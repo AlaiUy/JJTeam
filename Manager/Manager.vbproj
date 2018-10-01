@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{50F78F34-6348-492E-A983-EB11E9C1325B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Manager.frmCompras</StartupObject>
+    <StartupObject>Manager.Start</StartupObject>
     <RootNamespace>Manager</RootNamespace>
     <AssemblyName>Manager</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,6 +69,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Articulos\DEPARTAMENTOS\frmDepartamentoNuevo.Designer.vb">
+      <DependentUpon>frmDepartamentoNuevo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Articulos\DEPARTAMENTOS\frmDepartamentoNuevo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Articulos\frmArticulos.Designer.vb">
       <DependentUpon>frmArticulos.vb</DependentUpon>
     </Compile>
@@ -79,6 +85,12 @@
       <DependentUpon>frmNuevoArticulo.vb</DependentUpon>
     </Compile>
     <Compile Include="Articulos\frmNuevoArticulo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Articulos\MARCAS\frmNuevaMarca.Designer.vb">
+      <DependentUpon>frmNuevaMarca.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Articulos\MARCAS\frmNuevaMarca.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Compras\frmCompras.Designer.vb">
@@ -124,11 +136,17 @@
     <Compile Include="Start.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Articulos\DEPARTAMENTOS\frmDepartamentoNuevo.resx">
+      <DependentUpon>frmDepartamentoNuevo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Articulos\frmArticulos.resx">
       <DependentUpon>frmArticulos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Articulos\frmNuevoArticulo.resx">
       <DependentUpon>frmNuevoArticulo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Articulos\MARCAS\frmNuevaMarca.resx">
+      <DependentUpon>frmNuevaMarca.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compras\frmCompras.resx">
       <DependentUpon>frmCompras.vb</DependentUpon>
@@ -171,6 +189,10 @@
       <Project>{E2044DDD-F84D-4823-91D1-4C55C82800B0}</Project>
       <Name>Gestoras</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{EE8E2C44-ACE8-409C-B7E9-62CC07B82409}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{e1d33784-6fde-472b-af14-7087e88dffe2}</Project>
       <Name>Tools</Name>
@@ -185,6 +207,7 @@
   <ItemGroup>
     <None Include="Resources\settings.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

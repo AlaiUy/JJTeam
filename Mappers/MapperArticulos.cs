@@ -24,8 +24,10 @@ namespace JJ.Mappers
                     {
                         Codigo = _AddArticulo(A, Con, Tran);
                         if (Codigo > -1)
-                            foreach (PreciosVenta PV in A.Precios)
-                                _AddPrecioVenta(PV, Codigo, Con, Tran);
+                            if(A.Precios.Count > 0)
+                                foreach (PreciosVenta PV in A.Precios)
+                                    _AddPrecioVenta(PV, Codigo, Con, Tran);
+                        Tran.Commit();
                         return true;
                     }
                     catch (Exception E)
@@ -38,37 +40,33 @@ namespace JJ.Mappers
             
         }
 
-        public void AddDepartamento(object xDepto)
-        {
-            Departamento D = (Departamento)xDepto;
-            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-            {
-                Con.Open();
-                using (SqlCommand Com = new SqlCommand("INSERT INTO DEPARTAMENTOS(NOMBRE) VALUES (@NOMBRE)", Con))
-                {
-                    List<IDataParameter> P = new List<IDataParameter>();
-                    P.Add(new SqlParameter("@NOMBRE", D.Nombre.ToUpper()));
-                    ExecuteNonQuery(Com, P);
-                }
+      
 
-            }
-        } //Faster
+        
 
-        public void AddMarca(object xMarca)
+        public object AddMarca(object xMarca)
         {
 
             Marca M = (Marca)xMarca;
+            int Codigo = -1;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("INSERT INTO MARCAS(NOMBRE) VALUES (@NOMBRE)", Con))
+                using (SqlCommand Com = new SqlCommand("INSERT INTO MARCAS(NOMBRE) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE)", Con))
                 {
                     List<IDataParameter> P = new List<IDataParameter>();
                     P.Add(new SqlParameter("@NOMBRE", M.Nombre.ToUpper()));
-                    ExecuteNonQuery(Com, P);
+                    var Result = ExecuteScalar(Com, P);
+                    int.TryParse(Result.ToString(), out Codigo);
                 }
 
             }
+            if (Codigo > -1)
+            {
+                return new Marca(Codigo, M.Nombre);
+            }
+                
+            return null;
         }
 
         public IList<object> getDepartamentos()
@@ -232,6 +230,32 @@ namespace JJ.Mappers
         //@@ Son utilizados cuando una funcion requiere ultilizar  una transaccion para guardar en mas de 1 tabla a la vez, la idea que el codigo 
         //de cada tabla quede lo mejor legible.
 
+
+        private int _addDepartamento(Departamento xDepto, SqlConnection xCon, SqlTransaction xTran)
+        {
+            int CodDepto = -1;
+            using (SqlCommand Com = new SqlCommand("INSERT INTO DEPARTAMENTOS(NOMBRE) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE)", xCon))
+            {
+                Com.Parameters.Add(new SqlParameter("@NOMBRE", xDepto.Nombre.Trim().ToUpper()));
+                Com.Transaction = xTran;
+                var Result = ExecuteScalar(Com);
+                int.TryParse(Result.ToString(), out CodDepto);
+            }
+            return CodDepto;
+        }
+
+        private void _addSecciones(Seccion S, int codigo, SqlConnection con, SqlTransaction tran)
+        {
+            
+            using (SqlCommand Com = new SqlCommand("INSERT INTO SECCIONES(CODDEPARTAMENTO,NOMBRE) VALUES (@DEPTO,@NOMBRE)", (SqlConnection)con))
+            {
+                Com.Transaction = tran;
+                Com.Parameters.Add(new SqlParameter("@DEPTO", codigo));
+                Com.Parameters.Add(new SqlParameter("@NOMBRE", S.Nombre));
+                ExecuteNonQuery(Com);
+            }
+        }
+
         private int _AddArticulo(Articulo xA,IDbConnection xCon,IDbTransaction xTran)
         {
             //Agrego los datos en la tabla articulo, no uso conexion, porque viene en una transaccion, asumo que la conexion viene de afuera.
@@ -275,6 +299,36 @@ namespace JJ.Mappers
            
         }
 
-        
+        public object AddDepartamento(object xDepto)
+        {
+            Departamento D = (Departamento)xDepto;
+            int Codigo = -1;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlTransaction Tran = Con.BeginTransaction())
+                {
+                    try
+                    {
+                         Codigo = _addDepartamento(D, Con, Tran);
+                        if (Codigo > -1)
+                            if (D.Secciones.Count > 0)
+                                foreach (Seccion S in D.Secciones)
+                                    _addSecciones(S, Codigo, Con, Tran);
+                        Tran.Commit();
+                        if (Codigo > -1)
+                            D = new Departamento(Codigo, D.Nombre, D.Secciones);
+                        else
+                            D = null;
+                    }
+                    catch (Exception e)
+                    {
+                        Tran.Rollback();
+                        throw e;
+                    }
+                }
+            }
+            return D;
+        }
     }
 }

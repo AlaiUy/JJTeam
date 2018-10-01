@@ -48,17 +48,15 @@ namespace JJ.Gestoras
                 throw new Exception("La referencia ingresada no es aceptada");
             if(xArticulo.Nombre.Length > 50)
                 throw new Exception("La referencia ingresada no correcto");
-            if(xArticulo.Precios.Count < 1)
-                throw new Exception("Este articulo no tiene precios para la venta");
-
-            foreach (PreciosVenta P in xArticulo.Precios)
-            {
-                if (P.Ganancia < 1)
-                    throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", P.CodTarifa));
+            if(xArticulo.Precios.Count > 0)
+                foreach (PreciosVenta P in xArticulo.Precios)
+                {
+                    if (P.Ganancia < 1)
+                        throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", P.CodTarifa));
               
-                if (P.Precio() < 1)
-                    throw new Exception("El precio no es correcto");
-            }
+                    if (P.Precio() < 1)
+                        throw new Exception("El precio no es correcto");
+                }
 
             DBArticulos.Add(xArticulo);
                 
@@ -71,26 +69,26 @@ namespace JJ.Gestoras
 
         }
 
-        public void AddMarca(Marca xMarca)
+        public Marca AddMarca(Marca xMarca)
         {
             if (xMarca == null)
                 throw new Exception("La marca no puede ser nula");
-            if(xMarca.Nombre.Length < 1 || xMarca.Nombre.Length > 20)
+            if( string.IsNullOrEmpty(xMarca.Nombre) || xMarca.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
 
-            DBArticulos.AddMarca(xMarca);
+           return (Marca)DBArticulos.AddMarca(xMarca);
         }
 
-        public void AddDepto(Departamento xDpto)
+        public Departamento AddDepto(Departamento xDpto)
         {
             if (xDpto == null)
                 throw new Exception("La marca no puede ser nula");
-            if (xDpto.Nombre.Length < 1 || xDpto.Nombre.Length > 20)
+            if (string.IsNullOrEmpty(xDpto.Nombre) || xDpto.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
             if(xDpto.Codigo > 0)
                 throw new Exception("El departamento ya se encuentra ingresado");
 
-            DBArticulos.AddDepartamento(xDpto);
+            return (Departamento)DBArticulos.AddDepartamento(xDpto);
         }
 
         public IList<object> getDepartamentos()

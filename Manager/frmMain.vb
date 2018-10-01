@@ -2,7 +2,13 @@
 Imports JJ.Gestoras
 
 Public Class frmMain
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Private Sub btnNuevoArticulo_Click(sender As Object, e As EventArgs) Handles btnNuevoArticulo.Click
+        Dim frm As Form = New frmNuevoArticulo()
+        frm.Show()
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim TarifaContado As Tarifa = New Tarifa()
         TarifaContado.Nombre = "CONTADO"
 
@@ -16,6 +22,5 @@ Public Class frmMain
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-
     End Sub
 End Class

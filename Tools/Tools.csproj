@@ -7,8 +7,8 @@
     <ProjectGuid>{E1D33784-6FDE-472B-AF14-7087E88DFFE2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>JJ.Tools</AssemblyName>
+    <RootNamespace>JJ.Tools</RootNamespace>
+    <AssemblyName>Tools</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

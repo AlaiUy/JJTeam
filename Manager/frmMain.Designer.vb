@@ -23,37 +23,31 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.pnlContenedor = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.btnAgregarPersona = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btnAgregarPersona = New System.Windows.Forms.Button()
+        Me.btnNuevoArticulo = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.pnlContenedor.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlContenedor
         '
-        Me.pnlContenedor.Controls.Add(Me.Panel1)
         Me.pnlContenedor.Controls.Add(Me.Button1)
+        Me.pnlContenedor.Controls.Add(Me.Panel1)
+        Me.pnlContenedor.Controls.Add(Me.btnNuevoArticulo)
         Me.pnlContenedor.Location = New System.Drawing.Point(220, 103)
         Me.pnlContenedor.Name = "pnlContenedor"
         Me.pnlContenedor.Size = New System.Drawing.Size(580, 348)
         Me.pnlContenedor.TabIndex = 0
         '
-        'Button1
+        'Panel1
         '
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Image = Global.Manager.My.Resources.JJRecursos.Tools
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button1.Location = New System.Drawing.Point(216, 158)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(89, 63)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Agregar Articulos"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.Panel1.Controls.Add(Me.btnAgregarPersona)
+        Me.Panel1.Location = New System.Drawing.Point(28, 121)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(82, 100)
+        Me.Panel1.TabIndex = 2
         '
         'btnAgregarPersona
         '
@@ -71,13 +65,30 @@ Partial Class frmMain
         Me.btnAgregarPersona.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.btnAgregarPersona.UseVisualStyleBackColor = False
         '
-        'Panel1
+        'btnNuevoArticulo
         '
-        Me.Panel1.Controls.Add(Me.btnAgregarPersona)
-        Me.Panel1.Location = New System.Drawing.Point(28, 121)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(82, 100)
-        Me.Panel1.TabIndex = 2
+        Me.btnNuevoArticulo.FlatAppearance.BorderSize = 0
+        Me.btnNuevoArticulo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNuevoArticulo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNuevoArticulo.Image = Global.Manager.My.Resources.JJRecursos.Tools
+        Me.btnNuevoArticulo.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.btnNuevoArticulo.Location = New System.Drawing.Point(216, 158)
+        Me.btnNuevoArticulo.Name = "btnNuevoArticulo"
+        Me.btnNuevoArticulo.Size = New System.Drawing.Size(89, 63)
+        Me.btnNuevoArticulo.TabIndex = 1
+        Me.btnNuevoArticulo.Text = "Agregar Articulos"
+        Me.btnNuevoArticulo.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnNuevoArticulo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.btnNuevoArticulo.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(395, 75)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 55)
+        Me.Button1.TabIndex = 3
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -96,6 +107,7 @@ Partial Class frmMain
 
     Friend WithEvents pnlContenedor As Panel
     Friend WithEvents btnAgregarPersona As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btnNuevoArticulo As Button
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents Button1 As Button
 End Class

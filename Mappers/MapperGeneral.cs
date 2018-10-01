@@ -14,7 +14,21 @@ namespace JJ.Mappers
     {
         private static MapperGeneral _Instance = null;
         private static readonly object _padlock = new object();
-        
+        private IList<object> _Monedas;
+
+
+        public IList<object> Monedas
+        {
+            get
+            {
+                return _Monedas;
+            }
+
+            protected set
+            {
+                _Monedas = value;
+            }
+        }
 
         public static MapperGeneral getInstance()
         {
@@ -28,6 +42,10 @@ namespace JJ.Mappers
             }
 
             return _Instance;
+        }
+
+        private MapperGeneral() {
+            _Monedas = getMonedas();
         }
 
         public bool Add(object xObject)
@@ -67,6 +85,13 @@ namespace JJ.Mappers
                 }
             }
             return Monedas;
+        }
+
+        public void AddMoneda(Moneda M)
+        {
+            if (_Monedas == null)
+                _Monedas = new List<object>();
+            _Monedas.Add(M);
         }
 
        
