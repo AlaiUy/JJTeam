@@ -47,8 +47,13 @@ namespace JJ.Gestoras
             if (string.IsNullOrEmpty(xArticulo.Referencia) || xArticulo.Referencia.Length > 11)
                 throw new Exception("La referencia ingresada no es aceptada");
             if(xArticulo.Nombre.Length > 50)
-                throw new Exception("La referencia ingresada no correcto");
-            if(xArticulo.Precios.Count > 0)
+                throw new Exception("El nombre del articulo ingresada no correcto");
+            if(xArticulo.Coddepto < 1 || getDepartamentos().)
+                throw new Exception("El departamento ingresado no es valido o no existe");
+            if(xArticulo.Codmarca < 1 )
+
+
+            if (xArticulo.Precios.Count > 0)
                 foreach (PreciosVenta P in xArticulo.Precios)
                 {
                     if (P.Ganancia < 1)
@@ -104,6 +109,21 @@ namespace JJ.Gestoras
         public IList<object> getArticulos()
         {
             return DBArticulos.getArticulos();
+        }
+
+        public Seccion addSeccion(Seccion xSeccion, Departamento xDepartamento) {
+            if (xDepartamento == null || xSeccion == null)
+                throw new Exception("No es posible registrar una seccion con valores nulos");
+
+
+            if (string.IsNullOrEmpty(xSeccion.Nombre) || xSeccion.Nombre.Length > 20)
+                throw new Exception("La longuitud del nombre de la seccion es incorrecta");
+
+            if (xDepartamento.Codigo < 1)
+                throw new Exception("No se puede agregar una seccion en un departamento inexistente");
+
+
+            return (Seccion)DBArticulos.AddSeccion(xSeccion,xDepartamento);
         }
     }
 }

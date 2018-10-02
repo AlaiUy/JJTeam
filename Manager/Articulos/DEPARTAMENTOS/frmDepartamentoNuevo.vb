@@ -26,8 +26,11 @@ Public Class frmDepartamentoNuevo
     End Sub
 
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
+        If String.IsNullOrEmpty(txtDepto.Text) Then
+            Return
+        End If
         Dim xDepto As New Departamento()
-        xDepto.Nombre = txtMarca.Text.Trim().ToUpper()
+        xDepto.Nombre = txtDepto.Text.Trim().ToUpper()
         Try
             _Depto = GesArticulos.getInstance().AddDepto(xDepto)
             If Not IsNothing(_Depto) Then

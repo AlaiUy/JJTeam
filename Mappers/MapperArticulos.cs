@@ -244,13 +244,13 @@ namespace JJ.Mappers
             return CodDepto;
         }
 
-        private void _addSecciones(Seccion S, int codigo, SqlConnection con, SqlTransaction tran)
+        private void _addSecciones(Seccion S, int xCodigoDepto, SqlConnection con, SqlTransaction tran)
         {
             
             using (SqlCommand Com = new SqlCommand("INSERT INTO SECCIONES(CODDEPARTAMENTO,NOMBRE) VALUES (@DEPTO,@NOMBRE)", (SqlConnection)con))
             {
                 Com.Transaction = tran;
-                Com.Parameters.Add(new SqlParameter("@DEPTO", codigo));
+                Com.Parameters.Add(new SqlParameter("@DEPTO", xCodigoDepto));
                 Com.Parameters.Add(new SqlParameter("@NOMBRE", S.Nombre));
                 ExecuteNonQuery(Com);
             }
@@ -258,7 +258,6 @@ namespace JJ.Mappers
 
         private int _AddArticulo(Articulo xA,IDbConnection xCon,IDbTransaction xTran)
         {
-            //Agrego los datos en la tabla articulo, no uso conexion, porque viene en una transaccion, asumo que la conexion viene de afuera.
             int CodArtculo = -1;
             List<IDataParameter> P = new List<IDataParameter>();
             P.Add(new SqlParameter("@NOMBRE", xA.Nombre.ToUpper()));
@@ -267,7 +266,6 @@ namespace JJ.Mappers
             P.Add(new SqlParameter("@CODBARRAS", xA.Codbarras.ToUpper()));
             P.Add(new SqlParameter("@CODBARRAS1", xA.Codbarras1.ToUpper()));
             P.Add(new SqlParameter("@ACTIVO", xA.Activo));
-            //CODMARCA,MODELO,CODDEPARTAMENTO,CODSECCION
             P.Add(new SqlParameter("@CODMARCA", xA.Codmarca));
             P.Add(new SqlParameter("@MODELO", xA.Modelo));
             P.Add(new SqlParameter("@CODDEPARTAMENTO", xA.Coddepto));
@@ -283,8 +281,6 @@ namespace JJ.Mappers
 
         private void _AddPrecioVenta(PreciosVenta xPV,int xCodArticulo, IDbConnection xCon, IDbTransaction xTran)
         {
-            //Agrego los datos en la tabla ARTICULOPRECIOS, no uso conexion, porque viene en una transaccion, asumo que la conexion viene de afuera.
-
             List<IDataParameter> P = new List<IDataParameter>();
             P.Add(new SqlParameter("@CODARTICULO", xCodArticulo));
             P.Add(new SqlParameter("@CODTARIFA", xPV.CodTarifa));
@@ -296,7 +292,6 @@ namespace JJ.Mappers
                 Com.Transaction = (SqlTransaction)xTran;
                 ExecuteNonQuery(Com, P);
             }
-           
         }
 
         public object AddDepartamento(object xDepto)
@@ -312,7 +307,7 @@ namespace JJ.Mappers
                     {
                          Codigo = _addDepartamento(D, Con, Tran);
                         if (Codigo > -1)
-                            if (D.Secciones.Count > 0)
+                            if (D.Secciones != null && D.Secciones.Count > 0)
                                 foreach (Seccion S in D.Secciones)
                                     _addSecciones(S, Codigo, Con, Tran);
                         Tran.Commit();
@@ -329,6 +324,30 @@ namespace JJ.Mappers
                 }
             }
             return D;
+        }
+
+        public object AddSeccion(object xSeccion, object xDepto)
+        {
+            int Codigo = -1;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO SECCIONES(CODDEPARTAMENTO,NOMBRE) OUTPUT INSERTED.CODIGO VALUES (@DEPTO,@NOMBRE)", Con))
+                {
+
+                    Com.Parameters.Add(new SqlParameter("@DEPTO", ((Departamento)xDepto).Codigo));
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", ((Seccion)xSeccion).Nombre));
+                    var Result = ExecuteScalar(Com);
+                    int.TryParse(Result.ToString(), out Codigo);
+                }
+
+            }
+            if (Codigo > -1)
+            {
+                return new Seccion(Codigo, ((Seccion)xSeccion).Nombre);
+            }
+
+            return null;
         }
     }
 }

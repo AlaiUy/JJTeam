@@ -12,5 +12,6 @@ namespace JJ.Interfaces
         IList<object> getDepartamentos();
         IList<object> getMarcas();
         IList<object> getArticulos();
+        object AddSeccion(object xSeccion,object xDepto);
     }
 }

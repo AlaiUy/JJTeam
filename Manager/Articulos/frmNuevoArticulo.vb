@@ -132,6 +132,10 @@ Public Class frmNuevoArticulo
             _Marcas = GesArticulos.getInstance().getMarcas()
             Popular()
         End If
+        If TypeOf Obj Is Departamento Then
+            _Departamentos = GesArticulos.getInstance().getDepartamentos()
+            Popular()
+        End If
     End Sub
 
     Private Sub frmNuevoArticulo_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -143,5 +147,9 @@ Public Class frmNuevoArticulo
     Private Sub btnAddDepto_Click(sender As Object, e As EventArgs) Handles btnAddDepto.Click
         Dim F As Form = New frmDepartamentoNuevo(Me)
         F.Show()
+    End Sub
+
+    Private Sub btnAddSeccion_Click(sender As Object, e As EventArgs) Handles btnAddSeccion.Click
+
     End Sub
 End Class

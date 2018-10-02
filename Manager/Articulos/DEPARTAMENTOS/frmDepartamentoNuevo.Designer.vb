@@ -25,7 +25,7 @@ Partial Class frmDepartamentoNuevo
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.lblTitle = New System.Windows.Forms.Label()
-        Me.txtMarca = New System.Windows.Forms.TextBox()
+        Me.txtDepto = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -37,7 +37,7 @@ Partial Class frmDepartamentoNuevo
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.Controls.Add(Me.btnAgregar)
         Me.Panel1.Controls.Add(Me.lblTitle)
-        Me.Panel1.Controls.Add(Me.txtMarca)
+        Me.Panel1.Controls.Add(Me.txtDepto)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Location = New System.Drawing.Point(2, 2)
         Me.Panel1.Name = "Panel1"
@@ -63,12 +63,12 @@ Partial Class frmDepartamentoNuevo
         Me.lblTitle.TabIndex = 6
         Me.lblTitle.Text = "Ingreso de un departamento"
         '
-        'txtMarca
+        'txtDepto
         '
-        Me.txtMarca.Location = New System.Drawing.Point(71, 39)
-        Me.txtMarca.Name = "txtMarca"
-        Me.txtMarca.Size = New System.Drawing.Size(176, 23)
-        Me.txtMarca.TabIndex = 5
+        Me.txtDepto.Location = New System.Drawing.Point(71, 39)
+        Me.txtDepto.Name = "txtDepto"
+        Me.txtDepto.Size = New System.Drawing.Size(176, 23)
+        Me.txtDepto.TabIndex = 5
         '
         'Label1
         '
@@ -100,6 +100,6 @@ Partial Class frmDepartamentoNuevo
     Friend WithEvents Panel1 As Panel
     Friend WithEvents btnAgregar As Button
     Friend WithEvents lblTitle As Label
-    Friend WithEvents txtMarca As TextBox
+    Friend WithEvents txtDepto As TextBox
     Friend WithEvents Label1 As Label
 End Class
