@@ -47,18 +47,23 @@ namespace JJ.Gestoras
             if (string.IsNullOrEmpty(xArticulo.Referencia) || xArticulo.Referencia.Length > 11)
                 throw new Exception("La referencia ingresada no es aceptada");
             if(xArticulo.Nombre.Length > 50)
-                throw new Exception("La referencia ingresada no correcto");
-            if(xArticulo.Precios.Count < 1)
-                throw new Exception("Este articulo no tiene precios para la venta");
+                throw new Exception("El nombre del articulo ingresada no correcto");
+            if(xArticulo.Coddepto < 1)
+                throw new Exception("El departamento ingresado no es valido o no existe");
+            if(xArticulo.Codmarca < 1 )
+                throw new Exception("La marca ingresada no es valida o no existe");
+            if (xArticulo.Codseccion < 1)
+                throw new Exception("La seccion ingresada no es valida");
 
-            foreach (PreciosVenta P in xArticulo.Precios)
-            {
-                if (P.Ganancia < 1)
-                    throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", P.CodTarifa));
+            if (xArticulo.Precios.Count > 0)
+                foreach (PreciosVenta P in xArticulo.Precios)
+                {
+                    if (P.Ganancia < 1)
+                        throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", P.CodTarifa));
               
-                if (P.Precio() < 1)
-                    throw new Exception("El precio no es correcto");
-            }
+                    if (P.Precio() < 1)
+                        throw new Exception("El precio no es correcto");
+                }
 
             DBArticulos.Add(xArticulo);
                 
@@ -71,26 +76,26 @@ namespace JJ.Gestoras
 
         }
 
-        public void AddMarca(Marca xMarca)
+        public Marca AddMarca(Marca xMarca)
         {
             if (xMarca == null)
                 throw new Exception("La marca no puede ser nula");
-            if(xMarca.Nombre.Length < 1 || xMarca.Nombre.Length > 20)
+            if( string.IsNullOrEmpty(xMarca.Nombre) || xMarca.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
 
-            DBArticulos.AddMarca(xMarca);
+           return (Marca)DBArticulos.AddMarca(xMarca);
         }
 
-        public void AddDepto(Departamento xDpto)
+        public Departamento AddDepto(Departamento xDpto)
         {
             if (xDpto == null)
                 throw new Exception("La marca no puede ser nula");
-            if (xDpto.Nombre.Length < 1 || xDpto.Nombre.Length > 20)
+            if (string.IsNullOrEmpty(xDpto.Nombre) || xDpto.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
             if(xDpto.Codigo > 0)
                 throw new Exception("El departamento ya se encuentra ingresado");
 
-            DBArticulos.AddDepartamento(xDpto);
+            return (Departamento)DBArticulos.AddDepartamento(xDpto);
         }
 
         public IList<object> getDepartamentos()
@@ -106,6 +111,21 @@ namespace JJ.Gestoras
         public IList<object> getArticulos()
         {
             return DBArticulos.getArticulos();
+        }
+
+        public Seccion addSeccion(Seccion xSeccion, Departamento xDepartamento) {
+            if (xDepartamento == null || xSeccion == null)
+                throw new Exception("No es posible registrar una seccion con valores nulos");
+
+
+            if (string.IsNullOrEmpty(xSeccion.Nombre) || xSeccion.Nombre.Length > 20)
+                throw new Exception("La longuitud del nombre de la seccion es incorrecta");
+
+            if (xDepartamento.Codigo < 1)
+                throw new Exception("No se puede agregar una seccion en un departamento inexistente");
+
+
+            return (Seccion)DBArticulos.AddSeccion(xSeccion,xDepartamento);
         }
     }
 }

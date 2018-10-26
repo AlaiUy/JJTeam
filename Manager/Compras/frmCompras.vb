@@ -31,13 +31,11 @@ Public Class frmCompras
             MsgBox("La cantidad no puede ser negativa")
             Return
         End If
-
         Try
-                dgCompras.Rows.Add(xArticulo.CodArticulo, xArticulo.Referencia, xArticulo.Nombre, xCantidad, 1, 22, 1, 0, 1)
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
-
+            dgCompras.Rows.Add(xArticulo.CodArticulo, xArticulo.Referencia, xArticulo.Nombre + " - " + xArticulo.Descripcion, xCantidad, 1, 22, 1, 0, 1)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
     Private Sub PopularGrilla()
@@ -56,6 +54,7 @@ Public Class frmCompras
             Dim A As Articulo = Articulos.Find(Function(Ar As Articulo) Ar.Referencia = TryCast(sender, TextBox).Text)
             If Not IsNothing(A) Then
                 AgregarArticulo(A, Cantidad)
+                Totalizar()
             End If
         End If
 
@@ -93,6 +92,10 @@ Public Class frmCompras
     End Sub
 
     Private Sub Totalizar()
+        _ImpBruto = 0
+        _ImpDescuento = 0
+        _ImpIva = 0
+        _ImpTotal = 0
         For Each R As DataGridViewRow In dgCompras.Rows
             Dim Cantidad As Decimal = 0
             Dim Precio As Decimal = 0
@@ -102,6 +105,7 @@ Public Class frmCompras
             Dim PNeto As Decimal = 0
             Dim PFinal As Decimal = 0
             Dim PIva As Decimal = 0
+
             Cantidad = R.Cells("CANTIDAD").Value
             Precio = R.Cells("PRECIO").Value
             Iva = R.Cells("IVA").Value
@@ -130,5 +134,14 @@ Public Class frmCompras
 
     End Sub
 
+    Private Sub txtReferencia_TextChanged(sender As Object, e As EventArgs) Handles txtReferencia.TextChanged
 
+    End Sub
+
+    Private Sub btnBorrarLinea_Click(sender As Object, e As EventArgs) Handles btnBorrarLinea.Click
+        If Not IsNothing(dgCompras.CurrentRow) Then
+            dgCompras.Rows.Remove(dgCompras.CurrentRow)
+        End If
+
+    End Sub
 End Class

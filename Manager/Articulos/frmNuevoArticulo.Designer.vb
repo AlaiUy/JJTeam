@@ -26,6 +26,9 @@ Partial Class frmNuevoArticulo
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tbDatos = New System.Windows.Forms.TabPage()
+        Me.btnAddSeccion = New System.Windows.Forms.Button()
+        Me.btnAddDepto = New System.Windows.Forms.Button()
+        Me.btnAddMarca = New System.Windows.Forms.Button()
         Me.cbSeccion = New System.Windows.Forms.ComboBox()
         Me.cbDepartamento = New System.Windows.Forms.ComboBox()
         Me.cbMarca = New System.Windows.Forms.ComboBox()
@@ -111,6 +114,9 @@ Partial Class frmNuevoArticulo
         'tbDatos
         '
         Me.tbDatos.BackColor = System.Drawing.Color.White
+        Me.tbDatos.Controls.Add(Me.btnAddSeccion)
+        Me.tbDatos.Controls.Add(Me.btnAddDepto)
+        Me.tbDatos.Controls.Add(Me.btnAddMarca)
         Me.tbDatos.Controls.Add(Me.cbSeccion)
         Me.tbDatos.Controls.Add(Me.cbDepartamento)
         Me.tbDatos.Controls.Add(Me.cbMarca)
@@ -136,6 +142,33 @@ Partial Class frmNuevoArticulo
         Me.tbDatos.Size = New System.Drawing.Size(695, 421)
         Me.tbDatos.TabIndex = 0
         Me.tbDatos.Text = "DATOS"
+        '
+        'btnAddSeccion
+        '
+        Me.btnAddSeccion.Location = New System.Drawing.Point(360, 291)
+        Me.btnAddSeccion.Name = "btnAddSeccion"
+        Me.btnAddSeccion.Size = New System.Drawing.Size(22, 23)
+        Me.btnAddSeccion.TabIndex = 33
+        Me.btnAddSeccion.Text = "+"
+        Me.btnAddSeccion.UseVisualStyleBackColor = True
+        '
+        'btnAddDepto
+        '
+        Me.btnAddDepto.Location = New System.Drawing.Point(360, 253)
+        Me.btnAddDepto.Name = "btnAddDepto"
+        Me.btnAddDepto.Size = New System.Drawing.Size(22, 23)
+        Me.btnAddDepto.TabIndex = 32
+        Me.btnAddDepto.Text = "+"
+        Me.btnAddDepto.UseVisualStyleBackColor = True
+        '
+        'btnAddMarca
+        '
+        Me.btnAddMarca.Location = New System.Drawing.Point(360, 218)
+        Me.btnAddMarca.Name = "btnAddMarca"
+        Me.btnAddMarca.Size = New System.Drawing.Size(22, 23)
+        Me.btnAddMarca.TabIndex = 31
+        Me.btnAddMarca.Text = "+"
+        Me.btnAddMarca.UseVisualStyleBackColor = True
         '
         'cbSeccion
         '
@@ -525,4 +558,7 @@ Partial Class frmNuevoArticulo
     Friend WithEvents txtPrecio As TextBox
     Friend WithEvents lblPrecio As Label
     Friend WithEvents btnSave As Button
+    Friend WithEvents btnAddSeccion As Button
+    Friend WithEvents btnAddDepto As Button
+    Friend WithEvents btnAddMarca As Button
 End Class

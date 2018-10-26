@@ -44,6 +44,8 @@
     <Compile Include="IMapperDocumentos.cs" />
     <Compile Include="IMapperPersonas.cs" />
     <Compile Include="IMapperPrecios.cs" />
+    <Compile Include="Observer\IObservable.cs" />
+    <Compile Include="Observer\IObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
