@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{50F78F34-6348-492E-A983-EB11E9C1325B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Manager.Start</StartupObject>
+    <StartupObject>Manager.frmCompras</StartupObject>
     <RootNamespace>Manager</RootNamespace>
     <AssemblyName>Manager</AssemblyName>
     <FileAlignment>512</FileAlignment>

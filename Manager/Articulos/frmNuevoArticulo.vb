@@ -150,6 +150,11 @@ Public Class frmNuevoArticulo
     End Sub
 
     Private Sub btnAddSeccion_Click(sender As Object, e As EventArgs) Handles btnAddSeccion.Click
-
+        Dim Dpto As Departamento = TryCast(cbDepartamento.SelectedItem, Departamento)
+        If IsNothing(Dpto) Then
+            Return
+        End If
+        Dim F As Form = New frmNuevaSeccion(Me, Dpto)
+        F.Show()
     End Sub
 End Class

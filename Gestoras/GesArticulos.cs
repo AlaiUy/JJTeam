@@ -48,10 +48,12 @@ namespace JJ.Gestoras
                 throw new Exception("La referencia ingresada no es aceptada");
             if(xArticulo.Nombre.Length > 50)
                 throw new Exception("El nombre del articulo ingresada no correcto");
-            if(xArticulo.Coddepto < 1 || getDepartamentos().)
+            if(xArticulo.Coddepto < 1)
                 throw new Exception("El departamento ingresado no es valido o no existe");
             if(xArticulo.Codmarca < 1 )
-
+                throw new Exception("La marca ingresada no es valida o no existe");
+            if (xArticulo.Codseccion < 1)
+                throw new Exception("La seccion ingresada no es valida");
 
             if (xArticulo.Precios.Count > 0)
                 foreach (PreciosVenta P in xArticulo.Precios)

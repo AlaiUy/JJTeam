@@ -97,6 +97,8 @@ namespace JJ.Mappers
             return Departamentos;
         }
 
+
+
         public IList<object> getSeccionesByDpto(int codigo)
         {
 
