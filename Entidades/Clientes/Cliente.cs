@@ -44,5 +44,18 @@ namespace JJ.Entidades
                 _Cedula = value;
             }
         }
+
+        public int Rut
+        {
+            get
+            {
+                return _Rut;
+            }
+
+            set
+            {
+                _Rut = value;
+            }
+        }
     }
 }
