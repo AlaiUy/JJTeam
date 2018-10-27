@@ -31,5 +31,18 @@ namespace JJ.Entidades
                 _CodCliente = value;
             }
         }
+
+        public int Cedula
+        {
+            get
+            {
+                return _Cedula;
+            }
+
+            set
+            {
+                _Cedula = value;
+            }
+        }
     }
 }
