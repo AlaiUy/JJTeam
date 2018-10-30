@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class Esperalin
+    public class Esperalin: Facturalin
     {
         private byte _NumeroLinea;
         private int _codarticulo;

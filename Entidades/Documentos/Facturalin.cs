@@ -5,7 +5,10 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class Facturalin
+    public  abstract class Facturalin
+
     {
+
+
     }
 }

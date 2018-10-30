@@ -56,14 +56,12 @@
     <Compile Include="Tarifa.cs" />
     <Compile Include="TipoCliente.cs" />
     <Compile Include="Vendedor.cs" />
-    <Compile Include="Ventas\Espera.cs" />
-    <Compile Include="Ventas\Esperalin.cs" />
-    <Compile Include="Ventas\Facturas\Venta.cs" />
-    <Compile Include="Ventas\Facturas\Ventalin.cs" />
-    <Compile Include="Ventas\Factura\Factura.cs" />
-    <Compile Include="Ventas\Factura\Facturalin.cs" />
-    <Compile Include="Ventas\Remitos\RVenta.cs" />
-    <Compile Include="Ventas\Remitos\RVentaLin.cs" />
+    <Compile Include="Documentos\Espera\Espera.cs" />
+    <Compile Include="Documentos\Espera\Esperalin.cs" />
+    <Compile Include="Documentos\Factura.cs" />
+    <Compile Include="Documentos\Facturalin.cs" />
+    <Compile Include="Documentos\Venta\Venta.cs" />
+    <Compile Include="Documentos\Venta\VentaLin.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
