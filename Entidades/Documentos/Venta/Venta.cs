@@ -3,18 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JJ.Entidades.Ventas.Remitos
+namespace JJ.Entidades
 {
-    public class RVenta
+    public  class Facturas
     {
         private int _numero;
         private string _serie;
         private DateTime _fecha;
         private int _codvendedor;
-        private IList<RVentaLin> _Lineas;
-        private string _codcaja;
+        private IList<Facturaslin> _Lineas;
+        private Caja _caja;
         private int _codmoneda;
         private int _coddocumento;
+
+        public Facturas (int xNumero, String xSerie, DateTime xFecha, int xcodvendedor, IList<Facturaslin> xLineas, Caja xCaja, int xCodMoneda, int xCoddocumento)
+        {
+            _numero = xNumero;
+            _serie = xSerie;
+            _fecha = xFecha;
+            _codvendedor = xcodvendedor;
+            _Lineas = xLineas;
+            _caja = xCaja;
+            _codmoneda = xCodMoneda;
+            _coddocumento = xCoddocumento;
+             
+            }
 
         public int Numero
         {
@@ -50,29 +63,18 @@ namespace JJ.Entidades.Ventas.Remitos
             }
         }
 
-        public IList<RVentaLin> Lineas
+     
+
+        public Caja Caja
         {
             get
             {
-                return _Lineas;
+                return _caja;
             }
 
             set
             {
-                _Lineas = value;
-            }
-        }
-
-        public string Codcaja
-        {
-            get
-            {
-                return _codcaja;
-            }
-
-            set
-            {
-                _codcaja = value;
+                _caja = value;
             }
         }
 
@@ -100,39 +102,6 @@ namespace JJ.Entidades.Ventas.Remitos
             {
                 _coddocumento = value;
             }
-        }
-
-        public RVenta() { }
-
-        public bool addLinea(RVentaLin xLinea)
-        {
-            if(xLinea == null)
-                return false;
-            if (xLinea.Cantidad < 0)
-                return false;
-            if (xLinea.Dto < 0)
-                return false; ;
-            if (xLinea.Iva < 0)
-                return false; ;
-            if (xLinea.Precio < 0)
-                return false; ;
-
-            _Lineas.Add(xLinea);
-            return true;
-        }
-
-        public bool AgregarLineas(IList<RVentaLin> xLineas)
-        {
-            foreach (RVentaLin L in xLineas)
-            {
-                if (!addLinea(L))
-                {
-                    _Lineas = null;
-                    return false;
-                }
-                    
-            }
-            return true;
         }
     }
 }

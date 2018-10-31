@@ -53,5 +53,10 @@ namespace JJ.Entidades
         {
             return _Codigo + " - " + _Nombre;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

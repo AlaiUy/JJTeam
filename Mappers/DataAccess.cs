@@ -19,18 +19,30 @@ namespace JJ.Mappers
         {
             get
             {
-                if (globalConnectionString == null)
+                try
+                {
+                    if (globalConnectionString == null)
 #if DEBUG
-                    globalConnectionString = ConfigurationManager.ConnectionStrings["Servidor"].ConnectionString;
+                        globalConnectionString = ConfigurationManager.ConnectionStrings["Servidor"].ConnectionString;
 #else
                 globalConnectionString = ConfigurationManager.ConnectionStrings["ServidorAguinaG"].ConnectionString;
 #endif
 
 
-                return DataAccess.globalConnectionString;
+                    return DataAccess.globalConnectionString;
+
+                }
+
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+                
             }
             set { DataAccess.globalConnectionString = value; }
         }
+
 
 
 

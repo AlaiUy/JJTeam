@@ -40,7 +40,7 @@ namespace JJ.Gestoras
         {
             if (xTarifa == null)
                 throw new Exception("La tarifa no puede ser nula");
-            if (xTarifa.Nombre.Length < 1 || xTarifa.Nombre.Length > 20)
+            if (string.IsNullOrEmpty(xTarifa.Nombre) || xTarifa.Nombre.Length > 20)
                 throw new Exception("El nombre de la tarifa no cumple con los requerimientos");
             DBPrecios.AddTarifa(xTarifa);
         }

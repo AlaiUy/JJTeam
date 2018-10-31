@@ -19,5 +19,43 @@ namespace JJ.Entidades
         private int _Tipo;
         private IList<Cuenta> Cuentas;
 
+        public int CodCliente
+        {
+            get
+            {
+                return _CodCliente;
+            }
+
+            set
+            {
+                _CodCliente = value;
+            }
+        }
+
+        public int Cedula
+        {
+            get
+            {
+                return _Cedula;
+            }
+
+            set
+            {
+                _Cedula = value;
+            }
+        }
+
+        public int Rut
+        {
+            get
+            {
+                return _Rut;
+            }
+
+            set
+            {
+                _Rut = value;
+            }
+        }
     }
 }

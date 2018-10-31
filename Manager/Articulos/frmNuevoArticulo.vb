@@ -1,7 +1,9 @@
 ﻿Imports JJ.Entidades
 Imports JJ.Gestoras
+Imports JJ.Interfaces.Observer
 
 Public Class frmNuevoArticulo
+    Implements IObserver
     Private _Tarifas As List(Of Object)
     Private _Monedas As List(Of Object)
     Private _Departamentos As List(Of Object)
@@ -31,14 +33,6 @@ Public Class frmNuevoArticulo
         End Try
     End Sub
 
-    Private Sub tbPrecios_Click(sender As Object, e As EventArgs) Handles tbPrecios.Click
-
-    End Sub
-
-    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
-
-    End Sub
-
     Private Sub cbDepartamento_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDepartamento.SelectedIndexChanged
         Popular()
     End Sub
@@ -48,7 +42,9 @@ Public Class frmNuevoArticulo
             cbTarifa.DataSource = _Tarifas
             cbMoneda.DataSource = _Monedas
             cbDepartamento.DataSource = _Departamentos
-            cbSeccion.DataSource = TryCast(cbDepartamento.SelectedItem, Departamento).Secciones()
+            If Not IsNothing(cbDepartamento.SelectedItem) Then
+                cbSeccion.DataSource = TryCast(cbDepartamento.SelectedItem, Departamento).Secciones()
+            End If
             cbMarca.DataSource = _Marcas
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -64,7 +60,6 @@ Public Class frmNuevoArticulo
     End Sub
 
     Public Function Mostrar() As DataTable
-
         If IsNothing(_PreciosVenta) Then
             Return Nothing
         End If
@@ -82,7 +77,6 @@ Public Class frmNuevoArticulo
 
         Dim ColPrecio As DataColumn = New DataColumn("PRECIO SIN GANANCIA", Type.GetType("System.Single"))
         Dim ColGanancia As DataColumn = New DataColumn("GANANCIA", Type.GetType("System.Single"))
-
         Dim ColPrecioFinal As DataColumn = New DataColumn("PRECIO FINAL", Type.GetType("System.Single"))
 
         T.Columns.Add(ColCodTarifa)
@@ -92,7 +86,6 @@ Public Class frmNuevoArticulo
         T.Columns.Add(ColPrecio)
         T.Columns.Add(ColGanancia)
         T.Columns.Add(ColPrecioFinal)
-
 
         For Each PV As PreciosVenta In _PreciosVenta
             Dim Row As DataRow = T.NewRow()
@@ -129,7 +122,39 @@ Public Class frmNuevoArticulo
         End Try
     End Sub
 
-    Private Sub cbMarca_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbMarca.SelectedIndexChanged
+    Private Sub btnAddMarca_Click(sender As Object, e As EventArgs) Handles btnAddMarca.Click
+        Dim F As Form = New frmNuevaMarca(Me)
+        F.Show()
+    End Sub
 
+    Public Overloads Sub Update(Obj As Object) Implements IObserver.Update
+        If TypeOf Obj Is Marca Then
+            _Marcas = GesArticulos.getInstance().getMarcas()
+            Popular()
+        End If
+        If TypeOf Obj Is Departamento Then
+            _Departamentos = GesArticulos.getInstance().getDepartamentos()
+            Popular()
+        End If
+    End Sub
+
+    Private Sub frmNuevoArticulo_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            Me.Close()
+        End If
+    End Sub
+
+    Private Sub btnAddDepto_Click(sender As Object, e As EventArgs) Handles btnAddDepto.Click
+        Dim F As Form = New frmDepartamentoNuevo(Me)
+        F.Show()
+    End Sub
+
+    Private Sub btnAddSeccion_Click(sender As Object, e As EventArgs) Handles btnAddSeccion.Click
+        Dim Dpto As Departamento = TryCast(cbDepartamento.SelectedItem, Departamento)
+        If IsNothing(Dpto) Then
+            Return
+        End If
+        Dim F As Form = New frmNuevaSeccion(Me, Dpto)
+        F.Show()
     End Sub
 End Class

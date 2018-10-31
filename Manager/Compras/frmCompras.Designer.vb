@@ -22,6 +22,7 @@ Partial Class frmCompras
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel4 = New System.Windows.Forms.Panel()
@@ -36,6 +37,7 @@ Partial Class frmCompras
         Me.DESCUENTO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FINAL = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.btnBorrarLinea = New System.Windows.Forms.Button()
         Me.btnFacturar = New System.Windows.Forms.Button()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.txtFinal = New System.Windows.Forms.TextBox()
@@ -90,21 +92,30 @@ Partial Class frmCompras
         Me.dgCompras.AllowUserToDeleteRows = False
         Me.dgCompras.AllowUserToResizeRows = False
         Me.dgCompras.BorderStyle = System.Windows.Forms.BorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgCompras.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CODIGO, Me.REFERENCIA, Me.NOMBRE, Me.CANTIDAD, Me.PRECIO, Me.IVA, Me.SUBTOTAL, Me.DESCUENTO, Me.FINAL})
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Transparent
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgCompras.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgCompras.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgCompras.EnableHeadersVisualStyles = False
         Me.dgCompras.Location = New System.Drawing.Point(0, 0)
         Me.dgCompras.Name = "dgCompras"
         Me.dgCompras.RowHeadersVisible = False
+        Me.dgCompras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgCompras.Size = New System.Drawing.Size(976, 359)
         Me.dgCompras.TabIndex = 0
         '
@@ -124,6 +135,7 @@ Partial Class frmCompras
         '
         Me.NOMBRE.HeaderText = "NOMBRE"
         Me.NOMBRE.Name = "NOMBRE"
+        Me.NOMBRE.ReadOnly = True
         '
         'CANTIDAD
         '
@@ -157,6 +169,7 @@ Partial Class frmCompras
         '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.btnBorrarLinea)
         Me.Panel3.Controls.Add(Me.btnFacturar)
         Me.Panel3.Controls.Add(Me.Panel6)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -164,6 +177,16 @@ Partial Class frmCompras
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(976, 116)
         Me.Panel3.TabIndex = 1
+        '
+        'btnBorrarLinea
+        '
+        Me.btnBorrarLinea.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnBorrarLinea.Location = New System.Drawing.Point(96, 7)
+        Me.btnBorrarLinea.Name = "btnBorrarLinea"
+        Me.btnBorrarLinea.Size = New System.Drawing.Size(75, 58)
+        Me.btnBorrarLinea.TabIndex = 9
+        Me.btnBorrarLinea.Text = "Borrar Linea"
+        Me.btnBorrarLinea.UseVisualStyleBackColor = True
         '
         'btnFacturar
         '
@@ -385,15 +408,6 @@ Partial Class frmCompras
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents txtReferencia As TextBox
-    Friend WithEvents CODIGO As DataGridViewTextBoxColumn
-    Friend WithEvents REFERENCIA As DataGridViewTextBoxColumn
-    Friend WithEvents NOMBRE As DataGridViewTextBoxColumn
-    Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
-    Friend WithEvents PRECIO As DataGridViewTextBoxColumn
-    Friend WithEvents IVA As DataGridViewTextBoxColumn
-    Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
-    Friend WithEvents DESCUENTO As DataGridViewTextBoxColumn
-    Friend WithEvents FINAL As DataGridViewTextBoxColumn
     Friend WithEvents txtCantidad As TextBox
     Friend WithEvents LinkArticulos As LinkLabel
     Friend WithEvents Panel6 As Panel
@@ -406,4 +420,14 @@ Partial Class frmCompras
     Friend WithEvents Label4 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents btnFacturar As Button
+    Friend WithEvents CODIGO As DataGridViewTextBoxColumn
+    Friend WithEvents REFERENCIA As DataGridViewTextBoxColumn
+    Friend WithEvents NOMBRE As DataGridViewTextBoxColumn
+    Friend WithEvents CANTIDAD As DataGridViewTextBoxColumn
+    Friend WithEvents PRECIO As DataGridViewTextBoxColumn
+    Friend WithEvents IVA As DataGridViewTextBoxColumn
+    Friend WithEvents SUBTOTAL As DataGridViewTextBoxColumn
+    Friend WithEvents DESCUENTO As DataGridViewTextBoxColumn
+    Friend WithEvents FINAL As DataGridViewTextBoxColumn
+    Friend WithEvents btnBorrarLinea As Button
 End Class

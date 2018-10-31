@@ -7,10 +7,11 @@ namespace JJ.Interfaces
 {
     public interface IMapperArticulos : IMapper
     {
-        void AddMarca(object xMarca);
-        void AddDepartamento(object xDepto);
+        object AddMarca(object xMarca);
+        object AddDepartamento(object xDepto);
         IList<object> getDepartamentos();
         IList<object> getMarcas();
         IList<object> getArticulos();
+        object AddSeccion(object xSeccion,object xDepto);
     }
 }
