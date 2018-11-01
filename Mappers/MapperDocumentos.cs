@@ -53,8 +53,8 @@ namespace JJ.Mappers
                         List<IDataParameter> P = new List<IDataParameter>();
                         P.Add(new SqlParameter("@FECHA", DateTime.Today));
                         P.Add(new SqlParameter("@MONEDA", E.Codmoneda));
-                        P.Add(new SqlParameter("@CODPERSONA", E.Codcliente));
-                        P.Add(new SqlParameter("@CODCUENTA", E.Codcuenta));
+                        P.Add(new SqlParameter("@CODPERSONA", E.ObjCliente.Cedula));
+                        P.Add(new SqlParameter("@CODCUENTA", E.ObjCuenta));
                         P.Add(new SqlParameter("@ESTADO", E.Estado));
                         P.Add(new SqlParameter("@TIPO", E.Tipo));
                         P.Add(new SqlParameter("@NOMBREOPC", E.Nombreopc));
@@ -105,7 +105,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.MONEDA,E.CODPERSONA,E.CODCUENTA,E.ESTADO,E.TIPO,E.NOMBREOPC,E.DIROPC,E.RUTOPC,E.ADENDA FROM ESPERA E", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.MONEDA,E.CODPERSONA,E.CODCUENTA,E.ESTADO,E.TIPO,E.NOMBREOPC,E.DIROPC,E.RUTOPC,E.ADENDA FROM ESPERA E where estado=1 order by codigo asc", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -116,8 +116,8 @@ namespace JJ.Mappers
                             Espera E = new Espera(Codigo, Fecha);
                             E.Estado = (int)Reader["ESTADO"];
                             E.Adenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
-                            E.Codcliente = (int)Reader["CODPERSONA"];
-                            E.Codcuenta = (int)Reader["CODCUENTA"];
+                            E.ObjCliente =  new MapperPersonas().getPersona((int)Reader["CODPERSONA"]);
+                        //    E.ObjCuenta = new MapperPersonas().getCuenta((int)Reader["CODCUENTA"];
                             E.Tipo = (int)Reader["TIPO"];
                             E.Nombreopc = (string)(Reader["NOMBREOPC"] is DBNull ? string.Empty : Reader["NOMBREOPC"]);
                             E.DirOpc = (string)(Reader["DIROPC"] is DBNull ? string.Empty : Reader["DIROPC"]);
@@ -137,15 +137,17 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT L.CODIGO,L.CODESPERA,L.CODARTICULO,L.CANTIDAD,L.PRECIO,L.DESCUENTO,L.IVA,L.DESCRIPCION FROM ESPERALIN L WHERE CODESPERA = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT L.CODESPERA,L.LINEA, L.CODARTICULO,L.CANTIDAD,L.PRECIO,L.DESCUENTO,L.IVA,L.DESCRIPCION FROM ESPERALIN L WHERE CODESPERA = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xIDEspera));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         while (Reader.Read())
                         {
-                            int NumLin = (int)Reader["CODIGO"];
-                            Esperalin L = new Esperalin(NumLin);
+                            int codEspera = (int)Reader["CODESPERA"];
+                            int NumLin = (int)Reader["LINEA"];
+                            Esperalin L = new Esperalin(codEspera,NumLin);
+         
                             L.Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
                             L.CodArticulo = (int)Reader["CODARTICULO"];
                             L.Descripcion = (string)Reader["DESCRIPCION"];

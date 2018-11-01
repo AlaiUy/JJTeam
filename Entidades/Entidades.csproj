@@ -47,7 +47,7 @@
     <Compile Include="Categorias\CatCliente.cs" />
     <Compile Include="Categorias\Categoria.cs" />
     <Compile Include="Categorias\CatProveedor.cs" />
-    <Compile Include="Clientes\Cliente.cs" />
+    <Compile Include="Clientes\Personas.cs" />
     <Compile Include="Clientes\Cuenta.cs" />
     <Compile Include="Moneda.cs" />
     <Compile Include="PreciosVenta.cs" />

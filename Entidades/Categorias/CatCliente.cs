@@ -7,5 +7,12 @@ namespace JJ.Entidades
 {
     public class CatCliente:Categoria 
     {
+
+
+        public CatCliente(int xCodigo, string xDescripcion):base(xCodigo,xDescripcion)
+        {
+
+
+        }
     }
 }

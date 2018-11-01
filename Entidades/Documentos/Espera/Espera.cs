@@ -10,15 +10,15 @@ namespace JJ.Entidades
         //metodos sin set
         private int _numero;
         private DateTime _fecha;
-        private int _CodDocumento;
+
 
 
         //Metodos con set
-        private int _codvendedor;
-        private int _codcliente;
+        private Vendedor _objVendedor;
+        private Personas _objCliente;
         private List<Esperalin> lineas;
         private int _codmoneda;
-        private int _codcuenta;
+        private Cuenta _objCuenta;
         private string _Adenda;
         private string _Nombreopc = "";
         private string _DirOpc = "";
@@ -107,39 +107,9 @@ namespace JJ.Entidades
             }
         }
 
-        public int CodDocumento
-        {
-            get
-            {
-                return _CodDocumento;
-            }
-        }
+       
 
-        public int Codvendedor
-        {
-            get
-            {
-                return _codvendedor;
-            }
-
-            set
-            {
-                _codvendedor = value;
-            }
-        }
-
-        public int Codcliente
-        {
-            get
-            {
-                return _codcliente;
-            }
-
-            set
-            {
-                _codcliente = value;
-            }
-        }
+       
 
         public List<Esperalin> Lineas
         {
@@ -175,16 +145,42 @@ namespace JJ.Entidades
             }
         }
 
-        public int Codcuenta
+        public Vendedor ObjVendedor
         {
             get
             {
-                return _codcuenta;
+                return _objVendedor;
             }
 
             set
             {
-                _codcuenta = value;
+                _objVendedor = value;
+            }
+        }
+
+        public Personas ObjCliente
+        {
+            get
+            {
+                return _objCliente;
+            }
+
+            set
+            {
+                _objCliente = value;
+            }
+        }
+
+        public Cuenta ObjCuenta
+        {
+            get
+            {
+                return _objCuenta;
+            }
+
+            set
+            {
+                _objCuenta = value;
             }
         }
 

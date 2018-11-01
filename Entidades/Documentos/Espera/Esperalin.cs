@@ -15,9 +15,10 @@ namespace JJ.Entidades
         private decimal _Descuento;
         private int _NumLinea;
 
-        public Esperalin(int xNumeroLinea)
+        public Esperalin(int xCodArticulo, int xNumLinea)
         {
-            _NumLinea = xNumeroLinea;
+            _CodArticulo = xCodArticulo;
+           _NumLinea = xNumLinea;
         }
 
         public int CodArticulo
@@ -105,8 +106,5 @@ namespace JJ.Entidades
                 return _NumLinea;
             }
         }
-
-        
-
     }
 }

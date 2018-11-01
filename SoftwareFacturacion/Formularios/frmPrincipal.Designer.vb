@@ -585,7 +585,7 @@ Partial Class frmPrincipal
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 20)
         Me.Label5.TabIndex = 8
-        Me.Label5.Text = "Cliente"
+        Me.Label5.Text = "Personas"
         '
         'Label1
         '

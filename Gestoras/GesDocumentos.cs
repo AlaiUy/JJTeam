@@ -32,7 +32,8 @@ namespace JJ.Gestoras
         {
             DBDocumentos = (IMapperDocumentos)Factory.getMapper(GetType());
         }
-
+        
+        /*
         public void addEspera(Espera xEspera)
         {
             if (xEspera.Codcliente < 1)
@@ -50,7 +51,7 @@ namespace JJ.Gestoras
             E.Codcuenta = 1;
             E.DirOpc = "hola1";
             E.Codmoneda = 1;
-            Esperalin EL = new Esperalin(1);
+            Esperalin EL = new Esperalin(1,1);
             EL.Cantidad = 1;
             EL.CodArticulo = 1;
             EL.Descripcion = "Anca";
@@ -60,6 +61,7 @@ namespace JJ.Gestoras
             E.AgregarLinea(EL);
             DBDocumentos.addEspera(E);
         }
+        */
         public List<object> getListaEspera()
         {
             return DBDocumentos.getVentasEspera();

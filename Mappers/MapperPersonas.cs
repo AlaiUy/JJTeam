@@ -100,6 +100,7 @@ namespace JJ.Mappers
                 Con.Open();
                 using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL FROM PROVEEDORES P", Con))
                 {
+
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         Proveedor Entity;
@@ -124,6 +125,81 @@ namespace JJ.Mappers
             }
             return Proveedores;
         }
+
+        public Personas getPersona(int xCodPersona)
+        {
+            Personas objP=null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM PERSONAS WHERE CODIGO=@CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodPersona));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                   
+                        while (Reader.Read())
+                        {
+                            objP = new Personas((int)Reader["CODIGO"], (string)Reader["CEDULA"], (string)Reader["RUT"], (string)Reader["NOMBRE"], (string)Reader["APELLIDO"], (string)Reader["DIRECCION"], (string)Reader["DIRNUMERO"], (string)Reader["NUMEROAPTO"], (string)Reader["TELEFONO"], (string)Reader["CELULAR"], (string)Reader["PAIS"], (string)Reader["CIUDAD"],(CatCliente)getCategoriaPersonaByID((int)Reader["CODCATEGORIA"]), (string)Reader["EMAIL"], (int)Reader["ACTIVA"]);
+                           
+                        }
+                    }
+                }
+            }
+
+            return objP;
+        }
+
+        public object getCategoriaPersonaByID(int xCodigo)
+        {
+            object objCategoria = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT C.CODIGO, C.DESCRIPCION, C.ACTIVA FROM CATEGORIASCLIENTE AS C WHERE C.CODIGO = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodigo));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            string Nombre = (string)Reader["DESCRIPCION"];
+                         //   byte Activa = (byte)Reader["ACTIVA"];
+                            objCategoria = new CatCliente(Codigo, Nombre);
+                        }
+                    }
+                }
+            }
+            return objCategoria;
+        }
+
+        public Cuenta getCuenta(int xCodPersona, int xCuenta)
+        {
+            Cuenta objCuenta=null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM CUENTAS WHERE CODIGO=@CODIGO AND CODPERSONA=@CODPERSONA", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCuenta));
+                    Com.Parameters.Add(new SqlParameter("@CODPERSONA", xCodPersona));
+                
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+                        while (Reader.Read())
+                        {
+                            objCuenta = new Cuenta((int)Reader["CODIGO"], (int)Reader["CODTIPO"], (string)Reader["RAZONSOCIAL"], (string)Reader["DIRECCION"], (string)Reader["NUMDIRECCION"], (string)Reader["RUT"], (string)Reader["TELEFONO"], (string)Reader["CELULAR"], (string)Reader["EMAILPRINCIPAL"], (byte)Reader["ACTIVA"]);
+                          
+                        }
+                    }
+                }
+            }
+
+            return objCuenta;
+        }
+
 
         public bool Remove(object xObject)
         {
