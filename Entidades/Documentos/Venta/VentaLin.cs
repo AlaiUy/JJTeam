@@ -5,7 +5,11 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class Facturaslin
+    public class VentaLin : Facturalin
     {
+        public VentaLin(int xNumeroLinea) : base(xNumeroLinea)
+        {
+
+        }
     }
 }

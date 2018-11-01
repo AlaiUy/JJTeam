@@ -17,6 +17,7 @@ namespace JJ.FabricaMapper
                 case "GesArticulos": return (IMapper)new MapperArticulos();
                 case "GesPrecios": return (IMapper)new MapperPrecios();
                 case "GesPersonas": return (IMapper)new MapperPersonas();
+                case "GesDocumentos": return (IMapper)new MapperDocumentos();
             }
             return null;
         }
