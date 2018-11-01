@@ -7,26 +7,33 @@ namespace JJ.Entidades
 {
     public abstract class Factura
     {
-        private int _Codigo;
-        private string _serie;
+        
+        //metodos sin set
         private int _numero;      
         private DateTime _fecha;
+        private int _CodDocumento;
+
+
+        //Metodos con set
         private int _codvendedor;
         private int _codcliente;
-        private IList<Facturalin> _Lineas;
-        private Caja _caja;
+        protected List<object> _Lineas;
+        private Moneda _Moneda;
+        private string _serie;
+        private int _codcuenta;
+        private string _Adenda;
 
-        public int Codigo
+        public Factura()
         {
-            get
-            {
-                return _Codigo;
-            }
+            _Lineas = new List<object>();
+        }
 
-            set
-            {
-                _Codigo = value;
-            }
+        public Factura(int xNumero,DateTime xFecha,int xDocumento)
+        {
+            _numero = xNumero;
+            _fecha = xFecha;
+            _CodDocumento = xDocumento;
+            _Lineas = new List<object>();
         }
 
         public string Serie
@@ -48,11 +55,6 @@ namespace JJ.Entidades
             {
                 return _numero;
             }
-
-            set
-            {
-                _numero = value;
-            }
         }
 
         public DateTime Fecha
@@ -61,14 +63,9 @@ namespace JJ.Entidades
             {
                 return _fecha;
             }
-
-            set
-            {
-                _fecha = value;
-            }
         }
 
-        public int Codvendedor
+        public int Vendedor
         {
             get
             {
@@ -81,7 +78,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int Codcliente
+        public int Cliente
         {
             get
             {
@@ -94,43 +91,67 @@ namespace JJ.Entidades
             }
         }
 
-        public IList<Facturalin> Lineas
-        {
-            get
-            {
-                return Lineas1;
-            }
-
-            set
-            {
-                Lineas1 = value;
-            }
-        }
-
-        public Caja Caja
-        {
-            get
-            {
-                return _caja;
-            }
-
-            set
-            {
-                _caja = value;
-            }
-        }
-
-        public IList<Facturalin> Lineas1
+        public List<object> Lineas
         {
             get
             {
                 return _Lineas;
             }
+            
+        }
+
+        public int Documento
+        {
+            get
+            {
+                return _CodDocumento;
+            }
+        }
+
+        public Moneda Moneda
+        {
+            get
+            {
+                return _Moneda;
+            }
 
             set
             {
-                _Lineas = value;
+                _Moneda = value;
             }
         }
+
+        public int Codcuenta
+        {
+            get
+            {
+                return _codcuenta;
+            }
+
+            set
+            {
+                _codcuenta = value;
+            }
+        }
+
+        public string Adenda
+        {
+            get
+            {
+                return _Adenda;
+            }
+
+            set
+            {
+                _Adenda = value;
+            }
+        }
+
+        public virtual  void AgregarLineas(List<object> xLineas) { }
+        public virtual void AgregarLinea(object Linea) { }
+
+
+
+
     }
 }

@@ -57,6 +57,7 @@ Partial Class frmCompras
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtReferencia = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.Panel4.SuspendLayout()
         CType(Me.dgCompras, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -169,6 +170,7 @@ Partial Class frmCompras
         '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.Button1)
         Me.Panel3.Controls.Add(Me.btnBorrarLinea)
         Me.Panel3.Controls.Add(Me.btnFacturar)
         Me.Panel3.Controls.Add(Me.Panel6)
@@ -373,6 +375,16 @@ Partial Class frmCompras
         Me.txtReferencia.Size = New System.Drawing.Size(187, 20)
         Me.txtReferencia.TabIndex = 2
         '
+        'Button1
+        '
+        Me.Button1.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Location = New System.Drawing.Point(193, 7)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 58)
+        Me.Button1.TabIndex = 10
+        Me.Button1.Text = "Borrar Linea"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'frmCompras
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -430,4 +442,5 @@ Partial Class frmCompras
     Friend WithEvents DESCUENTO As DataGridViewTextBoxColumn
     Friend WithEvents FINAL As DataGridViewTextBoxColumn
     Friend WithEvents btnBorrarLinea As Button
+    Friend WithEvents Button1 As Button
 End Class
