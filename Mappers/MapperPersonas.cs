@@ -140,7 +140,7 @@ namespace JJ.Mappers
                    
                         while (Reader.Read())
                         {
-                            objP = new Personas((int)Reader["CODIGO"], (string)Reader["CEDULA"], (string)Reader["RUT"], (string)Reader["NOMBRE"], (string)Reader["APELLIDO"], (string)Reader["DIRECCION"], (string)Reader["DIRNUMERO"], (string)Reader["NUMEROAPTO"], (string)Reader["TELEFONO"], (string)Reader["CELULAR"], (string)Reader["PAIS"], (string)Reader["CIUDAD"],(CatCliente)getCategoriaPersonaByID((int)Reader["CODCATEGORIA"]), (string)Reader["EMAIL"], (int)Reader["ACTIVA"]);
+                            objP = new Personas((int)Reader["CODIGO"], (string)Reader["CEDULA"],(string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]), (string)Reader["NOMBRE"], (string)Reader["APELLIDO"], (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]), (string)Reader["DIRNUMERO"], (string)(Reader["NUMEROAPTO"] is DBNull ? string.Empty : Reader["NUMEROAPTO"]), (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]), (string)(Reader["CELULAR"] is DBNull ? string.Empty : Reader["CELULAR"]), (string)Reader["PAIS"], (string)(Reader["CIUDAD"] is DBNull ? string.Empty : Reader["CIUDAD"]), (CatCliente)getCategoriaPersonaByID((int)Reader["CODCATEGORIA"]), (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]), (int)Reader["ACTIVA"]);
                            
                         }
                     }

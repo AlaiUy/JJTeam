@@ -46,6 +46,7 @@
     <Compile Include="MapperGeneral.cs" />
     <Compile Include="MapperPersonas.cs" />
     <Compile Include="MapperPrecios.cs" />
+    <Compile Include="MapperVendedores.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -105,7 +105,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.MONEDA,E.CODPERSONA,E.CODCUENTA,E.ESTADO,E.TIPO,E.NOMBREOPC,E.DIROPC,E.RUTOPC,E.ADENDA FROM ESPERA E where estado=1 order by codigo asc", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.MONEDA,E.CODVENDEDOR,E.CODPERSONA,E.CODCUENTA,E.ESTADO,E.TIPO,E.NOMBREOPC,E.DIROPC,E.RUTOPC,E.ADENDA FROM ESPERA E where estado=1 order by codigo asc", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -115,9 +115,11 @@ namespace JJ.Mappers
                             DateTime Fecha = (DateTime)Reader["FECHA"];
                             Espera E = new Espera(Codigo, Fecha);
                             E.Estado = (int)Reader["ESTADO"];
+                            E.Codmoneda = (int)Reader["MONEDA"];
                             E.Adenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
                             E.ObjCliente =  new MapperPersonas().getPersona((int)Reader["CODPERSONA"]);
-                        //    E.ObjCuenta = new MapperPersonas().getCuenta((int)Reader["CODCUENTA"];
+                            E.ObjCuenta = new MapperPersonas().getCuenta((int)Reader["CODPERSONA"],(int)Reader["CODCUENTA"]);
+                            E.ObjVendedor =(Vendedor) new MapperVendedores().getVendedorByID((int)Reader["CODVENDEDOR"]);
                             E.Tipo = (int)Reader["TIPO"];
                             E.Nombreopc = (string)(Reader["NOMBREOPC"] is DBNull ? string.Empty : Reader["NOMBREOPC"]);
                             E.DirOpc = (string)(Reader["DIROPC"] is DBNull ? string.Empty : Reader["DIROPC"]);

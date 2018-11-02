@@ -10,11 +10,21 @@ namespace JJ.Entidades
         private int _codigo;
         private string _nombre;
 
+        public Vendedor(int xcodigo, string xnombre) {
+            Codigo = xcodigo;
+            Nombre = xnombre;
+        }
+
         public int Codigo
         {
             get
             {
                 return _codigo;
+            }
+
+            set
+            {
+                _codigo = value;
             }
         }
 
@@ -24,10 +34,11 @@ namespace JJ.Entidades
             {
                 return _nombre;
             }
+
+            set
+            {
+                _nombre = value;
+            }
         }
-
-
-
-
     }
 }

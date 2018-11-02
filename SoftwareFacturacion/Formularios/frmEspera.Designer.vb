@@ -36,6 +36,10 @@ Partial Class frmEspera
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.txtAdenda = New System.Windows.Forms.TextBox()
+        Me.txtImporteTotal = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -43,6 +47,7 @@ Partial Class frmEspera
         Me.Panel4.SuspendLayout()
         CType(Me.dgridCabecera, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        Me.Panel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -54,7 +59,7 @@ Partial Class frmEspera
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(997, 613)
+        Me.Panel1.Size = New System.Drawing.Size(1051, 563)
         Me.Panel1.TabIndex = 0
         '
         'Panel3
@@ -64,7 +69,7 @@ Partial Class frmEspera
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(0, 129)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(997, 484)
+        Me.Panel3.Size = New System.Drawing.Size(1051, 434)
         Me.Panel3.TabIndex = 1
         '
         'Panel5
@@ -72,9 +77,9 @@ Partial Class frmEspera
         Me.Panel5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel5.Controls.Add(Me.dgridLineas)
-        Me.Panel5.Location = New System.Drawing.Point(516, 0)
+        Me.Panel5.Location = New System.Drawing.Point(507, 0)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(481, 484)
+        Me.Panel5.Size = New System.Drawing.Size(544, 434)
         Me.Panel5.TabIndex = 1
         '
         'dgridLineas
@@ -92,7 +97,7 @@ Partial Class frmEspera
         Me.dgridLineas.RowHeadersVisible = False
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridLineas.Size = New System.Drawing.Size(481, 484)
+        Me.dgridLineas.Size = New System.Drawing.Size(544, 434)
         Me.dgridLineas.TabIndex = 0
         '
         'Panel4
@@ -103,7 +108,7 @@ Partial Class frmEspera
         Me.Panel4.Controls.Add(Me.dgridCabecera)
         Me.Panel4.Location = New System.Drawing.Point(0, 0)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(495, 484)
+        Me.Panel4.Size = New System.Drawing.Size(472, 434)
         Me.Panel4.TabIndex = 0
         '
         'dgridCabecera
@@ -121,7 +126,7 @@ Partial Class frmEspera
         Me.dgridCabecera.RowHeadersVisible = False
         Me.dgridCabecera.RowTemplate.Height = 28
         Me.dgridCabecera.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridCabecera.Size = New System.Drawing.Size(495, 484)
+        Me.dgridCabecera.Size = New System.Drawing.Size(472, 434)
         Me.dgridCabecera.TabIndex = 0
         '
         'Panel2
@@ -136,13 +141,13 @@ Partial Class frmEspera
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(997, 129)
+        Me.Panel2.Size = New System.Drawing.Size(1051, 129)
         Me.Panel2.TabIndex = 0
         '
         'btnRecuperar
         '
         Me.btnRecuperar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRecuperar.Location = New System.Drawing.Point(852, 36)
+        Me.btnRecuperar.Location = New System.Drawing.Point(906, 36)
         Me.btnRecuperar.Name = "btnRecuperar"
         Me.btnRecuperar.Size = New System.Drawing.Size(123, 46)
         Me.btnRecuperar.TabIndex = 6
@@ -200,11 +205,55 @@ Partial Class frmEspera
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Documento"
         '
+        'Panel6
+        '
+        Me.Panel6.Controls.Add(Me.Label4)
+        Me.Panel6.Controls.Add(Me.txtImporteTotal)
+        Me.Panel6.Controls.Add(Me.txtAdenda)
+        Me.Panel6.Location = New System.Drawing.Point(12, 581)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(1051, 101)
+        Me.Panel6.TabIndex = 1
+        '
+        'txtAdenda
+        '
+        Me.txtAdenda.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtAdenda.Location = New System.Drawing.Point(8, 13)
+        Me.txtAdenda.Multiline = True
+        Me.txtAdenda.Name = "txtAdenda"
+        Me.txtAdenda.ReadOnly = True
+        Me.txtAdenda.Size = New System.Drawing.Size(729, 73)
+        Me.txtAdenda.TabIndex = 0
+        '
+        'txtImporteTotal
+        '
+        Me.txtImporteTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtImporteTotal.Location = New System.Drawing.Point(867, 13)
+        Me.txtImporteTotal.Name = "txtImporteTotal"
+        Me.txtImporteTotal.ReadOnly = True
+        Me.txtImporteTotal.Size = New System.Drawing.Size(162, 30)
+        Me.txtImporteTotal.TabIndex = 1
+        Me.txtImporteTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(754, 20)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(107, 20)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Importe Total:"
+        '
         'frmEspera
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1021, 637)
+        Me.ClientSize = New System.Drawing.Size(1075, 694)
+        Me.Controls.Add(Me.Panel6)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.KeyPreview = True
@@ -219,6 +268,8 @@ Partial Class frmEspera
         CType(Me.dgridCabecera, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        Me.Panel6.ResumeLayout(False)
+        Me.Panel6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -237,4 +288,8 @@ Partial Class frmEspera
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtImporteTotal As TextBox
+    Friend WithEvents txtAdenda As TextBox
 End Class

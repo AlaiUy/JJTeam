@@ -17,26 +17,18 @@ Public Class frmEspera
 
     Public Function MostrarEncabezado() As DataTable
         Dim tTable As New DataTable
-        Dim ColA As DataColumn = tTable.Columns.Add("IDESPERA", Type.GetType("System.Int32"))
+        Dim ColA As DataColumn = tTable.Columns.Add("NUMERO", Type.GetType("System.Int32"))
         Dim ColV As DataColumn = tTable.Columns.Add("VENDEDOR", Type.GetType("System.String"))
-        'Dim ColS As DataColumn = tTable.Columns.Add("SERIE", Type.GetType("System.String"))
-        'Dim COLF As DataColumn = tTable.Columns.Add("FECHA", Type.GetType("System.String"))
+
 
         Dim COLC As DataColumn = tTable.Columns.Add("CLIENTE", Type.GetType("System.String"))
         Dim COLTV As DataColumn = tTable.Columns.Add("TIPOVENTA", Type.GetType("System.String"))
 
         For Each objE As Espera In mListaDocumentos
             Dim objf As DataRow = tTable.NewRow()
-            objf.Item("IDESPERA") = objE.Numero
-            'objf.Item("SERIE") = _FacturasPendientes(id).Serie
-            '   objf.Item("VENDEDOR") = objE.ObjVendedor.Nombre
-            ' objf.Item("FECHA") = Format(objl.Fecha, "dd/MM/yyyy")
-
-            objf.Item("CLIENTE") = objE.ObjCliente.Nombre
-
-
-
-
+            objf.Item("NUMERO") = objE.Numero
+            objf.Item("VENDEDOR") = objE.ObjVendedor.Nombre
+            objf.Item("CLIENTE") = objE.ObjCliente.Nombre & " " & objE.ObjCliente.Apellido
             objf.Item("TIPOVENTA") = objE.Tipo
 
 
@@ -46,4 +38,51 @@ Public Class frmEspera
         Return tTable
     End Function
 
+    Public Function ObtenerEsperabyIdEspera(xcodigo As Integer) As Espera
+        For Each E As Espera In mListaDocumentos
+            If E.Numero = xcodigo Then
+                Return E
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    Public Function MostrarLineas(xobjE As Espera) As DataTable
+        Dim tTable As New DataTable
+
+        Dim ColRef As DataColumn = tTable.Columns.Add("REFERENCIA", Type.GetType("System.String"))
+        Dim ColDes As DataColumn = tTable.Columns.Add("DESCRIPCION", Type.GetType("System.String"))
+        Dim ColCan As DataColumn = tTable.Columns.Add("CANTIDAD", Type.GetType("System.Decimal"))
+
+        If Not (xobjE.Lineas Is Nothing) Then
+
+
+            For Each xobjL As Esperalin In xobjE.Lineas
+
+                'If MyBase.Moneda.Id = objl.Articulo.MONEDA.Id Then
+                Dim objf As DataRow = tTable.NewRow()
+                objf.Item("REFERENCIA") = xobjL.CodArticulo
+                objf.Item("DESCRIPCION") = xobjL.Descripcion
+                objf.Item("CANTIDAD") = xobjL.Cantidad
+
+                tTable.Rows.Add(objf)
+
+
+            Next
+        End If
+        Return tTable
+
+    End Function
+
+    Private Sub dgridCabecera_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellContentClick
+
+    End Sub
+
+    Private Sub dgridCabecera_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellEnter
+        Dim objE As Espera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
+        Me.dgridLineas.DataSource = MostrarLineas(objE)
+        txtAdenda.Text = objE.Adenda
+        txtImporteTotal.Text = objE.PrecioFinal
+
+    End Sub
 End Class
