@@ -106,5 +106,29 @@ namespace JJ.Entidades
                 return _NumLinea;
             }
         }
+
+        public decimal PrecioUnitarioConIva()
+        {
+            
+            return (this.Precio*(1+(this.Iva/100)));
+        }
+
+        public decimal PrecioTotalConIva()
+        {
+            return (this.Precio * (1 + (this.Iva / 100)))*this.Cantidad;
+        }
+
+        public decimal PrecioTotalConDescuento()
+        {
+            return ((this.Precio * (1 + (this.Iva / 100)))/(1+(this.Descuento/100))) * this.Cantidad;
+        }
+
+        public decimal ImporteDescuento()
+        {
+            return (PrecioTotalConIva())-((this.Precio * (1 + (this.Iva / 100))) / (1 + (this.Descuento / 100))) * this.Cantidad;
+        }
+
+
     }
+
 }

@@ -3,6 +3,7 @@ Imports JJ.Entidades
 Public Class frmEspera
 
     Private mListaDocumentos As List(Of Object)
+    Public objEspera As Espera
 
     Private Sub frmEspera_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Escape Then
@@ -82,7 +83,23 @@ Public Class frmEspera
         Dim objE As Espera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
         Me.dgridLineas.DataSource = MostrarLineas(objE)
         txtAdenda.Text = objE.Adenda
-        txtImporteTotal.Text = objE.PrecioFinal
+        txtImporteTotal.Text = objE.ImporteTotal
+
+    End Sub
+
+    Private Sub btnRecuperar_Click(sender As Object, e As EventArgs) Handles btnRecuperar.Click
+        If Me.mListaDocumentos.Count > 0 Then
+            If dgridCabecera.Rows.Count > 1 Then
+                objEspera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", dgridCabecera.CurrentRow.Index).Value)
+            Else
+                objEspera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", 0).Value)
+            End If
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+        End If
+
+
+
 
     End Sub
 End Class

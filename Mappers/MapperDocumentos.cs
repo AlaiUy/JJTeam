@@ -163,6 +163,17 @@ namespace JJ.Mappers
             }
             return Lineas;
         }
+
+        public Boolean Facturar(Factura xObjFactura)
+        {
+
+
+
+            return false;
+
+        }
+
+
     }
 }
 

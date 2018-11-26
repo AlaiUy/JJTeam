@@ -210,41 +210,69 @@ namespace JJ.Entidades
             Lineas.Add(Linea);
         }
 
-        public decimal PrecioBruto()
+       
+
+        public decimal ImporteTotal()
         {
             decimal Importe = 0;
 
             foreach (Esperalin L in lineas)
             {
-                Importe += L.Cantidad * L.Precio;
+                Importe += (((L.Precio * (1 + (L.Iva / 100)))/(1+(L.Descuento/100))) * L.Cantidad);
 
             }
-            return Importe;
+            return Decimal.Round(Importe, 2);
         }
 
-        public decimal PrecioFinal()
+        public decimal ImporteTotalSinIva()
         {
             decimal Importe = 0;
 
             foreach (Esperalin L in lineas)
             {
-                Importe += (L.Precio * (1 + (L.Iva / 100)) * L.Cantidad);
+                Importe += L.Precio * L.Cantidad;
 
             }
-            return Importe;
+            return Decimal.Round(Importe, 2);
+
         }
 
-        public decimal PrecioIva()
+        public decimal ImporteTotalSinDescuentos()
         {
             decimal Importe = 0;
 
             foreach (Esperalin L in lineas)
             {
-                Importe += (((L.Precio * (1 + (L.Iva / 100)))-L.Precio)*L.Cantidad);
+                Importe += ((L.Precio * (1 + (L.Iva / 100))) * L.Cantidad);
 
             }
-            return Importe;
+            return Decimal.Round(Importe, 2);
+
         }
+
+        public decimal ImporteIva()
+        {
+                        
+            return Decimal.Round(ImporteTotalSinDescuentos() - ImporteTotalSinIva(),2);
+
+        }
+
+        public decimal ImporteDescuento() {
+
+            decimal Importe = 0;
+
+            foreach (Esperalin L in lineas)
+            {
+                Importe += (L.Precio * (1 + (L.Iva / 100)) - (L.Precio * (1 + (L.Iva / 100)) )/ (1+(L.Descuento/100))) * L.Cantidad;
+
+            }
+            return Decimal.Round(Importe,2);
+
+        }
+
+      
+
+
 
 
 

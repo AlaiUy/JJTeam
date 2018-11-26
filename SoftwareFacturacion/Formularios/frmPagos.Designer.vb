@@ -34,6 +34,9 @@ Partial Class frmPagos
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtFecha = New System.Windows.Forms.DateTimePicker()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.btnImprimir = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.dgridPagos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,6 +82,9 @@ Partial Class frmPagos
         '
         'txtDescripcion
         '
+        Me.txtDescripcion.Controls.Add(Me.btnImprimir)
+        Me.txtDescripcion.Controls.Add(Me.Label4)
+        Me.txtDescripcion.Controls.Add(Me.dtFecha)
         Me.txtDescripcion.Controls.Add(Me.btnBorrar)
         Me.txtDescripcion.Controls.Add(Me.btnAgregar)
         Me.txtDescripcion.Controls.Add(Me.cboxMoneda)
@@ -160,6 +166,32 @@ Partial Class frmPagos
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Descripcion"
         '
+        'dtFecha
+        '
+        Me.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFecha.Location = New System.Drawing.Point(992, 107)
+        Me.dtFecha.Name = "dtFecha"
+        Me.dtFecha.Size = New System.Drawing.Size(160, 26)
+        Me.dtFecha.TabIndex = 8
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(932, 112)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "Fecha"
+        '
+        'btnImprimir
+        '
+        Me.btnImprimir.Location = New System.Drawing.Point(644, 13)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(95, 38)
+        Me.btnImprimir.TabIndex = 10
+        Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.UseVisualStyleBackColor = True
+        '
         'frmPagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -190,4 +222,7 @@ Partial Class frmPagos
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents btnImprimir As Button
+    Friend WithEvents Label4 As Label
+    Friend WithEvents dtFecha As DateTimePicker
 End Class
