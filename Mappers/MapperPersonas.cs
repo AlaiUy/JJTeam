@@ -210,5 +210,29 @@ namespace JJ.Mappers
         {
             throw new NotImplementedException();
         }
+
+        public void addEmpresa(object xEmpresa)
+        {
+            Empresa Em = (Empresa)xEmpresa;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO EMPRESA(NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO) VALUES (@NOMBRE,@RAZONSOCIAL,@RUT,@DIRECCION,@CIUDAD,@PAIS,@TELEFONO,@EMAIL,@LOGO)", Con))
+                {
+                   
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", Em.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@RAZONSOCIAL", Em.Razonsocial));
+                    Com.Parameters.Add(new SqlParameter("@RUT", Em.Rut));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", Em.Direccion));
+                    Com.Parameters.Add(new SqlParameter("@CIUDAD", Em.Ciudad));
+                    Com.Parameters.Add(new SqlParameter("@PAIS", Em.Pais));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", Em.Telefono));
+                    Com.Parameters.Add(new SqlParameter("@EMAIL", Em.Email));
+                    Com.Parameters.Add(new SqlParameter("@LOGO", Em.Imagen));
+                    ExecuteNonQuery(Com);
+                }
+
+            }
+        }
     }
 }

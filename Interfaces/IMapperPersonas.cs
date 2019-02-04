@@ -11,5 +11,7 @@ namespace JJ.Interfaces
         IList<object> getCategoriasProveedor();
         object getCategoriasProveedorByID(int xCodigo);
         IList<object> getProveedores();
+
+        void addEmpresa(object xEmpresa);
     }
 }

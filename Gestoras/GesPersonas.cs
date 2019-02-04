@@ -37,6 +37,11 @@ namespace JJ.Gestoras
             _Proveedores = _DBPersonas.getProveedores();
         }
 
+        public void AddEmpresa(Empresa xEmpresa)
+        {
+            _DBPersonas.addEmpresa(xEmpresa);
+        }
+
         public void AddProveedor(Proveedor xProveedor)
         {
 
