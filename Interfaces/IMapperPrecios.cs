@@ -9,5 +9,6 @@ namespace JJ.Interfaces
     {
         void AddTarifa(object xTarifa);
         IList<object> getTarifas();
+        void AgregarMoneda(object xMoneda);
     }
 }

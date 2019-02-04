@@ -146,11 +146,5 @@ Public Class frmCompras
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Try
-            GesDocumentos.getInstance().addEspera(New Espera())
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
+
 End Class

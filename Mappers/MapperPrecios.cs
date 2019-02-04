@@ -27,9 +27,25 @@ namespace JJ.Mappers
                 using (SqlCommand Com = new SqlCommand("INSERT INTO TARIFAS(NOMBRE,ACTIVA) VALUES (@NOMBRE,@ACTIVO)", Con))
                 {
                     List<IDataParameter> P = new List<IDataParameter>();
-                    P.Add(new SqlParameter("@NOMBRE", T.Nombre.ToUpper()));
-                    P.Add(new SqlParameter("@ACTIVO", T.Activa));
-                    ExecuteNonQuery(Com, P);
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", T.Nombre.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@ACTIVO", T.Activa));
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
+
+        public void AgregarMoneda(object xMoneda)
+        {
+            Moneda M = (Moneda)xMoneda;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO MONEDAS(NOMBRE,SUBFIJO,ACTIVA) VALUES (@NOMBRE,@SUBFIJO,@ACTIVA)", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", M.Nombre.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@SUBFIJO", M.SubFijo));
+                    Com.Parameters.Add(new SqlParameter("@ACTIVA", 1));
+                    ExecuteNonQuery(Com);
                 }
             }
         }

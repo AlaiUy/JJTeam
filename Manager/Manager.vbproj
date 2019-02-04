@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{50F78F34-6348-492E-A983-EB11E9C1325B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Manager.frmCompras</StartupObject>
+    <StartupObject>Manager.frmMain</StartupObject>
     <RootNamespace>Manager</RootNamespace>
     <AssemblyName>Manager</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -105,6 +105,12 @@
     <Compile Include="Compras\frmCompras.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Configuracion\frmEmpresaData.Designer.vb">
+      <DependentUpon>frmEmpresaData.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Configuracion\frmEmpresaData.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ControlChecks.vb" />
     <Compile Include="Desing.vb" />
     <Compile Include="frmMain.Designer.vb">
@@ -159,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Compras\frmCompras.resx">
       <DependentUpon>frmCompras.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuracion\frmEmpresaData.resx">
+      <DependentUpon>frmEmpresaData.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
@@ -216,7 +225,15 @@
   <ItemGroup>
     <None Include="Resources\settings.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\placeholder %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

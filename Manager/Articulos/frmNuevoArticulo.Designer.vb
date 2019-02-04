@@ -63,7 +63,7 @@ Partial Class frmNuevoArticulo
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblTitle = New System.Windows.Forms.Label()
         Me.PanelContainer.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -94,9 +94,9 @@ Partial Class frmNuevoArticulo
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Controls.Add(Me.TabControl1)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel3.Location = New System.Drawing.Point(0, 33)
+        Me.Panel3.Location = New System.Drawing.Point(0, 40)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(705, 452)
+        Me.Panel3.Size = New System.Drawing.Size(705, 445)
         Me.Panel3.TabIndex = 0
         '
         'TabControl1
@@ -108,7 +108,7 @@ Partial Class frmNuevoArticulo
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(703, 450)
+        Me.TabControl1.Size = New System.Drawing.Size(703, 443)
         Me.TabControl1.TabIndex = 0
         '
         'tbDatos
@@ -139,7 +139,7 @@ Partial Class frmNuevoArticulo
         Me.tbDatos.Location = New System.Drawing.Point(4, 25)
         Me.tbDatos.Name = "tbDatos"
         Me.tbDatos.Padding = New System.Windows.Forms.Padding(3)
-        Me.tbDatos.Size = New System.Drawing.Size(695, 421)
+        Me.tbDatos.Size = New System.Drawing.Size(695, 414)
         Me.tbDatos.TabIndex = 0
         Me.tbDatos.Text = "DATOS"
         '
@@ -199,27 +199,30 @@ Partial Class frmNuevoArticulo
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(14, 292)
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(75, 294)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(126, 21)
+        Me.Label4.Size = New System.Drawing.Size(65, 16)
         Me.Label4.TabIndex = 14
         Me.Label4.Text = "SECCION:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(14, 254)
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(31, 256)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(126, 21)
+        Me.Label3.Size = New System.Drawing.Size(109, 16)
         Me.Label3.TabIndex = 13
         Me.Label3.Text = "DEPARTAMENTO:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(14, 218)
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(85, 220)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(126, 21)
+        Me.Label2.Size = New System.Drawing.Size(55, 16)
         Me.Label2.TabIndex = 12
         Me.Label2.Text = "MARCA:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -233,9 +236,10 @@ Partial Class frmNuevoArticulo
         '
         'lblModelo
         '
-        Me.lblModelo.Location = New System.Drawing.Point(11, 182)
+        Me.lblModelo.AutoSize = True
+        Me.lblModelo.Location = New System.Drawing.Point(78, 182)
         Me.lblModelo.Name = "lblModelo"
-        Me.lblModelo.Size = New System.Drawing.Size(129, 16)
+        Me.lblModelo.Size = New System.Drawing.Size(62, 16)
         Me.lblModelo.TabIndex = 10
         Me.lblModelo.Text = "MODELO:"
         Me.lblModelo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -249,9 +253,10 @@ Partial Class frmNuevoArticulo
         '
         'lblcodBarras1
         '
+        Me.lblcodBarras1.AutoSize = True
         Me.lblcodBarras1.Location = New System.Drawing.Point(11, 145)
         Me.lblcodBarras1.Name = "lblcodBarras1"
-        Me.lblcodBarras1.Size = New System.Drawing.Size(129, 20)
+        Me.lblcodBarras1.Size = New System.Drawing.Size(129, 16)
         Me.lblcodBarras1.TabIndex = 8
         Me.lblcodBarras1.Text = "CODIGO DE BARRAS:"
         Me.lblcodBarras1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -265,9 +270,10 @@ Partial Class frmNuevoArticulo
         '
         'lblCodBarras
         '
+        Me.lblCodBarras.AutoSize = True
         Me.lblCodBarras.Location = New System.Drawing.Point(11, 110)
         Me.lblCodBarras.Name = "lblCodBarras"
-        Me.lblCodBarras.Size = New System.Drawing.Size(129, 20)
+        Me.lblCodBarras.Size = New System.Drawing.Size(129, 16)
         Me.lblCodBarras.TabIndex = 6
         Me.lblCodBarras.Text = "CODIGO DE BARRAS:"
         Me.lblCodBarras.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -281,9 +287,10 @@ Partial Class frmNuevoArticulo
         '
         'lblReferencia
         '
-        Me.lblReferencia.Location = New System.Drawing.Point(14, 80)
+        Me.lblReferencia.AutoSize = True
+        Me.lblReferencia.Location = New System.Drawing.Point(55, 80)
         Me.lblReferencia.Name = "lblReferencia"
-        Me.lblReferencia.Size = New System.Drawing.Size(126, 20)
+        Me.lblReferencia.Size = New System.Drawing.Size(85, 16)
         Me.lblReferencia.TabIndex = 4
         Me.lblReferencia.Text = "REFERENCIA:"
         Me.lblReferencia.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -297,9 +304,10 @@ Partial Class frmNuevoArticulo
         '
         'lblDescripcion
         '
-        Me.lblDescripcion.Location = New System.Drawing.Point(14, 49)
+        Me.lblDescripcion.AutoSize = True
+        Me.lblDescripcion.Location = New System.Drawing.Point(48, 49)
         Me.lblDescripcion.Name = "lblDescripcion"
-        Me.lblDescripcion.Size = New System.Drawing.Size(126, 20)
+        Me.lblDescripcion.Size = New System.Drawing.Size(92, 16)
         Me.lblDescripcion.TabIndex = 2
         Me.lblDescripcion.Text = "DESCRIPCION:"
         Me.lblDescripcion.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -313,9 +321,10 @@ Partial Class frmNuevoArticulo
         '
         'lblNombre
         '
-        Me.lblNombre.Location = New System.Drawing.Point(14, 15)
+        Me.lblNombre.AutoSize = True
+        Me.lblNombre.Location = New System.Drawing.Point(78, 15)
         Me.lblNombre.Name = "lblNombre"
-        Me.lblNombre.Size = New System.Drawing.Size(126, 20)
+        Me.lblNombre.Size = New System.Drawing.Size(62, 16)
         Me.lblNombre.TabIndex = 0
         Me.lblNombre.Text = "NOMBRE:"
         Me.lblNombre.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -475,22 +484,22 @@ Partial Class frmNuevoArticulo
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.lblTitle)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(705, 33)
+        Me.Panel1.Size = New System.Drawing.Size(705, 40)
         Me.Panel1.TabIndex = 0
         '
-        'Label1
+        'lblTitle
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(229, 8)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(242, 19)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "REGISTRO DE UN ARTICULO"
+        Me.lblTitle.AutoSize = True
+        Me.lblTitle.Font = New System.Drawing.Font("Tahoma", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTitle.Location = New System.Drawing.Point(229, 8)
+        Me.lblTitle.Name = "lblTitle"
+        Me.lblTitle.Size = New System.Drawing.Size(242, 19)
+        Me.lblTitle.TabIndex = 0
+        Me.lblTitle.Text = "REGISTRO DE UN ARTICULO"
         '
         'frmNuevoArticulo
         '
@@ -503,6 +512,7 @@ Partial Class frmNuevoArticulo
         Me.Name = "frmNuevoArticulo"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmNuevoArticulo"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.PanelContainer.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
@@ -523,7 +533,7 @@ Partial Class frmNuevoArticulo
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label1 As Label
+    Friend WithEvents lblTitle As Label
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents tbDatos As TabPage
     Friend WithEvents cbSeccion As ComboBox

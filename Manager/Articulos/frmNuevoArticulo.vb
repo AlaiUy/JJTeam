@@ -1,14 +1,24 @@
-﻿Imports JJ.Entidades
+﻿Imports System.ComponentModel
+Imports JJ.Entidades
 Imports JJ.Gestoras
 Imports JJ.Interfaces.Observer
 
 Public Class frmNuevoArticulo
-    Implements IObserver
+    Implements IObserver, IObservable
+    Private Observadores As List(Of IObserver) = New List(Of IObserver)
     Private _Tarifas As List(Of Object)
     Private _Monedas As List(Of Object)
     Private _Departamentos As List(Of Object)
     Private _PreciosVenta As IList(Of Object)
     Private _Marcas As IList(Of Object)
+
+    Public Sub New()
+
+        ' Esta llamada es exigida por el diseñador.
+        InitializeComponent()
+
+        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+    End Sub
 
     Private Sub btnAgregarPrecio_Click(sender As Object, e As EventArgs) Handles btnAgregarPrecio.Click
         Dim PV As PreciosVenta
@@ -22,7 +32,9 @@ Public Class frmNuevoArticulo
     End Sub
 
     Private Sub frmNuevoArticulo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        PopularFormulario()
         Try
+
             _Tarifas = GesPrecios.getInstance().getTarifas()
             _Monedas = GesPrecios.getInstance().getMonedas()
             _Departamentos = GesArticulos.getInstance().getDepartamentos()
@@ -156,5 +168,45 @@ Public Class frmNuevoArticulo
         End If
         Dim F As Form = New frmNuevaSeccion(Me, Dpto)
         F.Show()
+    End Sub
+
+    Public Sub PopularFormulario()
+        Dim X As Decimal = ((Panel1.Width - lblTitle.Width) / 2)
+        Dim Y As Decimal = ((Panel1.Height - lblTitle.Height) / 2)
+        lblTitle.Location = New Point(X, Y)
+    End Sub
+
+    Private Sub frmNuevoArticulo_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        PopularFormulario()
+    End Sub
+
+    Public Sub Register(xObserver As IObserver) Implements IObservable.Register
+        If IsNothing(Observadores) Then
+            Observadores = New List(Of IObserver)
+        End If
+        Observadores.Add(xObserver)
+    End Sub
+
+    Public Sub UnRegister(xObserver As IObserver) Implements IObservable.UnRegister
+        For Each O As IObserver In Observadores
+            If (O.Equals(xObserver)) Then
+                Observadores.Remove(O)
+            End If
+        Next
+    End Sub
+
+    Public Sub notifyObservers() Implements IObservable.notifyObservers
+        For Each O As IObserver In Observadores
+            O.Update(Me)
+        Next
+    End Sub
+
+    Private Sub frmNuevoArticulo_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+    End Sub
+
+    Private Sub frmNuevoArticulo_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Me.DialogResult = DialogResult.Abort
+        notifyObservers()
     End Sub
 End Class
