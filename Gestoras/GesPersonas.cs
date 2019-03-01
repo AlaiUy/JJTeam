@@ -165,7 +165,10 @@ namespace JJ.Gestoras
         }
 
 
-        public
+        public object getPersonaById(int xId)
+        {
+            return null;
+        }
 
 
 
