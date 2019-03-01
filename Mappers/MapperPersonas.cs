@@ -234,5 +234,46 @@ namespace JJ.Mappers
 
             }
         }
+
+        public object getempresa()
+        {
+            Empresa ObjEmpresa = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CODEMPRESA,NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO FROM EMPRESA", Con))
+                {
+                   
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+                        if (Reader.Read())
+                        {
+                            int xCodigo = (int)(Reader["CODEMPRESA"]);
+                            string xNombre = (string)(Reader["NOMBRE"]);
+                            string xRz = (string)(Reader["RAZONSOCIAL"]);
+                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
+                            string xDir = (string)(Reader["DIRECCION"]);
+                            string xCiudad = (string)(Reader["CIUDAD"]);
+                            string xPais = (string)(Reader["PAIS"]);
+                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+                            string xEmail = (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]);
+                            byte[] xLogo = (byte[])((Reader["LOGO"] is DBNull ? string.Empty : Reader["LOGO"]));
+                            ObjEmpresa = new Empresa(xCodigo, xRz, xRut);
+                            ObjEmpresa.Ciudad = xCiudad;
+                            ObjEmpresa.Direccion = xDir;
+                            ObjEmpresa.Email = xEmail;
+                            ObjEmpresa.Imagen = xLogo;
+                            ObjEmpresa.Nombre = xNombre;
+                            ObjEmpresa.Pais = xPais;
+                            ObjEmpresa.Telefono = xTelefono;
+                            
+                        }
+                    }
+                }
+            }
+
+            return ObjEmpresa;
+        }
     }
 }

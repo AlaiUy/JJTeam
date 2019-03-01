@@ -13,5 +13,6 @@ namespace JJ.Interfaces
         IList<object> getProveedores();
 
         void addEmpresa(object xEmpresa);
+        object getempresa();
     }
 }

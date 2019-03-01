@@ -7,6 +7,7 @@ namespace JJ.Entidades
 {
     public class Empresa
     {
+        private int _CodEmpresa;
         private string _Nombre;
         private string _Razonsocial;
         private string _Rut;
@@ -124,7 +125,22 @@ namespace JJ.Entidades
             }
         }
 
+        public int CodEmpresa
+        {
+            get
+            {
+                return _CodEmpresa;
+            }
+        }
+
+        public Empresa(int xcodEmpresa,string xRazonSocial, string xRut)
+        {
+            _CodEmpresa = xcodEmpresa;
+            _Rut = xRut;
+            _Razonsocial = xRazonSocial;
+        }
         public Empresa(string xRazonSocial, string xRut) {
+            _CodEmpresa = -1;
             _Rut = xRut;
             _Razonsocial = xRazonSocial;
         }

@@ -105,6 +105,8 @@ namespace Tools
 
         public static bool ValidaTelefono(string telefono)
         {
+            if (telefono == "0")
+                return true;
             if (!isNumeric(telefono))
                 return false;
             if (telefono.Length != 8)
@@ -114,6 +116,8 @@ namespace Tools
 
         public static bool ValidaCelular(string telefono)
         {
+            if (telefono == "0")
+                return true;
             if (!isNumeric(telefono))
                 return false;
             if (telefono.Length != 9)
@@ -125,6 +129,8 @@ namespace Tools
         {
             if (!isNumeric(rut))
                 return false;
+            if (rut == "0")
+                return true;
             if (rut.Length < 11 || rut.Length > 12)
                 return false;
             return true;
