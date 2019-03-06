@@ -15,7 +15,7 @@ namespace JJ.Entidades
 
         //Metodos con set
         private Vendedor _objVendedor;
-        private Personas _objCliente;
+        private Persona _objCliente;
         private List<Esperalin> lineas;
         private int _codmoneda;
         private Cuenta _objCuenta;
@@ -158,7 +158,7 @@ namespace JJ.Entidades
             }
         }
 
-        public Personas ObjCliente
+        public Persona ObjCliente
         {
             get
             {

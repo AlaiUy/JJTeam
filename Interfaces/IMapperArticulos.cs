@@ -13,5 +13,6 @@ namespace JJ.Interfaces
         IList<object> getMarcas();
         IList<object> getArticulos();
         object AddSeccion(object xSeccion,object xDepto);
+        object getArticuloById(string xArticulo);
     }
 }

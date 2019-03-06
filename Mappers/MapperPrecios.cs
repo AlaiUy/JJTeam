@@ -62,15 +62,14 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE FROM TARIFAS T WHERE T.ACTIVA = 1", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE,T.CARGO FROM TARIFAS T WHERE T.ACTIVA = 1", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         while (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            Tarifas.Add(new Tarifa(Codigo, Nombre));
+                            Tarifa T = getTarifaReader(Reader);
+                            Tarifas.Add(T);
                         }
                     }
                 }
@@ -88,6 +87,16 @@ namespace JJ.Mappers
         public bool Update(object xObject)
         {
             throw new NotImplementedException();
+        }
+
+        private Tarifa getTarifaReader(IDataReader Reader)
+        {
+            Tarifa T;
+            int Codigo = (int)Reader["CODIGO"];
+            string Nombre = (string)Reader["NOMBRE"];
+            decimal Cargo = Convert.ToDecimal(Reader["CARGO"]);
+            T = new Tarifa(Codigo, Nombre, Cargo);
+            return T;
         }
     }
 }

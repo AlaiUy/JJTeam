@@ -15,10 +15,45 @@ namespace JJ.Mappers
 
         public bool Add(object xObject)
         {
-            throw new NotImplementedException();
+            
+
+            if (xObject is Proveedor)
+                addProveedor(xObject);
+
+            if (xObject is Persona)
+                addPersona(xObject);
+
+            return true;
         }
 
-        public void addProveedor(object xProveedor)
+        private void addPersona(object xPersona)
+        {
+            Persona P = (Persona)xPersona;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO PERSONAS(CEDULA,RUT,NOMBRE,APELLIDO,DIRECCION,DIRNUMERO,NUMEROAPTO,TELEFONO,CELULAR,PAIS,CIUDAD,CODCATEGORIA,EMAIL,ACTIVA) VALUES (@CEDULA,@RUT,@NOMBRE,@APELLIDO,@DIRECCION,@DIRNUMERO,@NUMEROAPTO,@TELEFONO,@CELULAR,@PAIS,@CIUDAD,@CODCATEGORIA,@EMAIL,@ACTIVA)", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CEDULA", P.Cedula));
+                    Com.Parameters.Add(new SqlParameter("@RUT", P.Rut));
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", P.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", P.Direccion));
+                    Com.Parameters.Add(new SqlParameter("@DIRNUMERO", P.DireccionNumero));
+                    Com.Parameters.Add(new SqlParameter("@NUMEROAPTO", P.DireccionApto));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", P.Telefono));
+                    Com.Parameters.Add(new SqlParameter("@CELULAR", P.Celular));
+                    Com.Parameters.Add(new SqlParameter("@PAIS", P.Pais));
+                    Com.Parameters.Add(new SqlParameter("@CIUDAD", P.Ciudad));
+                    Com.Parameters.Add(new SqlParameter("@CODCATEGORIA", P.ObjCategoria.Codigo));
+                    Com.Parameters.Add(new SqlParameter("@EMAIL", P.Email));
+                    Com.Parameters.Add(new SqlParameter("@ACTIVA", 1));
+                    ExecuteNonQuery(Com);
+                }
+
+            }
+        }
+
+        private void addProveedor(object xProveedor)
         {
             Proveedor Pv = (Proveedor)xProveedor;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
@@ -48,20 +83,40 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT CAT.CODIGO,CAT.NOMBRE FROM CATEGORIASPROVEEDORES CAT", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT CAT.CODIGO,CAT.NOMBRE AS DESCRIPCION FROM CATEGORIASPROVEEDORES CAT", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         while (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            CatsProveedor.Add(new CatProveedor(Codigo, Nombre));
+                            ;
+                            CatsProveedor.Add(getCategoriaFromReader(Reader,"P"));
                         }
                     }
                 }
             }
             return CatsProveedor;
+        }
+
+        public IList<object> getCategoriasPersona()
+        {
+            IList<object> CatCliente = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CAT.CODIGO,CAT.DESCRIPCION FROM CATEGORIASCLIENTE CAT", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            object Type=null;
+                            CatCliente.Add(getCategoriaFromReader(Reader,"C"));
+                        }
+                    }
+                }
+            }
+            return CatCliente;
         }
 
         public object getCategoriasProveedorByID(int xCodigo)
@@ -70,16 +125,15 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CAT.CODIGO,CAT.NOMBRE FROM CATEGORIASPROVEEDORES CAT WHERE CAT.CODIGO = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CAT.CODIGO,CAT.NOMBRE AS DESCRIPCION FROM CATEGORIASPROVEEDORES CAT WHERE CAT.CODIGO = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodigo));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         if (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            ObjCat = new CatProveedor(Codigo, Nombre);
+
+                            ObjCat = getCategoriaFromReader(Reader, "P");
                         }
                     }
                 }
@@ -126,22 +180,37 @@ namespace JJ.Mappers
             return Proveedores;
         }
 
-        public Personas getPersona(int xCodPersona)
+        public object getPersona(string xCodPersona)
         {
-            Personas objP=null;
+            Persona objP=null;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * FROM PERSONAS WHERE CODIGO=@CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM PERSONAS WHERE CODIGO=@CODIGO OR CEDULA=@CODIGO OR RUT=@CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodPersona));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                    
-                        while (Reader.Read())
+                        if(Reader.Read())
                         {
-                            objP = new Personas((int)Reader["CODIGO"], (string)Reader["CEDULA"],(string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]), (string)Reader["NOMBRE"], (string)Reader["APELLIDO"], (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]), (string)Reader["DIRNUMERO"], (string)(Reader["NUMEROAPTO"] is DBNull ? string.Empty : Reader["NUMEROAPTO"]), (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]), (string)(Reader["CELULAR"] is DBNull ? string.Empty : Reader["CELULAR"]), (string)Reader["PAIS"], (string)(Reader["CIUDAD"] is DBNull ? string.Empty : Reader["CIUDAD"]), (CatCliente)getCategoriaPersonaByID((int)Reader["CODCATEGORIA"]), (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]), (int)Reader["ACTIVA"]);
-                           
+                            int xCodigo = (int)Reader["CODIGO"];
+                            string xCedula = (string)Reader["CEDULA"];
+                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
+                            string xNombre = (string)Reader["NOMBRE"];
+                            string xApellido = (string)Reader["APELLIDO"];
+                            string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+                            string xDirNumero = (string)Reader["DIRNUMERO"];
+                            string xNumeroApto = (string)(Reader["NUMEROAPTO"] is DBNull ? string.Empty : Reader["NUMEROAPTO"]);
+                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+                            string xCelular = (string)(Reader["CELULAR"] is DBNull ? string.Empty : Reader["CELULAR"]);
+                            string xPais = (string)Reader["PAIS"];
+                            string xCiudad = (string)(Reader["CIUDAD"] is DBNull ? string.Empty : Reader["CIUDAD"]);
+                            Categoria Cat = (CatCliente)getCategoriaPersonaByID((int)Reader["CODCATEGORIA"]);
+                            string xEmail = (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]);
+                            int xActiva = (int)Reader["ACTIVA"];
+                            objP = new Persona(xCodigo, xCedula, xNombre, xApellido, xDireccion, xDirNumero,xNumeroApto,xTelefono,xCelular,xPais,xCiudad,Cat,xEmail,xActiva);
+                            objP.AddCuentas(getCuentasByCliente(xCodigo));
                         }
                     }
                 }
@@ -156,17 +225,14 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT C.CODIGO, C.DESCRIPCION, C.ACTIVA FROM CATEGORIASCLIENTE AS C WHERE C.CODIGO = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT C.CODIGO,C.DESCRIPCION FROM CATEGORIASCLIENTE AS C WHERE C.CODIGO = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodigo));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         if (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["DESCRIPCION"];
-                         //   byte Activa = (byte)Reader["ACTIVA"];
-                            objCategoria = new CatCliente(Codigo, Nombre);
+                            objCategoria = getCategoriaFromReader(Reader,"C");
                         }
                     }
                 }
@@ -188,7 +254,7 @@ namespace JJ.Mappers
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
 
-                        while (Reader.Read())
+                        if (Reader.Read())
                         {
                             objCuenta = new Cuenta((int)Reader["CODIGO"], (int)Reader["CODTIPO"], (string)Reader["RAZONSOCIAL"], (string)Reader["DIRECCION"], (string)Reader["NUMDIRECCION"], (string)Reader["RUT"], (string)Reader["TELEFONO"], (string)Reader["CELULAR"], (string)Reader["EMAILPRINCIPAL"], (byte)Reader["ACTIVA"]);
                           
@@ -198,6 +264,41 @@ namespace JJ.Mappers
             }
 
             return objCuenta;
+        }
+
+        private List<Cuenta> getCuentasByCliente(int xIdCliente)
+        {
+            List<Cuenta> Cuentas = new List<Cuenta>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CODIGO,CODTIPO,RAZONSOCIAL,DIRECCION,NUMDIRECCION,RUT,TELEFONO,CELULAR,EMAILPRINCIPAL,ACTIVA FROM CUENTAS WHERE  CODPERSONA=@CODPERSONA", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODPERSONA", xIdCliente));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        Cuenta objCuenta;
+                        while (Reader.Read())
+                        {
+                            int xCodigo = (int)Reader["CODIGO"];
+                            int xCodTipo = (int)Reader["CODTIPO"];
+                            string xRz = (string)Reader["RAZONSOCIAL"];
+
+                            string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+                            string xNumDir = (string)(Reader["NUMDIRECCION"] is DBNull ? string.Empty : Reader["NUMDIRECCION"]);
+                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
+                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+                            string xCelular = (string)(Reader["CELULAR"] is DBNull ? string.Empty : Reader["CELULAR"]);
+                            string xEmail = (string)(Reader["EMAILPRINCIPAL"] is DBNull ? string.Empty : Reader["EMAILPRINCIPAL"]);
+                            byte xActiva = Convert.ToByte((Reader["ACTIVA"] is DBNull ? 0 : Reader["ACTIVA"]));
+
+                            objCuenta = new Cuenta(xCodigo,xCodTipo,xRz,xDireccion,xNumDir,xRut,xTelefono,xCelular,xEmail,xActiva);
+                            Cuentas.Add(objCuenta);
+                        }
+                    }
+                }
+            }
+            return Cuentas;
         }
 
 
@@ -274,6 +375,20 @@ namespace JJ.Mappers
             }
 
             return ObjEmpresa;
+        }
+
+
+        private Categoria getCategoriaFromReader(IDataReader Reader,string xType)
+        {
+            Categoria Cat = null;
+            int Codigo = (int)Reader["CODIGO"];
+            string Nombre = (string)Reader["DESCRIPCION"];
+            if (xType == "C")
+                Cat = new CatCliente(Codigo, Nombre);
+            if (xType == "P")
+                Cat = new CatProveedor(Codigo, Nombre);
+            return Cat;
+            
         }
     }
 }

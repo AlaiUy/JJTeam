@@ -23,14 +23,24 @@ namespace JJ.Entidades
         private int _codcuenta;
         private string _Adenda;
 
-        public Factura()
+        public Factura(int xCodDocumento)
         {
+            _CodDocumento = xCodDocumento;
             _Lineas = new List<object>();
         }
 
-        public Factura(int xNumero,DateTime xFecha,int xDocumento)
+        public Factura(int xNumero,string xSerie,DateTime xFecha,int xDocumento)
         {
             _numero = xNumero;
+            _fecha = xFecha;
+            _CodDocumento = xDocumento;
+            _Lineas = new List<object>();
+            _serie = xSerie;
+        }
+
+
+        public Factura(DateTime xFecha, int xDocumento)
+        {
             _fecha = xFecha;
             _CodDocumento = xDocumento;
             _Lineas = new List<object>();
@@ -41,11 +51,6 @@ namespace JJ.Entidades
             get
             {
                 return _serie;
-            }
-
-            set
-            {
-                _serie = value;
             }
         }
 

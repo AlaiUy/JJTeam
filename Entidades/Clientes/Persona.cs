@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class Personas
+    public class Persona
     {
         private int _CodCliente;
         private string _Cedula;
@@ -22,14 +22,14 @@ namespace JJ.Entidades
         private Categoria _objCategoria;
         private string _Email;
         private int _Activa;      
-        private IList<Cuenta> Cuentas;
+        private List<Cuenta> _Cuentas;
         private int _Tipo;
+        private decimal _limite;
 
-        public Personas(int xCodigo, string xCedula, string xRut, string xNombre, string xApellido, string xDireccion, string xDirNumero, string xNumeroApto, string xtelefono, string xcelular, string xPais, string xciudad, Categoria xobjCategoria, string xemail, int xActiva)
+        public Persona(int xCodigo, string xCedula, string xNombre, string xApellido, string xDireccion, string xDirNumero, string xNumeroApto, string xtelefono, string xcelular, string xPais, string xciudad, Categoria xobjCategoria, string xemail, int xActiva)
         {
-            CodCliente= xCodigo;
+            _CodCliente = xCodigo;
             Cedula = xCedula;
-            Rut = xRut;
             Nombre = xNombre;
             Apellido = xApellido;
             Direccion = xDireccion;
@@ -42,8 +42,23 @@ namespace JJ.Entidades
             ObjCategoria = xobjCategoria;
             Email = xemail;
             Activa = xActiva;
+        }
 
-
+        public Persona(string xCedula, string xNombre, string xApellido, string xDireccion, string xDirNumero, string xNumeroApto, string xtelefono, string xcelular, string xPais, string xciudad, Categoria xobjCategoria, string xemail, int xActiva)
+        {
+            Cedula = xCedula;
+            Nombre = xNombre;
+            Apellido = xApellido;
+            Direccion = xDireccion;
+            DireccionNumero = xDirNumero;
+            DireccionApto = xNumeroApto;
+            Telefono = xtelefono;
+            Celular = xcelular;
+            Pais = xPais;
+            Ciudad = xciudad;
+            ObjCategoria = xobjCategoria;
+            Email = xemail;
+            Activa = xActiva;
         }
 
 
@@ -52,11 +67,6 @@ namespace JJ.Entidades
             get
             {
                 return _CodCliente;
-            }
-
-            set
-            {
-                _CodCliente = value;
             }
         }
 
@@ -242,19 +252,39 @@ namespace JJ.Entidades
             }
         }
 
-        public IList<Cuenta> Cuentas1
+        public List<Cuenta> Cuentas
         {
             get
             {
-                return Cuentas;
+                return _Cuentas;
+            }
+        }
+
+        public decimal Limite
+        {
+            get
+            {
+                return _limite;
             }
 
             set
             {
-                Cuentas = value;
+                _limite = value;
             }
         }
 
+        public void AddCuenta(Cuenta xCuenta)
+        {
+            if (_Cuentas == null)
+                _Cuentas = new List<Cuenta>();
+            _Cuentas.Add(xCuenta);
+        }
+
+        public void AddCuentas(List<Cuenta> Cuentas)
+        {
+            foreach (Cuenta C in Cuentas)
+                AddCuenta(C);
+        }
             
     }
 }

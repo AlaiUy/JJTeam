@@ -10,6 +10,7 @@ namespace JJ.Entidades
         private int _codigo;
         private string _nombre;
         private bool _activa;
+        private decimal _cargo;
 
         public int Codigo
         {
@@ -45,16 +46,27 @@ namespace JJ.Entidades
             }
         }
 
-        public Tarifa(int xCodigo, string xNombre)
+        public decimal Cargo
+        {
+            get
+            {
+                return _cargo;
+            }
+
+            set
+            {
+                _cargo = value;
+            }
+        }
+
+        public Tarifa(int xCodigo, string xNombre,decimal xCargo)
         {
             _codigo = xCodigo;
             _nombre = xNombre;
+            _cargo = xCargo;
         }
 
-        public Tarifa()
-        {
 
-        }
 
         public override string ToString()
         {

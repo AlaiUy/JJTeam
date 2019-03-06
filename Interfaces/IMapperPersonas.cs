@@ -7,12 +7,16 @@ namespace JJ.Interfaces
 {
     public interface IMapperPersonas : IMapper
     {
-        void addProveedor(object xProveedor);
+        
         IList<object> getCategoriasProveedor();
         object getCategoriasProveedorByID(int xCodigo);
         IList<object> getProveedores();
 
+        IList<object> getCategoriasPersona();
+
         void addEmpresa(object xEmpresa);
         object getempresa();
+
+        object getPersona(string xId);
     }
 }

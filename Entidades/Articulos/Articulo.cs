@@ -10,7 +10,6 @@ namespace JJ.Entidades
         private int _codArticulo;
         private string _descripcion;
         private string _referencia;
-        private IList<PreciosVenta> _Precios;
         private string _nombre;
         private bool _activo;
         private string _codbarras;
@@ -19,6 +18,9 @@ namespace JJ.Entidades
         private string _modelo;
         private int _coddepto;
         private int _codseccion;
+        private decimal _Costo;
+        private decimal _Ganancia;
+        private decimal _Iva;
 
         public int CodArticulo
         {
@@ -26,8 +28,6 @@ namespace JJ.Entidades
             {
                 return _codArticulo;
             }
-
-            
         }
 
         public string Descripcion
@@ -108,18 +108,7 @@ namespace JJ.Entidades
             }
         }
 
-        public IList<PreciosVenta> Precios
-        {
-            get
-            {
-                return _Precios;
-            }
 
-            protected set
-            {
-                _Precios = value;
-            }
-        }
 
         public int Codmarca
         {
@@ -175,52 +164,74 @@ namespace JJ.Entidades
             }
         }
 
-        public Articulo(int xCodigo, string xDescripcion, string xReferencia,IList<PreciosVenta> xPrecios)
+        public decimal Costo
+        {
+            get
+            {
+                return _Costo;
+            }
+        }
+
+        public decimal Ganancia
+        {
+            get
+            {
+                return _Ganancia;
+            }
+        }
+
+        public decimal Iva
+        {
+            get
+            {
+                return _Iva;
+            }
+        }
+
+        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,decimal xIva,decimal xGanancia)
         {
             _codArticulo = xCodigo;
             _descripcion = xDescripcion;
             _referencia = xReferencia;
-            _Precios = xPrecios;
+            _Costo = xPrecioCosto;
+            _Iva = xIva;
+            _Ganancia = xGanancia;
         }
 
-        public Articulo(int xCodArticulo) {
-            _codArticulo = xCodArticulo;
-            _Precios = new List<PreciosVenta>();
-            
-        }
-        public Articulo()
+        public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, decimal xIva, decimal xGanancia)
         {
-            _Precios = new List<PreciosVenta>();
-
+            _codArticulo = -1;
+            _descripcion = xDescripcion;
+            _referencia = xReferencia;
+            _Costo = xPrecioCosto;
+            _Iva = xIva;
+            _Ganancia = xGanancia;
         }
 
 
-        public void AddPreciosVenta(List<object> xPreciosVenta)
+        public decimal Precio()
         {
-            if (xPreciosVenta == null)
-                return;
-
-
-            foreach (PreciosVenta P in xPreciosVenta)
-            {
-               
-                if(!_Precios.Contains(P))
-                    AddPrecioVenta(P);
-            }
-
-          
+            return (_Costo + ValorPorcentaje(_Costo, _Iva)) + ValorPorcentaje(_Costo, _Ganancia);
         }
 
-        public void AddPrecioVenta(object xPrecioVenta)
+        private decimal ValorPorcentaje(decimal Numero, decimal Porcentaje)
         {
-
-            if (xPrecioVenta == null)
-                return;
-
-            PreciosVenta P = (PreciosVenta)xPrecioVenta;
-            if (!_Precios.Contains(P))
-                _Precios.Add(P);
+            return (Porcentaje * Numero) / 100;
         }
+
+        public decimal Precio(Tarifa xTarifa)
+        {
+            if (xTarifa == null)
+                return Precio();
+
+            decimal xPrecio = Precio();
+            return Precio() + ValorPorcentaje(xPrecio, xTarifa.Cargo);
+        }
+
+        
+
+
+       
 
 
     }

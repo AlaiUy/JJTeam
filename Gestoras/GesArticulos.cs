@@ -36,38 +36,37 @@ namespace JJ.Gestoras
 
         public bool AddArticulo(Articulo xArticulo)
         {
-            
+
 
             if (xArticulo == null)
                 throw new Exception("El articulo es incorrecto");
-            if(xArticulo.CodArticulo > 0)
+            if (xArticulo.CodArticulo > 0)
                 throw new Exception("El Articulo ya existe");
-            if(xArticulo.Descripcion.Length > 100)
-                throw new Exception("La descripcion no cumple con la longuitud necesaria");
+            if(!string.IsNullOrEmpty(xArticulo.Descripcion))
+                if (xArticulo.Descripcion.Length > 100)
+                    throw new Exception("La descripcion no cumple con la longuitud necesaria");
             if (string.IsNullOrEmpty(xArticulo.Referencia) || xArticulo.Referencia.Length > 11)
                 throw new Exception("La referencia ingresada no es aceptada");
-            if(xArticulo.Nombre.Length > 50)
+            if (xArticulo.Nombre.Length > 50)
                 throw new Exception("El nombre del articulo ingresada no correcto");
-            if(xArticulo.Coddepto < 1)
+            if (xArticulo.Coddepto < 1)
                 throw new Exception("El departamento ingresado no es valido o no existe");
-            if(xArticulo.Codmarca < 1 )
+            if (xArticulo.Codmarca < 1)
                 throw new Exception("La marca ingresada no es valida o no existe");
             if (xArticulo.Codseccion < 1)
                 throw new Exception("La seccion ingresada no es valida");
 
-            if (xArticulo.Precios.Count > 0)
-                foreach (PreciosVenta P in xArticulo.Precios)
-                {
-                    if (P.Ganancia < 1)
-                        throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", P.CodTarifa));
-              
-                    if (P.Precio() < 1)
-                        throw new Exception("El precio no es correcto");
-                }
+
+            if (xArticulo.Ganancia < 1)
+                throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", xArticulo.Ganancia));
+
+            if (xArticulo.Precio() < 1)
+                throw new Exception("El precio no es correcto");
+
 
             DBArticulos.Add(xArticulo);
-                
-                
+
+
             return true;
         }
 
@@ -80,10 +79,10 @@ namespace JJ.Gestoras
         {
             if (xMarca == null)
                 throw new Exception("La marca no puede ser nula");
-            if( string.IsNullOrEmpty(xMarca.Nombre) || xMarca.Nombre.Length > 20)
+            if (string.IsNullOrEmpty(xMarca.Nombre) || xMarca.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
 
-           return (Marca)DBArticulos.AddMarca(xMarca);
+            return (Marca)DBArticulos.AddMarca(xMarca);
         }
 
         public Departamento AddDepto(Departamento xDpto)
@@ -92,7 +91,7 @@ namespace JJ.Gestoras
                 throw new Exception("La marca no puede ser nula");
             if (string.IsNullOrEmpty(xDpto.Nombre) || xDpto.Nombre.Length > 20)
                 throw new Exception("La longuitud del nombre de la marca es incorrecta");
-            if(xDpto.Codigo > 0)
+            if (xDpto.Codigo > 0)
                 throw new Exception("El departamento ya se encuentra ingresado");
 
             return (Departamento)DBArticulos.AddDepartamento(xDpto);
@@ -113,7 +112,8 @@ namespace JJ.Gestoras
             return DBArticulos.getArticulos();
         }
 
-        public Seccion addSeccion(Seccion xSeccion, Departamento xDepartamento) {
+        public Seccion addSeccion(Seccion xSeccion, Departamento xDepartamento)
+        {
             if (xDepartamento == null || xSeccion == null)
                 throw new Exception("No es posible registrar una seccion con valores nulos");
 
@@ -125,7 +125,12 @@ namespace JJ.Gestoras
                 throw new Exception("No se puede agregar una seccion en un departamento inexistente");
 
 
-            return (Seccion)DBArticulos.AddSeccion(xSeccion,xDepartamento);
+            return (Seccion)DBArticulos.AddSeccion(xSeccion, xDepartamento);
+        }
+
+        public Articulo getArticuloById(string xCodigo)
+        {
+            return (Articulo)DBArticulos.getArticuloById(xCodigo);
         }
     }
 }

@@ -7,14 +7,20 @@ namespace JJ.Entidades
 {
     public  class Venta:Factura
     {
-        
 
-        public Venta (int xNumero, String xSerie, DateTime xFecha, int xcodvendedor, Caja xCaja, int xCodMoneda, int xCoddocumento)
+        public Venta(int xCodDocumento) :base(xCodDocumento)
         {
-            
+
         }
 
-        
+        public Venta(int xNumero, string xSerie, DateTime xFecha, int xDocumento) : base(xNumero, xSerie, xFecha, xDocumento)
+        {
+
+        }
+
+        public Venta(DateTime xFecha, int xDocumento) : base(xFecha, xDocumento)
+        {
+        }
 
         public override void AgregarLineas(List<object> xLineas)
         {

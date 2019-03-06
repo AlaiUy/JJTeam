@@ -23,10 +23,6 @@ namespace JJ.Mappers
                     try
                     {
                         Codigo = _AddArticulo(A, Con, Tran);
-                        if (Codigo > -1)
-                            if(A.Precios.Count > 0)
-                                foreach (PreciosVenta PV in A.Precios)
-                                    _AddPrecioVenta(PV, Codigo, Con, Tran);
                         Tran.Commit();
                         return true;
                     }
@@ -166,33 +162,13 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO FROM ARTICULOS A", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA FROM ARTICULOS A", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         while (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            string Descripcion = (string)(Reader["DESCRIPCION"] is DBNull ? string.Empty : Reader["DESCRIPCION"]);
-                            string Referencia = (string)Reader["REFERENCIA"];
-                            string CodBarras = (string)(Reader["CODBARRAS"] is DBNull ? string.Empty : Reader["CODBARRAS"]);
-                            string CodBarras1 = (string)(Reader["CODBARRAS1"] is DBNull ? string.Empty : Reader["CODBARRAS1"]);
-                            bool Activo;
-                            bool.TryParse(Reader["ACTIVO"].ToString(),out Activo);
-                            int Marca = (int)Reader["CODMARCA"];
-                            string Modelo = (string)(Reader["MODELO"] is DBNull ? string.Empty : Reader["MODELO"]);
-                            int CodDepartamento = (int)Reader["CODDEPARTAMENTO"];
-                            int CodSeccion = (int)Reader["CODSECCION"];
-                            IList<PreciosVenta> Precios = getPreciosByArticulo(Codigo);
-                            Articulo A = new Articulo(Codigo,Descripcion,Referencia,Precios);
-                            A.Nombre = Nombre;
-                            A.Codbarras = CodBarras;
-                            A.Codbarras1 = CodBarras1;
-                            A.Activo = Activo;
-                            A.Modelo = Modelo;
-                            A.Coddepto = CodDepartamento;
-                            A.Codseccion = CodSeccion;
+                            Articulo A = getArticuloReader(Reader);
                             Articulos.Add(A);
                         }
                     }
@@ -201,31 +177,29 @@ namespace JJ.Mappers
             return Articulos;
         }
 
-        private IList<PreciosVenta> getPreciosByArticulo(int codigo)
+       
+        public object getArticuloById(string xArticulo)
         {
-            IList<PreciosVenta> Precios = new List<PreciosVenta>();
+            Articulo A = null;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT AP.CODTARIFA,AP.BRUTO,AP.GANANCIA,AP.CODMONEDA FROM ARTICULOPRECIOS AP WHERE AP.ACTIVO = 1 AND AP.CODARTICULO = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
                 {
-                    Com.Parameters.Add(new SqlParameter("@CODIGO", codigo));
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xArticulo));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
-                        while (Reader.Read())
+                        if(Reader.Read())
                         {
-                            int Tarifa = (int)Reader["CODTARIFA"];
-                            decimal Bruto,Ganancia;
-                            decimal.TryParse(Reader["BRUTO"].ToString(),out Bruto);
-                            decimal.TryParse(Reader["GANANCIA"].ToString(), out Ganancia);
-                            int CodMoneda = (int)Reader["CODMONEDA"];
-                            Precios.Add(new PreciosVenta(Tarifa, Bruto, Ganancia, CodMoneda));
+                            A = getArticuloReader(Reader);
                         }
                     }
                 }
             }
-            return Precios;
+            return A;
         }
+
+        
 
 
         /* ==== METODOS PRIVADOS ==== */
@@ -258,22 +232,57 @@ namespace JJ.Mappers
             }
         }
 
+        private Articulo getArticuloReader(IDataReader Reader)
+        {
+            Articulo A;
+            int Codigo = (int)Reader["CODIGO"];
+            string Nombre = (string)Reader["NOMBRE"];
+            string Descripcion = (string)(Reader["DESCRIPCION"] is DBNull ? string.Empty : Reader["DESCRIPCION"]);
+            string Referencia = (string)Reader["REFERENCIA"];
+            string CodBarras = (string)(Reader["CODBARRAS"] is DBNull ? string.Empty : Reader["CODBARRAS"]);
+            string CodBarras1 = (string)(Reader["CODBARRAS1"] is DBNull ? string.Empty : Reader["CODBARRAS1"]);
+            bool Activo;
+            bool.TryParse(Reader["ACTIVO"].ToString(), out Activo);
+            int Marca = (int)Reader["CODMARCA"];
+            string Modelo = (string)(Reader["MODELO"] is DBNull ? string.Empty : Reader["MODELO"]);
+            int CodDepartamento = (int)Reader["CODDEPARTAMENTO"];
+            int CodSeccion = (int)Reader["CODSECCION"];
+            decimal Costo = Convert.ToDecimal(Reader["COSTO"]);
+            decimal Ganancia = Convert.ToDecimal(Reader["GANANCIA"]);
+            decimal IVA = Convert.ToDecimal(Reader["IVA"]);
+            A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia);
+            A.Nombre = Nombre;
+            A.Codbarras = CodBarras;
+            A.Codbarras1 = CodBarras1;
+            A.Activo = Activo;
+            A.Modelo = Modelo;
+            A.Coddepto = CodDepartamento;
+            A.Codseccion = CodSeccion;
+            return A;
+        }
+
+
         private int _AddArticulo(Articulo xA,IDbConnection xCon,IDbTransaction xTran)
         {
             int CodArtculo = -1;
             List<IDataParameter> P = new List<IDataParameter>();
-            P.Add(new SqlParameter("@NOMBRE", xA.Nombre.ToUpper()));
-            P.Add(new SqlParameter("@DESCRIPCION", xA.Descripcion.ToUpper()));
-            P.Add(new SqlParameter("@REFERENCIA", xA.Referencia.ToUpper()));
-            P.Add(new SqlParameter("@CODBARRAS", xA.Codbarras.ToUpper()));
-            P.Add(new SqlParameter("@CODBARRAS1", xA.Codbarras1.ToUpper()));
-            P.Add(new SqlParameter("@ACTIVO", xA.Activo));
-            P.Add(new SqlParameter("@CODMARCA", xA.Codmarca));
-            P.Add(new SqlParameter("@MODELO", xA.Modelo));
-            P.Add(new SqlParameter("@CODDEPARTAMENTO", xA.Coddepto));
-            P.Add(new SqlParameter("@CODSECCION", xA.Codseccion));
-            using (SqlCommand Com = new SqlCommand("INSERT INTO ARTICULOS(NOMBRE,DESCRIPCION,REFERENCIA,CODBARRAS,CODBARRAS1,ACTIVO,CODMARCA,MODELO,CODDEPARTAMENTO,CODSECCION) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE,@DESCRIPCION,@REFERENCIA,@CODBARRAS,@CODBARRAS1,@ACTIVO,@CODMARCA,@MODELO,@CODDEPARTAMENTO,@CODSECCION)", (SqlConnection)xCon))
+            
+
+            using (SqlCommand Com = new SqlCommand("INSERT INTO ARTICULOS(NOMBRE,DESCRIPCION,REFERENCIA,CODBARRAS,CODBARRAS1,ACTIVO,CODMARCA,MODELO,CODDEPARTAMENTO,CODSECCION,COSTO,GANANCIA,IVA) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE,@DESCRIPCION,@REFERENCIA,@CODBARRAS,@CODBARRAS1,@ACTIVO,@CODMARCA,@MODELO,@CODDEPARTAMENTO,@CODSECCION,@COSTO,@GANANCIA,@IVA)", (SqlConnection)xCon))
             {
+                Com.Parameters.Add(new SqlParameter("@NOMBRE", xA.Nombre.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@DESCRIPCION", xA.Descripcion.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@REFERENCIA", xA.Referencia.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@CODBARRAS", xA.Codbarras.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@CODBARRAS1", xA.Codbarras1.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@ACTIVO", xA.Activo));
+                Com.Parameters.Add(new SqlParameter("@CODMARCA", xA.Codmarca));
+                Com.Parameters.Add(new SqlParameter("@MODELO", xA.Modelo));
+                Com.Parameters.Add(new SqlParameter("@CODDEPARTAMENTO", xA.Coddepto));
+                Com.Parameters.Add(new SqlParameter("@CODSECCION", xA.Codseccion));
+                Com.Parameters.Add(new SqlParameter("@COSTO", xA.Costo));
+                Com.Parameters.Add(new SqlParameter("@GANANCIA", xA.Ganancia));
+                Com.Parameters.Add(new SqlParameter("@IVA", xA.Iva));
                 Com.Transaction = (SqlTransaction)xTran;
                 var Result = ExecuteScalar(Com, P);
                 int.TryParse(Result.ToString(), out CodArtculo);
@@ -281,20 +290,7 @@ namespace JJ.Mappers
             return CodArtculo;
         }
 
-        private void _AddPrecioVenta(PreciosVenta xPV,int xCodArticulo, IDbConnection xCon, IDbTransaction xTran)
-        {
-            List<IDataParameter> P = new List<IDataParameter>();
-            P.Add(new SqlParameter("@CODARTICULO", xCodArticulo));
-            P.Add(new SqlParameter("@CODTARIFA", xPV.CodTarifa));
-            P.Add(new SqlParameter("@GANANCIA", xPV.Ganancia));
-            P.Add(new SqlParameter("@CODMONEDA", xPV.CodMoneda));
-            P.Add(new SqlParameter("@BRUTO", xPV.PrecioBruto));
-            using (SqlCommand Com = new SqlCommand("INSERT INTO ARTICULOPRECIOS(CODARTICULO,CODTARIFA,BRUTO,GANANCIA,CODMONEDA) VALUES (@CODARTICULO,@CODTARIFA,@BRUTO,@GANANCIA,@CODMONEDA)", (SqlConnection)xCon))
-            {
-                Com.Transaction = (SqlTransaction)xTran;
-                ExecuteNonQuery(Com, P);
-            }
-        }
+        
 
         public object AddDepartamento(object xDepto)
         {

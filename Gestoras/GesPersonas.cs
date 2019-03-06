@@ -15,6 +15,7 @@ namespace JJ.Gestoras
         private static readonly object _padlock = new object();
         private IList<object> _CategoriasProveedores;
         private IList<object> _Proveedores;
+        private IList<object> _CategoriasPersona;
 
         public static GesPersonas getInstance()
         {
@@ -35,6 +36,7 @@ namespace JJ.Gestoras
             _DBPersonas = (IMapperPersonas)Factory.getMapper(this.GetType());
             _CategoriasProveedores = _DBPersonas.getCategoriasProveedor();
             _Proveedores = _DBPersonas.getProveedores();
+            _CategoriasPersona = _DBPersonas.getCategoriasPersona();
         }
 
         public void AddEmpresa(Empresa xEmpresa)
@@ -117,7 +119,7 @@ namespace JJ.Gestoras
             if(!Tools.Numeros.ValidaRut(xProveedor.Rut) || _ExisteProveedorByRut(xProveedor.Rut))
                 throw new Exception("Ya existe un proveedor con el rut que intenta registrar");
 
-            _DBPersonas.addProveedor(xProveedor);
+            _DBPersonas.Add(xProveedor);
         }
 
         public Empresa getEmpresa()
@@ -165,12 +167,15 @@ namespace JJ.Gestoras
         }
 
 
-        public object getPersonaById(int xId)
+        public object getPersonaById(string xId)
         {
-            return null;
+            return (Persona)_DBPersonas.getPersona(xId);
         }
 
-
+        public IList<object> getCategoriasCliente()
+        {
+            return _CategoriasPersona;
+        }
 
 
     }

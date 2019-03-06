@@ -18,7 +18,6 @@ namespace JJ.Entidades
         private string _EmailPrincipal;
         private byte _Activa;
        
-       private decimal _limite;
 
         public Cuenta(int xCodigo, int xCodTipo, string xRazonSocial, string xDireccion, string xNumDireccion, string xRut, string xTelefono, string xCelular, string xEmailPrincipal, byte xActiva)
         {

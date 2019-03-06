@@ -117,7 +117,8 @@ namespace JJ.Mappers
                             E.Estado = (int)Reader["ESTADO"];
                             E.Codmoneda = (int)Reader["MONEDA"];
                             E.Adenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
-                            E.ObjCliente =  new MapperPersonas().getPersona((int)Reader["CODPERSONA"]);
+                            string xCodigo = (string)Reader["CODPERSONA"];
+                            E.ObjCliente = (Persona)new MapperPersonas().getPersona(xCodigo);
                             E.ObjCuenta = new MapperPersonas().getCuenta((int)Reader["CODPERSONA"],(int)Reader["CODCUENTA"]);
                             E.ObjVendedor =(Vendedor) new MapperVendedores().getVendedorByID((int)Reader["CODVENDEDOR"]);
                             E.Tipo = (int)Reader["TIPO"];
