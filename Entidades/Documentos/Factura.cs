@@ -16,7 +16,6 @@ namespace JJ.Entidades
 
         //Metodos con set
         private int _codvendedor;
-        private int _codcliente;
         protected List<object> _Lineas;
         private Moneda _Moneda;
         private string _serie;
@@ -83,18 +82,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int Cliente
-        {
-            get
-            {
-                return _codcliente;
-            }
-
-            set
-            {
-                _codcliente = value;
-            }
-        }
+    
 
         public List<object> Lineas
         {
@@ -152,8 +140,15 @@ namespace JJ.Entidades
             }
         }
 
-        public virtual  void AgregarLineas(List<object> xLineas) { }
-        public virtual void AgregarLinea(object Linea) { }
+        public virtual  void AgregarLineas(List<object> xLineas) {
+            foreach (object Linea in xLineas)
+            {
+                Lineas.Add((VentaLin)Linea);
+            }
+        }
+        public virtual void AgregarLinea(object Linea) {
+            Lineas.Add((VentaLin)Linea);
+        }
 
 
 

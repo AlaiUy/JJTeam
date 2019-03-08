@@ -2,6 +2,12 @@
 ======= CHANGE LOG MAPPERS PARA SISTEMA FERRETERO ===============
 =================================================================
 
+// 08-03-2019
+
+Se creo la clase VentaContado para las facturas contado al vuelo
+Se cambio la clase Venta a VentaCuenta
+
+
 // 05-03-2019
 
 ALTER TABLE CUENTAS

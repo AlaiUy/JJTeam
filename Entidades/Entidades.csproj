@@ -47,8 +47,10 @@
     <Compile Include="Categorias\CatCliente.cs" />
     <Compile Include="Categorias\Categoria.cs" />
     <Compile Include="Categorias\CatProveedor.cs" />
+    <Compile Include="Clientes\ClienteContado.cs" />
     <Compile Include="Clientes\Persona.cs" />
     <Compile Include="Clientes\Cuenta.cs" />
+    <Compile Include="Documentos\Venta\VentaContado.cs" />
     <Compile Include="Empresa.cs" />
     <Compile Include="Moneda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +62,7 @@
     <Compile Include="Documentos\Espera\Esperalin.cs" />
     <Compile Include="Documentos\Factura.cs" />
     <Compile Include="Documentos\Facturalin.cs" />
-    <Compile Include="Documentos\Venta\Venta.cs" />
+    <Compile Include="Documentos\Venta\VentaCuenta.cs" />
     <Compile Include="Documentos\Venta\VentaLin.cs" />
   </ItemGroup>
   <ItemGroup />
