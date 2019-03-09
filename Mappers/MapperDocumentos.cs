@@ -14,7 +14,14 @@ namespace JJ.Mappers
     {
         public bool Add(object xObject)
         {
-            throw new NotImplementedException();
+            if (xObject is VentaCuenta)
+
+            if(xObject is VentaContado)
+
+            if(xObject is Espera)
+                GuardarEspera(xObject);
+
+            return true;
         }
 
         public IList<object> getMonedas()
@@ -31,12 +38,7 @@ namespace JJ.Mappers
         {
             throw new NotImplementedException();
         }
-        public void addEspera(object xEspera)
-        {
-            
-            GuardarEspera(xEspera);
-                    
-        }
+        
 
         private void GuardarEspera(object xEspera)
         {
