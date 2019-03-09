@@ -9,6 +9,7 @@ namespace JJ.Entidades
     {
         private int _Codigo;
         private int _CodTipo;
+        //private int _CodTipo;
         private string _RazonSocial;
         private string _Direccion;
         private string _NumDireccion;

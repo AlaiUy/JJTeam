@@ -1,4 +1,4 @@
-﻿using JJ.Entidades.Clientes;
+﻿using JJ.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;

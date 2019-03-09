@@ -7,30 +7,22 @@ namespace JJ.Entidades
 {
     public class Esperalin
     {
-        private int _CodArticulo;
+        private Articulo _objArticulo;
         private string _Descripcion;
-        private decimal _Precio;
-        private decimal _Iva;
         private decimal _Cantidad;
         private decimal _Descuento;
         private int _NumLinea;
 
-        public Esperalin(int xCodArticulo, int xNumLinea)
-        {
-            _CodArticulo = xCodArticulo;
-           _NumLinea = xNumLinea;
-        }
-
-        public int CodArticulo
+        public Articulo ObjArticulo
         {
             get
             {
-                return _CodArticulo;
+                return _objArticulo;
             }
 
             set
             {
-                _CodArticulo = value;
+                _objArticulo = value;
             }
         }
 
@@ -44,32 +36,6 @@ namespace JJ.Entidades
             set
             {
                 _Descripcion = value;
-            }
-        }
-
-        public decimal Precio
-        {
-            get
-            {
-                return _Precio;
-            }
-
-            set
-            {
-                _Precio = value;
-            }
-        }
-
-        public decimal Iva
-        {
-            get
-            {
-                return _Iva;
-            }
-
-            set
-            {
-                _Iva = value;
             }
         }
 
@@ -105,27 +71,45 @@ namespace JJ.Entidades
             {
                 return _NumLinea;
             }
+
+            set
+            {
+                _NumLinea = value;
+            }
         }
+
+        public Esperalin(Articulo xobjArticulo, String xDescripcion, Decimal xCantidad, Decimal xDescuento, int xNumLinea)
+        {
+            _objArticulo = xobjArticulo;
+            _Descripcion = xDescripcion;
+            _Cantidad = xCantidad;
+            _Descuento = xDescuento;
+            _NumLinea = xNumLinea;
+
+           
+        }
+
+      
 
         public decimal PrecioUnitarioConIva()
         {
             
-            return (this.Precio*(1+(this.Iva/100)));
+            return (_objArticulo.Precio()  * (1+(_objArticulo.Iva / 100)));
         }
 
         public decimal PrecioTotalConIva()
         {
-            return (this.Precio * (1 + (this.Iva / 100)))*this.Cantidad;
+            return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva/ 100)))*this.Cantidad;
         }
 
         public decimal PrecioTotalConDescuento()
         {
-            return ((this.Precio * (1 + (this.Iva / 100)))/(1+(this.Descuento/100))) * this.Cantidad;
+            return ((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100)))/(1+(this.Descuento/100))) * this.Cantidad;
         }
 
         public decimal ImporteDescuento()
         {
-            return (PrecioTotalConIva())-((this.Precio * (1 + (this.Iva / 100))) / (1 + (this.Descuento / 100))) * this.Cantidad;
+            return (PrecioTotalConIva())-((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) / (1 + (this.Descuento / 100))) * this.Cantidad;
         }
 
 

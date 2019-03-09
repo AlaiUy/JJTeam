@@ -50,6 +50,7 @@
     <Compile Include="Clientes\ClienteContado.cs" />
     <Compile Include="Clientes\Persona.cs" />
     <Compile Include="Clientes\Cuenta.cs" />
+    <Compile Include="Documentos\Espera\EsperaContado.cs" />
     <Compile Include="Documentos\Venta\VentaContado.cs" />
     <Compile Include="Empresa.cs" />
     <Compile Include="Moneda.cs" />
@@ -58,7 +59,7 @@
     <Compile Include="Tarifa.cs" />
     <Compile Include="TipoCliente.cs" />
     <Compile Include="Vendedor.cs" />
-    <Compile Include="Documentos\Espera\Espera.cs" />
+    <Compile Include="Documentos\Espera\EsperaCredito.cs" />
     <Compile Include="Documentos\Espera\Esperalin.cs" />
     <Compile Include="Documentos\Factura.cs" />
     <Compile Include="Documentos\Facturalin.cs" />
