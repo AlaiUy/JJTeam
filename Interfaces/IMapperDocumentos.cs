@@ -7,7 +7,6 @@ namespace JJ.Interfaces
 {
     public interface IMapperDocumentos:IMapper 
     {
-        
-        List<object> getVentasEspera();
+        List<object> getVentasEsperaContado();
     }
 }

@@ -15,7 +15,7 @@ namespace JJ.Entidades
 
         //Metodos con set
         private int _codvendedor;
-        private int _codPersona;
+        private Persona _ObjPersona;
         private List<Esperalin> _lineas;
         private int _codMoneda;
         private int _codCuenta;
@@ -37,16 +37,16 @@ namespace JJ.Entidades
             }
         }
 
-        public int CodPersona
+        public Persona ObjPersonas
         {
             get
             {
-                return _codPersona;
+                return _ObjPersona;
             }
 
             set
             {
-                _codPersona = value;
+                _ObjPersona = value;
             }
         }
 
@@ -164,7 +164,6 @@ namespace JJ.Entidades
             _numero = xNumero;
             _fecha = xFecha;
             _codvendedor = xcodVendedor;
-            _codPersona = xcodpersona;
             _codMoneda = xCodMoneda;
             _codCuenta = xCodCuenta;
             _Adenda = xAdenda;

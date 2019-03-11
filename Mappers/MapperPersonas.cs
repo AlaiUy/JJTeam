@@ -186,7 +186,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * FROM PERSONAS WHERE CODIGO=@CODIGO OR CEDULA=@CODIGO OR RUT=@CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM PERSONAS WHERE CODIGO=@CODIGO OR CEDULA=@CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodPersona));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -196,7 +196,6 @@ namespace JJ.Mappers
                         {
                             int xCodigo = (int)Reader["CODIGO"];
                             string xCedula = (string)Reader["CEDULA"];
-                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
                             string xNombre = (string)Reader["NOMBRE"];
                             string xApellido = (string)Reader["APELLIDO"];
                             string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reportes", "Reportes\Report
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SoftwareFacturacion", "SoftwareFacturacion\SoftwareFacturacion.vbproj", "{E2C47437-DA49-4186-8C4D-8626F87EF030}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Manager", "..\FerERP.UI\Manager\Manager.vbproj", "{50F78F34-6348-492E-A983-EB11E9C1325B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{E2C47437-DA49-4186-8C4D-8626F87EF030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C47437-DA49-4186-8C4D-8626F87EF030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C47437-DA49-4186-8C4D-8626F87EF030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50F78F34-6348-492E-A983-EB11E9C1325B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50F78F34-6348-492E-A983-EB11E9C1325B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50F78F34-6348-492E-A983-EB11E9C1325B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50F78F34-6348-492E-A983-EB11E9C1325B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

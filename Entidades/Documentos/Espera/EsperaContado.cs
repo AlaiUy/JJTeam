@@ -146,10 +146,9 @@ namespace JJ.Entidades
                       
         }
 
-        public EsperaContado(int xNumero, DateTime xFecha)
+        public EsperaContado(DateTime xFecha)
         {
             Lineas = new List<Esperalin>();
-            _numero = xNumero;
             _fecha = xFecha;
         }
 
@@ -161,13 +160,12 @@ namespace JJ.Entidades
             _numero = xNumero;
             _fecha = xFecha;
             Codvendedor = xCodVendedor;
-          Codclientecontado = xCodClienteContado;
+            Codclientecontado = xCodClienteContado;
             Codmoneda = xCodMoneda;
             Adenda = xAdenda;
             DirEnvio = xDirEnvio;
             Estado = xEstado;
             Tipo = xTipo;
-
         }
 
      

@@ -12,12 +12,19 @@ namespace JJ.Mappers
 {
     public class MapperDocumentos : DataAccess, IMapperDocumentos
     {
+
+        enum TipoLineas
+        {
+            Contado,
+            Credito,
+        }
+
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
-
-            if(xObject is VentaContado)
-
+                return true;
+            if (xObject is VentaContado)
+                return true;
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
 
@@ -64,29 +71,34 @@ namespace JJ.Mappers
                             var Result = ExecuteScalar(Com, P);
                             int.TryParse(Result.ToString(), out xCodEspera);
                         }
-                        AgregarLineasEsperaContado(E.Lineas, Con, Tran, xCodEspera);
+                        AddLineasEspera(E.Lineas, Con, Tran, xCodEspera,TipoLineas.Contado);
                         Tran.Commit();
                 }
             }
         }
 
-        private void AgregarLineasEsperaContado(List<Esperalin> lineas, SqlConnection xCon, SqlTransaction xTran, int xCodEsperaContado)
+        private void AddLineasEspera(List<Esperalin> lineas, SqlConnection xCon, SqlTransaction xTran, int xCodEsperaContado,TipoLineas xTipo)
         {
+            string Query="";
+
+            if (xTipo == TipoLineas.Contado)
+                Query = "INSERT INTO ESPERALINCONTADO (CODESPERACONTADO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, DESCUENTO) VALUES(@CODESPERACONTADO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @DESCUENTO)";
+           if (xTipo == TipoLineas.Credito)
+                Query = "";//INSERT INTO ESPERALINCONTADO (CODESPERACONTADO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, DESCUENTO) VALUES(@CODESPERACONTADO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @DESCUENTO)
+
             foreach (object L in lineas)
             {
                 Esperalin EL = (Esperalin)L;
-                List<IDataParameter> Lin = new List<IDataParameter>();
-                Lin.Add(new SqlParameter("@CODESPERACONTADO", xCodEsperaContado));
-                Lin.Add(new SqlParameter("@LINEA", EL.NumLinea));
-                Lin.Add(new SqlParameter("@CODARTICULO", EL.ObjArticulo.CodArticulo));
-                Lin.Add(new SqlParameter("@DESCRIPCION", EL.ObjArticulo.Descripcion));
-                Lin.Add(new SqlParameter("@CANTIDAD", EL.Cantidad));
-                Lin.Add(new SqlParameter("@DESCUENTO", EL.Descuento));
-     
-                using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERALINCONTADO (CODESPERACONTADO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, DESCUENTO) VALUES (@CODESPERACONTADO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @DESCUENTO)", (SqlConnection)xCon))
+                using (SqlCommand Com = new SqlCommand(Query, (SqlConnection)xCon))
                 {
+                    Com.Parameters.Add(new SqlParameter("@CODESPERACONTADO", xCodEsperaContado));
+                    Com.Parameters.Add(new SqlParameter("@LINEA", EL.NumLinea));
+                    Com.Parameters.Add(new SqlParameter("@CODARTICULO", EL.ObjArticulo.CodArticulo));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", EL.Descripcion));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", EL.Cantidad));
+                    Com.Parameters.Add(new SqlParameter("@DESCUENTO", EL.Descuento));
                     Com.Transaction = (SqlTransaction)xTran;
-                    ExecuteNonQuery(Com, Lin);
+                    ExecuteNonQuery(Com);
                 }
             }
         }
@@ -105,16 +117,14 @@ namespace JJ.Mappers
                         {
                             int Codigo = (int)Reader["CODIGO"];
                             DateTime Fecha = (DateTime)Reader["FECHA"];
-                            EsperaContado E = new EsperaContado(Codigo, Fecha);
-                            E.Codmoneda = (int)Reader["MONEDA"];
-                            E.Codvendedor = (int)Reader["CODVENDEDOR"];
-                            E.Codclientecontado = (int) Reader["CLIENTECONTADO"];
-                            E.Estado = (int)Reader["ESTADO"];
-                            E.Tipo = (int)Reader["TIPO"];
-                            E.DirEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
-                            E.Adenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
-   
-                          
+                            int xCodMoneda = (int)Reader["MONEDA"];
+                            int xCodVendedor = (int)Reader["CODVENDEDOR"];
+                            int xCliente = (int)Reader["CLIENTECONTADO"];
+                            string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
+                            string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
+                            int xTipo = (int)Reader["TIPO"];
+                            int xEstado = (int)Reader["ESTADO"];
+                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xCodMoneda,xAdenda,xEnvio,xEstado,xTipo);
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }
@@ -164,30 +174,10 @@ namespace JJ.Mappers
 
         }
 
-        List<object> IMapperDocumentos.getVentasEspera()
-        {
-            throw new NotImplementedException();
-        }
+      
 
-        bool IMapper.Add(object xObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IMapper.Update(object xObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IMapper.Remove(object xObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        IList<object> IMapper.getMonedas()
-        {
-            throw new NotImplementedException();
-        }
+       
+        
     }
 }
 
