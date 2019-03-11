@@ -14,16 +14,81 @@ namespace JJ.Entidades
 
 
         //Metodos con set
-        private Vendedor _objVendedor;
-        private ClienteContado _objClienteContado;
+        private int _codvendedor;
+        private int _codclientecontado;
         private List<Esperalin> lineas;
-        private Moneda _objMoneda;
+        private int _codmoneda;
         private string _Adenda;
         private string _DirEnvio = "";
         private int _estado;
         private int _tipo;
-                
-        public string DireccionEnvio
+
+        public int Codvendedor
+        {
+            get
+            {
+                return _codvendedor;
+            }
+
+            set
+            {
+                _codvendedor = value;
+            }
+        }
+
+        public int Codclientecontado
+        {
+            get
+            {
+                return _codclientecontado;
+            }
+
+            set
+            {
+                _codclientecontado = value;
+            }
+        }
+
+        public List<Esperalin> Lineas
+        {
+            get
+            {
+                return lineas;
+            }
+
+            set
+            {
+                lineas = value;
+            }
+        }
+
+        public int Codmoneda
+        {
+            get
+            {
+                return _codmoneda;
+            }
+
+            set
+            {
+                _codmoneda = value;
+            }
+        }
+
+        public string Adenda
+        {
+            get
+            {
+                return _Adenda;
+            }
+
+            set
+            {
+                _Adenda = value;
+            }
+        }
+
+        public string DirEnvio
         {
             get
             {
@@ -36,14 +101,17 @@ namespace JJ.Entidades
             }
         }
 
-       
         public int Estado
         {
             get
             {
                 return _estado;
             }
-            set { _estado = value; }
+
+            set
+            {
+                _estado = value;
+            }
         }
 
         public int Tipo
@@ -65,6 +133,8 @@ namespace JJ.Entidades
             {
                 return _numero;
             }
+
+         
         }
 
         public DateTime Fecha
@@ -73,90 +143,30 @@ namespace JJ.Entidades
             {
                 return _fecha;
             }
+                      
         }
 
-
-
-
-
-        public List<Esperalin> Lineas
+        public EsperaContado(int xNumero, DateTime xFecha)
         {
-            get
-            {
-                return lineas;
-            }
-        }
-
-      
-
-        public string Adenda
-        {
-            get
-            {
-                return _Adenda;
-            }
-
-            set
-            {
-                _Adenda = value;
-            }
-        }
-
-        public Vendedor ObjVendedor
-        {
-            get
-            {
-                return _objVendedor;
-            }
-
-            set
-            {
-                _objVendedor = value;
-            }
-        }
-
-       
-
-     
-
-        public ClienteContado ObjClienteContado
-        {
-            get
-            {
-                return _objClienteContado;
-            }
-
-            set
-            {
-                _objClienteContado = value;
-            }
-        }
-
-        public Moneda ObjMoneda
-        {
-            get
-            {
-                return _objMoneda;
-            }
-
-            set
-            {
-                _objMoneda = value;
-            }
-        }
-
-        public EsperaContado(int xNumero, DateTime xFecha, Vendedor xObjVendedor, ClienteContado xObjClienteContado, Moneda xObjMoneda, String xAdenda, String xDirEnvio, int xEstado, int xTipo)
-        {
-            lineas = new List<Esperalin>();
+            Lineas = new List<Esperalin>();
             _numero = xNumero;
             _fecha = xFecha;
-            _objVendedor = xObjVendedor;
-            _objClienteContado = xObjClienteContado;
-            _objMoneda = xObjMoneda;
-            _Adenda = xAdenda;
-            _DirEnvio = xDirEnvio;
-            _estado = xEstado;
-            _tipo = xTipo;
+        }
+
+
+
+        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, int xCodMoneda, String xAdenda, String xDirEnvio, int xEstado, int xTipo)
+        {
+            Lineas = new List<Esperalin>();
+            _numero = xNumero;
+            _fecha = xFecha;
+            Codvendedor = xCodVendedor;
+          Codclientecontado = xCodClienteContado;
+            Codmoneda = xCodMoneda;
+            Adenda = xAdenda;
+            DirEnvio = xDirEnvio;
+            Estado = xEstado;
+            Tipo = xTipo;
 
         }
 
@@ -180,7 +190,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += (((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
 
@@ -192,7 +202,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += L.ObjArticulo.Precio() * L.Cantidad;
 
@@ -205,7 +215,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += ((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) * L.Cantidad);
 
@@ -226,7 +236,7 @@ namespace JJ.Entidades
 
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += (L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100)) - (L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
 

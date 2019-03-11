@@ -77,7 +77,11 @@ namespace JJ.Entidades
                 _NumLinea = value;
             }
         }
+        public Esperalin()
+        {
 
+
+        }
         public Esperalin(Articulo xobjArticulo, String xDescripcion, Decimal xCantidad, Decimal xDescuento, int xNumLinea)
         {
             _objArticulo = xobjArticulo;
