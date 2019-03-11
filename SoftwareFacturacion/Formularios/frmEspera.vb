@@ -75,9 +75,7 @@ Public Class frmEspera
 
     End Function
 
-    Private Sub dgridCabecera_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellContentClick
 
-    End Sub
 
     Private Sub dgridCabecera_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellEnter
         Dim objE As EsperaContado = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
