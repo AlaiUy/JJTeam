@@ -19,7 +19,7 @@ namespace JJ.Entidades
         private List<Esperalin> lineas;
         private Moneda _objMoneda;
         private string _Adenda;
-       private string _DirEnvio = "";
+        private string _DirEnvio = "";
         private int _estado;
         private int _tipo;
                 

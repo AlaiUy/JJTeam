@@ -18,7 +18,7 @@ namespace JJ.Mappers
 
             if(xObject is VentaContado)
 
-            if(xObject is Espera)
+           //if(xObject is )
                 GuardarEspera(xObject);
 
             return true;
