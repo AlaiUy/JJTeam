@@ -9,6 +9,6 @@ namespace JJ.Interfaces
     {
         void addEspera(object xEspera);
 
-        List<object> getVentasEspera();
+        List<object> getVentasEsperaContado();
     }
 }

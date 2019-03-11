@@ -14,24 +14,118 @@ namespace JJ.Entidades
 
 
         //Metodos con set
-        private Vendedor _objVendedor;
-        private Persona _objPersona;
-        private List<Esperalin> lineas;
-        private Moneda _objMoneda;
-        private Cuenta _objCuenta;
+        private int _codvendedor;
+        private int _codPersona;
+        private List<Esperalin> _lineas;
+        private int _codMoneda;
+        private int _codCuenta;
         private string _Adenda;
         private string _DireccionEnvio;
         private int _estado;
         private int _tipo;
 
-     
+        public int Codvendedor
+        {
+            get
+            {
+                return _codvendedor;
+            }
+
+            set
+            {
+                _codvendedor = value;
+            }
+        }
+
+        public int CodPersona
+        {
+            get
+            {
+                return _codPersona;
+            }
+
+            set
+            {
+                _codPersona = value;
+            }
+        }
+
+        public List<Esperalin> Lineas
+        {
+            get
+            {
+                return _lineas;
+            }
+
+            set
+            {
+                _lineas = value;
+            }
+        }
+
+        public int CodMoneda
+        {
+            get
+            {
+                return _codMoneda;
+            }
+
+            set
+            {
+                _codMoneda = value;
+            }
+        }
+
+        public int CodCuenta
+        {
+            get
+            {
+                return _codCuenta;
+            }
+
+            set
+            {
+                _codCuenta = value;
+            }
+        }
+
+        public string Adenda
+        {
+            get
+            {
+                return _Adenda;
+            }
+
+            set
+            {
+                _Adenda = value;
+            }
+        }
+
+        public string DireccionEnvio
+        {
+            get
+            {
+                return _DireccionEnvio;
+            }
+
+            set
+            {
+                _DireccionEnvio = value;
+            }
+        }
+
         public int Estado
         {
             get
             {
                 return _estado;
             }
-            set { _estado = value; }
+
+            set
+            {
+                _estado = value;
+            }
         }
 
         public int Tipo
@@ -53,6 +147,7 @@ namespace JJ.Entidades
             {
                 return _numero;
             }
+
         }
 
         public DateTime Fecha
@@ -61,94 +156,17 @@ namespace JJ.Entidades
             {
                 return _fecha;
             }
-        }
 
-       
+                   }
 
-        public List<Esperalin> Lineas
-        {
-            get
-            {
-                return lineas;
-            }
-        }
-
-
-        public string Adenda
-        {
-            get
-            {
-                return _Adenda;
-            }
-
-            set
-            {
-                _Adenda = value;
-            }
-        }
-
-        public Vendedor ObjVendedor
-        {
-            get
-            {
-                return _objVendedor;
-            }
-
-            set
-            {
-                _objVendedor = value;
-            }
-        }
-
-       
-
-        public Cuenta ObjCuenta
-        {
-            get
-            {
-                return _objCuenta;
-            }
-
-            set
-            {
-                _objCuenta = value;
-            }
-        }
-
-        public Moneda ObjMoneda
-        {
-            get
-            {
-                return _objMoneda;
-            }
-
-            set
-            {
-                _objMoneda = value;
-            }
-        }
-
-        public Persona ObjPersona
-        {
-            get
-            {
-                return _objPersona;
-            }
-
-            set
-            {
-                _objPersona = value;
-            }
-        }
-
-        public EsperaCredito(int xNumero,DateTime xFecha, Vendedor xobjVendedor, Persona xobjPersona, Moneda xobjMoneda, Cuenta xobjCuenta,  String xAdenda, String xDireccionEnvio, int xestado, int xtipo) {
-            lineas = new List<Esperalin>();
+        public EsperaCredito(int xNumero,DateTime xFecha, int xcodVendedor, int xcodpersona, int xCodMoneda, int xCodCuenta,  String xAdenda, String xDireccionEnvio, int xestado, int xtipo) {
+            _lineas = new List<Esperalin>();
             _numero = xNumero;
             _fecha = xFecha;
-            _objVendedor = xobjVendedor;
-            ObjPersona = xobjPersona;
-            _objMoneda = xobjMoneda;
-            _objCuenta = xobjCuenta;
+            _codvendedor = xcodVendedor;
+            _codPersona = xcodpersona;
+            _codMoneda = xCodMoneda;
+            _codCuenta = xCodCuenta;
             _Adenda = xAdenda;
             _DireccionEnvio = xDireccionEnvio;
             _estado = xestado;
@@ -157,7 +175,7 @@ namespace JJ.Entidades
         }
 
         public EsperaCredito() {
-            lineas = new List<Esperalin>();
+            Lineas = new List<Esperalin>();
         }
 
 
@@ -181,7 +199,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += (((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100)))/(1+(L.Descuento/100))) * L.Cantidad);
 
@@ -193,7 +211,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += L.ObjArticulo.Precio() * L.Cantidad;
 
@@ -206,7 +224,7 @@ namespace JJ.Entidades
         {
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += ((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) * L.Cantidad);
 
@@ -226,7 +244,7 @@ namespace JJ.Entidades
 
             decimal Importe = 0;
 
-            foreach (Esperalin L in lineas)
+            foreach (Esperalin L in Lineas)
             {
                 Importe += (L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100)) - (L.ObjArticulo.Precio()  * (1 + (L.ObjArticulo.Iva / 100)) )/ (1+(L.Descuento/100))) * L.Cantidad;
 

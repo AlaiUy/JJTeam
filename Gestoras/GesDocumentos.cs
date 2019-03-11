@@ -64,7 +64,7 @@ namespace JJ.Gestoras
         */
         public List<object> getListaEspera()
         {
-            return DBDocumentos.getVentasEspera();
+            return DBDocumentos.getVentasEsperaContado();
         }
     }
 
