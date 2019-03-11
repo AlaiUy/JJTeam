@@ -9,7 +9,7 @@ namespace JJ.Entidades
     {
         private int _CodCLiente;
         private Cuenta _Cuenta;
-
+        private int _CodTarifa;
         public Cuenta Cuenta
         {
             get
@@ -26,6 +26,19 @@ namespace JJ.Entidades
             get
             {
                 return _CodCLiente;
+            }
+        }
+
+        public int CodTarifa
+        {
+            get
+            {
+                return _CodTarifa;
+            }
+
+            set
+            {
+                _CodTarifa = value;
             }
         }
 

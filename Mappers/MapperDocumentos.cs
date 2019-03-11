@@ -165,64 +165,71 @@ namespace JJ.Mappers
             return Lineas;
         }
 
-        public Boolean Facturar(Factura xObjFactura)
+        public void Facturar(object xObjFactura,int xZ)
         {
-          
+            Factura F = (Factura)xObjFactura;
+            int NumeroFactura = -1;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
-                    int xCodEspera = -1;
-                    List<IDataParameter> P = new List<IDataParameter>();
                     using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO) OUTPUT INSERTED.CODIGO VALUES (@CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO)", (SqlConnection)Con))
                     {
-                        Com.Parameters.Add(new SqlParameter("@CODSERIE", xObjFactura.Serie));
+                        Com.Parameters.Add(new SqlParameter("@CODSERIE", F.Serie));
                         Com.Parameters.Add(new SqlParameter("@CODCAJA", "cajaa"));
                         Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
-                        Com.Parameters.Add(new SqlParameter("@CODMONEDA", xObjFactura.Moneda.Codigo));
-                        Com.Parameters.Add(new SqlParameter("@Z", "z"));
-                        Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", xObjFactura.Vendedor));
-                        Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", xObjFactura.Documento));
-             
+                        Com.Parameters.Add(new SqlParameter("@CODMONEDA", F.Codmoneda));
+                        Com.Parameters.Add(new SqlParameter("@Z", xZ));
+                        Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", F.Vendedor));
+                        Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", F.Documento));
                         Com.Transaction = (SqlTransaction)Tran;
-                        var Result = ExecuteScalar(Com, P);
-                        int.TryParse(Result.ToString(), out xCodEspera);
+                        var Result = ExecuteScalar(Com);
+                        int.TryParse(Result.ToString(), out NumeroFactura);
+                        if (F is VentaContado)
+                        {
+                            Com.CommandText = "INSERT INTO VENTASCONTADO(NUMERO, SERIE, CLIENTECONTADO) OUTPUT INSERTED.CODIGO VALUES (@NUMERO,@CODSERIE,@CLIENTE)";
+                            Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
+                            Com.Parameters.Add(new SqlParameter("@CLIENTE", ((VentaContado)F).Cliente.Codigo));
+                            ExecuteScalar(Com);
+                        }
+                        else if (F is VentaCuenta)
+                        {
+                            Com.CommandText = "INSERT INTO VENTASCREDITO(NUMERO, SERIE, CODPERSONA,CODCUENTA,CODTARIFA) OUTPUT INSERTED.CODIGO VALUES (@NUMERO,@CODSERIE,@CLIENTE)";
+                            Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
+                            Com.Parameters.Add(new SqlParameter("@PERSONA", ((VentaCuenta)F).CodCLiente));
+                            Com.Parameters.Add(new SqlParameter("@CUENTA", ((VentaCuenta)F).Cuenta.Codigo));
+                            Com.Parameters.Add(new SqlParameter("@CUENTA", ((VentaCuenta)F).CodTarifa));
+                            ExecuteScalar(Com);
+                        }
+
                     }
-                    AddLineasEspera(E.Lineas, Con, Tran, xCodEspera, TipoLineas.Contado);
+                    AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura);
                     Tran.Commit();
                 }
             }
-
-
-            return false;
-
         }
 
-        private void AddLineasFactura(List<Facturalin> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID)
+        private void AddLineasFactura(List<object> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID)
         {
-            string Query = "";
-
-                Query = "INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO, @REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO,@IVA)";
-         
             foreach (object L in lineas)
             {
-                VentaLin EL = (VentaLin)L;
-                using (SqlCommand Com = new SqlCommand(Query, (SqlConnection)xCon))
+                VentaLin VL = (VentaLin)L;
+                using (SqlCommand Com = new SqlCommand("INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO, @REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO,@IVA)", (SqlConnection)xCon))
                 {
                     //FALTA EN VENTALIN PONER ATRIBUTOS
-                    //Com.Parameters.Add(new SqlParameter("@CODSERIE", "SERIE"));
-                    //Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
-                    //Com.Parameters.Add(new SqlParameter("@LINEA", EL.));
-                    //Com.Parameters.Add(new SqlParameter("@CODARTICULO", ));
-                    //Com.Parameters.Add(new SqlParameter("@REFERENCIA", ));
-                    //Com.Parameters.Add(new SqlParameter("@DESCRIPCION", ));
-                    //Com.Parameters.Add(new SqlParameter("@CANTIDAD", ));
-                    //Com.Parameters.Add(new SqlParameter("@PRECIO", ));
-                    //Com.Parameters.Add(new SqlParameter("@DTO", ));
-                    //Com.Parameters.Add(new SqlParameter("@IVA", ));
-                    //Com.Transaction = (SqlTransaction)xTran;
-                    //ExecuteNonQuery(Com);
+                    Com.Parameters.Add(new SqlParameter("@CODSERIE", "SERIE"));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
+                    Com.Parameters.Add(new SqlParameter("@LINEA",VL.NumLinea ));
+                    Com.Parameters.Add(new SqlParameter("@CODARTICULO",VL.CodArticulo ));
+                    //Com.Parameters.Add(new SqlParameter("@REFERENCIA",VL ));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion ));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
+                    Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio ));
+                    Com.Parameters.Add(new SqlParameter("@DTO", VL.Descuento));
+                    Com.Parameters.Add(new SqlParameter("@IVA",VL.Iva));
+                    Com.Transaction = (SqlTransaction)xTran;
+                    ExecuteNonQuery(Com);
                 }
             }
         }

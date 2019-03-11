@@ -17,7 +17,7 @@ namespace JJ.Entidades
         //Metodos con set
         private int _codvendedor;
         protected List<object> _Lineas;
-        private Moneda _Moneda;
+        private int _Moneda;
         private string _serie;
         private int _codcuenta;
         private string _Adenda;
@@ -101,7 +101,7 @@ namespace JJ.Entidades
             }
         }
 
-        public Moneda Moneda
+        public int Codmoneda
         {
             get
             {

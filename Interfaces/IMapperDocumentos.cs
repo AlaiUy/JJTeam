@@ -8,5 +8,7 @@ namespace JJ.Interfaces
     public interface IMapperDocumentos:IMapper 
     {
         List<object> getVentasEsperaContado();
+
+        void Facturar(object xObjFactura,int xZ);
     }
 }
