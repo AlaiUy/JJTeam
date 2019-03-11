@@ -4,7 +4,7 @@ Imports JJ.Entidades
 
 Public Class frmPrincipal
 
-    Private objE As Espera
+    Private objE As EsperaContado
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         If MsgBox("Desea salir?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
@@ -38,9 +38,9 @@ Public Class frmPrincipal
 
         If Not (objE Is Nothing) Then
             Me.txtAdenda.Text = objE.Adenda
-            Me.txtDireccion.Text = objE.ObjCliente.Direccion & " " & objE.ObjCliente.DireccionNumero
-            Me.txtDocumento.Text = objE.ObjCliente.Cedula
-            Me.txtTelefono.Text = objE.ObjCliente.Telefono
+            ' Me.txtDireccion.Text = objE.ObjCliente.Direccion & " " & objE.ObjCliente.DireccionNumero
+            Me.txtDocumento.Text = objE.Codclientecontado
+            '  Me.txtTelefono.Text = objE.ObjCliente.Telefono
             If objE.Tipo = 1 Then
                 Me.txtTipoVta.Text = "CONTADO"
             Else
@@ -93,7 +93,7 @@ Public Class frmPrincipal
             For Each objL As Esperalin In Me.objE.Lineas
                 Dim objf As DataRow = tTable.NewRow()
 
-                objf.Item("CODARTICULO") = objL.CodArticulo
+                objf.Item("CODARTICULO") = objL.ObjArticulo.Referencia
                 objf.Item("DESCRIPCION") = objL.Descripcion
                 objf.Item("CANTIDAD") = objL.Cantidad
                 objf.Item("P/UNITARIO C/IVA") = objL.PrecioUnitarioConIva

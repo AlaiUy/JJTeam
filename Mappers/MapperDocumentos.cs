@@ -154,7 +154,7 @@ namespace JJ.Mappers
                             Esperalin L = new Esperalin();
          
                             L.Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
-                          //  L.CodArticulo = (int)Reader["CODARTICULO"];
+                         L.ObjArticulo =(Articulo) (new MapperArticulos().getArticuloById(((string)Reader["CODARTICULO"])));
                             L.Descripcion = (string)Reader["DESCRIPCION"];
                             L.Descuento = Convert.ToDecimal(Reader["DESCUENTO"]);
                      

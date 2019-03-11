@@ -3,7 +3,7 @@ Imports JJ.Entidades
 Public Class frmEspera
 
     Private mListaDocumentos As List(Of Object)
-    Public objEspera As Espera
+    Public objEspera As EsperaContado
 
     Private Sub frmEspera_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyCode = Keys.Escape Then
@@ -25,11 +25,11 @@ Public Class frmEspera
         Dim COLC As DataColumn = tTable.Columns.Add("CLIENTE", Type.GetType("System.String"))
         Dim COLTV As DataColumn = tTable.Columns.Add("TIPOVENTA", Type.GetType("System.String"))
 
-        For Each objE As Espera In mListaDocumentos
+        For Each objE As EsperaContado In mListaDocumentos
             Dim objf As DataRow = tTable.NewRow()
             objf.Item("NUMERO") = objE.Numero
-            objf.Item("VENDEDOR") = objE.ObjVendedor.Nombre
-            objf.Item("CLIENTE") = objE.ObjCliente.Nombre & " " & objE.ObjCliente.Apellido
+            objf.Item("VENDEDOR") = objE.Codvendedor
+            objf.Item("CLIENTE") = objE.Codclientecontado
             objf.Item("TIPOVENTA") = objE.Tipo
 
 
@@ -39,8 +39,8 @@ Public Class frmEspera
         Return tTable
     End Function
 
-    Public Function ObtenerEsperabyIdEspera(xcodigo As Integer) As Espera
-        For Each E As Espera In mListaDocumentos
+    Public Function ObtenerEsperabyIdEspera(xcodigo As Integer) As EsperaContado
+        For Each E As EsperaContado In mListaDocumentos
             If E.Numero = xcodigo Then
                 Return E
             End If
@@ -48,7 +48,7 @@ Public Class frmEspera
         Return Nothing
     End Function
 
-    Public Function MostrarLineas(xobjE As Espera) As DataTable
+    Public Function MostrarLineas(xobjE As EsperaContado) As DataTable
         Dim tTable As New DataTable
 
         Dim ColRef As DataColumn = tTable.Columns.Add("REFERENCIA", Type.GetType("System.String"))
@@ -62,7 +62,7 @@ Public Class frmEspera
 
                 'If MyBase.Moneda.Id = objl.Articulo.MONEDA.Id Then
                 Dim objf As DataRow = tTable.NewRow()
-                objf.Item("REFERENCIA") = xobjL.CodArticulo
+                objf.Item("REFERENCIA") = xobjL.ObjArticulo.Referencia
                 objf.Item("DESCRIPCION") = xobjL.Descripcion
                 objf.Item("CANTIDAD") = xobjL.Cantidad
 
@@ -80,7 +80,7 @@ Public Class frmEspera
     End Sub
 
     Private Sub dgridCabecera_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellEnter
-        Dim objE As Espera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
+        Dim objE As EsperaContado = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
         Me.dgridLineas.DataSource = MostrarLineas(objE)
         txtAdenda.Text = objE.Adenda
         txtImporteTotal.Text = objE.ImporteTotal
