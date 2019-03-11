@@ -148,13 +148,13 @@ namespace JJ.Mappers
                     {
                         while (Reader.Read())
                         {
-                            int codEspera = (int)Reader["CODESPERA"];
+                            int codEspera = (int)Reader["CODESPERACONTADO"];
                             int NumLin = (int)Reader["LINEA"];
 
                             Esperalin L = new Esperalin();
          
                             L.Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
-                         L.ObjArticulo =(Articulo) (new MapperArticulos().getArticuloById(((string)Reader["CODARTICULO"])));
+                         L.ObjArticulo =(Articulo) (new MapperArticulos().getArticuloById((Reader["CODARTICULO"]).ToString()));
                             L.Descripcion = (string)Reader["DESCRIPCION"];
                             L.Descuento = Convert.ToDecimal(Reader["DESCUENTO"]);
                      
