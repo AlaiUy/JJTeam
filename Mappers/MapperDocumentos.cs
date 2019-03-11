@@ -18,8 +18,8 @@ namespace JJ.Mappers
 
             if(xObject is VentaContado)
 
-           //if(xObject is )
-                GuardarEspera(xObject);
+            if(xObject is EsperaContado )
+                GuardarEsperaContado(xObject);
 
             return true;
         }
@@ -43,38 +43,29 @@ namespace JJ.Mappers
         private void GuardarEsperaContado(object xEspera)
         {
             EsperaContado E = (EsperaContado)xEspera;
-            int Codigo = -1;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
-                    try
-                    {
-                        int CodEspera = -1;
+                        int xCodEspera = -1;
                         List<IDataParameter> P = new List<IDataParameter>();
-                        P.Add(new SqlParameter("@FECHA", DateTime.Today));
-                        P.Add(new SqlParameter("@MONEDA", E.Codmoneda));
-                        P.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
-                        P.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
-                        P.Add(new SqlParameter("@ESTADO", E.Estado));
-                        P.Add(new SqlParameter("@TIPO", E.Tipo));
-                        P.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio));
-                        P.Add(new SqlParameter("@ADENDA", E.Adenda));
-                       
                         using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,MONEDA,CODVENDEDOR,CLIENTECONTADO, ESTADO, TIPO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@MONEDA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
                         {
+                            Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
+                            Com.Parameters.Add(new SqlParameter("@MONEDA", E.Codmoneda));
+                            Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
+                            Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
+                            Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
+                            Com.Parameters.Add(new SqlParameter("@TIPO", E.Tipo));
+                            Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio));
+                            Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
                             Com.Transaction = (SqlTransaction)Tran;
                             var Result = ExecuteScalar(Com, P);
-                            int.TryParse(Result.ToString(), out CodEspera);
+                            int.TryParse(Result.ToString(), out xCodEspera);
                         }
-                        AgregarLineasEsperaContado(E.Lineas, Con, Tran, CodEspera);
+                        AgregarLineasEsperaContado(E.Lineas, Con, Tran, xCodEspera);
                         Tran.Commit();
-                    }
-                    catch (Exception Ex)
-                    {
-                        throw Ex;
-                    }
                 }
             }
         }
@@ -173,7 +164,30 @@ namespace JJ.Mappers
 
         }
 
+        List<object> IMapperDocumentos.getVentasEspera()
+        {
+            throw new NotImplementedException();
+        }
 
+        bool IMapper.Add(object xObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IMapper.Update(object xObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IMapper.Remove(object xObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        IList<object> IMapper.getMonedas()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
