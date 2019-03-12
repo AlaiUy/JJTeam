@@ -110,4 +110,30 @@ Public Class frmPrincipal
 
     End Sub
 
+    Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
+        Dim objF As New VentaContado(1, "C", "1", Date.Today(), objE.Codmoneda, 1, objE.Codvendedor, 1, New ClienteContado(objE.Codclientecontado, "45177525", "", "Jose Curti", "8 de octubre 635", "47325106"))
+
+
+        For Each objL As Esperalin In objE.Lineas
+
+            objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
+
+        Next
+
+
+        Try
+            GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+            objE = Nothing
+            MostrarEnTabla()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+
+
+
+
+
+
+    End Sub
 End Class

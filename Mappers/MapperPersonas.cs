@@ -389,5 +389,37 @@ namespace JJ.Mappers
             return Cat;
             
         }
+
+        public object getClienteContadobyID(int xCodCliente)
+        {
+            ClienteContado objc = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE CODIGO=@CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodCliente));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+                        if (Reader.Read())
+                        {
+                            int xCodigo = (int)Reader["CODIGO"];
+                            string xCedula = (string)(Reader["CEDULA"] is DBNull ? string.Empty : Reader["CEDULA"]);
+                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
+                            string xNombre = (string)Reader["NOMBRE"];
+                            string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+
+                            objc = new ClienteContado(xCodigo,xCedula,xRut,xNombre,xDireccion,xTelefono);
+           
+                        }
+                    }
+                }
+            }
+
+            return objc;
+        }
+
     }
 }

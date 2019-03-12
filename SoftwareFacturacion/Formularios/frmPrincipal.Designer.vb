@@ -599,7 +599,7 @@ Partial Class frmPrincipal
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(137, 7)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(84, 20)
+        Me.Label5.Size = New System.Drawing.Size(75, 20)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Persona"
         '

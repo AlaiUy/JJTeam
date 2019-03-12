@@ -20,7 +20,7 @@ namespace JJ.Entidades
             _Cliente = xCliente;
         }
 
-        public VentaContado(int xNumero, string xSerie, DateTime xFecha, int xDocumento,ClienteContado xCliente) : base(xNumero, xSerie, xFecha, xDocumento)
+        public VentaContado(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, ClienteContado xCliente) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ,xcodvendedor, xcoddocumento)
         {
             _Cliente = xCliente;
         }

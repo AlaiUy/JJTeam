@@ -12,6 +12,7 @@ namespace JJ.Entidades
         private int _numero;      
         private DateTime _fecha;
         private int _CodDocumento;
+        private string _CodCaja;
 
 
         //Metodos con set
@@ -21,6 +22,7 @@ namespace JJ.Entidades
         private string _serie;
         private int _codcuenta;
         private string _Adenda;
+        private int _Z;
 
         public Factura(int xCodDocumento)
         {
@@ -28,13 +30,17 @@ namespace JJ.Entidades
             _Lineas = new List<object>();
         }
 
-        public Factura(int xNumero,string xSerie,DateTime xFecha,int xDocumento)
+        public Factura(int xNumero,string xSerie,string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento)
         {
+            _Lineas = new List<object>();
             _numero = xNumero;
             _fecha = xFecha;
-            _CodDocumento = xDocumento;
-            _Lineas = new List<object>();
+            _CodCaja = xCodCaja;
             _serie = xSerie;
+            _Moneda = xCodMoneda;
+            _Z = xZ;
+            _codvendedor = xcodvendedor;
+            _CodDocumento = xcoddocumento;
         }
 
 
@@ -114,19 +120,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int Codcuenta
-        {
-            get
-            {
-                return _codcuenta;
-            }
-
-            set
-            {
-                _codcuenta = value;
-            }
-        }
-
+  
         public string Adenda
         {
             get
@@ -137,6 +131,32 @@ namespace JJ.Entidades
             set
             {
                 _Adenda = value;
+            }
+        }
+
+        public string CodCaja
+        {
+            get
+            {
+                return _CodCaja;
+            }
+
+            set
+            {
+                _CodCaja = value;
+            }
+        }
+
+        public int Z
+        {
+            get
+            {
+                return _Z;
+            }
+
+            set
+            {
+                _Z = value;
             }
         }
 

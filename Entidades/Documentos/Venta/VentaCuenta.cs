@@ -48,10 +48,11 @@ namespace JJ.Entidades
             _Cuenta = xCuenta;
         }
 
-        public VentaCuenta(int xNumero, string xSerie, DateTime xFecha, int xDocumento, int xCodCLiente, Cuenta xCuenta) : base(xNumero, xSerie, xFecha, xDocumento)
+        public VentaCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, Cuenta xCuenta,int xCodCliente, int xCodTarifa) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda , xZ, xcodvendedor , xcoddocumento)
         {
-            _CodCLiente = xCodCLiente;
+            _CodCLiente = xCodCliente;
             _Cuenta = xCuenta;
+            _CodTarifa = xCodTarifa;
         }
 
         public VentaCuenta(DateTime xFecha, int xDocumento, int xCodCLiente, Cuenta xCuenta) : base(xFecha, xDocumento)
