@@ -43,7 +43,8 @@
     <Compile Include="Articulos\Departamento.cs" />
     <Compile Include="Articulos\Marca.cs" />
     <Compile Include="Articulos\Seccion.cs" />
-    <Compile Include="Caja.cs" />
+    <Compile Include="Cajas\Caja.cs" />
+    <Compile Include="Cajas\Seriedoc.cs" />
     <Compile Include="Categorias\CatCliente.cs" />
     <Compile Include="Categorias\Categoria.cs" />
     <Compile Include="Categorias\CatProveedor.cs" />

@@ -65,7 +65,7 @@ namespace JJ.Mappers
                             Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
                             Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
                             Com.Parameters.Add(new SqlParameter("@TIPO", E.Tipo));
-                            Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio));
+                            Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
                             Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
                             Com.Transaction = (SqlTransaction)Tran;
                             var Result = ExecuteScalar(Com, P);
@@ -153,7 +153,7 @@ namespace JJ.Mappers
                             Esperalin L = new Esperalin();
          
                             L.Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
-                         L.ObjArticulo =(Articulo) (new MapperArticulos().getArticuloById((Reader["CODARTICULO"]).ToString()));
+                            L.ObjArticulo =(Articulo) (new MapperArticulos().getArticuloById((Reader["CODARTICULO"]).ToString()));
                             L.Descripcion = (string)Reader["DESCRIPCION"];
                             L.Descuento = Convert.ToDecimal(Reader["DESCUENTO"]);
                      
@@ -223,7 +223,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
                     Com.Parameters.Add(new SqlParameter("@LINEA",VL.NumLinea ));
                     Com.Parameters.Add(new SqlParameter("@CODARTICULO",VL.CodArticulo ));
-                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion ));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion.ToUpper() ));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
                     Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio ));
                     Com.Parameters.Add(new SqlParameter("@DTO", VL.Descuento));
@@ -240,6 +240,7 @@ namespace JJ.Mappers
             using (SqlCommand Com = new SqlCommand("SELECT ISNULL(MAX(NUMERO),0) AS NUMERO FROM VENTAS", (SqlConnection)xCon))
             {
                 Com.Transaction = xTran;
+                numero = Convert.ToInt32(ExecuteScalar(Com));
                 using (IDataReader Reader = ExecuteReader(Com))
                 {
 
@@ -249,11 +250,34 @@ namespace JJ.Mappers
                     
                     }
                 }
-
-                Com.Transaction = (SqlTransaction)xTran;
-             
             }
             return numero;
+        }
+
+
+        public List<Seriedoc> getDocumentosByCaja(int xCodCaja)
+        {
+            List<Seriedoc> ListDoc = new List<Seriedoc>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT D.NOMBRE,SC.SERIE,d.CODIGO FROM CAJAS C INNER JOIN SERIESCAJA SC ON C.CODIGO = SC.CODCAJA LEFT JOIN DOCUMENTOS D ON SC.CODDOCUMENTO = D.CODIGO  WHERE C.CODIGO = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodCaja));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            string xNombre = (string)(Reader["NOMBRE"] is DBNull ? string.Empty : Reader["NOMBRE"]);
+                            string xSerie = (string)(Reader["SERIE"] is DBNull ? string.Empty : Reader["SERIE"]);
+                            Seriedoc SD = new Seriedoc(Codigo, xNombre, xSerie);
+                            ListDoc.Add(SD);
+                        }
+                    }
+                }
+            }
+            return ListDoc;
         }
         
     }

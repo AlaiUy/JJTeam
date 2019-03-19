@@ -227,7 +227,7 @@ namespace JJ.Mappers
             {
                 Com.Transaction = tran;
                 Com.Parameters.Add(new SqlParameter("@DEPTO", xCodigoDepto));
-                Com.Parameters.Add(new SqlParameter("@NOMBRE", S.Nombre));
+                Com.Parameters.Add(new SqlParameter("@NOMBRE", S.Nombre.ToUpper()));
                 ExecuteNonQuery(Com);
             }
         }
@@ -334,7 +334,7 @@ namespace JJ.Mappers
                 {
 
                     Com.Parameters.Add(new SqlParameter("@DEPTO", ((Departamento)xDepto).Codigo));
-                    Com.Parameters.Add(new SqlParameter("@NOMBRE", ((Seccion)xSeccion).Nombre));
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", ((Seccion)xSeccion).Nombre.ToUpper()));
                     var Result = ExecuteScalar(Com);
                     int.TryParse(Result.ToString(), out Codigo);
                 }

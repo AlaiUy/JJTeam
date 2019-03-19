@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DataAccess.cs" />
     <Compile Include="MapperArticulos.cs" />
+    <Compile Include="MapperCajas.cs" />
     <Compile Include="MapperDocumentos.cs" />
     <Compile Include="MapperGeneral.cs" />
     <Compile Include="MapperPersonas.cs" />

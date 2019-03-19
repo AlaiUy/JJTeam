@@ -38,7 +38,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * FROM VENDEDORES WHERE CODIGO = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT V.CODIGO,V.NOMBRE FROM VENDEDORES AS V WHERE CODIGO = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodigo));
                     using (IDataReader Reader = ExecuteReader(Com))
