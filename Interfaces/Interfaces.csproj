@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IMapperArticulos.cs" />
     <Compile Include="IMapper.cs" />
+    <Compile Include="IMapperCajas.cs" />
     <Compile Include="IMapperDocumentos.cs" />
     <Compile Include="IMapperPersonas.cs" />
     <Compile Include="IMapperPrecios.cs" />

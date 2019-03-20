@@ -1,0 +1,6 @@
+Eliminar Pago
+Listado de pagos dado fecha y caja
+
+------
+
+Ddado una serie y numero obtener el objeto factura.

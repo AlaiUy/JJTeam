@@ -285,7 +285,7 @@ namespace JJ.Mappers
         }
 
 
-        public List<Seriedoc> getDocumentosByCaja(int xCodCaja)
+        public List<Seriedoc> getDocumentosByCaja(string xCodCaja)
         {
             List<Seriedoc> ListDoc = new List<Seriedoc>();
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))

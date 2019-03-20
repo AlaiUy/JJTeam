@@ -2,6 +2,38 @@
 ======= CHANGE LOG MAPPERS PARA SISTEMA FERRETERO ===============
 =================================================================
 
+// 20.03.2019
+
+CREATE TABLE EGRUPOS
+(
+	IDGrupo int identity(1,1) primary key,
+	Nombre varchar(100)
+)
+
+CREATE TABLE EQUIPOS
+(
+	IDEquipo int identity(1,1) primary key,
+	Nombre varchar(100) not null,
+	IDGrupo int not null,
+	foreign key(IDGrupo) references EGRUPOS(IDGrupo)
+)
+
+CREATE TABLE PARAMETROS
+(
+	IDPar int identity(1,1) primary key,
+	Nombre varchar(100) not null
+)
+
+CREATE TABLE EPARAMETROS
+(
+	IDPar int not null,
+	IDEquipo int not null,
+	VALOR  varchar(255),
+	primary key(IDpar,IDEquipo),
+	foreign key(IDPar) references PARAMETROS(IDPar),
+	foreign key(IDEquipo) references EQUIPOS(IDEquipo)
+)
+
 // 08-03-2019
 
 Se creo la clase VentaContado para las facturas contado al vuelo

@@ -44,6 +44,7 @@
     <Compile Include="Articulos\Marca.cs" />
     <Compile Include="Articulos\Seccion.cs" />
     <Compile Include="Cajas\Caja.cs" />
+    <Compile Include="Cajas\Pagos\Pago.cs" />
     <Compile Include="Cajas\Seriedoc.cs" />
     <Compile Include="Categorias\CatCliente.cs" />
     <Compile Include="Categorias\Categoria.cs" />

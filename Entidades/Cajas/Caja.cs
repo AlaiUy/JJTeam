@@ -7,11 +7,12 @@ namespace JJ.Entidades
 {
     public class Caja
     {
-        private int _Codigo;
+        private string _Codigo;
         private string _Nombre;
         private List<Seriedoc> _Series;
+        private int _Z;
 
-        public int Codigo
+        public string Codigo
         {
             get
             {
@@ -32,12 +33,20 @@ namespace JJ.Entidades
             }
         }
 
-        public Caja()
+        public int Z
         {
-            _Codigo = -1;
+            get
+            {
+                return _Z;
+            }
         }
 
-        public Caja(int xCodigo, string xNombre, List<Seriedoc> xSeries)
+        public Caja()
+        {
+            _Codigo = "";
+        }
+
+        public Caja(string xCodigo, string xNombre, List<Seriedoc> xSeries)
         {
             _Codigo = xCodigo;
             _Nombre = xNombre;
@@ -46,7 +55,7 @@ namespace JJ.Entidades
 
         public Caja(string xNombre, List<Seriedoc> xSeries)
         {
-            _Codigo = -1;
+            _Codigo = "";
             _Nombre = xNombre;
             _Series = xSeries;
         }
