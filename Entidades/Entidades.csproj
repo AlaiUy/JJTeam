@@ -62,6 +62,7 @@
     <Compile Include="Proveedores\Proveedor.cs" />
     <Compile Include="Tarifa.cs" />
     <Compile Include="TipoCliente.cs" />
+    <Compile Include="TiposDoc.cs" />
     <Compile Include="Vendedor.cs" />
     <Compile Include="Documentos\Espera\EsperaCredito.cs" />
     <Compile Include="Documentos\Espera\Esperalin.cs" />

@@ -15,12 +15,12 @@ namespace JJ.Entidades
             _Cliente = xCliente;
         }
 
-        public VentaContado(DateTime xFecha, int xDocumento,ClienteContado xCliente) : base(xFecha, xDocumento)
+        public VentaContado(int xDocumento,ClienteContado xCliente,DateTime xFecha) : base(xFecha, xDocumento)
         {
             _Cliente = xCliente;
         }
 
-        public VentaContado(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, ClienteContado xCliente) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ,xcodvendedor, xcoddocumento)
+        public VentaContado(int xDocumento,ClienteContado xCliente, DateTime xFecha,int  xNumero, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xCodVendedor) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ,xCodVendedor,xDocumento)
         {
             _Cliente = xCliente;
         }

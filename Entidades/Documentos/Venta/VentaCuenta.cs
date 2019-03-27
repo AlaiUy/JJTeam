@@ -7,27 +7,10 @@ namespace JJ.Entidades
 {
     public  class VentaCuenta:Factura
     {
-        private int _CodCLiente;
-        private Cuenta _Cuenta;
+        private Persona _Persona;
+        private int _Cuenta;
         private int _CodTarifa;
-        public Cuenta Cuenta
-        {
-            get
-            {
-                return _Cuenta;
-            }
-            set{
-                _Cuenta = value;
-            }
-        }
-
-        public int CodCLiente
-        {
-            get
-            {
-                return _CodCLiente;
-            }
-        }
+        
 
         public int CodTarifa
         {
@@ -42,23 +25,39 @@ namespace JJ.Entidades
             }
         }
 
-        public VentaCuenta(int xCodDocumento,int xCodCLiente,Cuenta xCuenta) :base(xCodDocumento)
+        public Persona Persona
         {
-            _CodCLiente = xCodCLiente;
-            _Cuenta = xCuenta;
+            get
+            {
+                return _Persona;
+            }
         }
 
-        public VentaCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, Cuenta xCuenta,int xCodCliente, int xCodTarifa) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda , xZ, xcodvendedor , xcoddocumento)
+        public int Cuenta
         {
-            _CodCLiente = xCodCliente;
-            _Cuenta = xCuenta;
+            get
+            {
+                return _Cuenta;
+            }
+        }
+
+        public VentaCuenta(int xCodDocumento,Persona xPersona,int xCodCuenta) :base(xCodDocumento)
+        {
+            _Persona  = xPersona;
+            _Cuenta = xCodCuenta;
+        }
+
+        public VentaCuenta(int xCodDocumento, Persona xPersona, int xCodCuenta, DateTime xFecha, int xNumero, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xcodvendedor, int xCodTarifa) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda , xZ,xcodvendedor,xCodDocumento)
+        {
+            _Persona = xPersona;
+            _Cuenta = xCodCuenta;
             _CodTarifa = xCodTarifa;
         }
 
-        public VentaCuenta(DateTime xFecha, int xDocumento, int xCodCLiente, Cuenta xCuenta) : base(xFecha, xDocumento)
+        public VentaCuenta(int xCodDocumento, Persona xPersona, int xCodCuenta,DateTime xFecha) : base(xFecha, xCodDocumento)
         {
-            _CodCLiente = xCodCLiente;
-            _Cuenta = xCuenta;
+            _Persona = xPersona;
+            _Cuenta = xCodCuenta;
         }
 
         

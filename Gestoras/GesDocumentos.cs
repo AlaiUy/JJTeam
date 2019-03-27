@@ -73,6 +73,11 @@ namespace JJ.Gestoras
             E.AgregarLineas(Lineas);
             _DBDocumentos.Add(E);
         }
+
+        public Factura getFacturaByID(int xNumero, string xSerie,TipoLineas xTipo)
+        {
+            return (Factura)_DBDocumentos.getFacturaByID(xSerie, xNumero, xTipo);
+        }
     }
 
 }

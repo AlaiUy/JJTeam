@@ -285,6 +285,17 @@ namespace JJ.Entidades
             foreach (Cuenta C in Cuentas)
                 AddCuenta(C);
         }
+
+        public Cuenta getCuenta(int xIdCuenta)
+        {
+            if (_Cuentas == null)
+                return null;
+
+            foreach (Cuenta C in _Cuentas)
+                if (C.Codigo == xIdCuenta)
+                    return C;
+            return null;
+        }
             
     }
 }

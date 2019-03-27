@@ -59,6 +59,32 @@ namespace JJ.Mappers
 
         }
 
+        public void Eliminarpago(int xNumeroPago)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("DELETE FROM PAGOS WHERE NUMERO = @NUMERO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xNumeroPago));
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
+
+        public int getZByPago(int xNumeroPago)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(ZCAJA,-1) FROM PAGOS WHERE NUMERO = @NUMERO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xNumeroPago));
+                    return Convert.ToInt32(ExecuteScalar(Com));
+                }
+            }
+        }
+
 
         public object getCaja()
         {
@@ -75,6 +101,22 @@ namespace JJ.Mappers
                 }
             }
             return C;
+        }
+
+        public object getPagoByFecha(DateTime xFecha, string xCaja)
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CAJA,NUMERO,FECHA,CODMONEDA,IMPORTE,COMENTARIO,ZCAJA WHERE CAJA=@CAJA AND FECHA = @FECHA", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
+                    Com.Parameters.Add(new SqlParameter("@FECHA", xFecha));
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
         }
 
         private Caja getCajaById(string xCodigo)

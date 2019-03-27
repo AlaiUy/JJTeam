@@ -12,13 +12,6 @@ namespace JJ.Mappers
 {
     public class MapperDocumentos : DataAccess, IMapperDocumentos
     {
-
-        enum TipoLineas
-        {
-            Contado,
-            Credito,
-        }
-
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
@@ -198,8 +191,8 @@ namespace JJ.Mappers
                         {
                             Com.CommandText = "INSERT INTO VENTASCREDITO(NUMERO, SERIE, CODPERSONA,CODCUENTA,CODTARIFA) VALUES (@NUMERO,@SERIE,@PERSONA,@CUENTA,@TARIFA)";
                             
-                            Com.Parameters.Add(new SqlParameter("@PERSONA", ((VentaCuenta)F).CodCLiente));
-                            Com.Parameters.Add(new SqlParameter("@CUENTA", ((VentaCuenta)F).Cuenta.Codigo));
+                            Com.Parameters.Add(new SqlParameter("@PERSONA", ((VentaCuenta)F).Persona.CodCliente));
+                            Com.Parameters.Add(new SqlParameter("@CUENTA", ((VentaCuenta)F).Cuenta));
                             Com.Parameters.Add(new SqlParameter("@TARIFA", ((VentaCuenta)F).CodTarifa));
                             ExecuteNonQuery(Com);
                         }
@@ -239,6 +232,129 @@ namespace JJ.Mappers
                     Tran.Commit();
                 }
             }
+        }
+
+        public object getFacturaByID(string xSerie, int xNumero,TipoLineas xTipo)
+        {
+            Factura F = null;
+            //
+            string Query = "SELECT * FROM VENTAS V ";
+            switch (xTipo)
+            {
+                case TipoLineas.Contado:
+                    Query += "INNER JOIN VENTASCONTADO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.SERIE";
+                    break;
+                case TipoLineas.Credito:
+                    Query += "INNER JOIN VENTASCREDITO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.CODSERIE";
+                    break;
+            }
+            Query += " WHERE V.CODSERIE = @SERIE AND V.NUMERO = @NUMERO";
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand(Query, Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@SERIE", xSerie));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xNumero));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            F = getFacturaFromReader(Reader,xTipo);
+                        }
+                    }
+                }
+            }
+            return F;
+        }
+
+        private Factura getFacturaFromReader(IDataReader Reader,TipoLineas xTipo)
+        {
+            Factura F = null;
+            ClienteContado CC = null;
+            Persona P = null;
+            int Numero = (int)Reader["NUMERO"];
+            string Serie = (string)Reader["SERIE"];
+            string Caja = (string)Reader["CODCAJA"];
+            DateTime Fecha = Convert.ToDateTime(Reader["FECHA"]);
+            int Moneda = (int)Reader["CODMONEDA"];
+            int Z = (int)Reader["Z"];
+            int Vendedor = (int)Reader["CODVENDEDOR"];
+            int Documento = (int)Reader["CODDOCUMENTO"];
+            switch (xTipo)
+            {
+                case TipoLineas.Contado:
+                    int ClC = (int)Reader["CLIENTECONTADO"];
+                    CC = getClienteContadoByID(ClC);
+                    F = new VentaContado(Documento, CC, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor);
+                    break;
+                case TipoLineas.Credito:
+                    int CodPersona = (int)Reader["CODPERSONA"];
+                    int CodCuenta = (int)Reader["CODCUENTA"];
+                    int Tarifa = (int)Reader["CODTARIFA"];
+                    P = getPersonaById(CodPersona.ToString());
+                    F = new VentaCuenta(Documento, P, CodCuenta, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor, Tarifa);
+                    break;
+                default:
+                    break;
+
+            }
+
+            List<object> L = getLineasByFactura(F.Numero, F.Serie);
+            F.AgregarLineas(L);
+            return F;
+        }
+
+        private List<object> getLineasByFactura(int xNumero, string xSerie)
+        {
+            List<object> Lineas = new List<object>();
+            VentaLin VL = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT L.CODSERIE,L.NUMERO,L.LINEA,L.CODARTICULO,L.REFERENCIA,L.DESCRIPCION,L.CANTIDAD,L.PRECIO,L.DTO,L.IVA FROM VENTASLIN L WHERE L.CODSERIE = @SERIE AND L.NUMERO = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xNumero));
+                    Com.Parameters.Add(new SqlParameter("@SERIE", xSerie));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+
+                            VL = getVentaLinFromReader(Reader);
+                            Lineas.Add(VL);
+                        }
+                    }
+                }
+            }
+            return Lineas;
+        }
+
+        private VentaLin getVentaLinFromReader(IDataReader Reader)
+        {
+            //L.CODSERIE,L.NUMERO,L.LINEA,L.CODARTICULO,L.REFERENCIA,L.DESCRIPCION,L.CANTIDAD,L.PRECIO,L.DTO,L.IVA
+            string Serie = (string)Reader["CODSERIE"];
+            int Numero = (int)Reader["NUMERO"];
+            int Linea = (int)Reader["LINEA"];
+            int CodArt = (int)Reader["CODARTICULO"];
+            string Ref = (string)Reader["REFERENCIA"];
+            string Des = (string)Reader["DESCRIPCION"];
+            decimal Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
+            decimal Precio = Convert.ToDecimal(Reader["PRECIO"]);
+            decimal dto = Convert.ToDecimal(Reader["DTO"]);
+            decimal Iva = Convert.ToDecimal(Reader["IVA"]);
+            VentaLin L = new VentaLin(Linea, CodArt, Des, Precio, Iva, Cantidad, dto);
+            return L;
+        }
+
+        private Persona getPersonaById(string codPersona)
+        {
+            return (Persona)new MapperPersonas().getPersona(codPersona);
+        }
+
+        private ClienteContado getClienteContadoByID(int ClC)
+        {
+            return (ClienteContado)new MapperPersonas().getClienteContadobyID(ClC);
         }
 
         private void AddLineasFactura(List<object> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
