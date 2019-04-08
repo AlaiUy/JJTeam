@@ -30,7 +30,7 @@ namespace JJ.Entidades
             _Lineas = new List<object>();
         }
 
-        public Factura(int xNumero,string xSerie,string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento)
+        public Factura(int xNumero,string xSerie,string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor)
         {
             _Lineas = new List<object>();
             _numero = xNumero;
@@ -40,14 +40,12 @@ namespace JJ.Entidades
             _Moneda = xCodMoneda;
             _Z = xZ;
             _codvendedor = xcodvendedor;
-            _CodDocumento = xcoddocumento;
         }
 
 
-        public Factura(DateTime xFecha, int xDocumento)
+        public Factura(DateTime xFecha)
         {
             _fecha = xFecha;
-            _CodDocumento = xDocumento;
             _Lineas = new List<object>();
         }
 
@@ -157,6 +155,19 @@ namespace JJ.Entidades
             set
             {
                 _Z = value;
+            }
+        }
+
+        public int CodDocumento
+        {
+            get
+            {
+                return _CodDocumento;
+            }
+
+            set
+            {
+                _CodDocumento = value;
             }
         }
 

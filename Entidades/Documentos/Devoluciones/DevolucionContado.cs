@@ -51,7 +51,7 @@ namespace JJ.Entidades
             }
         }
 
-        public DevolucionContado(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, string xSerieReferencia, int xNumeroReferencia, ClienteContado xCliente) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ, xcodvendedor, xcoddocumento)
+        public DevolucionContado(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, string xSerieReferencia, int xNumeroReferencia, ClienteContado xCliente) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ, xcodvendedor)
         {
             _Cliente = xCliente;
             _SerieReferencia = xSerieReferencia;

@@ -55,6 +55,9 @@ namespace JJ.Entidades
             {
                 return _Cantidad;
             }
+            set {
+                _Cantidad = value;
+            }
         }
 
         public decimal Descuento
