@@ -130,7 +130,10 @@ namespace JJ.Gestoras
 
         public Articulo getArticuloById(string xCodigo)
         {
-            return (Articulo)DBArticulos.getArticuloById(xCodigo);
+            Articulo A = (Articulo)DBArticulos.getArticuloById(xCodigo);
+            if (A != null)
+                return A;
+            throw new Exception("No se encontro el articulo");
         }
     }
 }
