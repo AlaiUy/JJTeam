@@ -5,14 +5,14 @@ using System.Text;
 
 namespace JJ.Interfaces
 {
-    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+   
 
     public interface IMapperVendedores : IMapper
             {
+         IList<object> getVendedores();
+
+         object getVendedorByID(int xCodigo);
+
 
     }
 }

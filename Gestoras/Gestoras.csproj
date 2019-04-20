@@ -44,6 +44,7 @@
     <Compile Include="GesDocumentos.cs" />
     <Compile Include="GesPersonas.cs" />
     <Compile Include="GesPrecios.cs" />
+    <Compile Include="GesVendedores.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

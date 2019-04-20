@@ -37,9 +37,9 @@ Partial Class frmEspera
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.txtAdenda = New System.Windows.Forms.TextBox()
-        Me.txtImporteTotal = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtImporteTotal = New System.Windows.Forms.TextBox()
+        Me.txtAdenda = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -215,17 +215,15 @@ Partial Class frmEspera
         Me.Panel6.Size = New System.Drawing.Size(1051, 101)
         Me.Panel6.TabIndex = 1
         '
-        'txtAdenda
+        'Label4
         '
-        Me.txtAdenda.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtAdenda.Location = New System.Drawing.Point(8, 13)
-        Me.txtAdenda.Multiline = True
-        Me.txtAdenda.Name = "txtAdenda"
-        Me.txtAdenda.ReadOnly = True
-        Me.txtAdenda.Size = New System.Drawing.Size(729, 73)
-        Me.txtAdenda.TabIndex = 0
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(754, 20)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(107, 20)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Importe Total:"
         '
         'txtImporteTotal
         '
@@ -238,15 +236,17 @@ Partial Class frmEspera
         Me.txtImporteTotal.TabIndex = 1
         Me.txtImporteTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label4
+        'txtAdenda
         '
-        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(754, 20)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(107, 20)
-        Me.Label4.TabIndex = 2
-        Me.Label4.Text = "Importe Total:"
+        Me.txtAdenda.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtAdenda.Location = New System.Drawing.Point(8, 13)
+        Me.txtAdenda.Multiline = True
+        Me.txtAdenda.Name = "txtAdenda"
+        Me.txtAdenda.ReadOnly = True
+        Me.txtAdenda.Size = New System.Drawing.Size(729, 73)
+        Me.txtAdenda.TabIndex = 0
         '
         'frmEspera
         '
@@ -260,6 +260,7 @@ Partial Class frmEspera
         Me.Name = "frmEspera"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds
         Me.Text = "Espera"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         Me.Panel5.ResumeLayout(False)

@@ -3,6 +3,7 @@ Imports JJ.Entidades
 Public Class frmEspera
 
     Private mListaDocumentos As List(Of Object)
+    Private mLisVendedores As List(Of Object)
     Public objEspera As EsperaContado
 
     Private Sub frmEspera_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -12,9 +13,12 @@ Public Class frmEspera
     End Sub
 
     Private Sub frmEspera_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        mLisVendedores = GesVendedores.getInstance.getListaVendedores()
         mListaDocumentos = GesDocumentos.getInstance.getListaEspera()
         Me.dgridCabecera.DataSource = MostrarEncabezado()
     End Sub
+
+
 
     Public Function MostrarEncabezado() As DataTable
         Dim tTable As New DataTable
@@ -28,7 +32,12 @@ Public Class frmEspera
         For Each objE As EsperaContado In mListaDocumentos
             Dim objf As DataRow = tTable.NewRow()
             objf.Item("NUMERO") = objE.Numero
-            objf.Item("VENDEDOR") = objE.Codvendedor
+            For Each objV As Vendedor In mLisVendedores
+                If objV.Codigo = objE.Codvendedor Then
+                    objf.Item("VENDEDOR") = objV.Nombre
+                End If
+            Next
+
             objf.Item("CLIENTE") = objE.Codclientecontado
             objf.Item("TIPOVENTA") = objE.Tipo
 
