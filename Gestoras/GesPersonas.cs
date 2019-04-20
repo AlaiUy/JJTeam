@@ -177,6 +177,17 @@ namespace JJ.Gestoras
             return _CategoriasPersona;
         }
 
+        public object TablaClientesContado()
+        {
+            return _DBPersonas.getAllClientes(true);
+        }
+
+        public ClienteContado getClienteContadoByID(int xCodCLienteContado)
+        {
+            return (ClienteContado)_DBPersonas.getClienteContadobyID(xCodCLienteContado);
+        }
+
+
 
     }
 }

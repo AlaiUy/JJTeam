@@ -421,5 +421,19 @@ namespace JJ.Mappers
             return objc;
         }
 
+        public object getAllClientes(bool xTodos)
+        {
+            DataTable DT;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(CONVERT(VARCHAR(8),CODIGO),'') CODIGO, ISNULL(CEDULA,'') AS CEDULA,ISNULL(RUT,'') as RUT,ISNULL(NOMBRE,'') NOMBRE,ISNULL(DIRECCION,'') AS DIRECCION,ISNULL(CONVERT(VARCHAR(8),TELEFONO),'') AS TELEFONO FROM  CLIENTESCONTADO", (SqlConnection)Con))
+                {
+                    DT = new DataTable();
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
     }
 }

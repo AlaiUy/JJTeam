@@ -18,5 +18,8 @@ namespace JJ.Interfaces
         object getempresa();
 
         object getPersona(string xId);
+        object getAllClientes(bool xTodos);
+
+        object getClienteContadobyID(int xCodCliente);
     }
 }
