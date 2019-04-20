@@ -10,7 +10,7 @@ using System.Text;
 
 namespace JJ.Mappers
 {
-    class MapperVendedores : DataAccess, IMapperVendedores
+    public class MapperVendedores : DataAccess, IMapperVendedores
     {
         public bool Add(object xObject)
         {
@@ -56,5 +56,32 @@ namespace JJ.Mappers
             return objVendedor;
         }
 
+        public IList<object> getVendedores()
+        {
+
+            IList<object> Vendedores = new List<object>();
+            Vendedor Entity = null;
+
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CODIGO, NOMBRE FROM VENDEDORES WHERE ACTIVO=1", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            string Nombre = (string)Reader["NOMBRE"];
+
+                            Entity = new Vendedor(Codigo, Nombre);
+                            Vendedores.Add(Entity);
+                        }
+                    }
+                }
+            }
+            return Vendedores;
+
+        }
     }
 }
