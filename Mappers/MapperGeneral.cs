@@ -70,7 +70,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE,T.SUBFIJO FROM MONEDAS T WHERE T.ACTIVA = 1", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE,T.SUBFIJO, T.COEFICIENTE FROM MONEDAS T WHERE T.ACTIVA = 1", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -79,7 +79,8 @@ namespace JJ.Mappers
                             int Codigo = (int)Reader["CODIGO"];
                             string Nombre = (string)Reader["NOMBRE"];
                             string SubFijo = (string)Reader["SUBFIJO"];
-                            Monedas.Add(new Moneda(Codigo, Nombre, SubFijo));
+                            decimal Coeficiente= (Decimal)Reader["COEFICIENTE"];
+                            Monedas.Add(new Moneda(Codigo, Nombre, SubFijo,Coeficiente));
                         }
                     }
                 }

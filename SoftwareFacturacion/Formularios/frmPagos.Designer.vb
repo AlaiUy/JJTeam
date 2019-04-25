@@ -25,22 +25,22 @@ Partial Class frmPagos
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.dgridPagos = New System.Windows.Forms.DataGridView()
-        Me.txtDescripcion = New System.Windows.Forms.Panel()
+        Me.PANELS = New System.Windows.Forms.Panel()
+        Me.btnImprimir = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dtFecha = New System.Windows.Forms.DateTimePicker()
         Me.btnBorrar = New System.Windows.Forms.Button()
         Me.btnAgregar = New System.Windows.Forms.Button()
         Me.cboxMoneda = New System.Windows.Forms.ComboBox()
         Me.txtImporte = New System.Windows.Forms.TextBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtdescripcion = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dtFecha = New System.Windows.Forms.DateTimePicker()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.btnImprimir = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.dgridPagos, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.txtDescripcion.SuspendLayout()
+        Me.PANELS.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -49,7 +49,7 @@ Partial Class frmPagos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel1.Controls.Add(Me.Panel3)
-        Me.Panel1.Controls.Add(Me.txtDescripcion)
+        Me.Panel1.Controls.Add(Me.PANELS)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1155, 573)
@@ -74,34 +74,61 @@ Partial Class frmPagos
         Me.dgridPagos.Location = New System.Drawing.Point(0, 0)
         Me.dgridPagos.MultiSelect = False
         Me.dgridPagos.Name = "dgridPagos"
+        Me.dgridPagos.ReadOnly = True
         Me.dgridPagos.RowHeadersVisible = False
         Me.dgridPagos.RowTemplate.Height = 28
         Me.dgridPagos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgridPagos.Size = New System.Drawing.Size(1155, 434)
         Me.dgridPagos.TabIndex = 0
         '
-        'txtDescripcion
+        'PANELS
         '
-        Me.txtDescripcion.Controls.Add(Me.btnImprimir)
-        Me.txtDescripcion.Controls.Add(Me.Label4)
-        Me.txtDescripcion.Controls.Add(Me.dtFecha)
-        Me.txtDescripcion.Controls.Add(Me.btnBorrar)
-        Me.txtDescripcion.Controls.Add(Me.btnAgregar)
-        Me.txtDescripcion.Controls.Add(Me.cboxMoneda)
-        Me.txtDescripcion.Controls.Add(Me.txtImporte)
-        Me.txtDescripcion.Controls.Add(Me.TextBox1)
-        Me.txtDescripcion.Controls.Add(Me.Label3)
-        Me.txtDescripcion.Controls.Add(Me.Label2)
-        Me.txtDescripcion.Controls.Add(Me.Label1)
-        Me.txtDescripcion.Dock = System.Windows.Forms.DockStyle.Top
-        Me.txtDescripcion.Location = New System.Drawing.Point(0, 0)
-        Me.txtDescripcion.Name = "txtDescripcion"
-        Me.txtDescripcion.Size = New System.Drawing.Size(1155, 139)
-        Me.txtDescripcion.TabIndex = 0
+        Me.PANELS.Controls.Add(Me.btnImprimir)
+        Me.PANELS.Controls.Add(Me.Label4)
+        Me.PANELS.Controls.Add(Me.dtFecha)
+        Me.PANELS.Controls.Add(Me.btnBorrar)
+        Me.PANELS.Controls.Add(Me.btnAgregar)
+        Me.PANELS.Controls.Add(Me.cboxMoneda)
+        Me.PANELS.Controls.Add(Me.txtImporte)
+        Me.PANELS.Controls.Add(Me.txtdescripcion)
+        Me.PANELS.Controls.Add(Me.Label3)
+        Me.PANELS.Controls.Add(Me.Label2)
+        Me.PANELS.Controls.Add(Me.Label1)
+        Me.PANELS.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PANELS.Location = New System.Drawing.Point(0, 0)
+        Me.PANELS.Name = "PANELS"
+        Me.PANELS.Size = New System.Drawing.Size(1155, 139)
+        Me.PANELS.TabIndex = 0
+        '
+        'btnImprimir
+        '
+        Me.btnImprimir.Location = New System.Drawing.Point(644, 13)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(95, 38)
+        Me.btnImprimir.TabIndex = 10
+        Me.btnImprimir.Text = "Imprimir"
+        Me.btnImprimir.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(932, 112)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(54, 20)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "Fecha"
+        '
+        'dtFecha
+        '
+        Me.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtFecha.Location = New System.Drawing.Point(992, 107)
+        Me.dtFecha.Name = "dtFecha"
+        Me.dtFecha.Size = New System.Drawing.Size(160, 26)
+        Me.dtFecha.TabIndex = 8
         '
         'btnBorrar
         '
-        Me.btnBorrar.Location = New System.Drawing.Point(512, 72)
+        Me.btnBorrar.Location = New System.Drawing.Point(512, 57)
         Me.btnBorrar.Name = "btnBorrar"
         Me.btnBorrar.Size = New System.Drawing.Size(95, 39)
         Me.btnBorrar.TabIndex = 7
@@ -119,6 +146,7 @@ Partial Class frmPagos
         '
         'cboxMoneda
         '
+        Me.cboxMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboxMoneda.FormattingEnabled = True
         Me.cboxMoneda.Location = New System.Drawing.Point(137, 83)
         Me.cboxMoneda.Name = "cboxMoneda"
@@ -132,12 +160,12 @@ Partial Class frmPagos
         Me.txtImporte.Size = New System.Drawing.Size(172, 26)
         Me.txtImporte.TabIndex = 4
         '
-        'TextBox1
+        'txtdescripcion
         '
-        Me.TextBox1.Location = New System.Drawing.Point(137, 19)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(328, 26)
-        Me.TextBox1.TabIndex = 3
+        Me.txtdescripcion.Location = New System.Drawing.Point(137, 19)
+        Me.txtdescripcion.Name = "txtdescripcion"
+        Me.txtdescripcion.Size = New System.Drawing.Size(328, 26)
+        Me.txtdescripcion.TabIndex = 3
         '
         'Label3
         '
@@ -166,32 +194,6 @@ Partial Class frmPagos
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Descripcion"
         '
-        'dtFecha
-        '
-        Me.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFecha.Location = New System.Drawing.Point(992, 107)
-        Me.dtFecha.Name = "dtFecha"
-        Me.dtFecha.Size = New System.Drawing.Size(160, 26)
-        Me.dtFecha.TabIndex = 8
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(932, 112)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(54, 20)
-        Me.Label4.TabIndex = 9
-        Me.Label4.Text = "Fecha"
-        '
-        'btnImprimir
-        '
-        Me.btnImprimir.Location = New System.Drawing.Point(644, 13)
-        Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(95, 38)
-        Me.btnImprimir.TabIndex = 10
-        Me.btnImprimir.Text = "Imprimir"
-        Me.btnImprimir.UseVisualStyleBackColor = True
-        '
         'frmPagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -199,26 +201,27 @@ Partial Class frmPagos
         Me.ClientSize = New System.Drawing.Size(1179, 597)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmPagos"
         Me.Text = "Pagos"
         Me.Panel1.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         CType(Me.dgridPagos, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.txtDescripcion.ResumeLayout(False)
-        Me.txtDescripcion.PerformLayout()
+        Me.PANELS.ResumeLayout(False)
+        Me.PANELS.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents txtDescripcion As Panel
+    Friend WithEvents PANELS As Panel
     Friend WithEvents dgridPagos As DataGridView
     Friend WithEvents btnBorrar As Button
     Friend WithEvents btnAgregar As Button
     Friend WithEvents cboxMoneda As ComboBox
     Friend WithEvents txtImporte As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtdescripcion As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label

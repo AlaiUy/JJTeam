@@ -92,7 +92,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.VALOR FROM EPARAMETROS AS E  INNER JOIN PARAMETROS AS P ON E.IDPAR = P.IDPAR AND P.NOMBRE = 'CAJA' INNER JOIN EQUIPOS AS EQ ON EQ.IDEQUIPO = E.IDEQUIPO WHERE EQ.NOMBRE = @EQUIPO ", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.VALOR FROM EPARAMETROS AS E  INNER JOIN PARAMETROS AS P ON E.IDPAR = P.IDPAR AND P.NOMBRE = 'CAJA' INNER JOIN EQUIPOS AS EQ ON EQ.IDGRUPO = E.IDGRUPO WHERE EQ.NOMBRE = @EQUIPO ", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@EQUIPO", Environment.MachineName));
                     string xSerieCaja = Convert.ToString(ExecuteScalar(Com));
@@ -109,7 +109,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT CAJA,NUMERO,FECHA,CODMONEDA,IMPORTE,COMENTARIO,ZCAJA WHERE CAJA=@CAJA AND FECHA = @FECHA", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT P.NUMERO,P.FECHA,convert(DATeTIME,P.HORA,108) AS HORA,P.CODMONEDA,M.NOMBRE, P.IMPORTE,P.COMENTARIO,P.ZCAJA FROM PAGOS AS P INNER JOIN MONEDAS AS M ON P.CODMONEDA= M.CODIGO WHERE P.CAJA=@CAJA AND P.FECHA = @FECHA ORDER BY P.NUMERO ASC", (SqlConnection)Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@FECHA", xFecha));

@@ -144,4 +144,10 @@ Public Class frmPrincipal
 
 
     End Sub
+
+    Private Sub btnPagos_Click(sender As Object, e As EventArgs) Handles btnPagos.Click
+        Dim frmP As New frmPagos
+        frmP.ShowDialog()
+
+    End Sub
 End Class
