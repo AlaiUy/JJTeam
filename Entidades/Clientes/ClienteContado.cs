@@ -9,7 +9,8 @@ namespace JJ.Entidades
     {
 
         private int _Codigo;
-        private String _Documento;
+        private String _Cedula;
+        private String _Rut;
         private String _Nombre;
         private String _Direccion;
         private String _Telefono;
@@ -27,20 +28,31 @@ namespace JJ.Entidades
             }
         }
 
-        public string Documento
+        public string Cedula
         {
             get
             {
-                return _Documento;
+                return _Cedula;
             }
 
             set
             {
-                _Documento = value;
+                _Cedula = value;
             }
         }
 
-     
+        public string Rut
+        {
+            get
+            {
+                return _Rut;
+            }
+
+            set
+            {
+                _Rut = value;
+            }
+        }
 
         public string Nombre
         {
@@ -81,11 +93,11 @@ namespace JJ.Entidades
             }
         }
 
-        public ClienteContado(int xCodigo, String xDocumento, String xNombre, String xDireccion, String xTelefono)
+        public ClienteContado(int xCodigo, String xCedula, String xRut, String xNombre, String xDireccion, String xTelefono)
         {
             _Codigo = xCodigo;
-            _Documento = xDocumento;
-            
+            _Cedula = xCedula;
+            _Rut = xRut;
             _Nombre = xNombre;
             _Direccion = xDireccion;
             _Telefono = xTelefono;

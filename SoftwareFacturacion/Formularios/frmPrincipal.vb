@@ -40,20 +40,13 @@ Public Class frmPrincipal
         If Not (objE Is Nothing) Then
             Me.txtAdenda.Text = objE.Adenda
             ' Me.txtDireccion.Text = objE.ObjCliente.Direccion & " " & objE.ObjCliente.DireccionNumero
-
+            Me.txtDocumento.Text = objE.Codclientecontado
             '  Me.txtTelefono.Text = objE.ObjCliente.Telefono
             If objE.Tipo = 1 Then
                 Me.txtTipoVta.Text = "CONTADO"
-                Dim objCC As ClienteContado = GesPersonas.getInstance.getClienteContadoByID(objE.Codclientecontado)
-                txtNombre.Text = objCC.Nombre
-                txtDocumento.Text = objCC.Documento
-                txtDireccion.Text = objCC.Direccion
-
             Else
                 Me.txtTipoVta.Text = "CREDITO"
             End If
-
-            Me.txtNombre.Text = objE.NombreCLiente
 
             Me.txtTotalSinIva.Text = objE.ImporteTotalSinIva
             Me.txtImporteIva.Text = objE.ImporteIva

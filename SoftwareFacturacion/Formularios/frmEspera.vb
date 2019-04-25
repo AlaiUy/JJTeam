@@ -16,7 +16,6 @@ Public Class frmEspera
         mLisVendedores = GesVendedores.getInstance.getListaVendedores()
         mListaDocumentos = GesDocumentos.getInstance.getListaEspera()
         Me.dgridCabecera.DataSource = MostrarEncabezado()
-        dgridCabecera.Columns("CLIENTECOD").Visible = False
     End Sub
 
 
@@ -27,8 +26,7 @@ Public Class frmEspera
         Dim ColV As DataColumn = tTable.Columns.Add("VENDEDOR", Type.GetType("System.String"))
 
 
-        Dim COLC As DataColumn = tTable.Columns.Add("CLIENTECOD", Type.GetType("System.String"))
-        Dim COLCN As DataColumn = tTable.Columns.Add("CLIENTE", Type.GetType("System.String"))
+        Dim COLC As DataColumn = tTable.Columns.Add("CLIENTE", Type.GetType("System.String"))
         Dim COLTV As DataColumn = tTable.Columns.Add("TIPOVENTA", Type.GetType("System.String"))
 
         For Each objE As EsperaContado In mListaDocumentos
@@ -40,8 +38,7 @@ Public Class frmEspera
                 End If
             Next
 
-            objf.Item("CLIENTECOD") = objE.Codclientecontado
-            objf.Item("CLIENTE") = objE.NombreCLiente
+            objf.Item("CLIENTE") = objE.Codclientecontado
             objf.Item("TIPOVENTA") = objE.Tipo
 
 
@@ -94,12 +91,6 @@ Public Class frmEspera
         Me.dgridLineas.DataSource = MostrarLineas(objE)
         txtAdenda.Text = objE.Adenda
         txtImporteTotal.Text = objE.ImporteTotal
-        Dim objCC As ClienteContado
-        objCC = GesPersonas.getInstance.getClienteContadoByID(dgridCabecera.Item("ClienteCod", e.RowIndex).Value)
-        txtNombre.Text = objCC.Nombre
-        txtDireccion.Text = objCC.Direccion
-        txtDocumento.Text = objCC.Documento
-
 
     End Sub
 
@@ -116,10 +107,6 @@ Public Class frmEspera
 
 
 
-
-    End Sub
-
-    Private Sub dgridCabecera_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellContentClick
 
     End Sub
 End Class
