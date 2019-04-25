@@ -81,6 +81,12 @@ namespace JJ.Gestoras
             _DBPersonas.addEmpresa(xEmpresa);
         }
 
+        public void addClienteContado(ClienteContado xCC)
+        {
+            
+            if(!Tools.Numeros.VerificaDocumento(xCC.Cedula)
+        }
+
         public void AddProveedor(Proveedor xProveedor)
         {
             if (xProveedor == null)
