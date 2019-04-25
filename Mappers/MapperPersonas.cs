@@ -405,13 +405,13 @@ namespace JJ.Mappers
                         if (Reader.Read())
                         {
                             int xCodigo = (int)Reader["CODIGO"];
-                            string xCedula = (string)(Reader["CEDULA"] is DBNull ? string.Empty : Reader["CEDULA"]);
-                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
+                            string xDocumento = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]);
+                          
                             string xNombre = (string)Reader["NOMBRE"];
                             string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
                             string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
 
-                            objc = new ClienteContado(xCodigo,xCedula,xRut,xNombre,xDireccion,xTelefono);
+                            objc = new ClienteContado(xCodigo,xDocumento,xNombre,xDireccion,xTelefono);
            
                         }
                     }
