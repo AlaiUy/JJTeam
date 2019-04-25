@@ -22,6 +22,7 @@ namespace JJ.Entidades
         private string _DirEnvio = "";
         private int _estado;
         private int _tipo;
+        private string _NombreCLiente;
 
         public int Codvendedor
         {
@@ -146,6 +147,19 @@ namespace JJ.Entidades
                       
         }
 
+        public string NombreCLiente
+        {
+            get
+            {
+                return _NombreCLiente;
+            }
+
+            set
+            {
+                _NombreCLiente = value;
+            }
+        }
+
         public EsperaContado(DateTime xFecha)
         {
             Lineas = new List<Esperalin>();
@@ -154,7 +168,7 @@ namespace JJ.Entidades
 
 
 
-        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, int xCodMoneda, String xAdenda, String xDirEnvio, int xEstado, int xTipo)
+        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, int xCodMoneda, String xAdenda, String xDirEnvio, int xEstado, int xTipo,string xNombreCliente)
         {
             Lineas = new List<Esperalin>();
             _numero = xNumero;
@@ -166,6 +180,7 @@ namespace JJ.Entidades
             DirEnvio = xDirEnvio;
             Estado = xEstado;
             Tipo = xTipo;
+            NombreCLiente = xNombreCliente;
         }
 
      
