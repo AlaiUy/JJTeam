@@ -156,18 +156,18 @@ namespace JJ.Entidades
 
 
 
-        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, int xCodMoneda, String xAdenda, String xDirEnvio, int xEstado, int xTipo,string xNombreCliente)
+        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, String xAdenda, String xDirEnvio, int xEstado, int xTipo,string xNombreCliente)
         {
             Lineas = new List<Esperalin>();
             _numero = xNumero;
             _fecha = xFecha;
-            Codvendedor = xCodVendedor;
-            Codclientecontado = xCodClienteContado;
-            Adenda = xAdenda;
-            DirEnvio = xDirEnvio;
-            Estado = xEstado;
-            Tipo = xTipo;
-            NombreCLiente = xNombreCliente;
+            _codvendedor = xCodVendedor;
+            _codclientecontado = xCodClienteContado;
+            _Adenda = xAdenda;
+            _DirEnvio = xDirEnvio;
+            _estado = xEstado;
+            _tipo = xTipo;
+            _NombreCLiente = xNombreCliente;
         }
 
      
