@@ -109,7 +109,6 @@ namespace JJ.Mappers
                         {
                             int Codigo = (int)Reader["CODIGO"];
                             DateTime Fecha = (DateTime)Reader["FECHA"];
-                            int xCodMoneda = (int)Reader["MONEDA"];
                             int xCodVendedor = (int)Reader["CODVENDEDOR"];
                             int xCliente = (int)Reader["CLIENTECONTADO"];
                             string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
@@ -117,7 +116,7 @@ namespace JJ.Mappers
                             int xTipo = (int)Reader["TIPO"];
                             int xEstado = (int)Reader["ESTADO"];
                             String xNombreCliente = (string)Reader["NOMBRE"];
-                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xCodMoneda,xAdenda,xEnvio,xEstado,xTipo,xNombreCliente);
+                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xTipo,xNombreCliente);
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }
