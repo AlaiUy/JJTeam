@@ -40,5 +40,10 @@ namespace JJ.Gestoras
             return DBVendedores.getVendedores();
         }
 
+        public Vendedor getVendedorByID(int xId)
+        {
+            return (Vendedor)DBVendedores.getVendedorByID(xId);
+        }
+
     }
 }

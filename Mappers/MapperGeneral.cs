@@ -66,7 +66,7 @@ namespace JJ.Mappers
         public IList<object> getMonedas()
         {
 
-            IList<object> Monedas = new List<object>();
+            List<object> Monedas = new List<object>();
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
@@ -95,7 +95,48 @@ namespace JJ.Mappers
             _Monedas.Add(M);
         }
 
-        
+        public Moneda getMonedaByID(int xCodMoneda)
+        {
+            Moneda M = null;
+            foreach (object O in _Monedas)
+            {
+                Moneda Mon = (Moneda)O;
+                if (Mon.Codigo == xCodMoneda)
+                    return Mon;
+            }
 
+            return _getMonedaByID(xCodMoneda);
+                
+        }
+
+        private Moneda _getMonedaByID(int xCodMoneda)
+        {
+            Moneda M = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 T.CODIGO,T.NOMBRE,T.SUBFIJO, T.COEFICIENTE FROM MONEDAS T WHERE T.ACTIVA = 1 AND T.CODIGO = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodMoneda));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if(Reader.Read())
+                        {
+                            M = getMonedaFromReader(Reader);
+                        }
+                    }
+                }
+            }
+            return M;
+        }
+
+        private Moneda getMonedaFromReader(IDataReader Reader)
+        {
+            int Codigo = (int)Reader["CODIGO"];
+            string Nombre = (string)Reader["NOMBRE"];
+            string SubFijo = (string)Reader["SUBFIJO"];
+            decimal Coeficiente = (Decimal)Reader["COEFICIENTE"];
+            return new Moneda(Codigo, Nombre, SubFijo, Coeficiente);
+        }
     }
 }

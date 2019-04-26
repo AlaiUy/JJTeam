@@ -12,6 +12,7 @@ namespace JJ.Entidades
         private decimal _Cantidad;
         private decimal _Descuento;
         private int _NumLinea;
+        private int _CodMoneda;
 
         public Articulo ObjArticulo
         {
@@ -77,6 +78,15 @@ namespace JJ.Entidades
                 _NumLinea = value;
             }
         }
+
+        public int CodMoneda
+        {
+            get
+            {
+                return _CodMoneda;
+            }
+        }
+
         public Esperalin()
         {
 
@@ -89,8 +99,6 @@ namespace JJ.Entidades
             _Cantidad = xCantidad;
             _Descuento = xDescuento;
             _NumLinea = xNumLinea;
-
-           
         }
 
       

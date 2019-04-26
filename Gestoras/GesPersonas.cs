@@ -88,6 +88,9 @@ namespace JJ.Gestoras
 
             ClienteContado CC = getClienteContadoByDoc(xCC.Documento);
 
+            if (CC != null)
+                return CC;
+
             if (xCC.Documento.Length > 12)
             {
                 throw new Exception("El rut ingresado no es valido. [Length 5-12]");

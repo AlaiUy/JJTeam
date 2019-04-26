@@ -50,10 +50,9 @@ namespace JJ.Mappers
                 {
                         int xCodEspera = -1;
                         List<IDataParameter> P = new List<IDataParameter>();
-                        using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,MONEDA,CODVENDEDOR,CLIENTECONTADO, ESTADO, TIPO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@MONEDA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
+                        using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, TIPO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
                         {
                             Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
-                            Com.Parameters.Add(new SqlParameter("@MONEDA", E.Codmoneda));
                             Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
                             Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
                             Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));

@@ -63,6 +63,8 @@ namespace JJ.Gestoras
             if (xArticulo.Precio() < 1)
                 throw new Exception("El precio no es correcto");
 
+            if (GesPrecios.getInstance().getMonedaByID(xArticulo.CodMoneda) == null)
+                throw new Exception("La moneda ingresada no es valida.");
 
             DBArticulos.Add(xArticulo);
 
