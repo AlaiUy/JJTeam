@@ -70,6 +70,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formularios\frmCierre.Designer.vb">
+      <DependentUpon>frmCierre.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmCierre.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\frmEspera.Designer.vb">
       <DependentUpon>frmEspera.vb</DependentUpon>
     </Compile>
@@ -111,6 +117,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\frmCierre.resx">
+      <DependentUpon>frmCierre.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmEspera.resx">
       <DependentUpon>frmEspera.vb</DependentUpon>
     </EmbeddedResource>
