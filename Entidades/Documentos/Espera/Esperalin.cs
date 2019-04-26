@@ -116,12 +116,12 @@ namespace JJ.Entidades
 
         public decimal PrecioTotalConDescuento()
         {
-            return (((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100)))*this.Descuento)/100) * this.Cantidad;
+            return ((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100)))   * ((100-this.Descuento)/100)) * this.Cantidad;
         }
 
         public decimal ImporteDescuento()
         {
-            return (PrecioTotalConIva()-(((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * this.Descuento) / 100)) * this.Cantidad;
+            return (PrecioTotalConIva()- PrecioTotalConDescuento()) * this.Cantidad;
         }
 
 

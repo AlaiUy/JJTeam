@@ -101,7 +101,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.MONEDA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.TIPO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado)where estado=1 order by codigo asc", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.TIPO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado)where estado=0 order by codigo asc", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
