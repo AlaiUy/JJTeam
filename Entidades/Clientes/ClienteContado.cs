@@ -20,11 +20,6 @@ namespace JJ.Entidades
             {
                 return _Codigo;
             }
-
-            set
-            {
-                _Codigo = value;
-            }
         }
 
         public string Documento
@@ -90,6 +85,16 @@ namespace JJ.Entidades
             _Direccion = xDireccion;
             _Telefono = xTelefono;
             
+        }
+
+        public ClienteContado( String xDocumento, String xNombre, String xDireccion, String xTelefono)
+        {
+            _Codigo = -1;
+            _Documento = xDocumento;
+            _Nombre = xNombre;
+            _Direccion = xDireccion;
+            _Telefono = xTelefono;
+
         }
 
     }

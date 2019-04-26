@@ -50,6 +50,11 @@ namespace JJ.Mappers
             }
         }
 
+        public Moneda getMonedaByID(int xCodMoneda)
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<object> getMonedas()
         {
             return MapperGeneral.getInstance().getMonedas();

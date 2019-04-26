@@ -421,19 +421,86 @@ namespace JJ.Mappers
             return objc;
         }
 
+        public object getClienteContadobyDoc(string xDoc)
+        {
+            ClienteContado objc = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE DOCUMENTO=@DOC", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@DOC", xDoc));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+                        if (Reader.Read())
+                        {
+                            int xCodigo = (int)Reader["CODIGO"];
+                            string xDocumento = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]);
+
+                            string xNombre = (string)Reader["NOMBRE"];
+                            string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+
+                            objc = new ClienteContado(xCodigo, xDocumento, xNombre, xDireccion, xTelefono);
+
+                        }
+                    }
+                }
+            }
+
+            return objc;
+        }
+
         public object getAllClientes(bool xTodos)
         {
             DataTable DT;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(CONVERT(VARCHAR(8),CODIGO),'') CODIGO, ISNULL(CEDULA,'') AS CEDULA,ISNULL(RUT,'') as RUT,ISNULL(NOMBRE,'') NOMBRE,ISNULL(DIRECCION,'') AS DIRECCION,ISNULL(CONVERT(VARCHAR(8),TELEFONO),'') AS TELEFONO FROM  CLIENTESCONTADO", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(CONVERT(VARCHAR(8),CODIGO),'') CODIGO, ISNULL(DOCUMENTO,'') AS DOCUMENTO,ISNULL(NOMBRE,'') NOMBRE,ISNULL(DIRECCION,'') AS DIRECCION,ISNULL(CONVERT(VARCHAR(8),TELEFONO),'') AS TELEFONO FROM  CLIENTESCONTADO", (SqlConnection)Con))
                 {
                     DT = new DataTable();
                     DT.Load(ExecuteReader(Com));
                 }
             }
             return DT;
+        }
+
+        public int addclienteContado(object xCC)
+        {
+            ClienteContado CC = (ClienteContado)xCC;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO CLIENTESCONTADO(CODIGO,DOCUMENTO,NOMBRE,DIRECCION,TELEFONO) VALUES (@CODIGO,@DOCUMENTO,@NOMBRE,@DIRECCION,@TELEFONO)", Con))
+                {
+                    int codigo = getMaxCodigoCC();
+                    codigo += 1;
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", codigo));
+                    Com.Parameters.Add(new SqlParameter("@DOCUMENTO", CC.Documento));
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", CC.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", CC.Direccion.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", CC.Telefono));
+                    ExecuteNonQuery(Com);
+                    return codigo;
+                }
+
+            }
+        }
+
+        private int getMaxCodigoCC()
+        {
+            int Numero = -1;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT MAX(CODIGO) NUMERO FROM CLIENTESCONTADO", (SqlConnection)Con))
+                {
+                    Numero = (int)ExecuteScalar(Com);
+                }
+            }
+            return Numero;
         }
     }
 }

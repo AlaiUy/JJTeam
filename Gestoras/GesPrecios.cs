@@ -54,5 +54,10 @@ namespace JJ.Gestoras
         {
             return DBPrecios.getMonedas();
         }
+
+        public Moneda getMonedaByID(int xCodMoneda)
+        {
+            return (Moneda)DBPrecios.getMonedaByID(xCodMoneda);
+        }
     }
 }

@@ -17,7 +17,6 @@ namespace JJ.Entidades
         private int _codvendedor;
         private Persona _ObjPersona;
         private List<Esperalin> _lineas;
-        private int _codMoneda;
         private int _codCuenta;
         private string _Adenda;
         private string _DireccionEnvio;
@@ -63,18 +62,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int CodMoneda
-        {
-            get
-            {
-                return _codMoneda;
-            }
-
-            set
-            {
-                _codMoneda = value;
-            }
-        }
+        
 
         public int CodCuenta
         {
@@ -164,7 +152,6 @@ namespace JJ.Entidades
             _numero = xNumero;
             _fecha = xFecha;
             _codvendedor = xcodVendedor;
-            _codMoneda = xCodMoneda;
             _codCuenta = xCodCuenta;
             _Adenda = xAdenda;
             _DireccionEnvio = xDireccionEnvio;

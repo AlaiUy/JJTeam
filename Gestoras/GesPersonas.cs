@@ -81,6 +81,38 @@ namespace JJ.Gestoras
             _DBPersonas.addEmpresa(xEmpresa);
         }
 
+        public ClienteContado addClienteContado(ClienteContado xCC)
+        {
+            if (xCC.Codigo == 1)
+                return null;
+
+            ClienteContado CC = getClienteContadoByDoc(xCC.Documento);
+
+            if (CC != null)
+                return CC;
+
+            if (xCC.Documento.Length > 12)
+            {
+                throw new Exception("El rut ingresado no es valido. [Length 5-12]");
+            }
+            if (xCC.Documento.Length < 11)
+                if (!Tools.Numeros.VerificaDocumento(Convert.ToInt32(xCC.Documento)))
+                    throw new Exception("La cedula ingresada no se puede verificar");
+
+            if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
+                throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+
+            if (xCC.Nombre.Length > 50)
+                xCC.Nombre = xCC.Nombre.Substring(0, 49);
+            if (xCC.Direccion.Length > 200)
+                xCC.Direccion = xCC.Direccion.Substring(0, 49);
+
+            int xCodigo = _DBPersonas.addclienteContado(xCC);
+
+            return new ClienteContado(xCodigo,xCC.Documento, xCC.Nombre, xCC.Direccion, xCC.Telefono);
+
+        }
+
         public void AddProveedor(Proveedor xProveedor)
         {
             if (xProveedor == null)
@@ -185,6 +217,11 @@ namespace JJ.Gestoras
         public ClienteContado getClienteContadoByID(int xCodCLienteContado)
         {
             return (ClienteContado)_DBPersonas.getClienteContadobyID(xCodCLienteContado);
+        }
+
+        public ClienteContado getClienteContadoByDoc(string xDoc)
+        {
+            return (ClienteContado)_DBPersonas.getClienteContadobyDoc(xDoc);
         }
 
 

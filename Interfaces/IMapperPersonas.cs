@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JJ.Entidades;
 
 namespace JJ.Interfaces
 {
@@ -21,5 +22,8 @@ namespace JJ.Interfaces
         object getAllClientes(bool xTodos);
 
         object getClienteContadobyID(int xCodCliente);
+
+        object getClienteContadobyDoc(string xDoc);
+        int addclienteContado(object xCC);
     }
 }
