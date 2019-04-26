@@ -671,6 +671,7 @@ Partial Class frmPrincipal
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "frmPrincipal"
         Me.Text = "Facturacion"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         Me.Panel9.ResumeLayout(False)

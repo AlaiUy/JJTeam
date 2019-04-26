@@ -47,17 +47,31 @@ namespace JJ.Entidades
             }
         }
 
+        public decimal Coeficiente
+        {
+            get
+            {
+                return _Coeficiente;
+            }
+
+            set
+            {
+                _Coeficiente = value;
+            }
+        }
+
         public Moneda() { }
 
         public Moneda(int xCodigo) {
             _Codigo = xCodigo;
         }
 
-        public Moneda(int xCodigo, string xNombre, string xSubFijo)
+        public Moneda(int xCodigo, string xNombre, string xSubFijo, decimal xCoeficiente)
         {
             _Codigo = xCodigo;
             _Nombre = xNombre;
             _SubFijo = xSubFijo;
+            _Coeficiente = xCoeficiente;
         }
 
         public override string ToString()
