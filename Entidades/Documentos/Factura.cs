@@ -181,6 +181,18 @@ namespace JJ.Entidades
             Lineas.Add((VentaLin)Linea);
         }
 
+        public decimal ImporteTotalSinIva()
+        {
+            decimal Importe = 0;
+
+            foreach (Facturalin L in Lineas)
+            {
+                Importe += L.Precio * L.Cantidad;
+
+            }
+            return Decimal.Round(Importe, 2);
+
+        }
 
 
 

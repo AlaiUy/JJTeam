@@ -167,7 +167,7 @@ namespace JJ.Mappers
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
                     NumeroFactura = ObtenerNumeroFactura(Con, Tran);
-                    using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO)", (SqlConnection)Con))
+                    using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,SUBTOTAL,IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO)", (SqlConnection)Con))
                     {
                         Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
                         Com.Parameters.Add(new SqlParameter("@CODSERIE", F.Serie));
@@ -177,6 +177,8 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@Z", xZ));
                         Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", F.Vendedor));
                         Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", F.Documento));
+                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.ImporteTotalSinIva()));
+                        Com.Parameters.Add(new SqlParameter("@IVA", F.Documento));
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
                         if (F is VentaContado)

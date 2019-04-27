@@ -150,4 +150,8 @@ Public Class frmPrincipal
         frmP.ShowDialog()
 
     End Sub
+
+    Private Sub txtTotalSinIva_TextChanged(sender As Object, e As EventArgs) Handles txtTotalSinIva.TextChanged
+
+    End Sub
 End Class

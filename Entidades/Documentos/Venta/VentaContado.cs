@@ -37,5 +37,8 @@ namespace JJ.Entidades
                 _Cliente = value;
             }
         }
+
+
+
     }
 }
