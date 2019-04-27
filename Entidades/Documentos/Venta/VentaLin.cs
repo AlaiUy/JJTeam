@@ -5,13 +5,16 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class VentaLin : Facturalin
+    public class VentaLin : Linea
     {
-        public VentaLin(string xSerie,int xNumero,int xNumeroLinea, int xCodArticulo, string xDescripcion, decimal xPrecio, decimal xIva, decimal xCantidad, decimal xDescuento) : base(xNumero,xSerie,xNumeroLinea,xCodArticulo,xDescripcion,xPrecio,xIva, xCantidad, xDescuento)
+        //base(xNumero,xSerie,xNumeroLinea,xCodArticulo,xDescripcion,xPrecio,xIva, xCantidad, xDescuento)
+        public VentaLin(string xSerie,int xNumero,int xNumeroLinea, Articulo xArticulo, string xDescripcion, decimal xPrecio, decimal xIva, decimal xCantidad, decimal xDescuento) : base(xArticulo,xDescripcion,xCantidad,xDescuento,xNumeroLinea)
         {
 
         }
-        public VentaLin(int xNumeroLinea, int xCodArticulo, string xDescripcion, decimal xPrecio, decimal xIva, decimal xCantidad,decimal xDescuento) : base(xNumeroLinea,xCodArticulo,xDescripcion,xPrecio,xIva,xCantidad,xDescuento)
+
+        //base(xNumeroLinea,xCodArticulo,xDescripcion,xPrecio,xIva,xCantidad,xDescuento)
+        public VentaLin(int xNumeroLinea, Articulo xArticulo, string xDescripcion, decimal xPrecio, decimal xIva, decimal xCantidad,decimal xDescuento) : base(xArticulo,xDescripcion,xCantidad,xDescuento,xNumeroLinea)
         {
 
         }

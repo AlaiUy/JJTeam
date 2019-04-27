@@ -6,24 +6,18 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class VentaContado : Factura
+    public class VentaContado : Documento
     {
         private ClienteContado _Cliente;
 
-        public VentaContado(int xCodDocumento, ClienteContado xCliente) : base(xCodDocumento)
+        
+
+
+        public VentaContado(ClienteContado xCliente, DateTime xFecha, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xCodVendedor) : base(xFecha,xSerie, xCodCaja, xCodMoneda, xZ,xCodVendedor)
         {
             _Cliente = xCliente;
         }
 
-        public VentaContado(int xDocumento,ClienteContado xCliente,DateTime xFecha) : base(xFecha)
-        {
-            _Cliente = xCliente;
-        }
-
-        public VentaContado(int xDocumento,ClienteContado xCliente, DateTime xFecha,int  xNumero, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xCodVendedor) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ,xCodVendedor)
-        {
-            _Cliente = xCliente;
-        }
 
         public ClienteContado Cliente
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public class DevolucionCuenta : Factura
+    public class DevolucionCuenta : Documento
     {
         private int _CodCLiente;
         private Cuenta _Cuenta;
@@ -79,7 +79,7 @@ namespace JJ.Entidades
             }
         }
 
-        public DevolucionCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, Cuenta xCuenta, int xCodCliente, int xCodTarifa, string xSerieReferencia, int xNumeroReferencia) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda, xZ, xcodvendedor)
+        public DevolucionCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, Cuenta xCuenta, int xCodCliente, int xCodTarifa, string xSerieReferencia, int xNumeroReferencia) : base(xFecha,xSerie, xCodCaja, xCodMoneda, xZ, xcodvendedor)
         {
             _CodCLiente = xCodCliente;
             _Cuenta = xCuenta;

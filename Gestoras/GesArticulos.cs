@@ -137,5 +137,7 @@ namespace JJ.Gestoras
                 return A;
             throw new Exception("No se encontro el articulo");
         }
+
+
     }
 }

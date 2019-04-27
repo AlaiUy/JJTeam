@@ -192,7 +192,7 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-                Importe += (((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+                Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
 
             }
             return Decimal.Round(Importe, 2);
@@ -204,7 +204,7 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-                Importe += L.ObjArticulo.Precio() * L.Cantidad;
+                Importe += L.Articulo.Precio() * L.Cantidad;
 
             }
             return Decimal.Round(Importe, 2);
@@ -217,7 +217,7 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-                Importe += ((L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) * L.Cantidad);
+                Importe += ((L.Articulo.Precio() * (1 + (L.Articulo.Iva / 100))) * L.Cantidad);
 
             }
             return Decimal.Round(Importe, 2);
@@ -238,7 +238,7 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-                Importe += (L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100)) - (L.ObjArticulo.Precio() * (1 + (L.ObjArticulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
 
             }
             return Decimal.Round(Importe, 2);

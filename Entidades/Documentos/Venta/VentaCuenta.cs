@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public  class VentaCuenta:Factura
+    public  class VentaCuenta:Documento
     {
         private Persona _Persona;
         private int _Cuenta;
@@ -41,24 +41,16 @@ namespace JJ.Entidades
             }
         }
 
-        public VentaCuenta(int xCodDocumento,Persona xPersona,int xCodCuenta) :base(xCodDocumento)
-        {
-            _Persona  = xPersona;
-            _Cuenta = xCodCuenta;
-        }
 
-        public VentaCuenta(int xCodDocumento, Persona xPersona, int xCodCuenta, DateTime xFecha, int xNumero, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xcodvendedor, int xCodTarifa) : base(xNumero, xSerie, xCodCaja, xFecha, xCodMoneda , xZ,xcodvendedor)
+
+        public VentaCuenta(int xCodDocumento, Persona xPersona, int xCodCuenta, DateTime xFecha, int xNumero, string xSerie, string xCodCaja, int xCodMoneda, int xZ, int xcodvendedor, int xCodTarifa) : base(xFecha,xSerie, xCodCaja, xCodMoneda , xZ,xcodvendedor)
         {
             _Persona = xPersona;
             _Cuenta = xCodCuenta;
             _CodTarifa = xCodTarifa;
         }
 
-        public VentaCuenta(int xCodDocumento, Persona xPersona, int xCodCuenta,DateTime xFecha) : base(xFecha)
-        {
-            _Persona = xPersona;
-            _Cuenta = xCodCuenta;
-        }
+     
 
         
     }
