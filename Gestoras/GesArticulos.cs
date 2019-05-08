@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Data;
+using System.Reflection;
 
 namespace JJ.Gestoras
 {
@@ -42,7 +44,7 @@ namespace JJ.Gestoras
                 throw new Exception("El articulo es incorrecto");
             if (xArticulo.CodArticulo > 0)
                 throw new Exception("El Articulo ya existe");
-            if(!string.IsNullOrEmpty(xArticulo.Descripcion))
+            if (!string.IsNullOrEmpty(xArticulo.Descripcion))
                 if (xArticulo.Descripcion.Length > 100)
                     throw new Exception("La descripcion no cumple con la longuitud necesaria");
             if (string.IsNullOrEmpty(xArticulo.Referencia) || xArticulo.Referencia.Length > 11)
@@ -70,6 +72,11 @@ namespace JJ.Gestoras
 
 
             return true;
+        }
+
+        public DataTable getVistaArticulos()
+        {
+            return (DataTable)DBArticulos.getVistaArticulos();
         }
 
         public void Descatalogar(int xCodArticulo)
@@ -109,10 +116,23 @@ namespace JJ.Gestoras
             return DBArticulos.getMarcas();
         }
 
-        public IList<object> getArticulos()
+
+        /// <summary>
+        /// Devuelve una lista de JJ.entidades.Articulos
+        /// </summary>
+        public List<Articulo> getArticulos()
+        {
+            List<Articulo> L = new List<Articulo>();
+            foreach (object o in _getArticlos())
+                L.Add((Articulo)o);
+            return L;
+        }
+        private IList<object> _getArticlos()
         {
             return DBArticulos.getArticulos();
         }
+
+        
 
         public Seccion addSeccion(Seccion xSeccion, Departamento xDepartamento)
         {

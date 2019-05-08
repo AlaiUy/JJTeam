@@ -101,27 +101,27 @@ namespace JJ.Entidades
             _NumLinea = xNumLinea;
         }
 
-        public decimal SubTotal()
+        public virtual decimal SubTotal()
         {
             return _objArticulo.Precio() * _Cantidad;
         }
 
-        public decimal Precio() //Con iva
+        public virtual decimal Precio() //Con iva
         {
             return (_objArticulo.Precio() * (1 + (_objArticulo.Iva / 100)));
         }
 
-        public decimal Total() //Total con iva
+        public virtual decimal Total() //Total con iva
         {
             return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva / 100))) * _Cantidad;
         }
 
-        public decimal TotalDescuento() //Total Con descuento
+        public virtual decimal TotalDescuento() //Total Con descuento
         {
             return ((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
         }
 
-        public decimal ImporteDescuento()
+        public virtual decimal ImporteDescuento()
         {
             return (Total() - TotalDescuento()) * _Cantidad;
         }

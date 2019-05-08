@@ -16,7 +16,7 @@ namespace JJ.Gestoras
 
         public void GesFacturar(object xObjFactura, int xZ)
         {
-            _DBDocumentos.Facturar(xObjFactura, xZ);
+            
 
         }
 
@@ -52,10 +52,7 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(E);
         }
 
-        public Factura getFacturaByID(int xNumero, string xSerie,TipoLineas xTipo)
-        {
-            return (Factura)_DBDocumentos.getFacturaByID(xSerie, xNumero, xTipo);
-        }
+        
     }
 
 }

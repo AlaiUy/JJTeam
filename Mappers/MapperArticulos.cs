@@ -348,5 +348,19 @@ namespace JJ.Mappers
 
             return null;
         }
+
+        public object getVistaArticulos()
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * from dbo.JL_ArtciulosView", (SqlConnection)Con))
+                { 
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
     }
 }
