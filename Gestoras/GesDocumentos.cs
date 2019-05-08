@@ -14,11 +14,7 @@ namespace JJ.Gestoras
         private static IMapperDocumentos _DBDocumentos;
         private static readonly object padlock = new object();
 
-        public void GesFacturar(object xObjFactura, int xZ)
-        {
-            _DBDocumentos.Facturar(xObjFactura, xZ);
-
-        }
+      
 
         public static GesDocumentos getInstance()
         {
@@ -52,10 +48,7 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(E);
         }
 
-        public Factura getFacturaByID(int xNumero, string xSerie,TipoLineas xTipo)
-        {
-            return (Factura)_DBDocumentos.getFacturaByID(xSerie, xNumero, xTipo);
-        }
+   
     }
 
 }

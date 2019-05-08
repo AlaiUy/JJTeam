@@ -74,7 +74,7 @@ Public Class frmEspera
 
                 'If MyBase.Moneda.Id = objl.Articulo.MONEDA.Id Then
                 Dim objf As DataRow = tTable.NewRow()
-                objf.Item("REFERENCIA") = xobjL.ObjArticulo.Referencia
+                ' objf.Item("REFERENCIA") = xobjL.ObjArticulo.Referencia
                 objf.Item("DESCRIPCION") = xobjL.Descripcion
                 objf.Item("CANTIDAD") = xobjL.Cantidad
 

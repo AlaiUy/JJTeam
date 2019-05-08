@@ -101,13 +101,13 @@ Public Class frmPrincipal
             For Each objL As Esperalin In Me.objE.Lineas
                 Dim objf As DataRow = tTable.NewRow()
 
-                objf.Item("CODARTICULO") = objL.ObjArticulo.Referencia
+                ' objf.Item("CODARTICULO") = objL.ObjArticulo.Referencia
                 objf.Item("DESCRIPCION") = objL.Descripcion
                 objf.Item("CANTIDAD") = objL.Cantidad
-                objf.Item("P/UNITARIO C/IVA") = objL.PrecioUnitarioConIva
+                ' objf.Item("P/UNITARIO C/IVA") = objL.PrecioUnitarioConIva
                 objf.Item("DESCUENTO") = objL.Descuento
                 objf.Item("IMPORTE DESCUENTO TOTAL") = objL.ImporteDescuento
-                objf.Item("PRECIO TOTAL") = objL.PrecioTotalConDescuento
+                'objf.Item("PRECIO TOTAL") = objL.PrecioTotalConDescuento
 
                 tTable.Rows.Add(objf)
             Next
