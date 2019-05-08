@@ -52,6 +52,8 @@
     <Compile Include="Clientes\ClienteContado.cs" />
     <Compile Include="Clientes\Persona.cs" />
     <Compile Include="Clientes\Cuenta.cs" />
+    <Compile Include="Documentos\Compra\Compra.cs" />
+    <Compile Include="Documentos\Compra\CompraLin.cs" />
     <Compile Include="Documentos\Devoluciones\DevolucionContado.cs" />
     <Compile Include="Documentos\Devoluciones\DevolucionCuenta.cs" />
     <Compile Include="Documentos\Documento.cs" />

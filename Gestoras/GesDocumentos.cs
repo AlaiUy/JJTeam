@@ -14,7 +14,13 @@ namespace JJ.Gestoras
         private static IMapperDocumentos _DBDocumentos;
         private static readonly object padlock = new object();
 
-      
+
+        public void GesFacturar(object xObjFactura, int xZ)
+        {
+            
+
+        }
+
 
         public static GesDocumentos getInstance()
         {
@@ -48,7 +54,7 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(E);
         }
 
-   
+
     }
 
 }
