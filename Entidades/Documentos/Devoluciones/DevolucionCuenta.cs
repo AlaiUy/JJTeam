@@ -79,7 +79,7 @@ namespace JJ.Entidades
             }
         }
 
-        public DevolucionCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor, int xcoddocumento, Cuenta xCuenta, int xCodCliente, int xCodTarifa, string xSerieReferencia, int xNumeroReferencia) : base(xFecha,xSerie, xCodCaja, xCodMoneda, xZ, xcodvendedor)
+        public DevolucionCuenta(int xNumero, string xSerie, string xCodCaja, DateTime xFecha, int xCodMoneda, int xZ, int xcodvendedor,decimal xcotizacion, int xcoddocumento, Cuenta xCuenta, int xCodCliente, int xCodTarifa, string xSerieReferencia, int xNumeroReferencia) : base(xFecha,xSerie, xCodCaja, xCodMoneda, xZ, xcodvendedor,xcotizacion)
         {
             _CodCLiente = xCodCliente;
             _Cuenta = xCuenta;

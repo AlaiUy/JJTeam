@@ -7,7 +7,7 @@ namespace JJ.Entidades.Documentos
 {
     public class Compra : Documento
     {
-        public Compra(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor) : base(xFecha, xSerie, xCaja, xMoneda, xZ, xVendedor)
+        public Compra(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion) : base(xFecha, xSerie, xCaja, xMoneda, xZ, xVendedor, xCotizacion)
         {
 
         }

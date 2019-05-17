@@ -160,9 +160,9 @@ namespace JJ.Mappers
 
 
 
-        //public void Facturar(object xObjFactura,int xZ)
+        //public void Facturar(object xObjFactura, int xZ)
         //{
-        //    Factura F = (Factura)xObjFactura;
+        //    Documento F = (Documento)xObjFactura;
         //    int NumeroFactura = -1;
         //    using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
         //    {
@@ -170,16 +170,18 @@ namespace JJ.Mappers
         //        using (SqlTransaction Tran = Con.BeginTransaction())
         //        {
         //            NumeroFactura = ObtenerNumeroFactura(Con, Tran);
-        //            using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,SUBTOTAL,IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO)", (SqlConnection)Con))
+        //            using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,DETALLE, COTIZACION, SUBTOTAL, IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO,@DETALLE,@COTIZACION,@SUBTOTAL,@IVA)", (SqlConnection)Con))
         //            {
         //                Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
         //                Com.Parameters.Add(new SqlParameter("@CODSERIE", F.Serie));
-        //                Com.Parameters.Add(new SqlParameter("@CODCAJA", F.CodCaja));
+        //                Com.Parameters.Add(new SqlParameter("@CODCAJA", F.Caja));
         //                Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
-        //                Com.Parameters.Add(new SqlParameter("@CODMONEDA", F.Codmoneda));
+        //                Com.Parameters.Add(new SqlParameter("@CODMONEDA", F.Moneda));
         //                Com.Parameters.Add(new SqlParameter("@Z", xZ));
         //                Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", F.Vendedor));
-        //                Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", F.Documento));
+        //                Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", F.));
+        //                Com.Parameters.Add(new SqlParameter("@DETALLE", F.ImporteTotalSinIva()));
+        //                Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
         //                Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.ImporteTotalSinIva()));
         //                Com.Parameters.Add(new SqlParameter("@IVA", F.Documento));
         //                Com.Transaction = (SqlTransaction)Tran;
@@ -232,16 +234,16 @@ namespace JJ.Mappers
 
 
         //            }
-        //            AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura,F.Serie);
+        //            AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
         //            Tran.Commit();
         //        }
         //    }
         //}
 
-        //public object getFacturaByID(string xSerie, int xNumero,TipoLineas xTipo)
+        //public object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo)
         //{
         //    Factura F = null;
-        //    //
+
         //    string Query = "SELECT * FROM VENTAS V ";
         //    switch (xTipo)
         //    {
@@ -264,7 +266,7 @@ namespace JJ.Mappers
         //            {
         //                if (Reader.Read())
         //                {
-        //                    F = getFacturaFromReader(Reader,xTipo);
+        //                    F = getFacturaFromReader(Reader, xTipo);
         //                }
         //            }
         //        }
@@ -272,7 +274,7 @@ namespace JJ.Mappers
         //    return F;
         //}
 
-        //private Factura getFacturaFromReader(IDataReader Reader,TipoLineas xTipo)
+        //private Factura getFacturaFromReader(IDataReader Reader, TipoLineas xTipo)
         //{
         //    Factura F = null;
         //    ClienteContado CC = null;

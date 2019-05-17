@@ -224,27 +224,25 @@ namespace JJ.Entidades
             _CodMoneda = xCodMoneda;
         }
 
+        public decimal PrecioIva()
+        {
 
+            return ((_Costo*ValorPorcentaje(_Iva))* ValorPorcentaje(_Ganancia));
+            
+        }
+
+       
         public decimal Precio()
         {
-            return (_Costo + ValorPorcentaje(_Costo, _Iva)) + ValorPorcentaje(_Costo, _Ganancia);
+            return (PrecioIva() / ValorPorcentaje(_Iva));
         }
 
-        private decimal ValorPorcentaje(decimal Numero, decimal Porcentaje)
+        private decimal ValorPorcentaje(decimal Porcentaje)
         {
-            return (Porcentaje * Numero) / 100;
+            return (1+(Porcentaje/100));
         }
 
-        public decimal Precio(Tarifa xTarifa)
-        {
-            if (xTarifa == null)
-                return Precio();
-
-            decimal xPrecio = Precio();
-            return Precio() + ValorPorcentaje(xPrecio, xTarifa.Cargo);
-        }
-
-        
+           
 
 
        
