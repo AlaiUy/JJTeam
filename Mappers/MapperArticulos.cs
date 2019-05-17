@@ -355,7 +355,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * from dbo.JL_ArtciulosView", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM dbo.JL_ArtciulosView", (SqlConnection)Con))
                 { 
                     DT.Load(ExecuteReader(Com));
                 }
