@@ -20,8 +20,56 @@ namespace JJ.Mappers
                 FacturarContado(xObject);
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
+            if (xObject is Compra)
+                FacturarCompra(xObject);
+
 
             return true;
+        }
+
+        private void FacturarCompra(object xObject)
+        {
+            Compra C = (Compra)xObject;
+            int Numero = -1;
+
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlTransaction Tran = Con.BeginTransaction())
+                {
+                    Numero = AddCabeceraCompra(C);
+                    
+                    AddLineasEspera(E.Lineas, Con, Tran, xCodEspera, TipoLineas.Contado);
+                    Tran.Commit();
+                }
+            }
+
+            //Ingreso Cabecera
+            
+            //Ingreso las lineas
+            AddLineasCompra(C, Numero);
+            //Ingreso el historico de precios
+            AddHisotriaPrecios(C);
+            //Actualizo el precio en la tabla articulos
+            UpdatePreciosArticulos(C.Lineas);
+
+        }
+
+        private int AddCabeceraCompra(Compra xC,SqlConnection xCon,SqlTransaction xTran)
+        {
+            using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRAS(SERIECOMPRA,FECHA,CODPROVEEDOR, CODMONEDA, NUMPROVEEDOR, SERIEPROVEEDO, FECHAPROVEEDOR) OUTPUT INSERTED.IDCOMPRA VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
+            {
+                Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
+                Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
+                Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
+                Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
+                Com.Parameters.Add(new SqlParameter("@TIPO", E.Tipo));
+                Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
+                Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
+                Com.Transaction = (SqlTransaction)Tran;
+                var Result = ExecuteScalar(Com, P);
+                int.TryParse(Result.ToString(), out xCodEspera);
+            }
         }
 
         public IList<object> getMonedas()
