@@ -39,19 +39,20 @@ namespace JJ.Entidades
             return (_Costo * (1 + (Articulo.Iva / 100)));
         }
 
-        public override decimal Total() //Total con iva
+        public override decimal TotalconIva() //Total con iva
         {
+     
             return (_Costo * (1 + (Articulo.Iva / 100))) * Cantidad;
         }
 
-        public override decimal TotalDescuento() //Total Con descuento
+        public override decimal TotalConDescuento() //Total Con descuento
         {
-            return ((this.Costo* (1 + (this.Articulo.Iva / 100))) * ((100 - Descuento) / 100)) * Cantidad;
+            return (TotalconIva() * ((100 - Descuento) / 100));
         }
 
-        public override decimal ImporteDescuento()
+        public override decimal ImporteDescuentoTotal()
         {
-            return (this.Total() - this.TotalDescuento()) * Cantidad;
+            return (TotalconIva() - TotalConDescuento());
         }
 
     }
