@@ -82,5 +82,10 @@ namespace JJ.Entidades
                     return true;
             return false;
         }
+
+        public Seriedoc getSerieByID(int xCodDocumento)
+        {
+            return _Series.Find(x => x.Documento == xCodDocumento);
+        }
     }
 }

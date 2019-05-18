@@ -54,6 +54,12 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(E);
         }
 
+        public void IngresarCompra(AlbaranCompra xCompra)
+        {
+
+            _DBDocumentos.Add(xCompra);
+        }
+
 
     }
 

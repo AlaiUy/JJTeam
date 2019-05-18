@@ -20,58 +20,109 @@ namespace JJ.Mappers
                 //FacturarContado(xObject);
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
-            //if (xObject is Compra)
-                //FacturarCompra(xObject);
+            if (xObject is AlbaranCompra)
+                FacturarCompra(xObject);
 
 
             return true;
         }
 
-        //private void FacturarCompra(object xObject)
-        //{
-        //    Compra C = (Compra)xObject;
-        //    int Numero = -1;
+        private void FacturarCompra(object xObject)
+        {
+            AlbaranCompra C = (AlbaranCompra)xObject;
+            int Numero = -1;
 
-        //    using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-        //    {
-        //        Con.Open();
-        //        using (SqlTransaction Tran = Con.BeginTransaction())
-        //        {
-        //            Numero = AddCabeceraCompra(C);
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlTransaction Tran = Con.BeginTransaction())
+                {
+                    //Ingreso Cabecera
+                    Numero = AddCabeceraCompra(C,Con,Tran);
+                    //Ingreso las lineas
+                    AddLineasCompra(C, Numero,Con,Tran);
+                    //Actualizo el precio en la tabla articulos
+                    UpdatePreciosArticulos(C.Lineas,Con,Tran);
+                    Tran.Commit();
+                }
+            }
+        }
 
-        //            AddLineasEspera(E.Lineas, Con, Tran, xCodEspera, TipoLineas.Contado);
-        //            Tran.Commit();
-        //        }
-        //    }
+        private void UpdatePreciosArticulos(List<CompraLin> xLineas, SqlConnection xCon, SqlTransaction xTran)
+        {
+            foreach (CompraLin L in xLineas)
+            {
+                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,IVA = @IVA WHERE CODARTICULO = @ARTICULO", (SqlConnection)xCon))
+                {
+                    Com.Parameters.Add(new SqlParameter("@COSTO", L.Articulo.Costo));
+                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva));
+                    Com.Parameters.Add(new SqlParameter("@ARTICULO", L.Articulo.CodArticulo));
+                    Com.Transaction = xTran;
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
 
-        //    Ingreso Cabecera
+        private void AddLineasCompra(AlbaranCompra xC, int xNumero, SqlConnection xCon, SqlTransaction xTran)
+        {
+            foreach (CompraLin L in xC.Lineas)
+            {
+                using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRASLIN(IDCOMPRA,SERIECOMPRA,NUMLIN,CODATICULO,DESCRIPCION,CANTIDAD,PRECIOBRUTO,IVA,TOTALIVA) VALUES(@IDCOMPRA,@SERIECOMPRA,@NUMLIN,@CODATICULO,@DESCRIPCION,@CANTIDAD,@PRECIOBRUTO,@IVA,@TOTALIVA)", (SqlConnection)xCon))
+                {
+                    Com.Parameters.Add(new SqlParameter("@IDCOMPRA", xNumero));
+                    Com.Parameters.Add(new SqlParameter("@SERIECOMPRA", xC.Serie));
+                    Com.Parameters.Add(new SqlParameter("@NUMLIN", L.NumLinea));
+                    Com.Parameters.Add(new SqlParameter("@CODATICULO", L.Articulo.CodArticulo));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", L.Descripcion));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
+                    Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", L.SubTotal()));
+                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva));
+                    Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.Total() - L.SubTotal()));
+                    Com.Transaction = xTran;
+                    ExecuteNonQuery(Com);
+                    AddHisotriaPrecios(xC,xCon,xTran,L,xNumero);
+                }
+            }
+        }
+
+        private void AddHisotriaPrecios(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran, CompraLin xL,int xNumero)
+        {
+            using (SqlCommand Com = new SqlCommand("INSERT INTO PRECIOS(CODARTICULO,IDCOMPRA,SERIECOMPRA,PRECIOBRUTO,FECHA,CODMONEDA,IVA) VALUES(@CODARTICULO,@IDCOMPRA,@SERIECOMPRA,@PRECIOBRUTO,@FECHA,@CODMONEDA,@IVA)", (SqlConnection)xCon))
+            {
+                //CODARTICULO,IDCOMPRA,SERIECOMPRA,PRECIOBRUTO,FECHA,CODMONEDA,IVA
+                Com.Parameters.Add(new SqlParameter("@CODARTICULO", xL.Articulo.CodArticulo));
+                Com.Parameters.Add(new SqlParameter("@IDCOMPRA", xNumero));
+                Com.Parameters.Add(new SqlParameter("@SERIECOMPRA",xC.Serie));
+                Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO",xL.Costo));
+                Com.Parameters.Add(new SqlParameter("@FECHA", xC.Fecha));
+                Com.Parameters.Add(new SqlParameter("@CODMONEDA", xC.CodMoneda));
+                Com.Parameters.Add(new SqlParameter("@IVA", xL.Articulo.Iva));
+                Com.Transaction = xTran;
+                ExecuteNonQuery(Com);
+            }
+        }
+
+        private int AddCabeceraCompra(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran)
+        {
+            int Numero = -1;
+            using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRAS(SERIECOMPRA,FECHA,CODPROVEEDOR, CODMONEDA, NUMPROVEEDOR, SERIEPROVEEDO, FECHAPROVEEDOR,COTIZACION) OUTPUT INSERTED.IDCOMPRA VALUES (@SERIECOMPRA,@FECHA,@CODPROVEEDOR,@CODMONEDA,@NUMPROVEEDOR,@SERIEPROVEEDO,@FECHAPROVEEDOR,@COTIZACION)", (SqlConnection)xCon))
+            {
+                Com.Parameters.Add(new SqlParameter("@SERIECOMPRA", xC.Serie));
+                Com.Parameters.Add(new SqlParameter("@FECHA", xC.Fecha.ToShortDateString()));
+                Com.Parameters.Add(new SqlParameter("@CODPROVEEDOR", xC.CodProveedor));
+                Com.Parameters.Add(new SqlParameter("@CODMONEDA", xC.CodMoneda));
+                Com.Parameters.Add(new SqlParameter("@NUMPROVEEDOR", xC.CodProveedor));
+                Com.Parameters.Add(new SqlParameter("@SERIEPROVEEDO", xC.SerieFacturaProveedor));
+                Com.Parameters.Add(new SqlParameter("@FECHAPROVEEDOR", xC.FechaProveedor));
+                Com.Parameters.Add(new SqlParameter("@COTIZACION", xC.Cotizacion));
+                Com.Transaction = xTran;
+                var Result = ExecuteScalar(Com);
+                int.TryParse(Result.ToString(), out Numero);
+            }
+            return Numero;
+        }
 
 
-        //    Ingreso las lineas
-        //    AddLineasCompra(C, Numero);
-        //    Ingreso el historico de precios
-        //    AddHisotriaPrecios(C);
-        //    Actualizo el precio en la tabla articulos
-        //    UpdatePreciosArticulos(C.Lineas);
-
-        //}
-
-        //private int AddCabeceraCompra(Compra xC, SqlConnection xCon, SqlTransaction xTran)
-        //{
-        //    using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRAS(SERIECOMPRA,FECHA,CODPROVEEDOR, CODMONEDA, NUMPROVEEDOR, SERIEPROVEEDO, FECHAPROVEEDOR) OUTPUT INSERTED.IDCOMPRA VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
-        //    {
-        //        Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
-        //        Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
-        //        Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
-        //        Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
-        //        Com.Parameters.Add(new SqlParameter("@TIPO", E.Tipo));
-        //        Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
-        //        Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
-        //        Com.Transaction = (SqlTransaction)Tran;
-        //        var Result = ExecuteScalar(Com, P);
-        //        int.TryParse(Result.ToString(), out xCodEspera);
-        //    }
-        //}
 
         public IList<object> getMonedas()
         {
