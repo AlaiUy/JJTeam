@@ -84,7 +84,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
                     Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", L.SubTotal()));
                     Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva));
-                    Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.Total() - L.SubTotal()));
+                    Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.TotalconIva() - L.SubTotal()));
                     Com.Transaction = xTran;
                     ExecuteNonQuery(Com);
                     AddHisotriaPrecios(xC,xCon,xTran,L,xNumero);
