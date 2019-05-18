@@ -15,8 +15,9 @@ namespace JJ.Entidades
         private int _Vendedor;
         private List<Linea> _Lineas;
         private decimal _Cotizacion;
+        private string _Detalle;
 
-        public Documento(DateTime xFecha,string xSerie,string xCaja,int xMoneda,int xZ,int xVendedor, decimal xCotizacion)
+        public Documento(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion)
         {
             _Fecha = xFecha;
             _Serie = xSerie;
@@ -35,7 +36,7 @@ namespace JJ.Entidades
             }
         }
 
-        public void AgregarLinea(Linea  Linea)
+        public void AgregarLinea(Linea Linea)
         {
             Lineas.Add(Linea);
         }
@@ -144,6 +145,19 @@ namespace JJ.Entidades
             }
         }
 
+        public string Detalle
+        {
+            get
+            {
+                return _Detalle;
+            }
+
+            set
+            {
+                _Detalle = value;
+            }
+        }
+
         public decimal Subtotal()
         {
             decimal zSuma = 0;
@@ -152,14 +166,14 @@ namespace JJ.Entidades
             return zSuma;
         }
 
-        public decimal Total()
-        {
-            decimal zSuma = 0;
+        public decimal IvaTotal() {
+            decimal ivaTot = 0;
             foreach (Linea L in _Lineas)
-                zSuma += L.TotalDescuento();
-            return zSuma;
+                ivaTot += L.SubTotal();
+            return ivaTot;
         }
 
+ 
         
     }
 

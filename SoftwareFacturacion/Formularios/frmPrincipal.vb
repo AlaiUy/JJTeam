@@ -106,7 +106,7 @@ Public Class frmPrincipal
                 objf.Item("CANTIDAD") = objL.Cantidad
                 ' objf.Item("P/UNITARIO C/IVA") = objL.PrecioUnitarioConIva
                 objf.Item("DESCUENTO") = objL.Descuento
-                objf.Item("IMPORTE DESCUENTO TOTAL") = objL.ImporteDescuento
+                objf.Item("IMPORTE DESCUENTO TOTAL") = objL.ImporteDescuentoTotal
                 'objf.Item("PRECIO TOTAL") = objL.PrecioTotalConDescuento
 
                 tTable.Rows.Add(objf)

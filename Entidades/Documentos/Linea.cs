@@ -108,22 +108,29 @@ namespace JJ.Entidades
 
         public virtual decimal Precio() //Con iva
         {
-            return (_objArticulo.Precio() * (1 + (_objArticulo.Iva / 100)));
+            return _objArticulo.Precio();
         }
 
-        public virtual decimal Total() //Total con iva
+        public virtual decimal TotalconIva() //Total con iva
         {
             return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva / 100))) * _Cantidad;
         }
 
-        public virtual decimal TotalDescuento() //Total Con descuento
+        public virtual decimal TotalConDescuento() //Total Con descuento
         {
-            return ((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
+            return (TotalconIva() * ((100 - _Descuento) / 100));
+
+                //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
         }
 
-        public virtual decimal ImporteDescuento()
+        public virtual decimal IvaTotal()
         {
-            return (Total() - TotalDescuento()) * _Cantidad;
+            return (TotalConDescuento() / (1+(_objArticulo.Iva/100)));
+        }
+
+        public virtual decimal ImporteDescuentoTotal()
+        {
+            return (TotalconIva() - TotalConDescuento());
         }
     }
 }
