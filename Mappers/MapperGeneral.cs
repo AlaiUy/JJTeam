@@ -70,17 +70,14 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE,T.SUBFIJO, T.COEFICIENTE FROM MONEDAS T WHERE T.ACTIVA = 1", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT T.CODIGO,T.NOMBRE,T.SUBFIJO, T.COEFICIENTE,ISNULL(dbo.getCotizacion(T.CODIGO),1) AS COTIZACION FROM MONEDAS T WHERE T.ACTIVA = 1", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
                         while (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            string SubFijo = (string)Reader["SUBFIJO"];
-                            decimal Coeficiente= (Decimal)Reader["COEFICIENTE"];
-                            Monedas.Add(new Moneda(Codigo, Nombre, SubFijo,Coeficiente));
+                            Monedas.Add(getMonedaFromReader(Reader));
+                            
                         }
                     }
                 }
@@ -136,7 +133,8 @@ namespace JJ.Mappers
             string Nombre = (string)Reader["NOMBRE"];
             string SubFijo = (string)Reader["SUBFIJO"];
             decimal Coeficiente = (Decimal)Reader["COEFICIENTE"];
-            return new Moneda(Codigo, Nombre, SubFijo, Coeficiente);
+            decimal Cotizacion = (decimal)Reader["COTIZACION"];
+            return new Moneda(Codigo, Nombre, SubFijo, Coeficiente, Cotizacion);
         }
     }
 }

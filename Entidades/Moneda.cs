@@ -11,6 +11,7 @@ namespace JJ.Entidades
         private string _Nombre;
         private string _SubFijo;
         private decimal _Coeficiente;
+        private decimal _Cotizacion;
 
         public int Codigo
         {
@@ -60,18 +61,32 @@ namespace JJ.Entidades
             }
         }
 
+        public decimal Cotizacion
+        {
+            get
+            {
+                return _Cotizacion;
+            }
+
+            set
+            {
+                _Cotizacion = value;
+            }
+        }
+
         public Moneda() { }
 
         public Moneda(int xCodigo) {
             _Codigo = xCodigo;
         }
 
-        public Moneda(int xCodigo, string xNombre, string xSubFijo, decimal xCoeficiente)
+        public Moneda(int xCodigo, string xNombre, string xSubFijo, decimal xCoeficiente,decimal xCotizacion)
         {
             _Codigo = xCodigo;
             _Nombre = xNombre;
             _SubFijo = xSubFijo;
             _Coeficiente = xCoeficiente;
+            _Cotizacion = xCotizacion;
         }
 
         public override string ToString()
