@@ -24,7 +24,7 @@ namespace JJ.Mappers
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-                //Facturar(xObject,33,1);
+                Facturar(xObject,33,1);
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
@@ -476,13 +476,14 @@ namespace JJ.Mappers
             foreach (object L in lineas)
             {
                 VentaLin VL = (VentaLin)L;
-                using (SqlCommand Com = new SqlCommand("INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO,@IVA)", (SqlConnection)xCon))
+                using (SqlCommand Com = new SqlCommand("INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO,@REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO,@IVA)", (SqlConnection)xCon))
                 {
                     //FALTA EN VENTALIN PONER ATRIBUTOS
                     Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
                     Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
                     Com.Parameters.Add(new SqlParameter("@LINEA",VL.NumLinea ));
                     Com.Parameters.Add(new SqlParameter("@CODARTICULO",VL.Articulo.CodArticulo ));
+                    Com.Parameters.Add(new SqlParameter("@REFERENCIA", VL.Articulo.Referencia));
                     Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion.ToUpper() ));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
                     Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio()));

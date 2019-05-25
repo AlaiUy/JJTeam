@@ -5,6 +5,7 @@ Imports JJ.Entidades
 Public Class frmPrincipal
 
     Private objE As EsperaContado
+    Private objCC As ClienteContado
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         If MsgBox("Desea salir?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
@@ -42,15 +43,17 @@ Public Class frmPrincipal
             ' Me.txtDireccion.Text = objE.ObjCliente.Direccion & " " & objE.ObjCliente.DireccionNumero
 
             '  Me.txtTelefono.Text = objE.ObjCliente.Telefono
-            If objE.Tipo = 1 Then
+            If TypeOf objE Is EsperaContado Then
                 Me.txtTipoVta.Text = "CONTADO"
-                Dim objCC As ClienteContado = GesPersonas.getInstance.getClienteContadoByID(objE.Codclientecontado)
+                objCC = GesPersonas.getInstance.getClienteContadoByID(objE.Codclientecontado)
                 txtNombre.Text = objCC.Nombre
                 txtDocumento.Text = objCC.Documento
                 txtDireccion.Text = objCC.Direccion
 
-            Else
-                Me.txtTipoVta.Text = "CREDITO"
+                'ElseIf (TypeOf objE Is EsperaCredito) Then
+                '    Me.txtTipoVta.Text = "CREDITO"
+
+
             End If
 
             Me.txtNombre.Text = objE.NombreCLiente
@@ -66,7 +69,7 @@ Public Class frmPrincipal
             Me.txtTelefono.Text = ""
 
             Me.txtTipoVta.Text = ""
-
+            objCC = Nothing
 
             Me.txtTotalSinIva.Text = 0
             Me.txtImporteIva.Text = 0
@@ -101,13 +104,13 @@ Public Class frmPrincipal
             For Each objL As Esperalin In Me.objE.Lineas
                 Dim objf As DataRow = tTable.NewRow()
 
-                ' objf.Item("CODARTICULO") = objL.ObjArticulo.Referencia
+                objf.Item("CODARTICULO") = objL.Articulo.Referencia
                 objf.Item("DESCRIPCION") = objL.Descripcion
                 objf.Item("CANTIDAD") = objL.Cantidad
-                ' objf.Item("P/UNITARIO C/IVA") = objL.PrecioUnitarioConIva
+                objf.Item("P/UNITARIO C/IVA") = objL.Precio
                 objf.Item("DESCUENTO") = objL.Descuento
                 objf.Item("IMPORTE DESCUENTO TOTAL") = objL.ImporteDescuentoTotal
-                'objf.Item("PRECIO TOTAL") = objL.PrecioTotalConDescuento
+                objf.Item("PRECIO TOTAL") = objL.TotalConDescuento
 
                 tTable.Rows.Add(objf)
             Next
@@ -119,28 +122,25 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
-        'Dim objF As New VentaContado(1, "C", "1", Date.Today(), objE.Codmoneda, 1, objE.Codvendedor, 1, New ClienteContado(objE.Codclientecontado, "45177525", "", "Jose Curti", "8 de octubre 635", "47325106"))
+
+        Dim objF As New VentaContado(objCC, Date.Today(), "c", "VB1", CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, 1, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion)
 
 
-        'For Each objL As Esperalin In objE.Lineas
+        For Each objL As Esperalin In objE.Lineas
 
-        '    objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
+            objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.Articulo, objL.Descripcion, objL.Cantidad, objL.Descuento))
+            'objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
 
-        'Next
-
-
-        'Try
-        '    GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
-        '    objE = Nothing
-        '    MostrarEnTabla()
-        'Catch ex As Exception
-        '    MsgBox(ex.Message)
-        'End Try
+        Next
 
 
-
-
-
+        Try
+            GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+            objE = Nothing
+            MostrarEnTabla()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
 
     End Sub

@@ -99,6 +99,7 @@ namespace JJ.Entidades
             _Cantidad = xCantidad;
             _Descuento = xDescuento;
             _NumLinea = xNumLinea;
+           
         }
 
         public virtual decimal SubTotal()
@@ -108,7 +109,7 @@ namespace JJ.Entidades
 
         public virtual decimal Precio() //Con iva
         {
-            return _objArticulo.Precio();
+            return _objArticulo.PrecioIva();
         }
 
         public virtual decimal TotalconIva() //Total con iva

@@ -17,8 +17,8 @@ namespace JJ.Gestoras
 
         public void GesFacturar(object xObjFactura, int xZ)
         {
-            
 
+            _DBDocumentos.Add(xObjFactura);
         }
 
 

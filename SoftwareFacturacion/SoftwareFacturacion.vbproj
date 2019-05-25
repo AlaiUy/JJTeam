@@ -70,6 +70,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formularios\frmAnulacion.Designer.vb">
+      <DependentUpon>frmAnulacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmAnulacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\frmCierre.Designer.vb">
       <DependentUpon>frmCierre.vb</DependentUpon>
     </Compile>
@@ -117,6 +123,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Formularios\frmAnulacion.resx">
+      <DependentUpon>frmAnulacion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmCierre.resx">
       <DependentUpon>frmCierre.vb</DependentUpon>
     </EmbeddedResource>

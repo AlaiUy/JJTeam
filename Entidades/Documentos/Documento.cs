@@ -26,6 +26,8 @@ namespace JJ.Entidades
             _Z = xZ;
             _Vendedor = xVendedor;
             _Cotizacion = xCotizacion;
+            _Lineas = new List<Linea>();
+            _Detalle = "";
         }
 
         public void AgregarLineas(List<Linea> xLineas)

@@ -133,6 +133,7 @@ Partial Class frmPrincipal
         Me.dgridLineas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgridLineas.Location = New System.Drawing.Point(0, 0)
         Me.dgridLineas.Name = "dgridLineas"
+        Me.dgridLineas.ReadOnly = True
         Me.dgridLineas.RowHeadersVisible = False
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
