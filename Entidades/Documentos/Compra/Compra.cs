@@ -39,5 +39,19 @@ namespace JJ.Entidades
                 return _SerieFacturaProveedor;
             }
         }
+
+ 
+
+        public void RecalculoPrecioConIvaTotal(int xNumLinea, decimal xPrecioConIvaTotal)
+        {
+            
+            foreach (CompraLin L in base.Lineas)
+                if (L.NumLinea == xNumLinea)
+                {
+                    L.Costo = ((xPrecioConIvaTotal / L.Cantidad) / (1 + (L.Articulo.Iva / 100)));
+                  
+                }
+        }
+
     }
 }
