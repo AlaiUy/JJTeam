@@ -34,7 +34,7 @@ namespace JJ.Entidades
         }
 
         protected  Categoria() {
-
+            _codigo = -1;
         }
 
         protected Categoria(int xCodigo, string xDescripcion)

@@ -157,27 +157,33 @@ namespace JJ.Mappers
 
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
-                        Proveedor Entity;
                         while (Reader.Read())
                         {
-                            int Codigo = (int)Reader["CODIGO"];
-                            string Nombre = (string)Reader["NOMBRE"];
-                            Entity = new Proveedor(Codigo);
-                            Entity.Direccion = (string)Reader["DIRECCION"];
-                            Entity.Dirnumero = (string)Reader["DIRNUMERO"];
-                            Entity.Email = (string)Reader["EMAIL"];
-                            Entity.Nombre = Nombre;
-                            Entity.Rut = (string)Reader["RUT"];
-                            Entity.Rz = (string)Reader["RZ"];
-                            Entity.Telefono = (string)Reader["TELEFONO"];
-                            Entity.Celular = (string)Reader["CELULAR"];
-                            Entity.Categoria = (int)Reader["CODCATEGORIA"];
-                            Proveedores.Add(Entity);
+                            object P = getProveedorFromReader(Reader);
+                            Proveedores.Add(P);
                         }
                     }
                 }
             }
             return Proveedores;
+        }
+
+        private Proveedor getProveedorFromReader(IDataReader Reader)
+        {
+            Proveedor Entity = null;
+            int Codigo = (int)Reader["CODIGO"];
+            string Nombre = (string)Reader["NOMBRE"];
+            Entity = new Proveedor(Codigo);
+            Entity.Direccion = (string)Reader["DIRECCION"];
+            Entity.Dirnumero = (string)Reader["DIRNUMERO"];
+            Entity.Email = (string)Reader["EMAIL"];
+            Entity.Nombre = Nombre;
+            Entity.Rut = (string)Reader["RUT"];
+            Entity.Rz = (string)Reader["RZ"];
+            Entity.Telefono = (string)Reader["TELEFONO"];
+            Entity.Celular = (string)Reader["CELULAR"];
+            Entity.Categoria = (int)Reader["CODCATEGORIA"];
+            return Entity;
         }
 
         public object getPersona(string xCodPersona)
@@ -501,6 +507,78 @@ namespace JJ.Mappers
                 }
             }
             return Numero;
+        }
+
+        public void addCatProveedor(object xCategoriaProveedor)
+        {
+            int Codigo = -1;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO CATEGORIASPROVEEDORES(NOMBRE) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE)", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", ((CatProveedor)xCategoriaProveedor).Nombre.ToUpper()));
+                    var Result = ExecuteScalar(Com);
+                    int.TryParse(Result.ToString(), out Codigo);
+                }
+
+            }
+        }
+
+        public object getVistaProveedores()
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM dbo.JL_ProveedoresView", (SqlConnection)Con))
+                {
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
+        public Proveedor getProveedorByID(string xCod)
+        {
+            Proveedor P = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL FROM PROVEEDORES P WHERE CODIGO = @CODIGO OR RUT = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCod));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            P = getProveedorFromReader(Reader);
+                        }
+                    }
+                }
+            }
+            return P;
+        }
+
+        public Proveedor getProveedorByRut(string xRut)
+        {
+            Proveedor P = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL FROM PROVEEDORES P WHERE RUT = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xRut));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            P = getProveedorFromReader(Reader);
+                        }
+                    }
+                }
+            }
+            return P;
         }
     }
 }

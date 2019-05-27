@@ -56,7 +56,9 @@ namespace JJ.Gestoras
 
         public void IngresarCompra(AlbaranCompra xCompra)
         {
-
+            xCompra.Serie = GesCajas.getInstance().Caja.getSerieByID(20).Serie;
+            xCompra.FechaProveedor = DateTime.Now;
+            xCompra.Fecha = DateTime.Now;
             _DBDocumentos.Add(xCompra);
         }
 

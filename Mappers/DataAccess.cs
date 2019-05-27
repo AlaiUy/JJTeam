@@ -55,7 +55,7 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
@@ -75,7 +75,7 @@ namespace JJ.Mappers
                 {
                 
                     CerrarConexion(cmd.Connection);
-                    throw new Exception(ExceptionMsg(E));
+                    throw new Exception(E.Message);
             }
             
         }
@@ -91,7 +91,7 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
@@ -108,7 +108,7 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
@@ -126,7 +126,7 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
@@ -140,7 +140,7 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
@@ -189,7 +189,7 @@ namespace JJ.Mappers
             catch (Exception E)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(E));
+                throw new Exception(E.Message);
             }
         }
 
@@ -203,24 +203,11 @@ namespace JJ.Mappers
             catch (Exception e)
             {
                 CerrarConexion(cmd.Connection);
-                throw new Exception(ExceptionMsg(e));
+                throw new Exception(e.Message);
             }
         }
 
-        private string ExceptionMsg(Exception xException)
-        {
-            SqlException MssqlEx = null;
-            if (xException is SqlException)
-                MssqlEx = (SqlException)xException;
-
-            if (MssqlEx.Number == 2627)
-                return "Existe un un registro con el mismo dato que se intenta registrar";
-
-            if (MssqlEx.Number == 547)
-                return "Existe un error con un dato que no esta vinculado entre si, consultar";
-
-            return xException.Message;
-        }
+        
 
     }
 

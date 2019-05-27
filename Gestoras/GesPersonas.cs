@@ -3,6 +3,7 @@ using JJ.FabricaMapper;
 using JJ.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -41,11 +42,11 @@ namespace JJ.Gestoras
 
         public void AddEmpresa(Empresa xEmpresa)
         {
-            
+
             if (xEmpresa == null)
                 return;
 
-            if (xEmpresa.CodEmpresa  != -1)
+            if (xEmpresa.CodEmpresa != -1)
                 return;
 
             if (xEmpresa.Nombre.Length < 4 || xEmpresa.Nombre.Length > 100)
@@ -66,19 +67,57 @@ namespace JJ.Gestoras
             if (xEmpresa.Pais.Length < 4 || xEmpresa.Ciudad.Length > 50)
                 throw new Exception("No se puede ingresar ese Pais. [Length 4-50]");
 
-            if (xEmpresa.Telefono.Length  < 9)
-                if(!Tools.Numeros.isNumeric(xEmpresa.Telefono))
-                         throw new Exception("No se puede ingresar ese telefono. [Only number.]");
-            else
-                throw new Exception("No se puede ingresar ese telefono. [Max 8.]");
+            if (xEmpresa.Telefono.Length < 9)
+                if (!Tools.Numeros.isNumeric(xEmpresa.Telefono))
+                    throw new Exception("No se puede ingresar ese telefono. [Only number.]");
+                else
+                    throw new Exception("No se puede ingresar ese telefono. [Max 8.]");
 
             if (xEmpresa.Email.Length < 100)
                 if (!xEmpresa.Email.Contains("@"))
                     throw new Exception("El email no se puede validar. [Must contain: @]");
-            else
+                else
                     throw new Exception("El direccion de correo electronico no valida en este sistema. [Max 100.]");
 
             _DBPersonas.addEmpresa(xEmpresa);
+        }
+
+        public Proveedor getProveedorById(string xCod)
+        {
+            Proveedor P = null;
+
+            if (xCod.Length < 10) {
+                P = _getProveedorById(xCod);
+                
+            }else{
+                P = _getProveedorByRut(xCod);
+                if (P == null)
+                    P = _DBPersonas.getProveedorByRut(xCod);
+            }
+            if (P == null)
+                throw new Exception("No se puede encontrar el proveedor buscado");
+            else
+                return P;
+        }
+
+        private Proveedor _getProveedorById(string xCod)
+        {
+            foreach (object P in _Proveedores)
+            {
+                if (((Proveedor)P).Codigo.Equals( Convert.ToInt32(xCod)))
+                    return (Proveedor)P;
+            }
+            return null;
+        }
+
+        private Proveedor _getProveedorByRut(string xCod)
+        {
+            foreach (object P in _Proveedores)
+            {
+                if (((Proveedor)P).Rut.Equals(xCod))
+                    return (Proveedor)P;
+            }
+            return null;
         }
 
         public ClienteContado addClienteContado(ClienteContado xCC)
@@ -109,7 +148,7 @@ namespace JJ.Gestoras
 
             int xCodigo = _DBPersonas.addclienteContado(xCC);
 
-            return new ClienteContado(xCodigo,xCC.Documento, xCC.Nombre, xCC.Direccion, xCC.Telefono);
+            return new ClienteContado(xCodigo, xCC.Documento, xCC.Nombre, xCC.Direccion, xCC.Telefono);
 
         }
 
@@ -117,38 +156,40 @@ namespace JJ.Gestoras
         {
             if (xProveedor == null)
                 return;
-            if (xProveedor.Nombre.Length < 5 || xProveedor.Nombre.Length > 20)
-                throw new Exception("El nombre del proveedor no es valido. [Length 5-20]");
+            if (xProveedor.Nombre.Length < 5 || xProveedor.Nombre.Length > 50)
+                throw new Exception("El nombre del proveedor no es valido. [Length 5-50]");
             if (xProveedor.Rz.Length < 4 || xProveedor.Rz.Length > 50)
                 throw new Exception("La razon social del proveedor no es valido. [Length 4-50]");
             if (xProveedor.Direccion.Length > 50)
                 throw new Exception("La direccion del proveedor no es valida. [Length 4-50]");
             if (xProveedor.Dirnumero.Length < 11)
-                if(!Tools.Numeros.isNumeric(xProveedor.Dirnumero))
+            {
+                if (!Tools.Numeros.isNumeric(xProveedor.Dirnumero))
                     throw new Exception("El numero de calle no es correcto. [Must be only numbers]");
+            }
             else
-                    throw new Exception("El numero de calle es demasiado largo. [Max 10]");
+                throw new Exception("El numero de calle es demasiado largo. [Max 10]");
 
-            if (xProveedor.Telefono.Length < 9)
-                if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
-                    throw new Exception("El telefono ingresado no es valido");
 
-            if (xProveedor.Celular.Length < 10)
-                if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
-                    throw new Exception("El celular ingresado no es valido");
-            else
-                    throw new Exception("El numero de calle es demasiado largo. [Max 9]");
+            if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
+                throw new Exception("El telefono ingresado no es valido");
+
+
+            if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
+                throw new Exception("El celular ingresado no es valido");
+
 
             if (xProveedor.Email.Length < 100)
+            {
                 if (!xProveedor.Email.Contains("@"))
                     throw new Exception("El email no se puede validar. [Must contain: @]");
-                else
+            } else
                     throw new Exception("El direccion de correo electronico no valida en este sistema. [Max 100.]");
-            
-            if(xProveedor.Categoria < 1 || !_ExisteCategoria(xProveedor.Categoria,_CategoriasProveedores))
+
+            if (xProveedor.Categoria < 1 || !_ExisteCategoria(xProveedor.Categoria, _CategoriasProveedores))
                 throw new Exception("La categoria del proveedor no es correcta");
 
-            if(!Tools.Numeros.ValidaRut(xProveedor.Rut) || _ExisteProveedorByRut(xProveedor.Rut))
+            if (!Tools.Numeros.ValidaRut(xProveedor.Rut) || _ExisteProveedorByRut(xProveedor.Rut))
                 throw new Exception("Ya existe un proveedor con el rut que intenta registrar");
 
             _DBPersonas.Add(xProveedor);
@@ -181,8 +222,8 @@ namespace JJ.Gestoras
 
             if (Cat is CatProveedor)
                 Cat = (Categoria)_DBPersonas.getCategoriasProveedorByID(xCodigo);
-            
-            if(Cat.Codigo == xCodigo)
+
+            if (Cat.Codigo == xCodigo)
                 return true;
             return false;
         }
@@ -222,6 +263,17 @@ namespace JJ.Gestoras
         public ClienteContado getClienteContadoByDoc(string xDoc)
         {
             return (ClienteContado)_DBPersonas.getClienteContadobyDoc(xDoc);
+        }
+
+        public void addCatProveedor(CatProveedor xCategoriaProveedor)
+        {
+            _DBPersonas.addCatProveedor(xCategoriaProveedor);
+            _CategoriasProveedores = _DBPersonas.getCategoriasProveedor();
+        }
+
+        public DataTable getVistaProveedores()
+        {
+            return (DataTable)_DBPersonas.getVistaProveedores();
         }
 
 

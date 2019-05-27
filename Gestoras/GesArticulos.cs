@@ -74,6 +74,8 @@ namespace JJ.Gestoras
             return true;
         }
 
+        
+
         public DataTable getVistaArticulos()
         {
             return (DataTable)DBArticulos.getVistaArticulos();

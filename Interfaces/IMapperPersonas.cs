@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using JJ.Entidades;
@@ -25,5 +26,10 @@ namespace JJ.Interfaces
 
         object getClienteContadobyDoc(string xDoc);
         int addclienteContado(object xCC);
+        void addCatProveedor(object xCategoriaProveedor);
+        object getVistaProveedores();
+        Proveedor getProveedorByID(string xCod);
+
+        Proveedor getProveedorByRut(string xRut);
     }
 }

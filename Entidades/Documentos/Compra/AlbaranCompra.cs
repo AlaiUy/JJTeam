@@ -25,7 +25,10 @@ namespace JJ.Entidades
 
         public AlbaranCompra(string xSerie, DateTime xFecha, int xCodproveedor, int xCodmoneda)
         {
-            
+            _Serie = xSerie;
+            _Fecha = xFecha;
+            _CodProveedor = xCodproveedor;
+            _CodMoneda = xCodmoneda; 
         }
 
         /// <summary>
@@ -36,7 +39,6 @@ namespace JJ.Entidades
         {
             foreach (CompraLin Linea in xLineas)
             {
-
                 AgregarLinea(Linea);
             }
         }
@@ -55,6 +57,9 @@ namespace JJ.Entidades
                 throw new Exception("El descuento de la linea es incorrecto");
             if(Linea.ImporteDescuentoTotal() < 0)
                 throw new Exception("El precio de la linea es incorrecto");
+
+            if (_Lineas == null)
+                _Lineas = new List<CompraLin>();
             Lineas.Add(Linea);
         }
 
