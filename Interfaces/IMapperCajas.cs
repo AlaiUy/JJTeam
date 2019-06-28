@@ -16,5 +16,9 @@ namespace JJ.Interfaces
         object getPagoByFecha(DateTime xFecha, string xCaja); //Devuelve un datatable
 
         object getCaja();
+
+        void CierreCaja(decimal xCierrePesos, decimal xCierreDolares, string xCaja, int xZ, int xCodVendedor);
+        
+       int getSaldoDeclarados(string xCaja, int xCodMoneda, int xtipo);
     }
 }

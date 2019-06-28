@@ -17,6 +17,11 @@ namespace JJ.Entidades
         private decimal _Cotizacion;
         private string _Detalle;
 
+        private string _env_Nombre;
+        private string _env_Direccion;
+        private string _env_telefono;
+        private string _env_observaciones;
+
         public Documento(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion)
         {
             _Fecha = xFecha;
@@ -160,6 +165,74 @@ namespace JJ.Entidades
             }
         }
 
+        public string Env_Nombre
+        {
+            get
+            {
+                if (_env_Nombre == null)
+                {
+                    return string.Empty;
+                }
+                return _env_Nombre;
+            }
+
+            set
+            {
+                _env_Nombre = value;
+            }
+        }
+
+        public string Env_Direccion
+        {
+            get
+            {
+                if (_env_Direccion == null)
+                {
+                    return string.Empty;
+                }
+                return _env_Direccion;
+            }
+
+            set
+            {
+                _env_Direccion = value;
+            }
+        }
+
+        public string Env_telefono
+        {
+            get
+            {
+                if (_env_telefono == null)
+                {
+                    return string.Empty;
+                }
+                return _env_telefono;
+            }
+
+            set
+            {
+                _env_telefono = value;
+            }
+        }
+
+        public string Env_observaciones
+        {
+            get
+            {
+                if (_env_observaciones == null)
+                {
+                    return string.Empty;
+                }
+                return _env_observaciones;
+            }
+
+            set
+            {
+                _env_observaciones = value;
+            }
+        }
+
         public decimal Subtotal()
         {
             decimal zSuma = 0;
@@ -171,7 +244,7 @@ namespace JJ.Entidades
         public decimal IvaTotal() {
             decimal ivaTot = 0;
             foreach (Linea L in _Lineas)
-                ivaTot += L.SubTotal();
+                ivaTot += L.IvaTotal();
             return ivaTot;
         }
 

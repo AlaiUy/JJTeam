@@ -50,6 +50,28 @@ namespace JJ.Mappers
             }
         }
 
+        public decimal getCotizacion()
+        {
+
+            decimal Cotizacion = 0;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT COEFICIENTE FROM MONEDAS WHERE CODIGO=2", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            Cotizacion = (decimal)Reader["COEFICIENTE"];
+                        }
+
+                    }
+                }
+            }
+            return Cotizacion;
+        }
+
         public Moneda getMonedaByID(int xCodMoneda)
         {
             throw new NotImplementedException();

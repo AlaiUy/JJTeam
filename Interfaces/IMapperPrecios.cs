@@ -12,5 +12,7 @@ namespace JJ.Interfaces
         IList<object> getTarifas();
         void AgregarMoneda(object xMoneda);
         Moneda getMonedaByID(int xCodMoneda);
+
+        decimal getCotizacion();
     }
 }

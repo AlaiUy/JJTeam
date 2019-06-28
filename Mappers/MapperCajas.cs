@@ -87,10 +87,24 @@ namespace JJ.Mappers
 
 
         public void CierreCaja(decimal xCierrePesos, decimal xCierreDolares, string xCaja, int xZ, int xCodVendedor)
+
         {
+
+            decimal Total = 0;
+            decimal totaldeclarado = 0;
+            decimal pagopesos = getPagosPesos(xCaja, xZ);
+            decimal pagodolares = getPagosDolares(xCaja, xZ);
+
+            decimal cotizacion = MapperGeneral.getInstance().getMonedaByID(2).Cotizacion;
+            decimal Descuadre = 0;
+
+            Total = getVentasContadoPesos(xCaja, xZ) + (getVentasContadoDolares(xCaja, xZ) * cotizacion) - pagopesos - (pagodolares*cotizacion) ;
+            totaldeclarado = xCierrePesos + (xCierreDolares * cotizacion) - pagopesos - (pagodolares * cotizacion);
+            Descuadre =totaldeclarado - Total;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
+                using (SqlTransaction Tran = Con.BeginTransaction()) { 
                 using (SqlCommand Com = new SqlCommand("INSERT INTO DECLARADOZ(TIPO, CAJA, NUMEROCIERRE, CODMONEDA, IMPORTE) VALUES (1,@CAJA,@NUMEROCIERRE,1,@CIERREPESOS)", Con))
                 {
                     DateTime xFecha = DateTime.Now;
@@ -101,26 +115,32 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", xCodVendedor));
                     Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Now.ToString("dd/MM/yyyy")));
                     Com.Parameters.Add(new SqlParameter("@HORA", DateTime.Now.ToString("HH:mm:ss")));
+                        Com.Parameters.Add(new SqlParameter("@TOTAL", Total));
+                        Com.Parameters.Add(new SqlParameter("@DESCUADRE", Descuadre));
 
+                        Com.Transaction = (SqlTransaction)Tran;
                     ExecuteNonQuery(Com);
 
                     Com.CommandText = "INSERT INTO DECLARADOZ(TIPO, CAJA, NUMEROCIERRE, CODMONEDA, IMPORTE) VALUES (1,@CAJA,@NUMEROCIERRE,2,@CIERREDOLARES)";
 
                     ExecuteNonQuery(Com);
 
-                    Com.CommandText = "INSERT INTO ARQUEOS(CODCAJA, NUMEROZ, CODVENDEDOR, FECHA, HORA,TOTAL, DESCUADRE) VALUES (@CAJA, @NUMEROCIERRE, @CODVENDEDOR,@FECHA,@HORA )";
+                    Com.CommandText = "INSERT INTO ARQUEOS(CODCAJA, NUMEROZ, CODVENDEDOR, FECHA, HORA,TOTAL, DESCUADRE) VALUES (@CAJA, @NUMEROCIERRE, @CODVENDEDOR,@FECHA,@HORA,@TOTAL, @DESCUADRE)";
 
                     ExecuteNonQuery(Com);
 
-               
 
+                  
 
 
                 }
+                    Tran.Commit();
+                }
+
 
             }
+    } 
 
-        }
 
 
         #region Funciones Cierre
@@ -130,7 +150,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(SUM(P.IMPORTE),0) AS TOTAL FROM PAGOS AS P WHERE CAJA=@CAJA AND NUMERO=@NUMEROCIERRE and CODMONEDA=1", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(SUM(P.IMPORTE),0) AS TOTAL FROM PAGOS AS P WHERE CAJA=@CAJA AND NUMERO=@NUMEROCIERRE AND CODMONEDA=1", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xnumerocierre));
@@ -144,7 +164,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(SUM(P.IMPORTE),0) AS TOTAL FROM PAGOS AS P WHERE CAJA=@CAJA AND NUMERO=@NUMEROCIERRE and CODMONEDA=2", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(SUM(P.IMPORTE),0) AS TOTAL  FROM PAGOS AS P WHERE CAJA=@CAJA AND NUMERO=@NUMEROCIERRE AND CODMONEDA=2", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xnumerocierre));
@@ -158,7 +178,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT  ISNULL(SUM(ISNULL(V.IMPORTE,0)),0) AS TOTAL FROM VENTAS AS V INNER JOIN VENTASCONTADO AS VC ON (V.NUMERO=VC.NUMERO AND V.CODSERIE=VC.SERIE) WHERE V.Z=@NUMEROCIERRE ANDN V.CODCAJA=@CAJA AND CODMONEDA=1", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT  ISNULL(SUM(V.SUBTOTAL+V.IVA),0) AS TOTAL FROM VENTAS AS V INNER JOIN VENTASCONTADO AS VC ON (V.NUMERO=VC.NUMERO AND V.CODSERIE=VC.SERIE) WHERE V.Z=@NUMEROCIERRE AND V.CODCAJA=@CAJA AND CODMONEDA=1", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xnumerocierre));
@@ -172,7 +192,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(SUM(P.IMPORTE),0) AS TOTAL FROM PAGOS AS P WHERE CAJA=@CAJA AND NUMERO=@NUMEROCIERRE and CODMONEDA=2", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT  ISNULL(SUM(V.SUBTOTAL+V.IVA),0) AS TOTAL FROM VENTAS AS V INNER JOIN VENTASCONTADO AS VC ON (V.NUMERO=VC.NUMERO AND V.CODSERIE=VC.SERIE) WHERE V.Z=@NUMEROCIERRE AND V.CODCAJA=@CAJA AND CODMONEDA=2", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xnumerocierre));
@@ -204,6 +224,24 @@ namespace JJ.Mappers
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xnumerocierre));
+                    return Convert.ToInt32(ExecuteScalar(Com));
+                }
+            }
+        }
+
+      
+
+        public int getSaldoDeclarados(string xCaja, int xCodMoneda, int xtipo)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 ISNULL(importe,0) AS IMPORTE from DeclaradoZ where codmoneda=@MONEDA and caja= @CAJA AND TIPO=@TIPO ORDER BY NUMEROCIERRE DESC", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
+                    Com.Parameters.Add(new SqlParameter("@MONEDA", xCodMoneda));
+                    Com.Parameters.Add(new SqlParameter("@TIPO", xtipo));
+
                     return Convert.ToInt32(ExecuteScalar(Com));
                 }
             }

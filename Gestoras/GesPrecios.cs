@@ -59,5 +59,13 @@ namespace JJ.Gestoras
         {
             return (Moneda)DBPrecios.getMonedaByID(xCodMoneda);
         }
+
+        public decimal getCotizacion()
+        {
+            return DBPrecios.getCotizacion();
+        }
+
+
+
     }
 }
