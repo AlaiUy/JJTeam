@@ -126,7 +126,7 @@ namespace JJ.Entidades
 
         public virtual decimal IvaTotal()
         {
-            return (TotalConDescuento() / (1+(_objArticulo.Iva/100)));
+            return (TotalConDescuento() - (TotalConDescuento() / (1+(_objArticulo.Iva/100))));
         }
 
         public virtual decimal ImporteDescuentoTotal()
