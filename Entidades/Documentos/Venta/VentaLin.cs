@@ -15,8 +15,6 @@ namespace JJ.Entidades
 
         //base(xNumeroLinea,xCodArticulo,xDescripcion,xPrecio,xIva,xCantidad,xDescuento)
         public VentaLin(int xNumeroLinea, Articulo xArticulo, string xDescripcion, decimal xCantidad,decimal xDescuento) : base(xArticulo,xDescripcion,xCantidad,xDescuento,xNumeroLinea)
-        {
-
-        }
+        {}
     }
 }

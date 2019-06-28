@@ -23,6 +23,7 @@ namespace JJ.Mappers
                     try
                     {
                         Codigo = _AddArticulo(A, Con, Tran);
+                        Tran.Commit();
                         return true;
                     }
                     catch (Exception E)

@@ -171,6 +171,10 @@ namespace JJ.Entidades
             {
                 return _Costo;
             }
+            set
+            {
+                _Costo = value;
+            }
         }
 
         public decimal Ganancia

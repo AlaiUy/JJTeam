@@ -49,23 +49,24 @@ namespace JJ.Mappers
                     //Ingreso las lineas
                     AddLineasCompra(C, Numero,Con,Tran);
                     //Actualizo el precio en la tabla articulos
-                    UpdatePreciosArticulos(C.Lineas,Con,Tran);
-                    
+                    UpdatePreciosArticulos(C,Con,Tran);
+                    // Agrego el historial del articulo.
+
                     Tran.Commit();
                 }
             }
         }
 
-        private void UpdatePreciosArticulos(List<CompraLin> xLineas, SqlConnection xCon, SqlTransaction xTran)
+        private void UpdatePreciosArticulos(AlbaranCompra xCompra, SqlConnection xCon, SqlTransaction xTran)
         {
-            foreach (CompraLin L in xLineas)
+            foreach (CompraLin L in xCompra.Lineas)
             {
-                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,IVA = @IVA,STOCK = STOCK + @CANTIDAD WHERE CODIGO = @ARTICULO", (SqlConnection)xCon))
+                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,STOCK = STOCK + @CANTIDAD,MONEDACOMPRA = @MONEDA WHERE CODIGO = @ARTICULO", (SqlConnection)xCon))
                 {
-                    Com.Parameters.Add(new SqlParameter("@COSTO", L.Articulo.Costo));
-                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva));
+                    Com.Parameters.Add(new SqlParameter("@COSTO", L.Costo));
                     Com.Parameters.Add(new SqlParameter("@ARTICULO", L.Articulo.CodArticulo));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
+                    Com.Parameters.Add(new SqlParameter("@MONEDA", xCompra.CodMoneda));
                     Com.Transaction = xTran;
                     ExecuteNonQuery(Com);
                 }
