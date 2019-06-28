@@ -58,9 +58,9 @@ Partial Class frmPrincipal
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Panel7 = New System.Windows.Forms.Panel()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.lblCajero = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
+        Me.lblCotrizacion = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.txtTipoVta = New System.Windows.Forms.TextBox()
@@ -102,7 +102,7 @@ Partial Class frmPrincipal
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1153, 639)
+        Me.Panel1.Size = New System.Drawing.Size(1286, 697)
         Me.Panel1.TabIndex = 0
         '
         'Panel3
@@ -112,7 +112,7 @@ Partial Class frmPrincipal
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(0, 167)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1153, 472)
+        Me.Panel3.Size = New System.Drawing.Size(1286, 530)
         Me.Panel3.TabIndex = 1
         '
         'Panel9
@@ -121,7 +121,7 @@ Partial Class frmPrincipal
         Me.Panel9.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel9.Location = New System.Drawing.Point(0, 0)
         Me.Panel9.Name = "Panel9"
-        Me.Panel9.Size = New System.Drawing.Size(1153, 253)
+        Me.Panel9.Size = New System.Drawing.Size(1286, 311)
         Me.Panel9.TabIndex = 1
         '
         'dgridLineas
@@ -137,7 +137,7 @@ Partial Class frmPrincipal
         Me.dgridLineas.RowHeadersVisible = False
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridLineas.Size = New System.Drawing.Size(1153, 253)
+        Me.dgridLineas.Size = New System.Drawing.Size(1286, 311)
         Me.dgridLineas.TabIndex = 0
         '
         'Panel8
@@ -145,9 +145,9 @@ Partial Class frmPrincipal
         Me.Panel8.Controls.Add(Me.Panel11)
         Me.Panel8.Controls.Add(Me.Panel10)
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel8.Location = New System.Drawing.Point(0, 253)
+        Me.Panel8.Location = New System.Drawing.Point(0, 311)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(1153, 219)
+        Me.Panel8.Size = New System.Drawing.Size(1286, 219)
         Me.Panel8.TabIndex = 0
         '
         'Panel11
@@ -157,7 +157,7 @@ Partial Class frmPrincipal
         Me.Panel11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel11.Location = New System.Drawing.Point(0, 58)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(1153, 161)
+        Me.Panel11.Size = New System.Drawing.Size(1286, 161)
         Me.Panel11.TabIndex = 1
         '
         'Panel13
@@ -176,12 +176,12 @@ Partial Class frmPrincipal
         Me.Panel13.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel13.Location = New System.Drawing.Point(0, 0)
         Me.Panel13.Name = "Panel13"
-        Me.Panel13.Size = New System.Drawing.Size(842, 161)
+        Me.Panel13.Size = New System.Drawing.Size(975, 161)
         Me.Panel13.TabIndex = 1
         '
         'btnReimprimir
         '
-        Me.btnReimprimir.Location = New System.Drawing.Point(854, 16)
+        Me.btnReimprimir.Location = New System.Drawing.Point(752, 16)
         Me.btnReimprimir.Name = "btnReimprimir"
         Me.btnReimprimir.Size = New System.Drawing.Size(142, 55)
         Me.btnReimprimir.TabIndex = 10
@@ -289,17 +289,17 @@ Partial Class frmPrincipal
         Me.Panel12.Controls.Add(Me.txtImporteIva)
         Me.Panel12.Controls.Add(Me.txtTotalSinIva)
         Me.Panel12.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel12.Location = New System.Drawing.Point(842, 0)
+        Me.Panel12.Location = New System.Drawing.Point(975, 0)
         Me.Panel12.Name = "Panel12"
         Me.Panel12.Size = New System.Drawing.Size(311, 161)
         Me.Panel12.TabIndex = 0
         '
         'Label18
         '
-        Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(12, 123)
+        Me.Label18.Location = New System.Drawing.Point(15, 123)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(128, 22)
         Me.Label18.TabIndex = 7
@@ -307,10 +307,10 @@ Partial Class frmPrincipal
         '
         'Label17
         '
-        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(35, 82)
+        Me.Label17.Location = New System.Drawing.Point(38, 85)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(105, 22)
         Me.Label17.TabIndex = 6
@@ -318,10 +318,10 @@ Partial Class frmPrincipal
         '
         'Label16
         '
-        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(99, 49)
+        Me.Label16.Location = New System.Drawing.Point(102, 49)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(41, 22)
         Me.Label16.TabIndex = 5
@@ -329,10 +329,10 @@ Partial Class frmPrincipal
         '
         'Label15
         '
-        Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(12, 15)
+        Me.Label15.Location = New System.Drawing.Point(15, 15)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(128, 22)
         Me.Label15.TabIndex = 4
@@ -340,7 +340,7 @@ Partial Class frmPrincipal
         '
         'txtImporteTotalConIva
         '
-        Me.txtImporteTotalConIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteTotalConIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteTotalConIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtImporteTotalConIva.Location = New System.Drawing.Point(149, 118)
         Me.txtImporteTotalConIva.Name = "txtImporteTotalConIva"
@@ -351,7 +351,7 @@ Partial Class frmPrincipal
         '
         'txtImporteDescuento
         '
-        Me.txtImporteDescuento.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteDescuento.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteDescuento.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtImporteDescuento.Location = New System.Drawing.Point(149, 80)
         Me.txtImporteDescuento.Name = "txtImporteDescuento"
@@ -362,7 +362,7 @@ Partial Class frmPrincipal
         '
         'txtImporteIva
         '
-        Me.txtImporteIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtImporteIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtImporteIva.Location = New System.Drawing.Point(149, 44)
         Me.txtImporteIva.Name = "txtImporteIva"
@@ -373,7 +373,7 @@ Partial Class frmPrincipal
         '
         'txtTotalSinIva
         '
-        Me.txtTotalSinIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTotalSinIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalSinIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTotalSinIva.Location = New System.Drawing.Point(149, 10)
         Me.txtTotalSinIva.Name = "txtTotalSinIva"
@@ -388,7 +388,7 @@ Partial Class frmPrincipal
         Me.Panel10.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel10.Location = New System.Drawing.Point(0, 0)
         Me.Panel10.Name = "Panel10"
-        Me.Panel10.Size = New System.Drawing.Size(1153, 58)
+        Me.Panel10.Size = New System.Drawing.Size(1286, 58)
         Me.Panel10.TabIndex = 0
         '
         'txtAdenda
@@ -398,7 +398,7 @@ Partial Class frmPrincipal
         Me.txtAdenda.Multiline = True
         Me.txtAdenda.Name = "txtAdenda"
         Me.txtAdenda.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtAdenda.Size = New System.Drawing.Size(1153, 58)
+        Me.txtAdenda.Size = New System.Drawing.Size(1286, 58)
         Me.txtAdenda.TabIndex = 0
         '
         'Panel2
@@ -408,7 +408,7 @@ Partial Class frmPrincipal
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1153, 167)
+        Me.Panel2.Size = New System.Drawing.Size(1286, 167)
         Me.Panel2.TabIndex = 0
         '
         'Panel5
@@ -422,7 +422,7 @@ Partial Class frmPrincipal
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel5.Location = New System.Drawing.Point(407, 0)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(746, 167)
+        Me.Panel5.Size = New System.Drawing.Size(879, 167)
         Me.Panel5.TabIndex = 10
         '
         'cboxMoneda
@@ -433,7 +433,7 @@ Partial Class frmPrincipal
         Me.cboxMoneda.FormattingEnabled = True
         Me.cboxMoneda.Location = New System.Drawing.Point(249, 111)
         Me.cboxMoneda.Name = "cboxMoneda"
-        Me.cboxMoneda.Size = New System.Drawing.Size(167, 28)
+        Me.cboxMoneda.Size = New System.Drawing.Size(300, 28)
         Me.cboxMoneda.TabIndex = 8
         '
         'cboxTarifa
@@ -444,14 +444,14 @@ Partial Class frmPrincipal
         Me.cboxTarifa.FormattingEnabled = True
         Me.cboxTarifa.Location = New System.Drawing.Point(249, 43)
         Me.cboxTarifa.Name = "cboxTarifa"
-        Me.cboxTarifa.Size = New System.Drawing.Size(167, 28)
+        Me.cboxTarifa.Size = New System.Drawing.Size(300, 28)
         Me.cboxTarifa.TabIndex = 7
         '
         'Label13
         '
         Me.Label13.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(287, 78)
+        Me.Label13.Location = New System.Drawing.Point(353, 78)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(79, 20)
         Me.Label13.TabIndex = 6
@@ -461,7 +461,7 @@ Partial Class frmPrincipal
         '
         Me.Label12.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(289, 12)
+        Me.Label12.Location = New System.Drawing.Point(355, 12)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(67, 20)
         Me.Label12.TabIndex = 5
@@ -469,25 +469,25 @@ Partial Class frmPrincipal
         '
         'Panel7
         '
-        Me.Panel7.Controls.Add(Me.Label11)
+        Me.Panel7.Controls.Add(Me.lblCajero)
         Me.Panel7.Controls.Add(Me.Label10)
-        Me.Panel7.Controls.Add(Me.Label9)
+        Me.Panel7.Controls.Add(Me.lblCotrizacion)
         Me.Panel7.Controls.Add(Me.Label8)
         Me.Panel7.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel7.Location = New System.Drawing.Point(447, 0)
+        Me.Panel7.Location = New System.Drawing.Point(580, 0)
         Me.Panel7.Name = "Panel7"
         Me.Panel7.Size = New System.Drawing.Size(299, 167)
         Me.Panel7.TabIndex = 4
         '
-        'Label11
+        'lblCajero
         '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(105, 86)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(82, 25)
-        Me.Label11.TabIndex = 6
-        Me.Label11.Text = "Label11"
+        Me.lblCajero.AutoSize = True
+        Me.lblCajero.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCajero.Location = New System.Drawing.Point(105, 86)
+        Me.lblCajero.Name = "lblCajero"
+        Me.lblCajero.Size = New System.Drawing.Size(82, 25)
+        Me.lblCajero.TabIndex = 6
+        Me.lblCajero.Text = "Label11"
         '
         'Label10
         '
@@ -499,15 +499,15 @@ Partial Class frmPrincipal
         Me.Label10.TabIndex = 5
         Me.Label10.Text = "Cajero:"
         '
-        'Label9
+        'lblCotrizacion
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(216, 26)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(71, 25)
-        Me.Label9.TabIndex = 4
-        Me.Label9.Text = "Label9"
+        Me.lblCotrizacion.AutoSize = True
+        Me.lblCotrizacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCotrizacion.Location = New System.Drawing.Point(216, 26)
+        Me.lblCotrizacion.Name = "lblCotrizacion"
+        Me.lblCotrizacion.Size = New System.Drawing.Size(71, 25)
+        Me.lblCotrizacion.TabIndex = 4
+        Me.lblCotrizacion.Text = "Label9"
         '
         'Label8
         '
@@ -667,7 +667,7 @@ Partial Class frmPrincipal
         'frmPrincipal
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
-        Me.ClientSize = New System.Drawing.Size(1177, 663)
+        Me.ClientSize = New System.Drawing.Size(1310, 721)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "frmPrincipal"
@@ -715,9 +715,9 @@ Partial Class frmPrincipal
     Friend WithEvents Label13 As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents Panel7 As Panel
-    Friend WithEvents Label11 As Label
+    Friend WithEvents lblCajero As Label
     Friend WithEvents Label10 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents lblCotrizacion As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Panel6 As Panel
     Friend WithEvents Label6 As Label

@@ -302,6 +302,31 @@ namespace JJ.Mappers
 
                             Com.Parameters.Add(new SqlParameter("@CLIENTE", ((VentaContado)F).Cliente.Codigo));
                             ExecuteNonQuery(Com);
+
+                            Com.CommandText = "INSERT INTO ENTREGA(CODSERIE, NUMERO, FECHA, ENVIO_NOMBRE, ENVIO_DIRECCION, ENVIO_TELEFONO, ENVIO_OBSERVACIONES) VALUES (@CODSERIE, @NUMERO, @FECHA, @ENVIO_NOMBRE,@ENVIO_DIRECCION,@ENVIO_TELEFONO,@ENVIO_OBSERVACIONES)";
+
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_NOMBRE", ((VentaContado)F).Env_Nombre));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_DIRECCION", ((VentaContado)F).Env_Direccion));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_TELEFONO", ((VentaContado)F).Env_telefono));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_OBSERVACIONES", ((VentaContado)F).Env_observaciones));
+                            ExecuteNonQuery(Com);
+
+                            //SqlParameter LINEA = new SqlParameter("@LINEA",0);
+                            //SqlParameter CANTIDAD = new SqlParameter("@CANTIDAD", 0);
+
+                            //Com.Parameters.Add(LINEA);
+                            //Com.Parameters.Add(CANTIDAD);
+
+                            //foreach (VentaLin L in F.Lineas)
+                            //{
+                            //    LINEA.Value = L.NumLinea;
+                            //    CANTIDAD.Value = L.Cantidad;                             
+
+                            //    Com.CommandText = "INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, 0,0, 0, 0)";
+                            //    ExecuteNonQuery(Com);
+                                
+                            //}
+
                         }
                         else if (F is VentaCuenta)
                         {
@@ -311,6 +336,33 @@ namespace JJ.Mappers
                             Com.Parameters.Add(new SqlParameter("@CUENTA", ((VentaCuenta)F).Cuenta));
                             Com.Parameters.Add(new SqlParameter("@TARIFA", ((VentaCuenta)F).CodTarifa));
                             ExecuteNonQuery(Com);
+
+
+                            Com.CommandText = "INSERT INTO ENTREGA(CODSERIE, NUMERO, FECHA, ENVIO_NOMBRE, ENVIO_DIRECCION, ENVIO_TELEFONO, ENVIO_OBSERVACIONES) VALUES (@CODSERIE, @NUMERO, @FECHA, @ENVIO_NOMBRE,@ENVIO_DIRECCION,@ENVIO_TELEFONO,@ENVIO_OBSERVACIONES)";
+
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_NOMBRE", ((VentaContado)F).Env_Nombre));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_DIRECCION", ((VentaContado)F).Env_Direccion));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_TELEFONO", ((VentaContado)F).Env_telefono));
+                            Com.Parameters.Add(new SqlParameter("@ENVIO_OBSERVACIONES", ((VentaContado)F).Env_observaciones));
+                            ExecuteNonQuery(Com);
+
+                            SqlParameter LINEA = new SqlParameter("@LINEA,", 0);
+                            SqlParameter CANTIDAD = new SqlParameter("@CANTIDAD,", 0);
+
+                            Com.Parameters.Add(LINEA);
+                            Com.Parameters.Add(CANTIDAD);
+
+                            foreach (VentaLin L in F.Lineas)
+                            {
+                                LINEA.Value = L.NumLinea;
+                                CANTIDAD.Value = L.Cantidad;
+
+                                Com.CommandText = "INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, 0,0, 0, 0)";
+                                ExecuteNonQuery(Com);
+
+                            }
+
+
                         }
 
                         else if (F is DevolucionContado)
@@ -324,6 +376,9 @@ namespace JJ.Mappers
                             Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", ((DevolucionContado)F).SerieReferencia));
                             Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", ((DevolucionContado)F).NumeroReferencia));
                             ExecuteNonQuery(Com);
+
+                                                     
+
 
                         }
                         else if (F is DevolucionCuenta)
@@ -345,6 +400,9 @@ namespace JJ.Mappers
 
                     }
                     AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                    AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+
+
                     Tran.Commit();
                 }
             }
@@ -497,6 +555,31 @@ namespace JJ.Mappers
                 }
             }
         }
+
+        private void AddLineasEntrega(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
+        {
+            foreach (object L in lineas)
+            {
+                VentaLin VL = (VentaLin)L;
+                using (SqlCommand Com = new SqlCommand("INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, 0,0, 0, 0)", (SqlConnection)xCon))
+                {
+                    //FALTA EN VENTALIN PONER ATRIBUTOS
+                    Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
+                    Com.Parameters.Add(new SqlParameter("@LINEA", VL.NumLinea));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
+
+                    Com.Transaction = (SqlTransaction)xTran;
+                    ExecuteNonQuery(Com);
+
+
+
+                }
+            }
+        }
+
+
+
 
         private int ObtenerNumeroFactura(SqlConnection xCon, SqlTransaction xTran)
         {

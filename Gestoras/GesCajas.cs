@@ -81,5 +81,20 @@ namespace JJ.Gestoras
 
             return (DataTable)_DBCajas.getPagoByFecha(xFecha, xCaja);
         }
+
+        public int GetSaldoDeclarado( int xCodMoneda, int xtipo)
+        {
+            return _DBCajas.getSaldoDeclarados(_Caja.Codigo,xCodMoneda, xtipo);
+
+        }
+
+        public void CierreCaja(decimal xPesos, decimal xDolares,int xcodVendedor )
+        {
+
+            _DBCajas.CierreCaja(xPesos, xDolares, _Caja.Codigo, _Caja.Z, xcodVendedor);
+
+        }
+      
+
     }
 }

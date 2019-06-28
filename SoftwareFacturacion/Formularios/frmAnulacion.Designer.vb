@@ -23,18 +23,23 @@ Partial Class frmAnulacion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Panel3 = New System.Windows.Forms.Panel()
         Me.dgridfactura = New System.Windows.Forms.DataGridView()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtSerie = New System.Windows.Forms.TextBox()
-        Me.txtNumero = New System.Windows.Forms.TextBox()
-        Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.txtTotalAnulacion = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.btnAnular = New System.Windows.Forms.Button()
+        Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.txtNumero = New System.Windows.Forms.TextBox()
+        Me.txtSerie = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
         CType(Me.dgridfactura, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
@@ -47,30 +52,8 @@ Partial Class frmAnulacion
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(820, 407)
+        Me.Panel1.Size = New System.Drawing.Size(823, 426)
         Me.Panel1.TabIndex = 0
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.btnAnular)
-        Me.Panel2.Controls.Add(Me.btnBuscar)
-        Me.Panel2.Controls.Add(Me.txtNumero)
-        Me.Panel2.Controls.Add(Me.txtSerie)
-        Me.Panel2.Controls.Add(Me.Label2)
-        Me.Panel2.Controls.Add(Me.Label1)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(820, 100)
-        Me.Panel2.TabIndex = 0
-        '
-        'Panel3
-        '
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 293)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(820, 114)
-        Me.Panel3.TabIndex = 1
         '
         'dgridfactura
         '
@@ -83,40 +66,78 @@ Partial Class frmAnulacion
         Me.dgridfactura.ReadOnly = True
         Me.dgridfactura.RowTemplate.Height = 28
         Me.dgridfactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridfactura.Size = New System.Drawing.Size(820, 193)
+        Me.dgridfactura.Size = New System.Drawing.Size(823, 249)
         Me.dgridfactura.TabIndex = 2
         '
-        'Label1
+        'Panel3
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(15, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(46, 20)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Serie"
+        Me.Panel3.Controls.Add(Me.txtTotalAnulacion)
+        Me.Panel3.Controls.Add(Me.Label4)
+        Me.Panel3.Controls.Add(Me.Label3)
+        Me.Panel3.Controls.Add(Me.txtTotal)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel3.Location = New System.Drawing.Point(0, 349)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(823, 77)
+        Me.Panel3.TabIndex = 1
         '
-        'Label2
+        'txtTotalAnulacion
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(15, 45)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(65, 20)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Numero"
+        Me.txtTotalAnulacion.Location = New System.Drawing.Point(689, 38)
+        Me.txtTotalAnulacion.Name = "txtTotalAnulacion"
+        Me.txtTotalAnulacion.ReadOnly = True
+        Me.txtTotalAnulacion.Size = New System.Drawing.Size(131, 26)
+        Me.txtTotalAnulacion.TabIndex = 3
         '
-        'txtSerie
+        'Label4
         '
-        Me.txtSerie.Location = New System.Drawing.Point(90, 7)
-        Me.txtSerie.Name = "txtSerie"
-        Me.txtSerie.Size = New System.Drawing.Size(100, 26)
-        Me.txtSerie.TabIndex = 2
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(549, 41)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(118, 20)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Total Anulacion"
         '
-        'txtNumero
+        'Label3
         '
-        Me.txtNumero.Location = New System.Drawing.Point(90, 42)
-        Me.txtNumero.Name = "txtNumero"
-        Me.txtNumero.Size = New System.Drawing.Size(100, 26)
-        Me.txtNumero.TabIndex = 3
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(564, 9)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(103, 20)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Total Factura"
+        '
+        'txtTotal
+        '
+        Me.txtTotal.Location = New System.Drawing.Point(689, 6)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.Size = New System.Drawing.Size(131, 26)
+        Me.txtTotal.TabIndex = 0
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.btnAnular)
+        Me.Panel2.Controls.Add(Me.btnBuscar)
+        Me.Panel2.Controls.Add(Me.txtNumero)
+        Me.Panel2.Controls.Add(Me.txtSerie)
+        Me.Panel2.Controls.Add(Me.Label2)
+        Me.Panel2.Controls.Add(Me.Label1)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(823, 100)
+        Me.Panel2.TabIndex = 0
+        '
+        'btnAnular
+        '
+        Me.btnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnAnular.Location = New System.Drawing.Point(712, 17)
+        Me.btnAnular.Name = "btnAnular"
+        Me.btnAnular.Size = New System.Drawing.Size(98, 44)
+        Me.btnAnular.TabIndex = 5
+        Me.btnAnular.Text = "Anular"
+        Me.btnAnular.UseVisualStyleBackColor = True
         '
         'btnBuscar
         '
@@ -127,21 +148,43 @@ Partial Class frmAnulacion
         Me.btnBuscar.Text = "Buscar"
         Me.btnBuscar.UseVisualStyleBackColor = True
         '
-        'btnAnular
+        'txtNumero
         '
-        Me.btnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAnular.Location = New System.Drawing.Point(709, 17)
-        Me.btnAnular.Name = "btnAnular"
-        Me.btnAnular.Size = New System.Drawing.Size(98, 44)
-        Me.btnAnular.TabIndex = 5
-        Me.btnAnular.Text = "Anular"
-        Me.btnAnular.UseVisualStyleBackColor = True
+        Me.txtNumero.Location = New System.Drawing.Point(90, 42)
+        Me.txtNumero.Name = "txtNumero"
+        Me.txtNumero.Size = New System.Drawing.Size(100, 26)
+        Me.txtNumero.TabIndex = 3
+        '
+        'txtSerie
+        '
+        Me.txtSerie.Location = New System.Drawing.Point(90, 7)
+        Me.txtSerie.Name = "txtSerie"
+        Me.txtSerie.Size = New System.Drawing.Size(100, 26)
+        Me.txtSerie.TabIndex = 2
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(15, 45)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(65, 20)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Numero"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(15, 10)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(46, 20)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Serie"
         '
         'frmAnulacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(844, 431)
+        Me.ClientSize = New System.Drawing.Size(847, 450)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frmAnulacion"
@@ -149,9 +192,11 @@ Partial Class frmAnulacion
         Me.Text = "Anulacion Facturas"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
+        CType(Me.dgridfactura, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        CType(Me.dgridfactura, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -166,4 +211,8 @@ Partial Class frmAnulacion
     Friend WithEvents txtSerie As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents txtTotalAnulacion As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtTotal As TextBox
 End Class

@@ -6,6 +6,7 @@ Public Class frmPrincipal
 
     Private objE As EsperaContado
     Private objCC As ClienteContado
+    Private mCajero As Vendedor
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         If MsgBox("Desea salir?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
@@ -17,6 +18,8 @@ Public Class frmPrincipal
         Try
             Me.cboxTarifa.DataSource = GesPrecios.getInstance().getTarifas()
             Me.cboxMoneda.DataSource = GesPrecios.getInstance().getMonedas()
+            mCajero = GesVendedores.getInstance().getVendedorByID(1)
+            lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion()
             MostrarEnTabla()
             CargarDatos()
         Catch ex As Exception
@@ -37,7 +40,7 @@ Public Class frmPrincipal
     End Sub
 
     Public Sub CargarDatos()
-
+        lblCajero.Text = mCajero.Nombre
         If Not (objE Is Nothing) Then
             Me.txtAdenda.Text = objE.Adenda
             ' Me.txtDireccion.Text = objE.ObjCliente.Direccion & " " & objE.ObjCliente.DireccionNumero
@@ -138,6 +141,7 @@ Public Class frmPrincipal
             GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
             objE = Nothing
             MostrarEnTabla()
+            MsgBox("Facturado", MsgBoxStyle.Information)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -153,5 +157,10 @@ Public Class frmPrincipal
 
     Private Sub txtTotalSinIva_TextChanged(sender As Object, e As EventArgs) Handles txtTotalSinIva.TextChanged
 
+    End Sub
+
+    Private Sub btnCierre_Click(sender As Object, e As EventArgs) Handles btnCierre.Click
+        Dim frmCierre As New frmCierre(mCajero.Codigo)
+        frmCierre.ShowDialog()
     End Sub
 End Class

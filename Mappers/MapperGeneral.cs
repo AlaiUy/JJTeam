@@ -85,6 +85,10 @@ namespace JJ.Mappers
             return Monedas;
         }
 
+
+        
+
+
         public void AddMoneda(Moneda M)
         {
             if (_Monedas == null)
@@ -105,6 +109,8 @@ namespace JJ.Mappers
             return _getMonedaByID(xCodMoneda);
                 
         }
+
+    
 
         private Moneda _getMonedaByID(int xCodMoneda)
         {
@@ -136,5 +142,8 @@ namespace JJ.Mappers
             decimal Cotizacion = (decimal)Reader["COTIZACION"];
             return new Moneda(Codigo, Nombre, SubFijo, Coeficiente, Cotizacion);
         }
+
+
+
     }
 }
