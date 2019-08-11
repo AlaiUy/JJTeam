@@ -250,7 +250,7 @@ namespace JJ.Mappers
             int CodSeccion = (int)Reader["CODSECCION"];
             decimal Costo = Convert.ToDecimal(Reader["COSTO"]);
             decimal Ganancia = Convert.ToDecimal(Reader["GANANCIA"]);
-            decimal IVA = Convert.ToDecimal(Reader["IVA"]);
+            Iva IVA = new MapperEmpresa().getIvaByID((int)(Reader["IVA"]));
             A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia,xCodMoneda);
             A.Nombre = Nombre;
             A.Codbarras = CodBarras;
@@ -283,7 +283,7 @@ namespace JJ.Mappers
                 Com.Parameters.Add(new SqlParameter("@CODSECCION", xA.Codseccion));
                 Com.Parameters.Add(new SqlParameter("@COSTO", xA.Costo));
                 Com.Parameters.Add(new SqlParameter("@GANANCIA", xA.Ganancia));
-                Com.Parameters.Add(new SqlParameter("@IVA", xA.Iva));
+                Com.Parameters.Add(new SqlParameter("@IVA", xA.Iva.Id));
                 Com.Parameters.Add(new SqlParameter("@MONEDA", xA.CodMoneda));
                 Com.Transaction = (SqlTransaction)xTran;
                 var Result = ExecuteScalar(Com, P);

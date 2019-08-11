@@ -98,7 +98,6 @@ namespace JJ.Mappers
 
         public Moneda getMonedaByID(int xCodMoneda)
         {
-            Moneda M = null;
             foreach (object O in _Monedas)
             {
                 Moneda Mon = (Moneda)O;

@@ -43,6 +43,7 @@
     <Compile Include="IMapper.cs" />
     <Compile Include="IMapperCajas.cs" />
     <Compile Include="IMapperDocumentos.cs" />
+    <Compile Include="IMapperEmpresa.cs" />
     <Compile Include="IMapperPersonas.cs" />
     <Compile Include="IMapperPrecios.cs" />
     <Compile Include="IMapperVendedores.cs" />

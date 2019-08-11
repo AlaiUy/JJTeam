@@ -40,47 +40,7 @@ namespace JJ.Gestoras
             _CategoriasPersona = _DBPersonas.getCategoriasPersona();
         }
 
-        public void AddEmpresa(Empresa xEmpresa)
-        {
-
-            if (xEmpresa == null)
-                return;
-
-            if (xEmpresa.CodEmpresa != -1)
-                return;
-
-            if (xEmpresa.Nombre.Length < 4 || xEmpresa.Nombre.Length > 100)
-                throw new Exception("El nombre de la empresa no es valido. [Length 4-100]");
-
-            if (xEmpresa.Razonsocial.Length < 3 || xEmpresa.Razonsocial.Length > 100)
-                throw new Exception("La razon social de la empresa no es valida. [Length 3-100]");
-
-            if (!Tools.Numeros.ValidaRut(xEmpresa.Rut.Trim()))
-                throw new Exception("El rut no se puede validar, o ya esta ingresada la empresa");
-
-            if (xEmpresa.Direccion.Length < 5 || xEmpresa.Direccion.Length > 100)
-                throw new Exception("No se puede guardar esa direccion.[Length 5-100]");
-
-            if (xEmpresa.Ciudad.Length < 2 || xEmpresa.Ciudad.Length > 50)
-                throw new Exception("No se puede ingresar esa ciudad. [Length 2-50]");
-
-            if (xEmpresa.Pais.Length < 4 || xEmpresa.Ciudad.Length > 50)
-                throw new Exception("No se puede ingresar ese Pais. [Length 4-50]");
-
-            if (xEmpresa.Telefono.Length < 9)
-                if (!Tools.Numeros.isNumeric(xEmpresa.Telefono))
-                    throw new Exception("No se puede ingresar ese telefono. [Only number.]");
-                else
-                    throw new Exception("No se puede ingresar ese telefono. [Max 8.]");
-
-            if (xEmpresa.Email.Length < 100)
-                if (!xEmpresa.Email.Contains("@"))
-                    throw new Exception("El email no se puede validar. [Must contain: @]");
-                else
-                    throw new Exception("El direccion de correo electronico no valida en este sistema. [Max 100.]");
-
-            _DBPersonas.addEmpresa(xEmpresa);
-        }
+        
 
         public Proveedor getProveedorById(string xCod)
         {
@@ -170,15 +130,12 @@ namespace JJ.Gestoras
             else
                 throw new Exception("El numero de calle es demasiado largo. [Max 10]");
 
-
             if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
                 throw new Exception("El telefono ingresado no es valido");
 
-
             if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
                 throw new Exception("El celular ingresado no es valido");
-
-
+            
             if (xProveedor.Email.Length < 100)
             {
                 if (!xProveedor.Email.Contains("@"))
@@ -195,10 +152,7 @@ namespace JJ.Gestoras
             _DBPersonas.Add(xProveedor);
         }
 
-        public Empresa getEmpresa()
-        {
-            return (Empresa)_DBPersonas.getempresa();
-        }
+       
 
         public IList<object> getCategoriasProveedor()
         {
@@ -275,8 +229,5 @@ namespace JJ.Gestoras
         {
             return (DataTable)_DBPersonas.getVistaProveedores();
         }
-
-
-
     }
 }

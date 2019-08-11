@@ -16,8 +16,8 @@ namespace JJ.Interfaces
 
         IList<object> getCategoriasPersona();
 
-        void addEmpresa(object xEmpresa);
-        object getempresa();
+       
+        
 
         object getPersona(string xId);
         object getAllClientes(bool xTodos);

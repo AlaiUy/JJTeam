@@ -17,6 +17,13 @@ namespace JJ.Entidades
         private string _Email;
         private string _Telefono;
         private Byte[] _Imagen;
+        private List<Grupo> _Grupos;
+        private List<Parametro> _Parametros;
+        private List<Caja> _Cajas;
+        private List<Seriedoc> _Series;
+        private List<Equipo> _Equipos;
+        private List<Iva> _Ivas;
+
 
         public string Nombre
         {
@@ -130,6 +137,84 @@ namespace JJ.Entidades
             get
             {
                 return _CodEmpresa;
+            }
+        }
+
+        public List<Grupo> Grupos
+        {
+            get
+            {
+                return _Grupos;
+            }
+
+            set
+            {
+                _Grupos = value;
+            }
+        }
+
+        public List<Parametro> Parametros
+        {
+            get
+            {
+                return _Parametros;
+            }
+
+            set
+            {
+                _Parametros = value;
+            }
+        }
+
+        public List<Seriedoc> Series
+        {
+            get
+            {
+                return _Series;
+            }
+
+            set
+            {
+                _Series = value;
+            }
+        }
+
+        public List<Caja> Cajas
+        {
+            get
+            {
+                return _Cajas;
+            }
+
+            set
+            {
+                _Cajas = value;
+            }
+        }
+
+        public List<Equipo> Equipos
+        {
+            get
+            {
+                return _Equipos;
+            }
+
+            set
+            {
+                _Equipos = value;
+            }
+        }
+
+        public List<Iva> Ivas
+        {
+            get
+            {
+                return _Ivas;
+            }
+
+            set
+            {
+                _Ivas = value;
             }
         }
 

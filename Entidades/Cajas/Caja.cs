@@ -7,6 +7,7 @@ namespace JJ.Entidades
 {
     public class Caja
     {
+        private bool isNew;
         private string _Codigo;
         private string _Nombre;
         private List<Seriedoc> _Series;
@@ -41,9 +42,20 @@ namespace JJ.Entidades
             }
         }
 
-        public Caja()
+        public bool IsNew
         {
-            _Codigo = "";
+            get
+            {
+                return isNew;
+            }
+        }
+
+        public List<Seriedoc> Series
+        {
+            get
+            {
+                return _Series;
+            } 
         }
 
         public Caja(string xCodigo, string xNombre, List<Seriedoc> xSeries)
@@ -78,7 +90,7 @@ namespace JJ.Entidades
         private bool ExisteSerie(Seriedoc xSerie)
         {
             foreach (Seriedoc S in _Series)
-                if (S.Documento == xSerie.Documento && S.Serie.Equals(xSerie.Nombre))
+                if (S.Documento == xSerie.Documento)
                     return true;
             return false;
         }

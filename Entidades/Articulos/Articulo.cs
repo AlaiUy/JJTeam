@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -20,7 +21,7 @@ namespace JJ.Entidades
         private int _codseccion;
         private decimal _Costo;
         private decimal _Ganancia;
-        private decimal _Iva;
+        private Iva _Iva;
         private int _CodMoneda;
 
         public int CodArticulo
@@ -185,7 +186,7 @@ namespace JJ.Entidades
             }
         }
 
-        public decimal Iva
+        public Iva Iva
         {
             get
             {
@@ -206,7 +207,7 @@ namespace JJ.Entidades
             }
         }
 
-        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,decimal xIva,decimal xGanancia, int xCodMoneda)
+        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,Iva xIva,decimal xGanancia, int xCodMoneda)
         {
             _codArticulo = xCodigo;
             _descripcion = xDescripcion;
@@ -217,7 +218,7 @@ namespace JJ.Entidades
             _CodMoneda = xCodMoneda;
         }
 
-        public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, decimal xIva, decimal xGanancia, int xCodMoneda)
+        public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, Iva xIva, decimal xGanancia, int xCodMoneda)
         {
             _codArticulo = -1;
             _descripcion = xDescripcion;
@@ -231,26 +232,34 @@ namespace JJ.Entidades
         public decimal PrecioIva()
         {
 
-            return ((_Costo*ValorPorcentaje(_Iva))* ValorPorcentaje(_Ganancia));
+            return ((_Costo*ValorPorcentaje(_Iva.Valor))* ValorPorcentaje(_Ganancia));
             
         }
 
        
         public decimal Precio()
         {
-            return (PrecioIva() / ValorPorcentaje(_Iva));
+            return (PrecioIva() / ValorPorcentaje(_Iva.Valor));
         }
 
-        private decimal ValorPorcentaje(decimal Porcentaje)
+        static decimal ValorPorcentaje(decimal Porcentaje)
         {
             return (1+(Porcentaje/100));
         }
 
-           
+        public static decimal ObtenerGanancia(decimal xCosto, Iva xIva, decimal xFinal)
+        {
+            decimal Importe = 0;
+            decimal ImporteSI = xFinal / ValorPorcentaje(xIva.Valor)
 
+            //Importe = xCosto * (ValorPorcentaje(xIva.Valor));
+            decimal Por = ((Importe * 100) / xFinal);
+            return 100;
+        }
 
-       
+        
 
+     
 
     }
 }

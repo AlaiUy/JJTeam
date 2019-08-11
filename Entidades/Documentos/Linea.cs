@@ -114,7 +114,7 @@ namespace JJ.Entidades
 
         public virtual decimal TotalconIva() //Total con iva
         {
-            return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva / 100))) * _Cantidad;
+            return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva.Valor / 100))) * _Cantidad;
         }
 
         public virtual decimal TotalConDescuento() //Total Con descuento
@@ -126,7 +126,7 @@ namespace JJ.Entidades
 
         public virtual decimal IvaTotal()
         {
-            return (TotalConDescuento() - (TotalConDescuento() / (1+(_objArticulo.Iva/100))));
+            return (TotalConDescuento() - (TotalConDescuento() / (1+(_objArticulo.Iva.Valor/100))));
         }
 
         public virtual decimal ImporteDescuentoTotal()

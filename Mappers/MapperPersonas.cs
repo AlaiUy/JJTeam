@@ -110,7 +110,6 @@ namespace JJ.Mappers
                     {
                         while (Reader.Read())
                         {
-                            object Type=null;
                             CatCliente.Add(getCategoriaFromReader(Reader,"C"));
                         }
                     }
@@ -317,71 +316,7 @@ namespace JJ.Mappers
             throw new NotImplementedException();
         }
 
-        public void addEmpresa(object xEmpresa)
-        {
-            Empresa Em = (Empresa)xEmpresa;
-            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-            {
-                Con.Open();
-                using (SqlCommand Com = new SqlCommand("INSERT INTO EMPRESA(NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO) VALUES (@NOMBRE,@RAZONSOCIAL,@RUT,@DIRECCION,@CIUDAD,@PAIS,@TELEFONO,@EMAIL,@LOGO)", Con))
-                {
-                   
-                    Com.Parameters.Add(new SqlParameter("@NOMBRE", Em.Nombre.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@RAZONSOCIAL", Em.Razonsocial.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@RUT", Em.Rut));
-                    Com.Parameters.Add(new SqlParameter("@DIRECCION", Em.Direccion.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@CIUDAD", Em.Ciudad.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@PAIS", Em.Pais.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@TELEFONO", Em.Telefono.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@EMAIL", Em.Email.ToUpper()));
-                    Com.Parameters.Add(new SqlParameter("@LOGO", Em.Imagen));
-                    ExecuteNonQuery(Com);
-                }
-
-            }
-        }
-
-        public object getempresa()
-        {
-            Empresa ObjEmpresa = null;
-            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-            {
-                Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CODEMPRESA,NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO FROM EMPRESA", Con))
-                {
-                   
-                    using (IDataReader Reader = ExecuteReader(Com))
-                    {
-
-                        if (Reader.Read())
-                        {
-                            int xCodigo = (int)(Reader["CODEMPRESA"]);
-                            string xNombre = (string)(Reader["NOMBRE"]);
-                            string xRz = (string)(Reader["RAZONSOCIAL"]);
-                            string xRut = (string)(Reader["RUT"] is DBNull ? string.Empty : Reader["RUT"]);
-                            string xDir = (string)(Reader["DIRECCION"]);
-                            string xCiudad = (string)(Reader["CIUDAD"]);
-                            string xPais = (string)(Reader["PAIS"]);
-                            string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
-                            string xEmail = (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]);
-                            byte[] xLogo = (byte[])((Reader["LOGO"] is DBNull ? string.Empty : Reader["LOGO"]));
-                            ObjEmpresa = new Empresa(xCodigo, xRz, xRut);
-                            ObjEmpresa.Ciudad = xCiudad;
-                            ObjEmpresa.Direccion = xDir;
-                            ObjEmpresa.Email = xEmail;
-                            ObjEmpresa.Imagen = xLogo;
-                            ObjEmpresa.Nombre = xNombre;
-                            ObjEmpresa.Pais = xPais;
-                            ObjEmpresa.Telefono = xTelefono;
-                            
-                        }
-                    }
-                }
-            }
-
-            return ObjEmpresa;
-        }
-
+       
 
         private Categoria getCategoriaFromReader(IDataReader Reader,string xType)
         {

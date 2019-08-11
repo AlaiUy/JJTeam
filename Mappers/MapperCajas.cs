@@ -14,28 +14,46 @@ namespace JJ.Mappers
     {
         public bool Add(object xObject)
         {
-            Caja C = (Caja)xObject;
-            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-            {
-                Con.Open();
-                using (SqlCommand Com = new SqlCommand("INSERT INTO CAJAS(CODIGO,NOMBRE) VALUES (@CODIGO,@NOMBRE)", Con))
-                {
-                    //List<IDataParameter> P = new List<IDataParameter>();
-                    //P.Add(new SqlParameter("@NOMBRE", Pv.Nombre));
-                    //P.Add(new SqlParameter("@RZ", Pv.Rz));
-                    //P.Add(new SqlParameter("@RUT", Pv.Rut));
-                    //P.Add(new SqlParameter("@DIRECCION", Pv.Direccion));
-                    //P.Add(new SqlParameter("@DIRNUMERO", Pv.Dirnumero));
-                    //P.Add(new SqlParameter("@TELEFONO", Pv.Telefono));
-                    //P.Add(new SqlParameter("@CELULAR", Pv.Celular));
-                    //P.Add(new SqlParameter("@CODCATEGORIA", Pv.Categoria));
-                    //P.Add(new SqlParameter("@EMAIL", Pv.Email));
-                    //ExecuteNonQuery(Com, P);
-                }
-
-            }
-            return true;
+            throw new Exception("No implementado");
         }
+
+        public void CrearCaja(Caja xCaja)
+        {
+            Caja C = xCaja;
+            SqlTransaction T;
+            try
+            {
+                using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+                {
+                    Con.Open();
+                    T = Con.BeginTransaction();
+                    using (SqlCommand Com = new SqlCommand("INSERT INTO CAJAS(CODIGO,NOMBRE) VALUES (@CODIGO,@NOMBRE)", Con))
+                    {
+                        Com.Transaction = T;
+                        Com.Parameters.Add(new SqlParameter("@CODIGO", C.Codigo));
+                        Com.Parameters.Add(new SqlParameter("@NOMBRE", C.Nombre));
+                        ExecuteNonQuery(Com);
+                    }
+                    foreach (Seriedoc S in C.Series)
+                    {
+                        using (SqlCommand Com = new SqlCommand("INSERT INTO SERIESCAJA(CODDOCUMENTO,CODCAJA,SERIE) VALUES (@DOCUMENTO,@CAJA,@SERIE)", Con))
+                        {
+                            Com.Transaction = T;
+                            Com.Parameters.Add(new SqlParameter("@DOCUMENTO", S.Documento));
+                            Com.Parameters.Add(new SqlParameter("@CAJA", C.Codigo));
+                            Com.Parameters.Add(new SqlParameter("@SERIE", S.Serie));
+                            ExecuteNonQuery(Com);
+                        }
+                    }
+                    T.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
         
         public void AgregarPago(int xMoneda,decimal xImporte,decimal xCotizacion,string xComentario,string xCaja, int xZ)
         {
@@ -285,12 +303,11 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.VALOR FROM EPARAMETROS AS E  INNER JOIN PARAMETROS AS P ON E.IDPAR = P.IDPAR AND P.NOMBRE = 'CAJA' INNER JOIN EQUIPOS AS EQ ON EQ.IDGRUPO = E.IDGRUPO WHERE EQ.NOMBRE = @EQUIPO ", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT CODIGO FROM CAJAS AS C  INNER JOIN EGRUPOS AS G ON C.CODIGO = G.CAJA INNER JOIN EQUIPOS E ON E.IDGRUPO = G.IDGRUPO WHERE E.NOMBRE = @EQUIPO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@EQUIPO", Environment.MachineName));
                     string xSerieCaja = Convert.ToString(ExecuteScalar(Com));
-                    C = getCajaById(xSerieCaja);
-                    
+                    C = (Caja)getCajaById(xSerieCaja);
                 }
             }
             return C;
@@ -312,7 +329,7 @@ namespace JJ.Mappers
             return DT;
         }
 
-        private Caja getCajaById(string xCodigo)
+        public object getCajaById(string xCodigo)
         {
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
@@ -330,6 +347,26 @@ namespace JJ.Mappers
                 }
             }
             return null;
+        }
+
+        public List<Caja> getCajas()
+        {
+            List<Caja> Cajas = new List<Caja>() ;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT C.CODIGO,C.NOMBRE FROM CAJAS C ", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while(Reader.Read())
+                        {
+                            Cajas.Add(getCajaFromReader(Reader));
+                        }
+                    }
+                }
+            }
+            return Cajas;
         }
 
         public IList<object> getMonedas()

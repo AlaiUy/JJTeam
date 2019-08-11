@@ -48,7 +48,7 @@ namespace JJ.Entidades
             foreach (CompraLin L in base.Lineas)
                 if (L.NumLinea == xNumLinea)
                 {
-                    L.Costo = ((xPrecioConIvaTotal / L.Cantidad) / (1 + (L.Articulo.Iva / 100)));
+                    L.Costo = ((xPrecioConIvaTotal / L.Cantidad) / (1 + (L.Articulo.Iva.Valor / 100)));
                   
                 }
         }

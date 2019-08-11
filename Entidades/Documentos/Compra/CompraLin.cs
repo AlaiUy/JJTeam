@@ -41,7 +41,7 @@ namespace JJ.Entidades
         /// </summary>
         public override decimal Precio() //Con iva
         {
-            return (_Costo * (1 + (Articulo.Iva / 100)));
+            return (_Costo * (1 + (Articulo.Iva.Valor / 100)));
         }
 
 
@@ -51,7 +51,7 @@ namespace JJ.Entidades
         public override decimal TotalconIva() //Total con iva
         {
      
-            return (_Costo * (1 + (Articulo.Iva / 100))) * Cantidad;
+            return (_Costo * (1 + (Articulo.Iva.Valor / 100))) * Cantidad;
         }
 
 

@@ -50,12 +50,21 @@ namespace JJ.Entidades
             }
         }
 
-        public Seriedoc() { }
+        public Seriedoc(int xDocumento, string xNombre)
+        {
+            _Documento = xDocumento;
+            _Nombre = xNombre;
+        }
 
         public Seriedoc(int xDocumento, string xNombre, string xSerie) {
             _Documento = xDocumento;
             _Nombre = xNombre;
             _Serie = xSerie;
-        } 
+        }
+
+        public override string ToString()
+        {
+            return _Documento + " - " + _Nombre;
+        }
     }
 }

@@ -59,10 +59,10 @@ namespace JJ.Gestoras
                 throw new Exception("La seccion ingresada no es valida");
 
 
-            if (xArticulo.Ganancia < 1)
-                throw new Exception(String.Format("la ganancia del articulo es negativa en tarifa: {0}", xArticulo.Ganancia));
+            if (xArticulo.Ganancia < 0)
+                throw new Exception(String.Format("la ganancia del articulo es negativa", xArticulo.Ganancia));
 
-            if (xArticulo.Precio() < 1)
+            if (xArticulo.Precio() < 0)
                 throw new Exception("El precio no es correcto");
 
             if (GesPrecios.getInstance().getMonedaByID(xArticulo.CodMoneda) == null)

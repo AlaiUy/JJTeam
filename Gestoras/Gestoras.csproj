@@ -42,6 +42,7 @@
     <Compile Include="GesArticulos.cs" />
     <Compile Include="GesCajas.cs" />
     <Compile Include="GesDocumentos.cs" />
+    <Compile Include="GesEmpresa.cs" />
     <Compile Include="GesPersonas.cs" />
     <Compile Include="GesPrecios.cs" />
     <Compile Include="GesVendedores.cs" />

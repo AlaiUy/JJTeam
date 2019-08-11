@@ -45,6 +45,7 @@
     <Compile Include="MapperCajas.cs" />
     <Compile Include="MapperDocumentos.cs" />
     <Compile Include="MapperGeneral.cs" />
+    <Compile Include="MapperEmpresa.cs" />
     <Compile Include="MapperPersonas.cs" />
     <Compile Include="MapperPrecios.cs" />
     <Compile Include="MapperVendedores.cs" />
