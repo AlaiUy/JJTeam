@@ -250,11 +250,11 @@ namespace JJ.Entidades
         public static decimal ObtenerGanancia(decimal xCosto, Iva xIva, decimal xFinal)
         {
             decimal Importe = 0;
-            decimal ImporteSI = xFinal / ValorPorcentaje(xIva.Valor)
 
-            //Importe = xCosto * (ValorPorcentaje(xIva.Valor));
-            decimal Por = ((Importe * 100) / xFinal);
-            return 100;
+            Importe = (xFinal / (xCosto * ValorPorcentaje(xIva.Valor)));
+//me devuelve el valor de la ganancia pero no en % sino como 1,x..
+
+            return ((Importe - 1)*100);
         }
 
         
