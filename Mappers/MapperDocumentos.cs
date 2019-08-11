@@ -236,6 +236,37 @@ namespace JJ.Mappers
             return LtsEspera;
         }
 
+        public List<object> getVentasEsperaCredito()
+        {
+            List<object> LtsEspera = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CODPERSONA, E.CODCUENTA, E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, E.PRESUPUESTO, CC.NOMBRE, E.PRESUPUESTO, P.CODIGO, P.CEDULA, P.NOMBRE, P.APELLIDO, P.DIRECCION, P.DIRNUMERO, P.TELEFONO,P.CELULAR, P.PAIS,P.CIUDAD,P.SUBCATEGORIA, P.EMAIL,P.ACTIVA   FROM ESPERA E  inner join PERSONAS as P on (E.CODIGO= P.CODIGO) where estado=0 order by codigo asc", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            DateTime Fecha = (DateTime)Reader["FECHA"];
+                            int xCodVendedor = (int)Reader["CODVENDEDOR"];
+                            int xCliente = (int)Reader["CLIENTECONTADO"];
+                            string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
+                            string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
+                            char xPresupuesto = (char)Reader["PRESPUESTO"];
+                            int xEstado = (int)Reader["ESTADO"];
+                            String xNombreCliente = (string)Reader["NOMBRE"];
+                            EsperaContado E = new EsperaContado(Codigo, Fecha, xCodVendedor, xCliente, xAdenda, xEnvio, xEstado, xNombreCliente, xPresupuesto);
+                            E.AgregarLineas(getLineasEsperaContado(Codigo));
+                            LtsEspera.Add(E);
+                        }
+                    }
+                }
+            }
+            return LtsEspera;
+        }
+
         private List<Esperalin> getLineasEsperaContado(int xIDEspera)
         {
             List<Esperalin> Lineas = new List<Esperalin>();

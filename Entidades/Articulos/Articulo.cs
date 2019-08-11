@@ -257,9 +257,7 @@ namespace JJ.Entidades
             return ((Importe - 1)*100);
         }
 
-        
-
-     
+   
 
     }
 }

@@ -41,6 +41,10 @@ Partial Class frmEspera
         Me.txtImporteTotal = New System.Windows.Forms.TextBox()
         Me.txtAdenda = New System.Windows.Forms.TextBox()
         Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -59,7 +63,7 @@ Partial Class frmEspera
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1174, 677)
+        Me.Panel1.Size = New System.Drawing.Size(1174, 658)
         Me.Panel1.TabIndex = 0
         '
         'Panel3
@@ -69,7 +73,7 @@ Partial Class frmEspera
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(0, 129)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1174, 548)
+        Me.Panel3.Size = New System.Drawing.Size(1174, 529)
         Me.Panel3.TabIndex = 1
         '
         'Panel5
@@ -79,7 +83,7 @@ Partial Class frmEspera
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel5.Location = New System.Drawing.Point(742, 0)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(432, 548)
+        Me.Panel5.Size = New System.Drawing.Size(432, 529)
         Me.Panel5.TabIndex = 1
         '
         'dgridLineas
@@ -97,7 +101,7 @@ Partial Class frmEspera
         Me.dgridLineas.RowHeadersVisible = False
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridLineas.Size = New System.Drawing.Size(430, 546)
+        Me.dgridLineas.Size = New System.Drawing.Size(430, 527)
         Me.dgridLineas.TabIndex = 0
         '
         'Panel4
@@ -107,7 +111,7 @@ Partial Class frmEspera
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel4.Location = New System.Drawing.Point(0, 0)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(742, 548)
+        Me.Panel4.Size = New System.Drawing.Size(742, 529)
         Me.Panel4.TabIndex = 0
         '
         'dgridCabecera
@@ -125,7 +129,7 @@ Partial Class frmEspera
         Me.dgridCabecera.RowHeadersVisible = False
         Me.dgridCabecera.RowTemplate.Height = 28
         Me.dgridCabecera.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridCabecera.Size = New System.Drawing.Size(740, 546)
+        Me.dgridCabecera.Size = New System.Drawing.Size(740, 527)
         Me.dgridCabecera.TabIndex = 0
         '
         'Panel2
@@ -206,13 +210,17 @@ Partial Class frmEspera
         '
         'Panel6
         '
+        Me.Panel6.Controls.Add(Me.Label6)
+        Me.Panel6.Controls.Add(Me.Panel8)
         Me.Panel6.Controls.Add(Me.Label4)
+        Me.Panel6.Controls.Add(Me.Label5)
+        Me.Panel6.Controls.Add(Me.Panel9)
         Me.Panel6.Controls.Add(Me.txtImporteTotal)
         Me.Panel6.Controls.Add(Me.txtAdenda)
         Me.Panel6.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel6.Location = New System.Drawing.Point(0, 677)
+        Me.Panel6.Location = New System.Drawing.Point(0, 658)
         Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(1174, 101)
+        Me.Panel6.Size = New System.Drawing.Size(1174, 120)
         Me.Panel6.TabIndex = 1
         '
         'Label4
@@ -245,7 +253,7 @@ Partial Class frmEspera
         Me.txtAdenda.Multiline = True
         Me.txtAdenda.Name = "txtAdenda"
         Me.txtAdenda.ReadOnly = True
-        Me.txtAdenda.Size = New System.Drawing.Size(852, 73)
+        Me.txtAdenda.Size = New System.Drawing.Size(852, 68)
         Me.txtAdenda.TabIndex = 0
         '
         'Panel7
@@ -259,6 +267,42 @@ Partial Class frmEspera
         Me.Panel7.Name = "Panel7"
         Me.Panel7.Size = New System.Drawing.Size(1174, 778)
         Me.Panel7.TabIndex = 2
+        '
+        'Panel8
+        '
+        Me.Panel8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Panel8.Location = New System.Drawing.Point(136, 89)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Size = New System.Drawing.Size(32, 26)
+        Me.Panel8.TabIndex = 7
+        '
+        'Panel9
+        '
+        Me.Panel9.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Panel9.Location = New System.Drawing.Point(14, 88)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Size = New System.Drawing.Size(32, 26)
+        Me.Panel9.TabIndex = 8
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(57, 91)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(70, 20)
+        Me.Label5.TabIndex = 9
+        Me.Label5.Text = "Contado"
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(186, 91)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(60, 20)
+        Me.Label6.TabIndex = 10
+        Me.Label6.Text = "Credito"
         '
         'frmEspera
         '
@@ -306,4 +350,8 @@ Partial Class frmEspera
     Friend WithEvents txtImporteTotal As TextBox
     Friend WithEvents txtAdenda As TextBox
     Friend WithEvents Panel7 As Panel
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Panel9 As Panel
 End Class

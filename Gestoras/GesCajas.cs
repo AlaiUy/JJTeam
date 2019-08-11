@@ -99,6 +99,7 @@ namespace JJ.Gestoras
         {
             return (Caja)_DBCajas.getCajaById(xCajaID);
         }
+
       
 
     }

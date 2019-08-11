@@ -29,7 +29,7 @@ Public Class frmEspera
 
         Dim COLC As DataColumn = tTable.Columns.Add("CLIENTECOD", Type.GetType("System.String"))
         Dim COLCN As DataColumn = tTable.Columns.Add("CLIENTE", Type.GetType("System.String"))
-        Dim COLTV As DataColumn = tTable.Columns.Add("TIPOVENTA", Type.GetType("System.String"))
+
 
         For Each objE As EsperaContado In mListaDocumentos
             Dim objf As DataRow = tTable.NewRow()

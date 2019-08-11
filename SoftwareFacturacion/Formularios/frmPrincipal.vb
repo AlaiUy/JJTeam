@@ -7,6 +7,7 @@ Public Class frmPrincipal
     Private objE As EsperaContado
     Private objCC As ClienteContado
     Private mCajero As Vendedor
+    Private objC As Caja
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         If MsgBox("Desea salir?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
@@ -15,6 +16,7 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub cboxTarifa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        objC = GesCajas.getInstance().Caja
         Try
 
             Me.cboxMoneda.DataSource = GesPrecios.getInstance().getMonedas()
@@ -129,7 +131,7 @@ Public Class frmPrincipal
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
 
-        Dim objF As New VentaContado(objCC, Date.Today(), "c", "VB1", CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, 1, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False)
+        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, 1, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False)
 
 
         For Each objL As Esperalin In objE.Lineas
@@ -172,6 +174,14 @@ Public Class frmPrincipal
     End Function
 
     Private Sub cboxMoneda_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMoneda.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub btnDescuentoLinea_Click(sender As Object, e As EventArgs) Handles btnDescuentoLinea.Click
+
+    End Sub
+
+    Private Sub btnDescuentoTotal_Click(sender As Object, e As EventArgs) Handles btnDescuentoTotal.Click
 
     End Sub
 End Class
