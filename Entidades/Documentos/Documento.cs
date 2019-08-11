@@ -21,6 +21,8 @@ namespace JJ.Entidades
         private string _env_Direccion;
         private string _env_telefono;
         private string _env_observaciones;
+        private bool _presupuesto;
+
 
         public Documento(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion)
         {
@@ -33,6 +35,7 @@ namespace JJ.Entidades
             _Cotizacion = xCotizacion;
             _Lineas = new List<Linea>();
             _Detalle = "";
+         
         }
 
         public void AgregarLineas(List<Linea> xLineas)
@@ -230,6 +233,19 @@ namespace JJ.Entidades
             set
             {
                 _env_observaciones = value;
+            }
+        }
+
+        public bool Presupuesto
+        {
+            get
+            {
+                return _presupuesto;
+            }
+
+            set
+            {
+                _presupuesto = value;
             }
         }
 

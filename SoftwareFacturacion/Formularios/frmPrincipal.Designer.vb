@@ -22,6 +22,7 @@ Partial Class frmPrincipal
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Panel9 = New System.Windows.Forms.Panel()
@@ -54,9 +55,7 @@ Partial Class frmPrincipal
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel5 = New System.Windows.Forms.Panel()
         Me.cboxMoneda = New System.Windows.Forms.ComboBox()
-        Me.cboxTarifa = New System.Windows.Forms.ComboBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.lblCajero = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -134,7 +133,16 @@ Partial Class frmPrincipal
         Me.dgridLineas.Location = New System.Drawing.Point(0, 0)
         Me.dgridLineas.Name = "dgridLineas"
         Me.dgridLineas.ReadOnly = True
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgridLineas.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgridLineas.RowHeadersVisible = False
+        Me.dgridLineas.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgridLineas.Size = New System.Drawing.Size(1286, 311)
@@ -414,9 +422,7 @@ Partial Class frmPrincipal
         'Panel5
         '
         Me.Panel5.Controls.Add(Me.cboxMoneda)
-        Me.Panel5.Controls.Add(Me.cboxTarifa)
         Me.Panel5.Controls.Add(Me.Label13)
-        Me.Panel5.Controls.Add(Me.Label12)
         Me.Panel5.Controls.Add(Me.Panel7)
         Me.Panel5.Controls.Add(Me.Panel6)
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
@@ -431,41 +437,20 @@ Partial Class frmPrincipal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cboxMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboxMoneda.FormattingEnabled = True
-        Me.cboxMoneda.Location = New System.Drawing.Point(249, 111)
+        Me.cboxMoneda.Location = New System.Drawing.Point(249, 45)
         Me.cboxMoneda.Name = "cboxMoneda"
         Me.cboxMoneda.Size = New System.Drawing.Size(300, 28)
         Me.cboxMoneda.TabIndex = 8
-        '
-        'cboxTarifa
-        '
-        Me.cboxTarifa.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cboxTarifa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboxTarifa.FormattingEnabled = True
-        Me.cboxTarifa.Location = New System.Drawing.Point(249, 43)
-        Me.cboxTarifa.Name = "cboxTarifa"
-        Me.cboxTarifa.Size = New System.Drawing.Size(300, 28)
-        Me.cboxTarifa.TabIndex = 7
         '
         'Label13
         '
         Me.Label13.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(353, 78)
+        Me.Label13.Location = New System.Drawing.Point(353, 13)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(79, 20)
         Me.Label13.TabIndex = 6
         Me.Label13.Text = "MONEDA"
-        '
-        'Label12
-        '
-        Me.Label12.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(355, 12)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(67, 20)
-        Me.Label12.TabIndex = 5
-        Me.Label12.Text = "TARIFA"
         '
         'Panel7
         '
@@ -650,7 +635,7 @@ Partial Class frmPrincipal
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(8, 37)
+        Me.Label4.Location = New System.Drawing.Point(2, 37)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(92, 20)
         Me.Label4.TabIndex = 3
@@ -711,9 +696,7 @@ Partial Class frmPrincipal
     Friend WithEvents Label1 As Label
     Friend WithEvents Panel5 As Panel
     Friend WithEvents cboxMoneda As ComboBox
-    Friend WithEvents cboxTarifa As ComboBox
     Friend WithEvents Label13 As Label
-    Friend WithEvents Label12 As Label
     Friend WithEvents Panel7 As Panel
     Friend WithEvents lblCajero As Label
     Friend WithEvents Label10 As Label

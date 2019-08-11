@@ -20,8 +20,8 @@ namespace JJ.Entidades
         private string _Adenda;
         private string _DirEnvio = "";
         private int _estado;
-        private int _tipo;
         private string _NombreCLiente;
+        private bool _presupuesto;
 
         public int Codvendedor
         {
@@ -103,18 +103,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int Tipo
-        {
-            get
-            {
-                return _tipo;
-            }
-
-            set
-            {
-                _tipo = value;
-            }
-        }
+       
 
         public int Numero
         {
@@ -148,6 +137,33 @@ namespace JJ.Entidades
             }
         }
 
+        public char Presupuesto
+        {
+            get
+            {
+                if(_presupuesto==true)
+                {
+                    return 'T';
+                  
+                }
+                return 'F';
+            }
+            set
+            {
+
+                if (value.Equals('T'))
+                {
+                    _presupuesto = true;
+
+                }else
+                {
+                    _presupuesto = false;
+                }
+               
+
+            }
+        }
+
         public EsperaContado(DateTime xFecha)
         {
             Lineas = new List<Esperalin>();
@@ -156,7 +172,7 @@ namespace JJ.Entidades
 
 
 
-        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, String xAdenda, String xDirEnvio, int xEstado, int xTipo,string xNombreCliente)
+        public EsperaContado(int xNumero, DateTime xFecha, int xCodVendedor, int xCodClienteContado, String xAdenda, String xDirEnvio, int xEstado,string xNombreCliente, char xpresupuesto)
         {
             Lineas = new List<Esperalin>();
             _numero = xNumero;
@@ -166,7 +182,7 @@ namespace JJ.Entidades
             _Adenda = xAdenda;
             _DirEnvio = xDirEnvio;
             _estado = xEstado;
-            _tipo = xTipo;
+            Presupuesto = xpresupuesto;
             _NombreCLiente = xNombreCliente;
         }
 

@@ -160,13 +160,13 @@ namespace JJ.Mappers
                 {
                         int xCodEspera = -1;
                         List<IDataParameter> P = new List<IDataParameter>();
-                        using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, TIPO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @TIPO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
+                        using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, DIRECCIONENVIO, ADENDA, PRESUPUESTO) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @DIRECCIONENVIO, @ADENDA, @PRESUPUESTO)", (SqlConnection)Con))
                         {
                             Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
                             Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
                             Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
                             Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
-                            Com.Parameters.Add(new SqlParameter("@TIPO", E.Tipo));
+                            Com.Parameters.Add(new SqlParameter("@PRESUPUESTO", E.Presupuesto));
                             Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
                             Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
                             Com.Transaction = (SqlTransaction)Tran;
@@ -211,7 +211,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.TIPO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 order by codigo asc", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE, E.PRESUPUESTO FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 order by codigo asc", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -223,10 +223,10 @@ namespace JJ.Mappers
                             int xCliente = (int)Reader["CLIENTECONTADO"];
                             string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
                             string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
-                            int xTipo = (int)Reader["TIPO"];
+                            char xPresupuesto = (char)Reader["PRESPUESTO"];
                             int xEstado = (int)Reader["ESTADO"];
                             String xNombreCliente = (string)Reader["NOMBRE"];
-                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xTipo,xNombreCliente);
+                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xNombreCliente,xPresupuesto);
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }

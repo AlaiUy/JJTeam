@@ -42,7 +42,7 @@ Public Class frmEspera
 
             objf.Item("CLIENTECOD") = objE.Codclientecontado
             objf.Item("CLIENTE") = objE.NombreCLiente
-            objf.Item("TIPOVENTA") = objE.Tipo
+
 
 
             tTable.Rows.Add(objf)

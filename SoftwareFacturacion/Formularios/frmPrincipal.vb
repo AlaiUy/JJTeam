@@ -16,7 +16,7 @@ Public Class frmPrincipal
 
     Private Sub cboxTarifa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            Me.cboxTarifa.DataSource = GesPrecios.getInstance().getTarifas()
+
             Me.cboxMoneda.DataSource = GesPrecios.getInstance().getMonedas()
             mCajero = GesVendedores.getInstance().getVendedorByID(1)
             lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion()
@@ -25,6 +25,9 @@ Public Class frmPrincipal
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+
+
     End Sub
 
     Private Sub btnRecuperar_Click(sender As Object, e As EventArgs) Handles btnRecuperar.Click
@@ -110,10 +113,10 @@ Public Class frmPrincipal
                 objf.Item("CODARTICULO") = objL.Articulo.Referencia
                 objf.Item("DESCRIPCION") = objL.Descripcion
                 objf.Item("CANTIDAD") = objL.Cantidad
-                objf.Item("P/UNITARIO C/IVA") = objL.Precio
+                objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Precio)
                 objf.Item("DESCUENTO") = objL.Descuento
-                objf.Item("IMPORTE DESCUENTO TOTAL") = objL.ImporteDescuentoTotal
-                objf.Item("PRECIO TOTAL") = objL.TotalConDescuento
+                objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal)
+                objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento)
 
                 tTable.Rows.Add(objf)
             Next
@@ -126,7 +129,7 @@ Public Class frmPrincipal
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
 
-        Dim objF As New VentaContado(objCC, Date.Today(), "c", "VB1", CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, 1, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion)
+        Dim objF As New VentaContado(objCC, Date.Today(), "c", "VB1", CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, 1, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False)
 
 
         For Each objL As Esperalin In objE.Lineas
@@ -162,5 +165,13 @@ Public Class frmPrincipal
     Private Sub btnCierre_Click(sender As Object, e As EventArgs) Handles btnCierre.Click
         Dim frmCierre As New frmCierre(mCajero.Codigo)
         frmCierre.ShowDialog()
+    End Sub
+
+    Public Function Redondear(xvalor As Decimal) As Decimal
+        Return Decimal.Round(xvalor, 2)
+    End Function
+
+    Private Sub cboxMoneda_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboxMoneda.SelectedIndexChanged
+
     End Sub
 End Class
