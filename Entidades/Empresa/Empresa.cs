@@ -23,6 +23,7 @@ namespace JJ.Entidades
         private List<Seriedoc> _Series;
         private List<Equipo> _Equipos;
         private List<Iva> _Ivas;
+        private List<object> _Vendedores;
 
 
         public string Nombre
@@ -215,6 +216,18 @@ namespace JJ.Entidades
             set
             {
                 _Ivas = value;
+            }
+        }
+        public List<object> Vendedores
+        {
+            get
+            {
+                return _Vendedores;
+            }
+
+            set
+            {
+                _Vendedores = value;
             }
         }
 

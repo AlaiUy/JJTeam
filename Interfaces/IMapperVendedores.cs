@@ -8,8 +8,8 @@ namespace JJ.Interfaces
    
 
     public interface IMapperVendedores : IMapper
-            {
-         IList<object> getVendedores();
+    {
+         List<object> getVendedores();
 
          object getVendedorByID(int xCodigo);
 

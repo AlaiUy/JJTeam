@@ -70,6 +70,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GestionReporte.cs" />
+    <Compile Include="Precios\rptPrintPrice.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptPrintPrice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +90,10 @@
     <EmbeddedResource Include="DiseñoFacturas\FacturaSinCliente.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FacturaSinCliente.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Precios\rptPrintPrice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptPrintPrice.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

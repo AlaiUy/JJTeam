@@ -23,6 +23,7 @@ namespace JJ.Entidades
         private decimal _Ganancia;
         private Iva _Iva;
         private int _CodMoneda;
+        private bool _recalcula;
 
         public int CodArticulo
         {
@@ -192,6 +193,10 @@ namespace JJ.Entidades
             {
                 return _Iva;
             }
+            set
+            {
+                _Iva = value;
+            }
         }
 
         public int CodMoneda
@@ -207,7 +212,20 @@ namespace JJ.Entidades
             }
         }
 
-        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,Iva xIva,decimal xGanancia, int xCodMoneda)
+        public bool Recalcula
+        {
+            get
+            {
+                return _recalcula;
+            }
+
+            set
+            {
+                _recalcula = value;
+            }
+        }
+
+        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,Iva xIva,decimal xGanancia, int xCodMoneda,bool xRecalcula)
         {
             _codArticulo = xCodigo;
             _descripcion = xDescripcion;
@@ -216,9 +234,10 @@ namespace JJ.Entidades
             _Iva = xIva;
             _Ganancia = xGanancia;
             _CodMoneda = xCodMoneda;
+            _recalcula = xRecalcula;
         }
 
-        public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, Iva xIva, decimal xGanancia, int xCodMoneda)
+        public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, Iva xIva, decimal xGanancia, int xCodMoneda,bool xRecalcula)
         {
             _codArticulo = -1;
             _descripcion = xDescripcion;
@@ -227,6 +246,21 @@ namespace JJ.Entidades
             _Iva = xIva;
             _Ganancia = xGanancia;
             _CodMoneda = xCodMoneda;
+            _recalcula = xRecalcula;
+        }
+
+        public void setCosto(decimal xCosto)
+        {
+            if (xCosto <= 0)
+                return;
+            _Costo = xCosto;
+        }
+
+        public void setGanancia(decimal xGanancia)
+        {
+            if (xGanancia <= 0)
+                return;
+            _Ganancia = xGanancia;
         }
 
         public decimal PrecioIva()
@@ -252,9 +286,9 @@ namespace JJ.Entidades
             decimal Importe = 0;
 
             Importe = (xFinal / (xCosto * ValorPorcentaje(xIva.Valor)));
-//me devuelve el valor de la ganancia pero no en % sino como 1,x..
+             //me devuelve el valor de la ganancia pero no en % sino como 1,x..
 
-            return ((Importe - 1)*100);
+            return decimal.Round(((Importe - 1)*100),2);
         }
 
         

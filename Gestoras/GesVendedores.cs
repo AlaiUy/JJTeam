@@ -45,5 +45,20 @@ namespace JJ.Gestoras
             return (Vendedor)DBVendedores.getVendedorByID(xId);
         }
 
+        public void AddVendedor(Vendedor xVendedor)
+        {
+            if (xVendedor == null)
+                throw new Exception("El vendedor no puede verificar [System Null]");
+
+            if(xVendedor.Nombre.Trim().Length < 1)
+                throw new Exception("El nombre del vendedor no puede ser vacio [Length > 1]");
+
+            if(xVendedor.Codigo  > 0)
+                throw new Exception("El vendedor ya existe [Codigo > 0]");
+
+            DBVendedores.Add(xVendedor);
+
+        }
+
     }
 }

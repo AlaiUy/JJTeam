@@ -7,24 +7,33 @@ namespace JJ.Entidades
 {
     public class Vendedor
     {
-        private int _codigo;
-        private string _nombre;
+        private int _Codigo;
+        private string _Nombre;
+        private bool _Activo;
 
-        public Vendedor(int xcodigo, string xnombre) {
-            Codigo = xcodigo;
-            Nombre = xnombre;
+        public Vendedor(int xcodigo, string xnombre,bool xActivo) {
+            _Codigo = xcodigo;
+            _Nombre = xnombre;
+            _Activo = xActivo;
+        }
+
+        public Vendedor(string xnombre)
+        {
+            _Codigo = -1;
+            _Nombre = xnombre;
+            _Activo = true;
         }
 
         public int Codigo
         {
             get
             {
-                return _codigo;
+                return _Codigo;
             }
 
             set
             {
-                _codigo = value;
+                _Codigo = value;
             }
         }
 
@@ -32,13 +41,31 @@ namespace JJ.Entidades
         {
             get
             {
-                return _nombre;
+                return _Nombre;
             }
 
             set
             {
-                _nombre = value;
+                _Nombre = value;
             }
+        }
+
+        public bool Activo
+        {
+            get
+            {
+                return _Activo;
+            }
+
+            set
+            {
+                _Activo = value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return _Codigo + " - " + _Nombre;
         }
     }
 }

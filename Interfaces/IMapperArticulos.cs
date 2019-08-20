@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JJ.Entidades;
 
 namespace JJ.Interfaces
 {
@@ -15,5 +16,6 @@ namespace JJ.Interfaces
         object AddSeccion(object xSeccion,object xDepto);
         object getArticuloById(string xArticulo);
         object getVistaArticulos();
+        void Actualizar(Articulo xArticulo, decimal xGanancia, decimal xCosto);
     }
 }

@@ -61,14 +61,17 @@ namespace JJ.Mappers
         {
             foreach (CompraLin L in xCompra.Lineas)
             {
-                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,STOCK = STOCK + @CANTIDAD,MONEDACOMPRA = @MONEDA WHERE CODIGO = @ARTICULO", (SqlConnection)xCon))
+                if(L.Articulo.Recalcula)
                 {
-                    Com.Parameters.Add(new SqlParameter("@COSTO", L.Costo));
-                    Com.Parameters.Add(new SqlParameter("@ARTICULO", L.Articulo.CodArticulo));
-                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
-                    Com.Parameters.Add(new SqlParameter("@MONEDA", xCompra.CodMoneda));
-                    Com.Transaction = xTran;
-                    ExecuteNonQuery(Com);
+                    using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,STOCK = STOCK + @CANTIDAD,MONEDACOMPRA = @MONEDA WHERE CODIGO = @ARTICULO", (SqlConnection)xCon))
+                    {
+                        Com.Parameters.Add(new SqlParameter("@COSTO", L.Costo));
+                        Com.Parameters.Add(new SqlParameter("@ARTICULO", L.Articulo.CodArticulo));
+                        Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
+                        Com.Parameters.Add(new SqlParameter("@MONEDA", xCompra.CodMoneda));
+                        Com.Transaction = xTran;
+                        ExecuteNonQuery(Com);
+                    }
                 }
             }
         }
@@ -568,18 +571,11 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
                     Com.Parameters.Add(new SqlParameter("@LINEA", VL.NumLinea));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
-
                     Com.Transaction = (SqlTransaction)xTran;
                     ExecuteNonQuery(Com);
-
-
-
                 }
             }
         }
-
-
-
 
         private int ObtenerNumeroFactura(SqlConnection xCon, SqlTransaction xTran)
         {
@@ -593,8 +589,7 @@ namespace JJ.Mappers
 
                     if (Reader.Read())
                     {
-                        numero = (int)Reader["NUMERO"] + 1 ;
-                    
+                        numero = (int)Reader["NUMERO"] + 1;
                     }
                 }
             }
