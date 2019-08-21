@@ -116,32 +116,49 @@ namespace JJ.Gestoras
         {
             if (xProveedor == null)
                 return;
+
             if (xProveedor.Nombre.Length < 5 || xProveedor.Nombre.Length > 50)
                 throw new Exception("El nombre del proveedor no es valido. [Length 5-50]");
-            if (xProveedor.Rz.Length < 4 || xProveedor.Rz.Length > 50)
+
+            if (xProveedor.Rz.Length > 0 && xProveedor.Rz.Length > 50)
                 throw new Exception("La razon social del proveedor no es valido. [Length 4-50]");
-            if (xProveedor.Direccion.Length > 50)
+
+            if (xProveedor.Direccion.Length > 0 && xProveedor.Direccion.Length > 50)
                 throw new Exception("La direccion del proveedor no es valida. [Length 4-50]");
-            if (xProveedor.Dirnumero.Length < 11)
+
+            if (xProveedor.Dirnumero.Length > 0 && xProveedor.Dirnumero.Length < 11)
             {
                 if (!Tools.Numeros.isNumeric(xProveedor.Dirnumero))
                     throw new Exception("El numero de calle no es correcto. [Must be only numbers]");
             }
             else
-                throw new Exception("El numero de calle es demasiado largo. [Max 10]");
+            {
+                if(xProveedor.Dirnumero.Length > 10)
+                    throw new Exception("El numero de calle es demasiado largo. [Max 10]");
+            }
+                
 
-            if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
-                throw new Exception("El telefono ingresado no es valido");
+            if(xProveedor.Telefono.Length > 0)
+            {
+                if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
+                    throw new Exception("El telefono ingresado no es valido");
+            }
 
-            if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
-                throw new Exception("El celular ingresado no es valido");
+            if (xProveedor.Celular.Length > 0) {
+                if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
+                    throw new Exception("El celular ingresado no es valido");
+            }
             
-            if (xProveedor.Email.Length < 100)
+            
+            if (xProveedor.Email.Length > 0 && xProveedor.Email.Length < 100)
             {
                 if (!xProveedor.Email.Contains("@"))
                     throw new Exception("El email no se puede validar. [Must contain: @]");
             } else
-                    throw new Exception("El direccion de correo electronico no valida en este sistema. [Max 100.]");
+            {
+                if(xProveedor.Dirnumero.Length > 100)
+                    throw new Exception("El email no se puede validar. [Max: 100]");
+            }
 
             if (xProveedor.Categoria < 1 || !_ExisteCategoria(xProveedor.Categoria, _CategoriasProveedores))
                 throw new Exception("La categoria del proveedor no es correcta");

@@ -162,7 +162,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA FROM ARTICULOS A", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -184,7 +184,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xArticulo));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -252,7 +252,8 @@ namespace JJ.Mappers
             decimal Ganancia = Convert.ToDecimal(Reader["GANANCIA"]);
             int Recalcula = (int)Reader["RECALCULA"];
             Iva IVA = new MapperEmpresa().getIvaByID((int)(Reader["IVA"]));
-            A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia,xCodMoneda,Convert.ToBoolean((Recalcula)));
+            decimal Stock = Convert.ToDecimal(Reader["STOCK"]);
+            A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia,xCodMoneda,Convert.ToBoolean((Recalcula)),Stock);
             A.Nombre = Nombre;
             A.Codbarras = CodBarras;
             A.Codbarras1 = CodBarras1;

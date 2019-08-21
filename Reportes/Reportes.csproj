@@ -33,9 +33,20 @@
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Open XML SDK\V2.0\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetLight, Version=3.4.0.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetLight.3.4\lib\SpreadsheetLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Articulos\dsetArticulos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsetArticulos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Articulos\rptArticulos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptArticulos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DiseñoFacturas\Devolucion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,7 +91,18 @@
       <DependentUpon>FacturaSinCliente.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="frmInforme.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInforme.Designer.cs">
+      <DependentUpon>frmInforme.cs</DependentUpon>
+    </Compile>
     <Compile Include="GestionReporte.cs" />
+    <Compile Include="Precios\dsetPrecios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsetPrecios.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Precios\rptPrintPrice.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -79,6 +112,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Articulos\rptArticulos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptArticulos.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="DiseñoFacturas\Devolucion.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Devolucion.cs</LastGenOutput>
@@ -91,6 +128,9 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FacturaSinCliente.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInforme.resx">
+      <DependentUpon>frmInforme.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Precios\rptPrintPrice.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptPrintPrice.cs</LastGenOutput>
@@ -100,6 +140,17 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Articulos\dsetArticulos.xsc">
+      <DependentUpon>dsetArticulos.xsd</DependentUpon>
+    </None>
+    <None Include="Articulos\dsetArticulos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsetArticulos.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Articulos\dsetArticulos.xss">
+      <DependentUpon>dsetArticulos.xsd</DependentUpon>
+    </None>
     <None Include="DTFactura.xsc">
       <DependentUpon>DTFactura.xsd</DependentUpon>
     </None>
@@ -111,7 +162,20 @@
     <None Include="DTFactura.xss">
       <DependentUpon>DTFactura.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
+    <None Include="Precios\dsetPrecios.xsc">
+      <DependentUpon>dsetPrecios.xsd</DependentUpon>
+    </None>
+    <None Include="Precios\dsetPrecios.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsetPrecios.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Precios\dsetPrecios.xss">
+      <DependentUpon>dsetPrecios.xsd</DependentUpon>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

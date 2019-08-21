@@ -24,6 +24,7 @@ namespace JJ.Entidades
         private Iva _Iva;
         private int _CodMoneda;
         private bool _recalcula;
+        private decimal _stock;
 
         public int CodArticulo
         {
@@ -225,7 +226,15 @@ namespace JJ.Entidades
             }
         }
 
-        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,Iva xIva,decimal xGanancia, int xCodMoneda,bool xRecalcula)
+        public decimal Stock
+        {
+            get
+            {
+                return _stock;
+            }
+        }
+
+        public Articulo(int xCodigo, string xDescripcion, string xReferencia,decimal xPrecioCosto,Iva xIva,decimal xGanancia, int xCodMoneda,bool xRecalcula,decimal xStock)
         {
             _codArticulo = xCodigo;
             _descripcion = xDescripcion;
@@ -235,6 +244,7 @@ namespace JJ.Entidades
             _Ganancia = xGanancia;
             _CodMoneda = xCodMoneda;
             _recalcula = xRecalcula;
+            _stock = xStock;
         }
 
         public Articulo(string xDescripcion, string xReferencia, decimal xPrecioCosto, Iva xIva, decimal xGanancia, int xCodMoneda,bool xRecalcula)
