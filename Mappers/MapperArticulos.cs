@@ -162,7 +162,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA FROM ARTICULOS A", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -184,7 +184,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xArticulo));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -250,8 +250,10 @@ namespace JJ.Mappers
             int CodSeccion = (int)Reader["CODSECCION"];
             decimal Costo = Convert.ToDecimal(Reader["COSTO"]);
             decimal Ganancia = Convert.ToDecimal(Reader["GANANCIA"]);
+            int Recalcula = (int)Reader["RECALCULA"];
             Iva IVA = new MapperEmpresa().getIvaByID((int)(Reader["IVA"]));
-            A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia,xCodMoneda);
+            decimal Stock = Convert.ToDecimal(Reader["STOCK"]);
+            A = new Articulo(Codigo, Descripcion, Referencia, Costo, IVA, Ganancia,xCodMoneda,Convert.ToBoolean((Recalcula)),Stock);
             A.Nombre = Nombre;
             A.Codbarras = CodBarras;
             A.Codbarras1 = CodBarras1;
@@ -259,6 +261,7 @@ namespace JJ.Mappers
             A.Modelo = Modelo;
             A.Coddepto = CodDepartamento;
             A.Codseccion = CodSeccion;
+            A.Codmarca = Marca;
             return A;
         }
 
@@ -269,7 +272,7 @@ namespace JJ.Mappers
             List<IDataParameter> P = new List<IDataParameter>();
             
 
-            using (SqlCommand Com = new SqlCommand("INSERT INTO ARTICULOS(NOMBRE,DESCRIPCION,REFERENCIA,CODBARRAS,CODBARRAS1,ACTIVO,CODMARCA,MODELO,CODDEPARTAMENTO,CODSECCION,COSTO,GANANCIA,IVA,MONEDACOMPRA) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE,@DESCRIPCION,@REFERENCIA,@CODBARRAS,@CODBARRAS1,@ACTIVO,@CODMARCA,@MODELO,@CODDEPARTAMENTO,@CODSECCION,@COSTO,@GANANCIA,@IVA,@MONEDA)", (SqlConnection)xCon))
+            using (SqlCommand Com = new SqlCommand("INSERT INTO ARTICULOS(NOMBRE,DESCRIPCION,REFERENCIA,CODBARRAS,CODBARRAS1,ACTIVO,CODMARCA,MODELO,CODDEPARTAMENTO,CODSECCION,COSTO,GANANCIA,IVA,MONEDACOMPRA,RECALCULA) OUTPUT INSERTED.CODIGO VALUES (@NOMBRE,@DESCRIPCION,@REFERENCIA,@CODBARRAS,@CODBARRAS1,@ACTIVO,@CODMARCA,@MODELO,@CODDEPARTAMENTO,@CODSECCION,@COSTO,@GANANCIA,@IVA,@MONEDA,@RECALCULA)", (SqlConnection)xCon))
             {
                 Com.Parameters.Add(new SqlParameter("@NOMBRE", xA.Nombre.ToUpper()));
                 Com.Parameters.Add(new SqlParameter("@DESCRIPCION", xA.Descripcion.ToUpper()));
@@ -285,8 +288,9 @@ namespace JJ.Mappers
                 Com.Parameters.Add(new SqlParameter("@GANANCIA", xA.Ganancia));
                 Com.Parameters.Add(new SqlParameter("@IVA", xA.Iva.Id));
                 Com.Parameters.Add(new SqlParameter("@MONEDA", xA.CodMoneda));
+                Com.Parameters.Add(new SqlParameter("@RECALCULA", xA.Recalcula));
                 Com.Transaction = (SqlTransaction)xTran;
-                var Result = ExecuteScalar(Com, P);
+                var Result = ExecuteScalar(Com);
                 int.TryParse(Result.ToString(), out CodArtculo);
             }
             return CodArtculo;
@@ -362,6 +366,36 @@ namespace JJ.Mappers
                 }
             }
             return DT;
+        }
+
+        public void Actualizar(Articulo xA, decimal xGanancia, decimal xCosto)
+        {
+            List<IDataParameter> P = new List<IDataParameter>();
+
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET NOMBRE=@NOMBRE,DESCRIPCION=@DESCRIPCION,REFERENCIA=@REFERENCIA,CODBARRAS=@CODBARRAS,CODBARRAS1=@CODBARRAS1,ACTIVO=@ACTIVO,CODMARCA=@CODMARCA,MODELO=@MODELO,CODDEPARTAMENTO=@CODDEPARTAMENTO,CODSECCION=@CODSECCION,COSTO=@COSTO,GANANCIA=@GANANCIA,IVA=@IVA,MONEDACOMPRA=@MONEDA,RECALCULA=@RECALCULA WHERE CODIGO = @CODIGO", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xA.CodArticulo));
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", xA.Nombre.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", xA.Descripcion.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@REFERENCIA", xA.Referencia.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@CODBARRAS", xA.Codbarras.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@CODBARRAS1", xA.Codbarras1.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@ACTIVO", xA.Activo));
+                    Com.Parameters.Add(new SqlParameter("@CODMARCA", xA.Codmarca));
+                    Com.Parameters.Add(new SqlParameter("@MODELO", xA.Modelo));
+                    Com.Parameters.Add(new SqlParameter("@CODDEPARTAMENTO", xA.Coddepto));
+                    Com.Parameters.Add(new SqlParameter("@CODSECCION", xA.Codseccion));
+                    Com.Parameters.Add(new SqlParameter("@COSTO", xCosto));
+                    Com.Parameters.Add(new SqlParameter("@GANANCIA", xGanancia));
+                    Com.Parameters.Add(new SqlParameter("@IVA", xA.Iva.Id));
+                    Com.Parameters.Add(new SqlParameter("@MONEDA", xA.CodMoneda));
+                    Com.Parameters.Add(new SqlParameter("@RECALCULA", xA.Recalcula));
+                    ExecuteNonQuery(Com);
+                }
+            }
         }
     }
 }

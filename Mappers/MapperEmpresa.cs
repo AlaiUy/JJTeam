@@ -179,7 +179,7 @@ namespace JJ.Mappers
                             ObjEmpresa.Cajas = new MapperCajas().getCajas();
                             ObjEmpresa.Equipos = getEquipos();
                             ObjEmpresa.Ivas = getIvas();
-
+                            ObjEmpresa.Vendedores = getVendedores();
 
                         }
                     }
@@ -187,6 +187,11 @@ namespace JJ.Mappers
             }
 
             return ObjEmpresa;
+        }
+
+        private List<object> getVendedores()
+        {
+            return new MapperVendedores().getVendedores();
         }
 
         private List<Iva> getIvas()

@@ -22,11 +22,8 @@ namespace JJ.Mappers
                 try
                 {
                     if (globalConnectionString == null)
-#if DEBUG
                         globalConnectionString = ConfigurationManager.ConnectionStrings["Servidor"].ConnectionString;
-#else
-                globalConnectionString = ConfigurationManager.ConnectionStrings["ServidorAguinaG"].ConnectionString;
-#endif
+
 
 
                     return DataAccess.globalConnectionString;

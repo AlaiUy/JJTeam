@@ -160,6 +160,34 @@ namespace JJ.Gestoras
             throw new Exception("No se encontro el articulo");
         }
 
+        public void ActualizarArticulo(Articulo xArticulo, decimal xCosto, decimal xGanancia)
+        {
+            if (xArticulo == null)
+                throw new Exception("El articulo es incorrecto");
+            
+            if (!string.IsNullOrEmpty(xArticulo.Descripcion))
+                if (xArticulo.Descripcion.Length > 100)
+                    throw new Exception("La descripcion no cumple con la longuitud necesaria");
+            if (string.IsNullOrEmpty(xArticulo.Referencia) || xArticulo.Referencia.Length > 11)
+                throw new Exception("La referencia ingresada no es aceptada");
+            if (xArticulo.Nombre.Length > 50)
+                throw new Exception("El nombre del articulo ingresada no correcto");
+            if (xArticulo.Coddepto < 1)
+                throw new Exception("El departamento ingresado no es valido o no existe");
+            if (xArticulo.Codmarca < 1)
+                throw new Exception("La marca ingresada no es valida o no existe");
+            if (xArticulo.Codseccion < 1)
+                throw new Exception("La seccion ingresada no es valida");
 
+
+            if (xGanancia <= 0)
+                throw new Exception(String.Format("La ganancia del articulo es negativa", xGanancia));
+
+            if(xCosto <= 0)
+                throw new Exception(String.Format("El costo no puede ser menor a 0", xCosto));
+
+            DBArticulos.Actualizar(xArticulo, xGanancia, xCosto);
+
+        }
     }
 }

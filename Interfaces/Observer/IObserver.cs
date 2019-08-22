@@ -8,5 +8,6 @@ namespace JJ.Interfaces.Observer
     public interface IObserver
     {
         void Update(object Obj);
+
     }
 }

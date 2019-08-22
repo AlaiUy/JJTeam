@@ -99,5 +99,10 @@ namespace JJ.Entidades
         {
             return _Series.Find(x => x.Documento == xCodDocumento);
         }
+
+        public override string ToString()
+        {
+            return _Codigo + " - " + _Nombre;
+        }
     }
 }
