@@ -24,6 +24,7 @@ namespace JJ.Entidades
         private List<Equipo> _Equipos;
         private List<Iva> _Ivas;
         private List<object> _Vendedores;
+        private decimal _DescuentoContado;
 
 
         public string Nombre
@@ -228,6 +229,18 @@ namespace JJ.Entidades
             set
             {
                 _Vendedores = value;
+            }
+        }
+
+        public decimal DescuentoContado
+        {
+            get
+            {
+                return _DescuentoContado;
+            }
+            set
+            {
+                _DescuentoContado = value;
             }
         }
 

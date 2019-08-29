@@ -257,6 +257,7 @@ namespace JJ.Entidades
             _Ganancia = xGanancia;
             _CodMoneda = xCodMoneda;
             _recalcula = xRecalcula;
+            _activo = true;
         }
 
         public void setCosto(decimal xCosto)

@@ -29,8 +29,7 @@ namespace JJ.Gestoras
             if (xEmpresa == null)
                 return;
 
-            if (xEmpresa.CodEmpresa != -1)
-                return;
+           
 
             if (xEmpresa.Nombre.Length < 4 || xEmpresa.Nombre.Length > 100)
                 throw new Exception("El nombre de la empresa no es valido. [Length 4-100]");
@@ -68,8 +67,16 @@ namespace JJ.Gestoras
                 throw new Exception("El direccion de correo electronico no valida en este sistema. [Max 100.]");
             }
 
+            if (xEmpresa.CodEmpresa != -1)
+                UpdateEmpresa(xEmpresa);
 
             _DBEmpresa.addEmpresa(xEmpresa);
+            _Emp = (Empresa)_DBEmpresa.getempresa();
+        }
+
+        private void UpdateEmpresa(Empresa xEmpresa)
+        {
+            _DBEmpresa.UpdateEmpresa(xEmpresa);
             _Emp = (Empresa)_DBEmpresa.getempresa();
         }
 

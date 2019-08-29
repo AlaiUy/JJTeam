@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JJ.Entidades;
 
 namespace JJ.Interfaces
 {
@@ -12,5 +13,6 @@ namespace JJ.Interfaces
         void AddCaja(object xCaja);
         void addEquipo(object xEquipo);
         object getGrupo();
+        void UpdateEmpresa(Empresa xEmpresa);
     }
 }

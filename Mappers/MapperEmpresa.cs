@@ -147,7 +147,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CODEMPRESA,NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO FROM EMPRESA", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 CODEMPRESA,NOMBRE,RAZONSOCIAL,RUT,DIRECCION,CIUDAD,PAIS,TELEFONO,EMAIL,LOGO,DESCUENTO_CONTADO AS DESCUENTO FROM EMPRESA", Con))
                 {
 
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -164,6 +164,7 @@ namespace JJ.Mappers
                             string xPais = (string)(Reader["PAIS"]);
                             string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
                             string xEmail = (string)(Reader["EMAIL"] is DBNull ? string.Empty : Reader["EMAIL"]);
+                            decimal xDescuento = Convert.ToDecimal((Reader["DESCUENTO"]));
                             byte[] xLogo = (byte[])((Reader["LOGO"] is DBNull ? string.Empty : Reader["LOGO"]));
                             ObjEmpresa = new Empresa(xCodigo, xRz, xRut);
                             ObjEmpresa.Ciudad = xCiudad;
@@ -180,6 +181,7 @@ namespace JJ.Mappers
                             ObjEmpresa.Equipos = getEquipos();
                             ObjEmpresa.Ivas = getIvas();
                             ObjEmpresa.Vendedores = getVendedores();
+                            ObjEmpresa.DescuentoContado = xDescuento;
 
                         }
                     }
@@ -492,6 +494,29 @@ namespace JJ.Mappers
                 }
             }
             return Parametros;
+        }
+
+        public void UpdateEmpresa(Empresa xEmpresa)
+        {
+            Empresa Em = (Empresa)xEmpresa;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE EMPRESA SET NOMBRE=@NOMBRE,DIRECCION=@DIRECCION,CIUDAD=@CIUDAD,PAIS=@PAIS,TELEFONO=@TELEFONO,EMAIL=@EMAIL,LOGO=@LOGO,DESCUENTO_CONTADO=@DESCUENTO", Con))
+                {
+
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", Em.Nombre.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", Em.Direccion.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@CIUDAD", Em.Ciudad.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@PAIS", Em.Pais.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", Em.Telefono.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@EMAIL", Em.Email.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@LOGO", Em.Imagen));
+                    Com.Parameters.Add(new SqlParameter("@DESCUENTO", Em.DescuentoContado));
+                    ExecuteNonQuery(Com);
+                }
+
+            }
         }
     }
 }
