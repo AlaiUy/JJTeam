@@ -184,7 +184,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A where A.CODIGO = @CODIGO OR A.REFERENCIA = @CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A where A.CODIGO = @CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xArticulo));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -199,7 +199,8 @@ namespace JJ.Mappers
             return A;
         }
 
-        
+       
+
 
 
         /* ==== METODOS PRIVADOS ==== */
@@ -370,8 +371,6 @@ namespace JJ.Mappers
 
         public void Actualizar(Articulo xA, decimal xGanancia, decimal xCosto)
         {
-            List<IDataParameter> P = new List<IDataParameter>();
-
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
@@ -396,6 +395,42 @@ namespace JJ.Mappers
                     ExecuteNonQuery(Com);
                 }
             }
+        }
+
+        public void UpdateStock(object xArticulo, decimal xCantidad)
+        {
+            Articulo xA = (Articulo)xArticulo;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET STOCK=@STOCK WHERE CODIGO = @CODIGO", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xA.CodArticulo));
+                    Com.Parameters.Add(new SqlParameter("@STOCK", xCantidad));
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
+
+        public object getArticuloByRef(string xCodigo)
+        {
+            Articulo A = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 A.CODIGO,A.NOMBRE,A.DESCRIPCION,A.REFERENCIA,A.CODBARRAS,A.CODBARRAS1,A.ACTIVO,A.CODMARCA,A.CODSECCION,A.CODDEPARTAMENTO,A.MODELO,A.COSTO,A.IVA,A.GANANCIA,A.MONEDACOMPRA,A.RECALCULA,A.STOCK FROM ARTICULOS A where A.REFERENCIA = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xCodigo));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            A = getArticuloReader(Reader);
+                        }
+                    }
+                }
+            }
+            return A;
         }
     }
 }

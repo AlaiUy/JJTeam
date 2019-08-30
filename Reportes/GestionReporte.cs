@@ -3,6 +3,7 @@ using CrystalDecisions.Windows.Forms;
 using DocumentFormat.OpenXml.Spreadsheet;
 using JJ.Reportes;
 using SpreadsheetLight;
+using SpreadsheetLight.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -44,34 +45,49 @@ namespace JJ.Reportes
                 //creamos el objeto SLDocument el cual creara el excel
                 SLDocument sl = new SLDocument();
 
-                //creamos las celdas en diagonal
-                //utilizando la función setcellvalue pueden navegar sobre el documento
-                //primer parametro es la fila el segundo la columna y el tercero el dato de la celda
+               
 
                 int Index = 1;
                 SLStyle style = sl.CreateStyle();
                 style.Font.FontSize = 12;
                 style.Font.FontColor = System.Drawing.Color.Black;
                 style.Font.Bold = true;
+                style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
+                style.SetVerticalAlignment(VerticalAlignmentValues.Center);
                 style.SetTopBorder(BorderStyleValues.DashDot, System.Drawing.Color.Blue);
-                style.SetBottomBorder(BorderStyleValues.DashDot, System.Drawing.Color.Blue);
+                style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
                 sl.SetCellStyle(1, 1, style);
+
+                System.Drawing.Bitmap bm = new System.Drawing.Bitmap(Properties.Resources.LogoChico);
+                byte[] ba;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    bm.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    ms.Close();
+                    ba = ms.ToArray();
+                }
+
+                // we need the image type because in byte array form, we don't know the type
+                SLPicture pic = new SLPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
+                pic.SetPosition(0, 0);
+                sl.InsertPicture(pic);
+
+
+
                 foreach (DataColumn DC in xData.Columns)
                 {
-                    sl.SetCellValue(1, Index, DC.ColumnName);
-                    sl.SetCellStyle(1, Index, style);
+                    sl.SetCellValue(8, Index, DC.ColumnName);
+                    sl.SetCellStyle(8, Index, style);
+                    sl.AutoFitColumn(Index);
                     Index += 1;
                 }
 
-                
-
-               
-
-                int IndexRow = 2;
+                int IndexRow = 9;
                 foreach (DataRow row in xData.Rows)
                 {
                     foreach (DataColumn DC in xData.Columns)
                     {
+                        
                         switch (Type.GetTypeCode(row[DC.Ordinal].GetType()))
                         {
                             case TypeCode.Byte:
@@ -111,18 +127,17 @@ namespace JJ.Reportes
                                 sl.SetCellValue(IndexRow, DC.Ordinal + 1, row[DC.Ordinal].ToString());
                                 break;
                         }
-                        
-                        style = sl.CreateStyle();
-                        style.SetHorizontalAlignment(HorizontalAlignmentValues.Right);
+                       
                        
                     }
                     IndexRow += 1;
                 }
-                
+                sl.SetRowHeight(1, IndexRow, 20);
+
                 //Guardar como, y aqui ponemos la ruta de nuestro archivo
                 if (xDestino == null)
                 {
-                    sl.SaveAs("C:/INFORMES/inco.xlsx");
+                    sl.SaveAs("C:/INFORMES/Informe.xlsx");
                 }
                 else
                 {

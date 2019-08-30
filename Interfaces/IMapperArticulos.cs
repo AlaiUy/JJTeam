@@ -17,5 +17,7 @@ namespace JJ.Interfaces
         object getArticuloById(string xArticulo);
         object getVistaArticulos();
         void Actualizar(Articulo xArticulo, decimal xGanancia, decimal xCosto);
+        void UpdateStock(object xArticulo, decimal xCantidad);
+        object getArticuloByRef(string xCodigo);
     }
 }

@@ -152,12 +152,28 @@ namespace JJ.Gestoras
             return (Seccion)DBArticulos.AddSeccion(xSeccion, xDepartamento);
         }
 
+        public Articulo getArticuloByRef(string xCodigo)
+        {
+            Articulo A = (Articulo)DBArticulos.getArticuloByRef(xCodigo);
+            if (A != null)
+                return A;
+            if( A == null)
+                throw new Exception("No se encontro el articulo");
+            if(!A.Activo)
+                throw new Exception("El articulo esta descatalogado");
+            return null;
+        }
+
         public Articulo getArticuloById(string xCodigo)
         {
             Articulo A = (Articulo)DBArticulos.getArticuloById(xCodigo);
             if (A != null)
                 return A;
-            throw new Exception("No se encontro el articulo");
+            if (A == null)
+                throw new Exception("No se encontro el articulo");
+            if (!A.Activo)
+                throw new Exception("El articulo esta descatalogado");
+            return null;
         }
 
         public void ActualizarArticulo(Articulo xArticulo, decimal xCosto, decimal xGanancia)
@@ -188,6 +204,16 @@ namespace JJ.Gestoras
 
             DBArticulos.Actualizar(xArticulo, xGanancia, xCosto);
 
+        }
+
+        public void UpdateStock(Articulo xArticulo, decimal xCantidad)
+        {
+            if (xArticulo == null)
+                throw new Exception("No se puede validar ese articulo");
+            if (xCantidad <= 0)
+                throw new Exception("La cantidad a asignar debe ser mayor que 0");
+
+            DBArticulos.UpdateStock(xArticulo, xCantidad);
         }
     }
 }
