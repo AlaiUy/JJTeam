@@ -313,10 +313,34 @@ namespace JJ.Mappers
 
         public bool Update(object xObject)
         {
-            throw new NotImplementedException();
+            if (xObject is Proveedor)
+            {
+                UpdateProveedor((Proveedor)xObject);
+                return true;
+            }
+            return true;
         }
 
-       
+        private void UpdateProveedor(Proveedor xObject)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE PROVEEDORES SET NOMBRE=@NOMBRE,RZ=@RZ,RUT=@RUT,DIRECCION=@DIRECCION,DIRNUMERO=@NUMERO,TELEFONO=@TELEFONO,CELULAR=@CELULAR,CODCATEGORIA=@CODCATEGORIA,EMAIL=@EMAIL",Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", xObject.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@RZ", xObject.Rz));
+                    Com.Parameters.Add(new SqlParameter("@RUT", xObject.Rut));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", xObject.Direccion));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xObject.Dirnumero));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", xObject.Telefono));
+                    Com.Parameters.Add(new SqlParameter("@CELULAR", xObject.Celular));
+                    Com.Parameters.Add(new SqlParameter("@CODCATEGORIA", xObject.Categoria));
+                    Com.Parameters.Add(new SqlParameter("@EMAIL", xObject.Email));
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
 
         private Categoria getCategoriaFromReader(IDataReader Reader,string xType)
         {

@@ -242,8 +242,8 @@ namespace JJ.Mappers
             string Referencia = (string)Reader["REFERENCIA"];
             string CodBarras = (string)(Reader["CODBARRAS"] is DBNull ? string.Empty : Reader["CODBARRAS"]);
             string CodBarras1 = (string)(Reader["CODBARRAS1"] is DBNull ? string.Empty : Reader["CODBARRAS1"]);
-            bool Activo;
-            bool.TryParse(Reader["ACTIVO"].ToString(), out Activo);
+            bool Activo = Convert.ToBoolean(Reader["ACTIVO"]);
+
             int Marca = (int)Reader["CODMARCA"];
             string Modelo = (string)(Reader["MODELO"] is DBNull ? string.Empty : Reader["MODELO"]);
             int CodDepartamento = (int)Reader["CODDEPARTAMENTO"];

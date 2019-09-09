@@ -518,5 +518,20 @@ namespace JJ.Mappers
 
             }
         }
+
+        public void ChangeCot(decimal xCotizacion, int xCodigo)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("INSERT INTO COTIZACIONES (CODMONEDA,VALOR,FECHA)VALUES(@CODMONEDA,@VALOR,GETDATE())", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODMONEDA", xCodigo));
+                    Com.Parameters.Add(new SqlParameter("@VALOR", xCotizacion));
+                    ExecuteNonQuery(Com);
+                }
+
+            }
+        }
     }
 }

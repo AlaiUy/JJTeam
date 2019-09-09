@@ -255,5 +255,7 @@ namespace JJ.Entidades
             _Rut = xRut;
             _Razonsocial = xRazonSocial;
         }
+
+        
     }
 }
