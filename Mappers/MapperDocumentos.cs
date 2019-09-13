@@ -163,12 +163,15 @@ namespace JJ.Mappers
                 {
                         int xCodEspera = -1;
                         List<IDataParameter> P = new List<IDataParameter>();
+
+
                         using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
-                        {
+ {
                             Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
                             Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
                             Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
                             Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
+
                             Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
                             Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
                             Com.Transaction = (SqlTransaction)Tran;
@@ -213,7 +216,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.TIPO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 order by codigo asc", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE, E.PRESUPUESTO FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 order by codigo asc", Con))
                 {
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
@@ -225,10 +228,42 @@ namespace JJ.Mappers
                             int xCliente = (int)Reader["CLIENTECONTADO"];
                             string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
                             string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
-                            int xTipo = (int)Reader["TIPO"];
+                           
+                            //char xPresupuesto = (char)Reader["PRESUPUESTO"];
                             int xEstado = (int)Reader["ESTADO"];
                             String xNombreCliente = (string)Reader["NOMBRE"];
-                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xTipo,xNombreCliente);
+                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xNombreCliente,'F');
+                            E.AgregarLineas(getLineasEsperaContado(Codigo));
+                            LtsEspera.Add(E);
+                        }
+                    }
+                }
+            }
+            return LtsEspera;
+        }
+
+        public List<object> getVentasEsperaCredito()
+        {
+            List<object> LtsEspera = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CODPERSONA, E.CODCUENTA, E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, E.PRESUPUESTO, CC.NOMBRE, E.PRESUPUESTO, P.CODIGO, P.CEDULA, P.NOMBRE, P.APELLIDO, P.DIRECCION, P.DIRNUMERO, P.TELEFONO,P.CELULAR, P.PAIS,P.CIUDAD,P.SUBCATEGORIA, P.EMAIL,P.ACTIVA   FROM ESPERA E  inner join PERSONAS as P on (E.CODIGO= P.CODIGO) where estado=0 order by codigo asc", Con))
+                {
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            DateTime Fecha = (DateTime)Reader["FECHA"];
+                            int xCodVendedor = (int)Reader["CODVENDEDOR"];
+                            int xCliente = (int)Reader["CLIENTECONTADO"];
+                            string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
+                            string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
+                            char xPresupuesto = (char)Reader["PRESPUESTO"];
+                            int xEstado = (int)Reader["ESTADO"];
+                            String xNombreCliente = (string)Reader["NOMBRE"];
+                            EsperaContado E = new EsperaContado(Codigo, Fecha, xCodVendedor, xCliente, xAdenda, xEnvio, xEstado, xNombreCliente, xPresupuesto);
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }
@@ -412,13 +447,13 @@ namespace JJ.Mappers
 
         //public object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo)
         //{
-        //    Factura F = null;
+        //    Documento F = null;
 
         //    string Query = "SELECT * FROM VENTAS V ";
         //    switch (xTipo)
         //    {
         //        case TipoLineas.Contado:
-        //            Query += "INNER JOIN VENTASCONTADO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.SERIE";
+        //            Query += "INNER JOIN VENTASCONTADO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.SERIE and INNER JOIN CLIENTESCONTADO AS CC ON (CC.CODIGO=CV.CLIENTECONTADO)";
         //            break;
         //        case TipoLineas.Credito:
         //            Query += "INNER JOIN VENTASCREDITO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.CODSERIE";
@@ -444,46 +479,68 @@ namespace JJ.Mappers
         //    return F;
         //}
 
-        //private Factura getFacturaFromReader(IDataReader Reader, TipoLineas xTipo)
-        //{
-        //    Factura F = null;
-        //    ClienteContado CC = null;
-        //    Persona P = null;
-        //    int Numero = (int)Reader["NUMERO"];
-        //    string Serie = (string)Reader["SERIE"];
-        //    string Caja = (string)Reader["CODCAJA"];
-        //    DateTime Fecha = Convert.ToDateTime(Reader["FECHA"]);
-        //    int Moneda = (int)Reader["CODMONEDA"];
-        //    int Z = (int)Reader["Z"];
-        //    int Vendedor = (int)Reader["CODVENDEDOR"];
-        //    int Documento = (int)Reader["CODDOCUMENTO"];
-        //    switch (xTipo)
-        //    {
-        //        case TipoLineas.Contado:
-        //            int ClC = (int)Reader["CLIENTECONTADO"];
-        //            CC = getClienteContadoByID(ClC);
-        //            F = new VentaContado(Documento, CC, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor);
-        //            break;
-        //        case TipoLineas.Credito:
-        //            int CodPersona = (int)Reader["CODPERSONA"];
-        //            int CodCuenta = (int)Reader["CODCUENTA"];
-        //            int Tarifa = (int)Reader["CODTARIFA"];
-        //            P = getPersonaById(CodPersona.ToString());
-        //            F = new VentaCuenta(Documento, P, CodCuenta, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor, Tarifa);
-        //            break;
-        //        default:
-        //            break;
-
-        //    }
-
-        //    List<object> L = getLineasByFactura(F.Numero, F.Serie);
-        //    F.AgregarLineas(L);
-        //    return F;
-        //}
-
-        private List<object> getLineasByFactura(int xNumero, string xSerie)
+        private Documento getFacturaFromReader(IDataReader Reader, TipoLineas xTipo)
         {
-            List<object> Lineas = new List<object>();
+            Documento F = null;
+           
+            Persona P = null;
+            //CLIENTE CONTADO
+            int CODCCCLIENTE = (int)Reader["CODIGO"];
+            string CCDOCUMENTO = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]) ;
+            string CCNOMBRE = (string)Reader["NOMBRE"];
+            string CCDIRECCION = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+            string CCTELEFONO = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+
+            //VENTASCONTADO
+            int VCNUMERO = (int)Reader["NUMERO"];
+            string CVSERIE = (string)Reader["SERIE"];
+            int CVCLIENTECONTADO = (int)Reader["CLIENTECONTADO"];
+
+            //VENTA
+
+            
+            int VNumero = (int)Reader["NUMERO"];
+            string VSerie = (string)Reader["SERIE"];
+            string VCaja = (string)Reader["CODCAJA"];
+            DateTime VFecha = Convert.ToDateTime(Reader["FECHA"]);
+            int VMoneda = (int)Reader["CODMONEDA"];
+            int VZ = (int)Reader["Z"];
+            int VVendedor = (int)Reader["CODVENDEDOR"];
+            int VDocumento = (int)Reader["CODDOCUMENTO"];
+            string VDetalle =(string)Reader["DETALLE"];
+            decimal VCotizacion = (decimal)Reader["COTIZACION"];
+            double VSubtotal = (double)Reader["SUBTOTAL"];
+            double VIva = (double)Reader["IVA"];
+
+
+            switch (xTipo)
+            {
+                case TipoLineas.Contado:
+               
+                    F = new VentaContado(new ClienteContado (CODCCCLIENTE, CCDOCUMENTO,CCNOMBRE,CCDIRECCION,CCTELEFONO),VFecha,VSerie,VCaja,VMoneda,VZ,VVendedor,VCotizacion,false);
+                    break;
+                case TipoLineas.Credito:
+                    //int CodPersona = (int)Reader["CODPERSONA"];
+                    //int CodCuenta = (int)Reader["CODCUENTA"];
+                    //int Tarifa = (int)Reader["CODTARIFA"];
+                    //P = getPersonaById(CodPersona.ToString());
+                    //F = new VentaCuenta(Documento, P, CodCuenta, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor, Tarifa);
+                    //break;
+                default:
+                    break;
+
+            }
+
+            List<Linea> L = getLineasByFactura(F.Numero, F.Serie);
+            F.AgregarLineas(L);
+            return F;
+        }
+
+      
+
+        private List<Linea> getLineasByFactura(int xNumero, string xSerie)
+        {
+            List<Linea> Lineas = new List<Linea>();
             VentaLin VL = null;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
@@ -551,7 +608,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
                     Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio()));
                     Com.Parameters.Add(new SqlParameter("@DTO", VL.Descuento));
-                    Com.Parameters.Add(new SqlParameter("@IVA",VL.Articulo.Iva));
+                    Com.Parameters.Add(new SqlParameter("@IVA",VL.Articulo.Iva.Valor));
                     Com.Transaction = (SqlTransaction)xTran;
                     ExecuteNonQuery(Com);
                 }
@@ -620,9 +677,43 @@ namespace JJ.Mappers
             }
             return ListDoc;
         }
-        
+
+        Documento IMapperDocumentos.getFacturaByID(string xSerie, int Numero, TipoLineas xTipo)
+        {
+            Documento F = null;
+
+            string Query = "SELECT * FROM VENTAS V ";
+            switch (xTipo)
+            {
+                case TipoLineas.Contado:
+                    Query += "INNER JOIN VENTASCONTADO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.SERIE INNER JOIN CLIENTESCONTADO AS CC ON (V.CODDOCUMENTO=CC.CODIGO) ";
+                    break;
+                case TipoLineas.Credito:
+                    Query += "INNER JOIN VENTASCREDITO VC ON V.NUMERO = VC.NUMERO AND V.CODSERIE = VC.CODSERIE";
+                    break;
+            }
+            Query += " WHERE V.CODSERIE = @SERIE AND V.NUMERO = @NUMERO";
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand(Query, Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@SERIE", xSerie));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", Numero));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            F = getFacturaFromReader(Reader, xTipo);
+                        }
+                    }
+                }
+            }
+            return F;
+        }
     }
-}
+    }
+
 
 
         

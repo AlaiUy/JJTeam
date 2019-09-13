@@ -21,7 +21,7 @@ namespace JJ.Entidades
         private string _Adenda;
         private string _DireccionEnvio;
         private int _estado;
-        private int _tipo;
+        private bool _presupuesto;
 
         public int Codvendedor
         {
@@ -116,19 +116,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int Tipo
-        {
-            get
-            {
-                return _tipo;
-            }
-
-            set
-            {
-                _tipo = value;
-            }
-        }
-
+       
         public int Numero
         {
             get
@@ -147,7 +135,34 @@ namespace JJ.Entidades
 
                    }
 
-        public EsperaCredito(int xNumero,DateTime xFecha, int xcodVendedor, int xcodpersona, int xCodMoneda, int xCodCuenta,  String xAdenda, String xDireccionEnvio, int xestado, int xtipo) {
+        public char Presupuesto
+        {
+            get
+            {
+                if (_presupuesto == true){
+                    return 'T';
+                }
+                return 'F';
+               
+            }
+
+            set
+            {
+                if (value.Equals('T'))
+                {
+
+                    _presupuesto = true;
+                }
+                else
+                {
+                    _presupuesto = false;
+                }
+            
+
+            }
+        }
+
+        public EsperaCredito(int xNumero,DateTime xFecha, int xcodVendedor, int xcodpersona, int xCodMoneda, int xCodCuenta,  String xAdenda, String xDireccionEnvio, int xestado, char xpresupuesto) {
             _lineas = new List<Esperalin>();
             _numero = xNumero;
             _fecha = xFecha;
@@ -156,7 +171,7 @@ namespace JJ.Entidades
             _Adenda = xAdenda;
             _DireccionEnvio = xDireccionEnvio;
             _estado = xestado;
-            _tipo = xtipo;
+            Presupuesto= xpresupuesto;
                         
         }
 

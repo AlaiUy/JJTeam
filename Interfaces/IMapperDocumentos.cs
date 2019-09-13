@@ -10,6 +10,8 @@ namespace JJ.Interfaces
     {
         List<object> getVentasEsperaContado();
 
+        Documento getFacturaByID(string xSerie, int Numero, TipoLineas xTipo);
+
         //object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo);
     }
 }

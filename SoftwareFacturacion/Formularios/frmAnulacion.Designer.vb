@@ -52,7 +52,7 @@ Partial Class frmAnulacion
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(823, 426)
+        Me.Panel1.Size = New System.Drawing.Size(795, 422)
         Me.Panel1.TabIndex = 0
         '
         'dgridfactura
@@ -66,7 +66,7 @@ Partial Class frmAnulacion
         Me.dgridfactura.ReadOnly = True
         Me.dgridfactura.RowTemplate.Height = 28
         Me.dgridfactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridfactura.Size = New System.Drawing.Size(823, 249)
+        Me.dgridfactura.Size = New System.Drawing.Size(795, 245)
         Me.dgridfactura.TabIndex = 2
         '
         'Panel3
@@ -76,14 +76,15 @@ Partial Class frmAnulacion
         Me.Panel3.Controls.Add(Me.Label3)
         Me.Panel3.Controls.Add(Me.txtTotal)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.Location = New System.Drawing.Point(0, 349)
+        Me.Panel3.Location = New System.Drawing.Point(0, 345)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(823, 77)
+        Me.Panel3.Size = New System.Drawing.Size(795, 77)
         Me.Panel3.TabIndex = 1
         '
         'txtTotalAnulacion
         '
-        Me.txtTotalAnulacion.Location = New System.Drawing.Point(689, 38)
+        Me.txtTotalAnulacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTotalAnulacion.Location = New System.Drawing.Point(652, 38)
         Me.txtTotalAnulacion.Name = "txtTotalAnulacion"
         Me.txtTotalAnulacion.ReadOnly = True
         Me.txtTotalAnulacion.Size = New System.Drawing.Size(131, 26)
@@ -91,8 +92,9 @@ Partial Class frmAnulacion
         '
         'Label4
         '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(549, 41)
+        Me.Label4.Location = New System.Drawing.Point(512, 41)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(118, 20)
         Me.Label4.TabIndex = 2
@@ -100,8 +102,9 @@ Partial Class frmAnulacion
         '
         'Label3
         '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(564, 9)
+        Me.Label3.Location = New System.Drawing.Point(527, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(103, 20)
         Me.Label3.TabIndex = 1
@@ -109,7 +112,8 @@ Partial Class frmAnulacion
         '
         'txtTotal
         '
-        Me.txtTotal.Location = New System.Drawing.Point(689, 6)
+        Me.txtTotal.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTotal.Location = New System.Drawing.Point(652, 6)
         Me.txtTotal.Name = "txtTotal"
         Me.txtTotal.ReadOnly = True
         Me.txtTotal.Size = New System.Drawing.Size(131, 26)
@@ -126,13 +130,13 @@ Partial Class frmAnulacion
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(823, 100)
+        Me.Panel2.Size = New System.Drawing.Size(795, 100)
         Me.Panel2.TabIndex = 0
         '
         'btnAnular
         '
         Me.btnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAnular.Location = New System.Drawing.Point(712, 17)
+        Me.btnAnular.Location = New System.Drawing.Point(684, 17)
         Me.btnAnular.Name = "btnAnular"
         Me.btnAnular.Size = New System.Drawing.Size(98, 44)
         Me.btnAnular.TabIndex = 5
@@ -184,9 +188,10 @@ Partial Class frmAnulacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(847, 450)
+        Me.ClientSize = New System.Drawing.Size(819, 446)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmAnulacion"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Anulacion Facturas"

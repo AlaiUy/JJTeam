@@ -62,6 +62,10 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(xCompra);
         }
 
+        public VentaContado getVentaDocumento(int xNumero, string xSerie, TipoLineas xtipo)
+        {
+           return (VentaContado)_DBDocumentos.getFacturaByID(xSerie, xNumero, xtipo);
+        }
 
     }
 

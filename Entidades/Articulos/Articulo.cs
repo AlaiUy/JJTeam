@@ -302,9 +302,7 @@ namespace JJ.Entidades
             return decimal.Round(((Importe - 1)*100),2);
         }
 
-        
-
-     
+   
 
     }
 }

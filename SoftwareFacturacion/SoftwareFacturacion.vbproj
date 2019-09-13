@@ -47,6 +47,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Entidades">
+      <HintPath>..\Entidades\bin\Debug\Entidades.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -80,6 +83,12 @@
       <DependentUpon>frmCierre.vb</DependentUpon>
     </Compile>
     <Compile Include="Formularios\frmCierre.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmClave.Designer.vb">
+      <DependentUpon>frmClave.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmClave.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\frmEspera.Designer.vb">
@@ -129,6 +138,9 @@
     <EmbeddedResource Include="Formularios\frmCierre.resx">
       <DependentUpon>frmCierre.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmClave.resx">
+      <DependentUpon>frmClave.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmEspera.resx">
       <DependentUpon>frmEspera.vb</DependentUpon>
     </EmbeddedResource>
@@ -161,10 +173,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entidades\Entidades.csproj">
-      <Project>{b0d7ef4f-6a0f-4073-8c79-58413c2011f8}</Project>
-      <Name>Entidades</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Gestoras\Gestoras.csproj">
       <Project>{e2044ddd-f84d-4823-91d1-4c55c82800b0}</Project>
       <Name>Gestoras</Name>
