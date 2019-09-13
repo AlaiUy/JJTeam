@@ -191,6 +191,7 @@ Partial Class frmAnulacion
         Me.ClientSize = New System.Drawing.Size(819, 446)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmAnulacion"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Anulacion Facturas"
