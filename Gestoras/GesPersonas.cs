@@ -286,7 +286,7 @@ namespace JJ.Gestoras
             return _DBPersonas.getAllClientes(true);
         }
 
-        public ClienteContado getClienteContadoByID(int xCodCLienteContado)
+        public ClienteContado getClienteContadoByID(string xCodCLienteContado)
         {
             return (ClienteContado)_DBPersonas.getClienteContadobyID(xCodCLienteContado);
         }

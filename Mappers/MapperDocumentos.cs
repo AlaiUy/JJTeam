@@ -529,7 +529,7 @@ namespace JJ.Mappers
             return (Persona)new MapperPersonas().getPersona(codPersona);
         }
 
-        private ClienteContado getClienteContadoByID(int ClC)
+        private ClienteContado getClienteContadoByID(string ClC)
         {
             return (ClienteContado)new MapperPersonas().getClienteContadobyID(ClC);
         }

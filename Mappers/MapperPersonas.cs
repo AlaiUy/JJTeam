@@ -326,7 +326,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("UPDATE PROVEEDORES SET NOMBRE=@NOMBRE,RZ=@RZ,RUT=@RUT,DIRECCION=@DIRECCION,DIRNUMERO=@NUMERO,TELEFONO=@TELEFONO,CELULAR=@CELULAR,CODCATEGORIA=@CODCATEGORIA,EMAIL=@EMAIL",Con))
+                using (SqlCommand Com = new SqlCommand("UPDATE PROVEEDORES SET NOMBRE=@NOMBRE,RZ=@RZ,RUT=@RUT,DIRECCION=@DIRECCION,DIRNUMERO=@NUMERO,TELEFONO=@TELEFONO,CELULAR=@CELULAR,CODCATEGORIA=@CODCATEGORIA,EMAIL=@EMAIL where CODIGO = @CODIGO",Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@NOMBRE", xObject.Nombre));
                     Com.Parameters.Add(new SqlParameter("@RZ", xObject.Rz));
@@ -337,6 +337,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@CELULAR", xObject.Celular));
                     Com.Parameters.Add(new SqlParameter("@CODCATEGORIA", xObject.Categoria));
                     Com.Parameters.Add(new SqlParameter("@EMAIL", xObject.Email));
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xObject.Codigo));
                     ExecuteNonQuery(Com);
                 }
             }
@@ -355,13 +356,13 @@ namespace JJ.Mappers
             
         }
 
-        public object getClienteContadobyID(int xCodCliente)
+        public object getClienteContadobyID(string xCodCliente)
         {
             ClienteContado objc = null;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE CODIGO=@CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE DOCUMENTO=@CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodCliente));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -371,7 +372,6 @@ namespace JJ.Mappers
                         {
                             int xCodigo = (int)Reader["CODIGO"];
                             string xDocumento = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]);
-                          
                             string xNombre = (string)Reader["NOMBRE"];
                             string xDireccion = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
                             string xTelefono = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
