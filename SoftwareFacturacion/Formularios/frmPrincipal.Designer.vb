@@ -436,6 +436,7 @@ Partial Class frmPrincipal
         Me.cboxMoneda.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cboxMoneda.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboxMoneda.Enabled = False
         Me.cboxMoneda.FormattingEnabled = True
         Me.cboxMoneda.Location = New System.Drawing.Point(249, 45)
         Me.cboxMoneda.Name = "cboxMoneda"
@@ -524,6 +525,7 @@ Partial Class frmPrincipal
         Me.txtTipoVta.ReadOnly = True
         Me.txtTipoVta.Size = New System.Drawing.Size(203, 26)
         Me.txtTipoVta.TabIndex = 3
+        Me.txtTipoVta.Visible = False
         '
         'Label14
         '
@@ -533,6 +535,7 @@ Partial Class frmPrincipal
         Me.Label14.Size = New System.Drawing.Size(129, 20)
         Me.Label14.TabIndex = 2
         Me.Label14.Text = "TIPO DE VENTA"
+        Me.Label14.Visible = False
         '
         'Label6
         '

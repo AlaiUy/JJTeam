@@ -24,7 +24,7 @@ namespace JJ.Mappers
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-                Facturar(xObject,33,1);
+                Facturar(xObject,33,1,new MapperPrecios().getCotizacion());
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
@@ -233,6 +233,7 @@ namespace JJ.Mappers
                             int xEstado = (int)Reader["ESTADO"];
                             String xNombreCliente = (string)Reader["NOMBRE"];
                             EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xNombreCliente,'F');
+                        
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }
@@ -294,7 +295,10 @@ namespace JJ.Mappers
                             decimal Descuento = Convert.ToDecimal(Reader["DESCUENTO"]);
 
                             Esperalin L = new Esperalin(A,Descripcion,Cantidad,Descuento,NumLin);
-         
+
+                  
+
+
                             
                             Lineas.Add(L);
                         }
@@ -307,7 +311,7 @@ namespace JJ.Mappers
 
 
 
-        public void Facturar(object xObjFactura, int xZ, int xCodDocumento)
+        public void Facturar(object xObjFactura, int xZ, int xCodDocumento, decimal xcotizacion)
         {
             Documento F = (Documento)xObjFactura;
             int NumeroFactura = -1;
@@ -329,8 +333,8 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", xCodDocumento));
                         Com.Parameters.Add(new SqlParameter("@DETALLE", F.Detalle));
                         Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
-                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal()));
-                        Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal()));
+                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1,xcotizacion)));
+                        Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
                         if (F is VentaContado)
@@ -436,7 +440,7 @@ namespace JJ.Mappers
 
 
                     }
-                    AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                    AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
                     AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
 
 
@@ -518,6 +522,7 @@ namespace JJ.Mappers
                 case TipoLineas.Contado:
                
                     F = new VentaContado(new ClienteContado (CODCCCLIENTE, CCDOCUMENTO,CCNOMBRE,CCDIRECCION,CCTELEFONO),VFecha,VSerie,VCaja,VMoneda,VZ,VVendedor,VCotizacion,false);
+                    F.Numero = VCNUMERO;
                     break;
                 case TipoLineas.Credito:
                     //int CodPersona = (int)Reader["CODPERSONA"];
@@ -577,6 +582,9 @@ namespace JJ.Mappers
             decimal dto = Convert.ToDecimal(Reader["DTO"]);
             decimal Iva = Convert.ToDecimal(Reader["IVA"]);
             Articulo A = (Articulo)(new MapperArticulos().getArticuloById(CodArt.ToString()));
+            A.setCostoenBaseAPrecioFinal(Precio);
+
+
             VentaLin L = new VentaLin(Linea, A, Des,  Cantidad, dto);
             return L;
         }
@@ -591,7 +599,7 @@ namespace JJ.Mappers
             return (ClienteContado)new MapperPersonas().getClienteContadobyID(ClC);
         }
 
-        private void AddLineasFactura(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
+        private void AddLineasFactura(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie, decimal xcotizacion)
         {
             foreach (object L in lineas)
             {
@@ -606,7 +614,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@REFERENCIA", VL.Articulo.Referencia));
                     Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion.ToUpper() ));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
-                    Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio()));
+                    Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio(1,xcotizacion)));
                     Com.Parameters.Add(new SqlParameter("@DTO", VL.Descuento));
                     Com.Parameters.Add(new SqlParameter("@IVA",VL.Articulo.Iva.Valor));
                     Com.Transaction = (SqlTransaction)xTran;
@@ -620,7 +628,7 @@ namespace JJ.Mappers
             foreach (object L in lineas)
             {
                 VentaLin VL = (VentaLin)L;
-                using (SqlCommand Com = new SqlCommand("INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, 0,0, 0, 0)", (SqlConnection)xCon))
+                using (SqlCommand Com = new SqlCommand("INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, @CANTIDAD,0, 0, 0)", (SqlConnection)xCon))
                 {
                     //FALTA EN VENTALIN PONER ATRIBUTOS
                     Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));

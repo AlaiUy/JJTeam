@@ -93,7 +93,7 @@ Public Class frmEspera
         Dim objE As EsperaContado = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", e.RowIndex).Value)
         Me.dgridLineas.DataSource = MostrarLineas(objE)
         txtAdenda.Text = objE.Adenda
-        txtImporteTotal.Text = objE.ImporteTotal
+        txtImporteTotal.Text = objE.ImporteTotal()
         Dim objCC As ClienteContado
         objCC = GesPersonas.getInstance.getClienteContadoByID(dgridCabecera.Item("ClienteCod", e.RowIndex).Value)
         txtNombre.Text = objCC.Nombre

@@ -224,6 +224,7 @@ Partial Class frmEspera
         Me.Label4.Size = New System.Drawing.Size(107, 20)
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Importe Total:"
+        Me.Label4.Visible = False
         '
         'txtImporteTotal
         '
@@ -235,6 +236,7 @@ Partial Class frmEspera
         Me.txtImporteTotal.Size = New System.Drawing.Size(162, 30)
         Me.txtImporteTotal.TabIndex = 1
         Me.txtImporteTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtImporteTotal.Visible = False
         '
         'txtAdenda
         '

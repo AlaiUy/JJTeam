@@ -23,6 +23,7 @@ namespace JJ.Entidades
         private string _NombreCLiente;
         private bool _presupuesto;
 
+
         public int Codvendedor
         {
             get
@@ -164,6 +165,7 @@ namespace JJ.Entidades
             }
         }
 
+
         public EsperaContado(DateTime xFecha)
         {
             Lineas = new List<Esperalin>();
@@ -208,11 +210,58 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
+               
                 Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+             
 
             }
             return Decimal.Round(Importe, 2);
         }
+
+        public decimal ImporteTotal(int xcodmoneda, decimal xcotizacion)
+        {
+            decimal Importe = 0;
+
+            foreach (Esperalin L in Lineas)
+            {
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+
+
+                }
+                else
+                {
+                    Importe += ((((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+
+                }
+
+
+            }
+            return Decimal.Round(Importe, 2);
+        }
+
+        //public decimal ImporteTotalMoneda(int xcodMoneda, decimal xcotizacion)
+        //{
+        //    decimal Importe = 0;
+
+        //    foreach (Esperalin L in Lineas)
+        //    {
+        //        if (L.Articulo.CodMoneda == xcodMoneda)
+        //        {
+
+
+        //        Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+        //        }else
+        //        {
+        //            Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+
+        //        }
+
+        //    }
+        //    return Decimal.Round(Importe, 2);
+        //}
+
 
         public decimal ImporteTotalSinIva()
         {
@@ -220,8 +269,28 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
+              
                 Importe += L.Articulo.Precio() * L.Cantidad;
 
+            }
+            return Decimal.Round(Importe, 2);
+
+        }
+
+        public decimal ImporteTotalSinIva(int xcodmoneda, decimal xcotizacion)
+        {
+            decimal Importe = 0;
+
+            foreach (Esperalin L in Lineas)
+            {
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    Importe += L.Articulo.Precio() * L.Cantidad;
+                }
+                else
+                {
+                    Importe += (L.Articulo.Precio() * xcotizacion) * L.Cantidad;
+                }
             }
             return Decimal.Round(Importe, 2);
 
@@ -240,10 +309,41 @@ namespace JJ.Entidades
 
         }
 
+        public decimal ImporteTotalSinDescuentos(int xcodmoneda, decimal xcotizacion)
+        {
+            decimal Importe = 0;
+
+            foreach (Esperalin L in Lineas)
+            {
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    Importe += ((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) * L.Cantidad);
+
+                }
+                else
+                {
+                    Importe += (((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) * L.Cantidad);
+
+                }
+
+
+            }
+            return Decimal.Round(Importe, 2);
+
+        }
+
+
         public decimal ImporteIva()
         {
 
             return Decimal.Round(ImporteTotalSinDescuentos() - ImporteTotalSinIva(), 2);
+
+        }
+
+        public decimal ImporteIva(int xcodmoneda, decimal xcotizacion)
+        {
+
+            return Decimal.Round(ImporteTotalSinDescuentos(xcodmoneda, xcotizacion) - ImporteTotalSinIva(xcodmoneda, xcotizacion), 2);
 
         }
 
@@ -261,9 +361,42 @@ namespace JJ.Entidades
 
         }
 
+        public decimal ImporteDescuento(int xcodmoneda, decimal xcotizacion)
+        {
+
+            decimal Importe = 0;
+
+            foreach (Esperalin L in Lineas)
+            {
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                }
+                else
+                {
+                    Importe += ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100)) - ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                }
+            }
+            return Decimal.Round(Importe, 2);
+
+        }
+
+        public  void EliminarLinea(int xNLinea )
+        {
+                      lineas.RemoveAt(xNLinea);
+            Byte Index = 1;
+            foreach (Esperalin L in Lineas)
+            {
+                L.NumLinea = Index;
+            Index += 1;
+
+            }
 
 
+            }
 
+
+        
 
 
 

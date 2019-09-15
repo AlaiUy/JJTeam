@@ -91,6 +91,12 @@
     <Compile Include="Formularios\frmClave.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\frmDescuento.Designer.vb">
+      <DependentUpon>frmDescuento.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmDescuento.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\frmEspera.Designer.vb">
       <DependentUpon>frmEspera.vb</DependentUpon>
     </Compile>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmClave.resx">
       <DependentUpon>frmClave.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmDescuento.resx">
+      <DependentUpon>frmDescuento.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmEspera.resx">
       <DependentUpon>frmEspera.vb</DependentUpon>
