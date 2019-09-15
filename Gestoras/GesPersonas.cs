@@ -158,8 +158,15 @@ namespace JJ.Gestoras
                 if (!Tools.Numeros.VerificaDocumento(Convert.ToInt32(xCC.Documento)))
                     throw new Exception("La cedula ingresada no se puede verificar");
 
-            if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
-                throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+            if (xCC.Telefono.Length > 0)
+            {
+                if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
+                {
+                    throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+                }
+                    
+            }
+            
 
             if (xCC.Nombre.Length > 50)
                 xCC.Nombre = xCC.Nombre.Substring(0, 49);

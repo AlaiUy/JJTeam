@@ -362,7 +362,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE DOCUMENTO=@CODIGO", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM CLIENTESCONTADO WHERE CODIGO=@CODIGO", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xCodCliente));
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -385,6 +385,8 @@ namespace JJ.Mappers
 
             return objc;
         }
+
+       
 
         public object getClienteContadobyDoc(string xDoc)
         {
