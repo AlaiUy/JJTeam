@@ -39,6 +39,70 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
+        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra)
+        {
+            xArticulos.TableName = "Presupuesto";
+            ReportDocument rptDoc;
+            rptDoc = new Presupuesto.rptPresupuesto();
+            rptDoc.SetDataSource(xArticulos);
+            TextObject Campo;
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtNumberDias"];
+            Campo.Text = xDias.ToString();
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["dtoExtra"];
+            Campo.Text = dtoExtra;
+
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtFormaPago"];
+            Campo.Text = xFormaPago;
+            
+
+
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
+        public static void FacturaContado(DataTable xArticulos, string xRut)
+        {
+            DataSet Factura = new DataSet();
+            xArticulos.TableName = "Contado";
+            Factura.Tables.Add(xArticulos);
+
+            List<DataTable> Lista = new List<DataTable>();
+            Lista.Add(xArticulos);
+
+            DataTable T = Factura.Tables.Add("Cabecera");
+
+            T.Columns.Add("RUT");
+            T.Columns.Add("NOMBRE");
+
+            DataRow R;
+            R = T.NewRow();
+            R["RUT"] = "123";
+            R["NOMBRE"] = "1234";
+
+            T.Rows.Add(R);
+
+
+
+
+
+
+            ReportDocument rptDoc;
+            rptDoc = new DiseñoFacturas.rptContado();
+            //rptDoc.SetDataSource(xArticulos);
+            rptDoc.SetDataSource(Factura);
+
+
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
         public static void ExportExcel(DataTable xData, string xDestino)
         {
             try
