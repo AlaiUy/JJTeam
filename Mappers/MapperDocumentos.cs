@@ -24,7 +24,7 @@ namespace JJ.Mappers
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-                Facturar(xObject,33,1);
+                Facturar(xObject,1);
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
@@ -307,7 +307,7 @@ namespace JJ.Mappers
 
 
 
-        public void Facturar(object xObjFactura, int xZ, int xCodDocumento)
+        public void Facturar(object xObjFactura, int xCodDocumento)
         {
             Documento F = (Documento)xObjFactura;
             int NumeroFactura = -1;
@@ -316,6 +316,7 @@ namespace JJ.Mappers
                 Con.Open();
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
+                    int xZ = getNumeroZ(F.Caja);
                     NumeroFactura = ObtenerNumeroFactura(Con, Tran);
                     using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,DETALLE, COTIZACION, SUBTOTAL, IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO,@DETALLE,@COTIZACION,@SUBTOTAL,@IVA)", (SqlConnection)Con))
                     {
@@ -361,9 +362,9 @@ namespace JJ.Mappers
 
                             //    Com.CommandText = "INSERT INTO ENTREGALIN(CODSERIE, NUMERO, LINEA, CANTIDAD, ENTREGADO, DEVUELTO, RECIBIDO, NOTAC) VALUES (@CODSERIE, @NUMERO, @LINEA, @CANTIDAD, 0,0, 0, 0)";
                             //    ExecuteNonQuery(Com);
-                                
-                            //}
 
+                            //}
+                            UpdateEspera(((VentaContado)F).Espera,Tran);
                         }
                         else if (F is VentaCuenta)
                         {
@@ -445,6 +446,37 @@ namespace JJ.Mappers
             }
         }
 
+        private void UpdateEspera(int xEspera,IDbTransaction xTra)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE ESPERACONTADO SET ESTADO=1 WHERE CODIGO = @CODIGO", Con))
+                {
+                    Com.Transaction = (SqlTransaction)xTra;
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xEspera));
+                    ExecuteNonQuery(Com);
+                }
+
+            }
+        }
+
+        private int getNumeroZ(string xCaja)
+        {
+            int Numero = -1;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CONVERT(INT,MAX(NUMEROZ+1)) AS NUMERO FROM ARQUEOS WHERE CODCAJA =@CAJA", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
+
+                    Numero = (int)ExecuteScalar(Com);
+                }
+            }
+            return Numero;
+        }
+
         //public object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo)
         //{
         //    Documento F = null;
@@ -517,7 +549,7 @@ namespace JJ.Mappers
             {
                 case TipoLineas.Contado:
                
-                    F = new VentaContado(new ClienteContado (CODCCCLIENTE, CCDOCUMENTO,CCNOMBRE,CCDIRECCION,CCTELEFONO),VFecha,VSerie,VCaja,VMoneda,VZ,VVendedor,VCotizacion,false);
+                    F = new VentaContado(new ClienteContado (CODCCCLIENTE, CCDOCUMENTO,CCNOMBRE,CCDIRECCION,CCTELEFONO),VFecha,VSerie,VCaja,VMoneda,VZ,VVendedor,VCotizacion,false,-1);
                     break;
                 case TipoLineas.Credito:
                     //int CodPersona = (int)Reader["CODPERSONA"];
