@@ -60,9 +60,9 @@ namespace JJ.Gestoras
             return (Moneda)DBPrecios.getMonedaByID(xCodMoneda);
         }
 
-        public decimal getCotizacion()
+        public decimal getCotizacion(int xCodmoneda)
         {
-            return DBPrecios.getCotizacion();
+            return DBPrecios.getCotizacion(xCodmoneda);
         }
 
 

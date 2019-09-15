@@ -22,9 +22,9 @@ namespace JJ.Interfaces
         object getPersona(string xId);
         object getAllClientes(bool xTodos);
 
-        object getClienteContadobyID(int xCodCliente);
-
-        object getClienteContadobyDoc(string xDoc);
+        object getClienteContadobyID(string xCodCliente);
+        object getClienteContadobyDoc(string xCodCliente);
+        
         int addclienteContado(object xCC);
         void addCatProveedor(object xCategoriaProveedor);
         object getVistaProveedores();

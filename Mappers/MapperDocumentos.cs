@@ -89,7 +89,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@DESCRIPCION", L.Descripcion));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
                     Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", L.SubTotal()));
-                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva));
+                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva.Id));
                     Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.TotalconIva() - L.SubTotal()));
                     Com.Transaction = xTran;
                     ExecuteNonQuery(Com);
@@ -109,7 +109,7 @@ namespace JJ.Mappers
                 Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO",xL.Costo));
                 Com.Parameters.Add(new SqlParameter("@FECHA", xC.Fecha));
                 Com.Parameters.Add(new SqlParameter("@CODMONEDA", xC.CodMoneda));
-                Com.Parameters.Add(new SqlParameter("@IVA", xL.Articulo.Iva));
+                Com.Parameters.Add(new SqlParameter("@IVA", xL.Articulo.Iva.Id));
                 Com.Transaction = xTran;
                 ExecuteNonQuery(Com);
             }
@@ -594,7 +594,7 @@ namespace JJ.Mappers
             return (Persona)new MapperPersonas().getPersona(codPersona);
         }
 
-        private ClienteContado getClienteContadoByID(int ClC)
+        private ClienteContado getClienteContadoByID(string ClC)
         {
             return (ClienteContado)new MapperPersonas().getClienteContadobyID(ClC);
         }

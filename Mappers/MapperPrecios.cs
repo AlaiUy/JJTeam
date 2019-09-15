@@ -50,18 +50,29 @@ namespace JJ.Mappers
             }
         }
 
-        public decimal getCotizacion()
+        public decimal getCotizacion(int xCodMoneda)
         {
 
             decimal Cotizacion = 0;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("select dbo.getCotizacion(2)", Con))
+
+
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(dbo.getCotizacion(@MONEDA),1) AS COTIZACION", Con))
                 {
-                    Cotizacion = Convert.ToDecimal(ExecuteScalar(Com));
+                    Com.Parameters.Add(new SqlParameter("@MONEDA", xCodMoneda));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            Cotizacion = (decimal)Reader["COTIZACION"];
+                        }
+
+
                 }
-            }
+                }
+                 }
             return Cotizacion;
         }
 

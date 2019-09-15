@@ -60,6 +60,66 @@ namespace JJ.Gestoras
                 return P;
         }
 
+        public void UpdateProveedor(Proveedor xProveedor)
+        {
+            if (xProveedor == null)
+                return;
+
+            if (xProveedor.Codigo == -1)
+                return;
+
+            if (xProveedor.Nombre.Length < 5 || xProveedor.Nombre.Length > 50)
+                throw new Exception("El nombre del proveedor no es valido. [Length 5-50]");
+
+            if (xProveedor.Rz.Length > 0 && xProveedor.Rz.Length > 50)
+                throw new Exception("La razon social del proveedor no es valido. [Length 4-50]");
+
+            if (xProveedor.Direccion.Length > 0 && xProveedor.Direccion.Length > 50)
+                throw new Exception("La direccion del proveedor no es valida. [Length 4-50]");
+
+            if (xProveedor.Dirnumero.Length > 0 && xProveedor.Dirnumero.Length < 11)
+            {
+                if (!Tools.Numeros.isNumeric(xProveedor.Dirnumero))
+                    throw new Exception("El numero de calle no es correcto. [Must be only numbers]");
+            }
+            else
+            {
+                if (xProveedor.Dirnumero.Length > 10)
+                    throw new Exception("El numero de calle es demasiado largo. [Max 10]");
+            }
+
+
+            if (xProveedor.Telefono.Length > 0)
+            {
+                if (!Tools.Numeros.ValidaTelefono(xProveedor.Telefono))
+                    throw new Exception("El telefono ingresado no es valido");
+            }
+
+            if (xProveedor.Celular.Length > 0)
+            {
+                if (!Tools.Numeros.ValidaCelular(xProveedor.Celular))
+                    throw new Exception("El celular ingresado no es valido");
+            }
+
+
+            if (xProveedor.Email.Length > 0 && xProveedor.Email.Length < 100)
+            {
+                if (!xProveedor.Email.Contains("@"))
+                    throw new Exception("El email no se puede validar. [Must contain: @]");
+            }
+            else
+            {
+                if (xProveedor.Dirnumero.Length > 100)
+                    throw new Exception("El email no se puede validar. [Max: 100]");
+            }
+
+            if (xProveedor.Categoria < 1 || !_ExisteCategoria(xProveedor.Categoria, _CategoriasProveedores))
+                throw new Exception("La categoria del proveedor no es correcta");
+            
+
+            _DBPersonas.Update(xProveedor);
+        }
+
         private Proveedor _getProveedorById(string xCod)
         {
             foreach (object P in _Proveedores)
@@ -67,7 +127,7 @@ namespace JJ.Gestoras
                 if (((Proveedor)P).Codigo.Equals( Convert.ToInt32(xCod)))
                     return (Proveedor)P;
             }
-            return null;
+            return _DBPersonas.getProveedorByID(xCod);
         }
 
         private Proveedor _getProveedorByRut(string xCod)
@@ -77,7 +137,7 @@ namespace JJ.Gestoras
                 if (((Proveedor)P).Rut.Equals(xCod))
                     return (Proveedor)P;
             }
-            return null;
+            return _DBPersonas.getProveedorByRut(xCod);
         }
 
         public ClienteContado addClienteContado(ClienteContado xCC)
@@ -98,8 +158,15 @@ namespace JJ.Gestoras
                 if (!Tools.Numeros.VerificaDocumento(Convert.ToInt32(xCC.Documento)))
                     throw new Exception("La cedula ingresada no se puede verificar");
 
-            if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
-                throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+            if (xCC.Telefono.Length > 0)
+            {
+                if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
+                {
+                    throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+                }
+                    
+            }
+            
 
             if (xCC.Nombre.Length > 50)
                 xCC.Nombre = xCC.Nombre.Substring(0, 49);
@@ -226,7 +293,7 @@ namespace JJ.Gestoras
             return _DBPersonas.getAllClientes(true);
         }
 
-        public ClienteContado getClienteContadoByID(int xCodCLienteContado)
+        public ClienteContado getClienteContadoByID(string xCodCLienteContado)
         {
             return (ClienteContado)_DBPersonas.getClienteContadobyID(xCodCLienteContado);
         }

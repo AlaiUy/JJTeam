@@ -74,6 +74,17 @@ namespace JJ.Gestoras
             _Emp = (Empresa)_DBEmpresa.getempresa();
         }
 
+        public void ChangeCot(decimal xCotizacion, Moneda xMoneda)
+        {
+            if (xMoneda == null)
+                throw new Exception("No se puede cambiar la cotizacion para una moneda inexistente");
+            if (xCotizacion <= 0)
+                throw new Exception("No se puede cambiar la cotizacion por un valor negativo");
+
+            _DBEmpresa.ChangeCot(xCotizacion, xMoneda.Codigo);
+
+        }
+
         private void UpdateEmpresa(Empresa xEmpresa)
         {
             _DBEmpresa.UpdateEmpresa(xEmpresa);

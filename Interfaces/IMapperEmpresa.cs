@@ -14,5 +14,6 @@ namespace JJ.Interfaces
         void addEquipo(object xEquipo);
         object getGrupo();
         void UpdateEmpresa(Empresa xEmpresa);
+        void ChangeCot(decimal xCotizacion, int xCodigo);
     }
 }

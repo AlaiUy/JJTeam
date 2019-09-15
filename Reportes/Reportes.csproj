@@ -71,10 +71,27 @@
       <DependentUpon>Devolucion.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DiseñoFacturas\dsetFactContado.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsetFactContado.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DiseñoFacturas\FacturaConCliente.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FacturaConCliente.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DiseñoFacturas\rptContado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptContado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DiseñoFacturas\rptDiseñoContado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDiseñoContado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DTFactura.cs">
@@ -109,11 +126,22 @@
       <DependentUpon>rptPrintPrice.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Presupuesto\dsetPresupuesto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsetPresupuesto.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Presupuesto\rptPresupuesto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptPresupuesto.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +161,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>FacturaSinCliente.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="DiseñoFacturas\rptContado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptContado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DiseñoFacturas\rptDiseñoContado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDiseñoContado.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInforme.resx">
       <DependentUpon>frmInforme.cs</DependentUpon>
     </EmbeddedResource>
@@ -143,6 +179,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presupuesto\rptPresupuesto.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptPresupuesto.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +199,17 @@
     </None>
     <None Include="Articulos\dsetArticulos.xss">
       <DependentUpon>dsetArticulos.xsd</DependentUpon>
+    </None>
+    <None Include="DiseñoFacturas\dsetFactContado.xsc">
+      <DependentUpon>dsetFactContado.xsd</DependentUpon>
+    </None>
+    <None Include="DiseñoFacturas\dsetFactContado.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsetFactContado.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DiseñoFacturas\dsetFactContado.xss">
+      <DependentUpon>dsetFactContado.xsd</DependentUpon>
     </None>
     <None Include="DTFactura.xsc">
       <DependentUpon>DTFactura.xsd</DependentUpon>
@@ -185,6 +236,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Presupuesto\dsetPresupuesto.xsc">
+      <DependentUpon>dsetPresupuesto.xsd</DependentUpon>
+    </None>
+    <None Include="Presupuesto\dsetPresupuesto.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsetPresupuesto.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Presupuesto\dsetPresupuesto.xss">
+      <DependentUpon>dsetPresupuesto.xsd</DependentUpon>
+    </None>
     <None Include="Resources\LogoChico.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

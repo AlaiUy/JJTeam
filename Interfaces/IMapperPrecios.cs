@@ -13,6 +13,6 @@ namespace JJ.Interfaces
         void AgregarMoneda(object xMoneda);
         Moneda getMonedaByID(int xCodMoneda);
 
-        decimal getCotizacion();
+        decimal getCotizacion(int xCodMoneda);
     }
 }
