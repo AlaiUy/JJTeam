@@ -12,7 +12,7 @@
   <xs:element name="dsetFactContado" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsetFactContado" msprop:Generator_UserDSName="dsetFactContado">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Contado" msprop:Generator_TableClassName="ContadoDataTable" msprop:Generator_TableVarName="tableContado" msprop:Generator_RowChangedName="ContadoRowChanged" msprop:Generator_TablePropName="Contado" msprop:Generator_RowDeletingName="ContadoRowDeleting" msprop:Generator_RowChangingName="ContadoRowChanging" msprop:Generator_RowEvHandlerName="ContadoRowChangeEventHandler" msprop:Generator_RowDeletedName="ContadoRowDeleted" msprop:Generator_RowClassName="ContadoRow" msprop:Generator_UserTableName="Contado" msprop:Generator_RowEvArgName="ContadoRowChangeEvent">
+        <xs:element name="Contado" msprop:Generator_TableClassName="ContadoDataTable" msprop:Generator_TableVarName="tableContado" msprop:Generator_TablePropName="Contado" msprop:Generator_RowDeletingName="ContadoRowDeleting" msprop:Generator_RowChangingName="ContadoRowChanging" msprop:Generator_RowEvHandlerName="ContadoRowChangeEventHandler" msprop:Generator_RowDeletedName="ContadoRowDeleted" msprop:Generator_UserTableName="Contado" msprop:Generator_RowChangedName="ContadoRowChanged" msprop:Generator_RowEvArgName="ContadoRowChangeEvent" msprop:Generator_RowClassName="ContadoRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CODIGO" msprop:Generator_ColumnVarNameInTable="columnCODIGO" msprop:Generator_ColumnPropNameInRow="CODIGO" msprop:Generator_ColumnPropNameInTable="CODIGOColumn" msprop:Generator_UserColumnName="CODIGO" type="xs:string" minOccurs="0" />
@@ -22,11 +22,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Cabecera" msprop:Generator_TableClassName="CabeceraDataTable" msprop:Generator_TableVarName="tableCabecera" msprop:Generator_TablePropName="Cabecera" msprop:Generator_RowDeletingName="CabeceraRowDeleting" msprop:Generator_RowChangingName="CabeceraRowChanging" msprop:Generator_RowEvHandlerName="CabeceraRowChangeEventHandler" msprop:Generator_RowDeletedName="CabeceraRowDeleted" msprop:Generator_UserTableName="Cabecera" msprop:Generator_RowChangedName="CabeceraRowChanged" msprop:Generator_RowEvArgName="CabeceraRowChangeEvent" msprop:Generator_RowClassName="CabeceraRow">
+        <xs:element name="Cabecera" msprop:Generator_TableClassName="CabeceraDataTable" msprop:Generator_TableVarName="tableCabecera" msprop:Generator_RowChangedName="CabeceraRowChanged" msprop:Generator_TablePropName="Cabecera" msprop:Generator_RowDeletingName="CabeceraRowDeleting" msprop:Generator_RowChangingName="CabeceraRowChanging" msprop:Generator_RowEvHandlerName="CabeceraRowChangeEventHandler" msprop:Generator_RowDeletedName="CabeceraRowDeleted" msprop:Generator_RowClassName="CabeceraRow" msprop:Generator_UserTableName="Cabecera" msprop:Generator_RowEvArgName="CabeceraRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="RUT" msprop:Generator_ColumnVarNameInTable="columnRUT" msprop:Generator_ColumnPropNameInRow="RUT" msprop:Generator_ColumnPropNameInTable="RUTColumn" msprop:Generator_UserColumnName="RUT" type="xs:string" minOccurs="0" />
-              <xs:element name="NOMBRE" msprop:Generator_ColumnVarNameInTable="columnNOMBRE" msprop:Generator_ColumnPropNameInRow="NOMBRE" msprop:Generator_ColumnPropNameInTable="NOMBREColumn" msprop:Generator_UserColumnName="NOMBRE" type="xs:string" minOccurs="0" />
+              <xs:element name="CLIENTE" msprop:Generator_ColumnVarNameInTable="columnCLIENTE" msprop:Generator_ColumnPropNameInRow="CLIENTE" msprop:Generator_ColumnPropNameInTable="CLIENTEColumn" msprop:Generator_UserColumnName="CLIENTE" type="xs:string" minOccurs="0" />
+              <xs:element name="SUBTOTAL" msprop:Generator_ColumnVarNameInTable="columnSUBTOTAL" msprop:Generator_ColumnPropNameInRow="SUBTOTAL" msprop:Generator_ColumnPropNameInTable="SUBTOTALColumn" msprop:Generator_UserColumnName="SUBTOTAL" type="xs:string" minOccurs="0" />
+              <xs:element name="IVA" msprop:Generator_ColumnVarNameInTable="columnIVA" msprop:Generator_ColumnPropNameInRow="IVA" msprop:Generator_ColumnPropNameInTable="IVAColumn" msprop:Generator_UserColumnName="IVA" type="xs:string" minOccurs="0" />
+              <xs:element name="TOTAL" msprop:Generator_ColumnVarNameInTable="columnTOTAL" msprop:Generator_ColumnPropNameInRow="TOTAL" msprop:Generator_ColumnPropNameInTable="TOTALColumn" msprop:Generator_UserColumnName="TOTAL" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

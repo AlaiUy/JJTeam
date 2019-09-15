@@ -82,17 +82,9 @@ namespace JJ.Reportes.DiseñoFacturas {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section ReportFooterSection2 {
-            get {
-                return this.ReportDefinition.Sections[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
-                return this.ReportDefinition.Sections[5];
+                return this.ReportDefinition.Sections[4];
             }
         }
     }

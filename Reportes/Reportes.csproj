@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,6 +71,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Devolucion.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DiseñoFacturas\dsetFactContado.cs">
+      <DependentUpon>dsetFactContado.xsd</DependentUpon>
     </Compile>
     <Compile Include="DiseñoFacturas\dsetFactContado.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -248,6 +252,12 @@
       <DependentUpon>dsetPresupuesto.xsd</DependentUpon>
     </None>
     <None Include="Resources\LogoChico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{B0D7EF4F-6A0F-4073-8C79-58413C2011F8}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

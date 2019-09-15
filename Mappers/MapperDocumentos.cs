@@ -24,7 +24,7 @@ namespace JJ.Mappers
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-                Facturar(xObject,33,1,new MapperPrecios().getCotizacion());
+                Facturar(xObject,33,1,new MapperPrecios().getCotizacion(2));
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)

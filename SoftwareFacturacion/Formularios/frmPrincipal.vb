@@ -1,6 +1,7 @@
 ﻿
 Imports JJ.Gestoras
 Imports JJ.Entidades
+Imports JJ.Reportes
 
 Public Class frmPrincipal
 
@@ -21,7 +22,7 @@ Public Class frmPrincipal
 
             Me.cboxMoneda.DataSource = GesPrecios.getInstance().getMonedas()
             mCajero = GesVendedores.getInstance().getVendedorByID(1)
-            lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion()
+            lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion(2)
             MostrarEnTabla()
             CargarDatos()
         Catch ex As Exception
@@ -65,11 +66,11 @@ Public Class frmPrincipal
             End If
 
             Me.txtNombre.Text = objE.NombreCLiente
-
-            Me.txtTotalSinIva.Text = objE.ImporteTotalSinIva(1, GesPrecios.getInstance.getCotizacion())
-            Me.txtImporteIva.Text = objE.ImporteIva(1, GesPrecios.getInstance.getCotizacion())
-            Me.txtImporteDescuento.Text = objE.ImporteDescuento(1, GesPrecios.getInstance.getCotizacion())
-            Me.txtImporteTotalConIva.Text = objE.ImporteTotal(1, GesPrecios.getInstance.getCotizacion())
+            Dim cot As Decimal = GesPrecios.getInstance.getCotizacion(2)
+            Me.txtTotalSinIva.Text = objE.ImporteTotalSinIva(1, cot)
+            Me.txtImporteIva.Text = objE.ImporteIva(1, cot)
+            Me.txtImporteDescuento.Text = objE.ImporteDescuento(1, cot)
+            Me.txtImporteTotalConIva.Text = objE.ImporteTotal(1, cot)
         Else
             Me.txtAdenda.Text = ""
             Me.txtDireccion.Text = ""
@@ -128,10 +129,10 @@ Public Class frmPrincipal
                     objf.Item("CODARTICULO") = objL.Articulo.Referencia
                     objf.Item("DESCRIPCION") = objL.Descripcion
                     objf.Item("CANTIDAD") = objL.Cantidad
-                    objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva() * GesPrecios.getInstance.getCotizacion())
+                    objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva() * GesPrecios.getInstance.getCotizacion(2))
                     objf.Item("DESCUENTO") = objL.Descuento
-                    objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal()) * GesPrecios.getInstance.getCotizacion()
-                    objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento()) * GesPrecios.getInstance.getCotizacion()
+                    objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal()) * GesPrecios.getInstance.getCotizacion(2)
+                    objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento()) * GesPrecios.getInstance.getCotizacion(2)
                 End If
 
 
@@ -158,6 +159,13 @@ Public Class frmPrincipal
             'objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
 
         Next
+
+        Try
+            GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
+            Return
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
 
         Try
@@ -250,6 +258,19 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub txtImporteTotalConIva_TextChanged(sender As Object, e As EventArgs) Handles txtImporteTotalConIva.TextChanged
+
+    End Sub
+
+    Private Sub btnReimprimir_Click(sender As Object, e As EventArgs) Handles btnReimprimir.Click
+        Dim xobjf As VentaContado
+        xobjf = GesDocumentos.getInstance().getVentaDocumento(2, "NH1C", 1)
+
+        Try
+            GestionReporte.FacturaContado(xobjf, GesPrecios.getInstance.getCotizacion(2))
+            Return
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
     End Sub
 End Class
