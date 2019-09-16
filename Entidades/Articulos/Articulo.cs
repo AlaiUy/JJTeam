@@ -290,7 +290,9 @@ namespace JJ.Entidades
        
         public decimal Precio()
         {
+          
             return (PrecioIva() / ValorPorcentaje(_Iva.Valor));
+          
         }
 
         static decimal ValorPorcentaje(decimal Porcentaje)

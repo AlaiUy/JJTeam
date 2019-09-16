@@ -210,8 +210,17 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-               
-                Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+                if (L.Descuento < 0)
+                {
+                    Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad);
+
+                }
+                else
+                {
+                    Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+
+                }
+                   
              
 
             }
@@ -226,13 +235,26 @@ namespace JJ.Entidades
             {
                 if (L.Articulo.CodMoneda == xcodmoneda)
                 {
+                    if (L.Descuento < 0)
+                    {
+                        Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad);
+                    }
+                    else { 
                     Importe += (((L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+                    }
+                     }
 
-
-                }
+                
                 else
                 {
-                    Importe += ((((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+                    if (L.Descuento < 0)
+                    {
+                        Importe += ((((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad);
+                    }
+                    else {
+                        Importe += ((((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad);
+                    }
+                    
 
                 }
 
@@ -285,11 +307,29 @@ namespace JJ.Entidades
             {
                 if (L.Articulo.CodMoneda == xcodmoneda)
                 {
-                    Importe += L.Articulo.Precio() * L.Cantidad;
+                if (L.Descuento < 0)
+                    {
+                        Importe += (L.Articulo.Precio()*(1+(-L.Descuento)/100)) * L.Cantidad;
+                    }else
+                    {
+                        Importe += (L.Articulo.Precio()/ (1 + (L.Descuento) / 100)) * L.Cantidad;
+
+                    }
+                  
                 }
                 else
                 {
-                    Importe += (L.Articulo.Precio() * xcotizacion) * L.Cantidad;
+                    if (L.Descuento < 0)
+                    {
+                        Importe += ((L.Articulo.Precio()*(1+(-L.Descuento/100))) * xcotizacion) * L.Cantidad;
+
+                    }
+                    else
+                    {
+                        Importe += ((L.Articulo.Precio() / (1 + (L.Descuento / 100))) * xcotizacion) * L.Cantidad;
+
+                    }
+                       
                 }
             }
             return Decimal.Round(Importe, 2);
@@ -342,8 +382,8 @@ namespace JJ.Entidades
 
         public decimal ImporteIva(int xcodmoneda, decimal xcotizacion)
         {
-
-            return Decimal.Round(ImporteTotalSinDescuentos(xcodmoneda, xcotizacion) - ImporteTotalSinIva(xcodmoneda, xcotizacion), 2);
+            return Decimal.Round(ImporteTotal(xcodmoneda, xcotizacion) - ImporteTotalSinIva(xcodmoneda, xcotizacion), 2);
+         //   return Decimal.Round(ImporteTotalSinDescuentos(xcodmoneda, xcotizacion) - ImporteTotalSinIva(xcodmoneda, xcotizacion), 2);
 
         }
 
@@ -354,7 +394,17 @@ namespace JJ.Entidades
 
             foreach (Esperalin L in Lineas)
             {
-                Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                if (L.Descuento < 0)
+                {
+                    Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad;
+
+                }
+                else
+                {
+                    Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+
+                }
+                   
 
             }
             return Decimal.Round(Importe, 2);
@@ -370,11 +420,28 @@ namespace JJ.Entidades
             {
                 if (L.Articulo.CodMoneda == xcodmoneda)
                 {
-                    Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                    if (L.Descuento < 0)
+                    {
+                        Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad;
+                    }
+                    else
+                    {
+
+                        Importe += (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100)) - (L.Articulo.Precio() * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                    }
+                      
                 }
                 else
                 {
-                    Importe += ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100)) - ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                    if (L.Descuento < 0)
+                    {
+                        Importe += ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100)) - ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) * (1 + (-L.Descuento / 100))) * L.Cantidad;
+
+                    }
+                    else {
+                        Importe += ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100)) - ((L.Articulo.Precio() * xcotizacion) * (1 + (L.Articulo.Iva.Valor / 100))) / (1 + (L.Descuento / 100))) * L.Cantidad;
+                    }
+                        
                 }
             }
             return Decimal.Round(Importe, 2);
