@@ -277,6 +277,7 @@ namespace JJ.Entidades
             }
         }
 
+      
         public decimal Subtotal()
         {
             decimal zSuma = 0;
@@ -288,12 +289,48 @@ namespace JJ.Entidades
         public decimal IvaTotal() {
             decimal ivaTot = 0;
             foreach (Linea L in _Lineas)
-                ivaTot += L.IvaTotal();
+               
+                    ivaTot += L.IvaTotal();
+             
+               
             return ivaTot;
         }
 
- 
-        
+        public decimal IvaTotal(int xcodmoneda, decimal xCotizacion)
+        {
+            decimal ivaTot = 0;
+            foreach (Linea L in _Lineas)
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    ivaTot += L.IvaTotal();
+                }
+            else
+                {
+                    ivaTot += L.IvaTotal()*xCotizacion;
+
+                }
+              
+
+
+            return ivaTot;
+        }
+
+        public decimal Subtotal(int xcodmoneda, decimal xCotizacion)
+        {
+            decimal zSuma = 0;
+            foreach (Linea L in _Lineas)
+                if (L.Articulo.CodMoneda == xcodmoneda)
+                {
+                    zSuma += L.SubTotal();
+                }
+                else
+                {
+                    zSuma += L.SubTotal()* xCotizacion;
+
+                }
+            return zSuma;
+        }
+
     }
 
 

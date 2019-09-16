@@ -267,6 +267,12 @@ namespace JJ.Entidades
             _Costo = xCosto;
         }
 
+        public void setCostoenBaseAPrecioFinal(decimal xPrecio)
+        {
+            _Costo = ((xPrecio/ ValorPorcentaje(_Iva.Valor)) / ValorPorcentaje(_Ganancia));
+
+        }
+
         public void setGanancia(decimal xGanancia)
         {
             if (xGanancia <= 0)

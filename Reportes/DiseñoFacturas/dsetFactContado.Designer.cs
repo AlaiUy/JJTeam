@@ -607,7 +607,13 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             private global::System.Data.DataColumn columnRUT;
             
-            private global::System.Data.DataColumn columnNOMBRE;
+            private global::System.Data.DataColumn columnCLIENTE;
+            
+            private global::System.Data.DataColumn columnSUBTOTAL;
+            
+            private global::System.Data.DataColumn columnIVA;
+            
+            private global::System.Data.DataColumn columnTOTAL;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -652,9 +658,33 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NOMBREColumn {
+            public global::System.Data.DataColumn CLIENTEColumn {
                 get {
-                    return this.columnNOMBRE;
+                    return this.columnCLIENTE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SUBTOTALColumn {
+                get {
+                    return this.columnSUBTOTAL;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IVAColumn {
+                get {
+                    return this.columnIVA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TOTALColumn {
+                get {
+                    return this.columnTOTAL;
                 }
             }
             
@@ -695,11 +725,14 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public CabeceraRow AddCabeceraRow(string RUT, string NOMBRE) {
+            public CabeceraRow AddCabeceraRow(string RUT, string CLIENTE, string SUBTOTAL, string IVA, string TOTAL) {
                 CabeceraRow rowCabeceraRow = ((CabeceraRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         RUT,
-                        NOMBRE};
+                        CLIENTE,
+                        SUBTOTAL,
+                        IVA,
+                        TOTAL};
                 rowCabeceraRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCabeceraRow);
                 return rowCabeceraRow;
@@ -723,7 +756,10 @@ namespace JJ.Reportes.DiseñoFacturas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnRUT = base.Columns["RUT"];
-                this.columnNOMBRE = base.Columns["NOMBRE"];
+                this.columnCLIENTE = base.Columns["CLIENTE"];
+                this.columnSUBTOTAL = base.Columns["SUBTOTAL"];
+                this.columnIVA = base.Columns["IVA"];
+                this.columnTOTAL = base.Columns["TOTAL"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -731,8 +767,14 @@ namespace JJ.Reportes.DiseñoFacturas {
             private void InitClass() {
                 this.columnRUT = new global::System.Data.DataColumn("RUT", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRUT);
-                this.columnNOMBRE = new global::System.Data.DataColumn("NOMBRE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNOMBRE);
+                this.columnCLIENTE = new global::System.Data.DataColumn("CLIENTE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCLIENTE);
+                this.columnSUBTOTAL = new global::System.Data.DataColumn("SUBTOTAL", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSUBTOTAL);
+                this.columnIVA = new global::System.Data.DataColumn("IVA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIVA);
+                this.columnTOTAL = new global::System.Data.DataColumn("TOTAL", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTOTAL);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1018,17 +1060,65 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NOMBRE {
+            public string CLIENTE {
                 get {
                     try {
-                        return ((string)(this[this.tableCabecera.NOMBREColumn]));
+                        return ((string)(this[this.tableCabecera.CLIENTEColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NOMBRE\' de la tabla \'Cabecera\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CLIENTE\' de la tabla \'Cabecera\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCabecera.NOMBREColumn] = value;
+                    this[this.tableCabecera.CLIENTEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string SUBTOTAL {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera.SUBTOTALColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'SUBTOTAL\' de la tabla \'Cabecera\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera.SUBTOTALColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string IVA {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera.IVAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'IVA\' de la tabla \'Cabecera\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera.IVAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TOTAL {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera.TOTALColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TOTAL\' de la tabla \'Cabecera\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera.TOTALColumn] = value;
                 }
             }
             
@@ -1046,14 +1136,50 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNOMBRENull() {
-                return this.IsNull(this.tableCabecera.NOMBREColumn);
+            public bool IsCLIENTENull() {
+                return this.IsNull(this.tableCabecera.CLIENTEColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNOMBRENull() {
-                this[this.tableCabecera.NOMBREColumn] = global::System.Convert.DBNull;
+            public void SetCLIENTENull() {
+                this[this.tableCabecera.CLIENTEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSUBTOTALNull() {
+                return this.IsNull(this.tableCabecera.SUBTOTALColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSUBTOTALNull() {
+                this[this.tableCabecera.SUBTOTALColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsIVANull() {
+                return this.IsNull(this.tableCabecera.IVAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetIVANull() {
+                this[this.tableCabecera.IVAColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTOTALNull() {
+                return this.IsNull(this.tableCabecera.TOTALColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTOTALNull() {
+                this[this.tableCabecera.TOTALColumn] = global::System.Convert.DBNull;
             }
         }
         

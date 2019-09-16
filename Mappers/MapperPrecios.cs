@@ -57,6 +57,8 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
+
+
                 using (SqlCommand Com = new SqlCommand("SELECT ISNULL(dbo.getCotizacion(@MONEDA),1) AS COTIZACION", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@MONEDA", xCodMoneda));
@@ -67,9 +69,10 @@ namespace JJ.Mappers
                             Cotizacion = (decimal)Reader["COTIZACION"];
                         }
 
-                    }
+
                 }
-            }
+                }
+                 }
             return Cotizacion;
         }
 

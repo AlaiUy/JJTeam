@@ -1,6 +1,7 @@
 ﻿
 Imports JJ.Gestoras
 Imports JJ.Entidades
+Imports JJ.Reportes
 
 Public Class frmPrincipal
 
@@ -21,7 +22,7 @@ Public Class frmPrincipal
 
             Me.cboxMoneda.DataSource = GesPrecios.getInstance().getMonedas()
             mCajero = GesVendedores.getInstance().getVendedorByID(1)
-            lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion()
+            lblCotrizacion.Text = GesPrecios.getInstance().getCotizacion(2)
             MostrarEnTabla()
             CargarDatos()
         Catch ex As Exception
@@ -65,11 +66,11 @@ Public Class frmPrincipal
             End If
 
             Me.txtNombre.Text = objE.NombreCLiente
-
-            Me.txtTotalSinIva.Text = objE.ImporteTotalSinIva
-            Me.txtImporteIva.Text = objE.ImporteIva
-            Me.txtImporteDescuento.Text = objE.ImporteDescuento
-            Me.txtImporteTotalConIva.Text = objE.ImporteTotal
+            Dim cot As Decimal = GesPrecios.getInstance.getCotizacion(2)
+            Me.txtTotalSinIva.Text = objE.ImporteTotalSinIva(1, cot)
+            Me.txtImporteIva.Text = objE.ImporteIva(1, cot)
+            Me.txtImporteDescuento.Text = objE.ImporteDescuento(1, cot)
+            Me.txtImporteTotalConIva.Text = objE.ImporteTotal(1, cot)
         Else
             Me.txtAdenda.Text = ""
             Me.txtDireccion.Text = ""
@@ -93,6 +94,9 @@ Public Class frmPrincipal
 
         Dim tTable As New DataTable
 
+        Dim colLin As DataColumn = tTable.Columns.Add("LINEA", Type.GetType("System.Int32"))
+
+
         Dim ColA As DataColumn = tTable.Columns.Add("CODARTICULO", Type.GetType("System.Int32"))
 
         Dim ColD As DataColumn = tTable.Columns.Add("DESCRIPCION", Type.GetType("System.String"))
@@ -111,14 +115,26 @@ Public Class frmPrincipal
 
             For Each objL As Esperalin In Me.objE.Lineas
                 Dim objf As DataRow = tTable.NewRow()
+                If objL.Articulo.CodMoneda = 1 Then
+                    objf.Item("LINEA") = objL.NumLinea
+                    objf.Item("CODARTICULO") = objL.Articulo.Referencia
+                    objf.Item("DESCRIPCION") = objL.Descripcion
+                    objf.Item("CANTIDAD") = objL.Cantidad
+                    objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva())
+                    objf.Item("DESCUENTO") = objL.Descuento
+                    objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal())
+                    objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento())
+                Else
+                    objf.Item("LINEA") = objL.NumLinea
+                    objf.Item("CODARTICULO") = objL.Articulo.Referencia
+                    objf.Item("DESCRIPCION") = objL.Descripcion
+                    objf.Item("CANTIDAD") = objL.Cantidad
+                    objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva() * GesPrecios.getInstance.getCotizacion(2))
+                    objf.Item("DESCUENTO") = objL.Descuento
+                    objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal()) * GesPrecios.getInstance.getCotizacion(2)
+                    objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento()) * GesPrecios.getInstance.getCotizacion(2)
+                End If
 
-                objf.Item("CODARTICULO") = objL.Articulo.Referencia
-                objf.Item("DESCRIPCION") = objL.Descripcion
-                objf.Item("CANTIDAD") = objL.Cantidad
-                objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Precio)
-                objf.Item("DESCUENTO") = objL.Descuento
-                objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal)
-                objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento)
 
                 tTable.Rows.Add(objf)
             Next
@@ -126,12 +142,15 @@ Public Class frmPrincipal
         End If
 
         Me.dgridLineas.DataSource = tTable
+        If dgridLineas.RowCount > 0 Then
+            dgridLineas.Columns("LINEA").Visible = False
+        End If
 
     End Sub
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
 
-        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False)
+        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
 
         For Each objL As Esperalin In objE.Lineas
@@ -142,14 +161,18 @@ Public Class frmPrincipal
         Next
 
 
+
         Try
             GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+            GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
             objE = Nothing
             MostrarEnTabla()
-            MsgBox("Facturado", MsgBoxStyle.Information)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+
+
 
 
     End Sub
@@ -178,16 +201,77 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub btnDescuentoLinea_Click(sender As Object, e As EventArgs) Handles btnDescuentoLinea.Click
+        Dim lin As Integer = dgridLineas.CurrentRow.Index + 1
+
+        Dim frmd As New frmDescuento
+        frmd.ShowDialog()
+        If frmd.DialogResult = DialogResult.OK Then
+            For Each line As Linea In objE.Lineas
+                If line.NumLinea = lin Then
+                    line.Descuento = frmd.xdescuento
+                End If
+            Next
+            CargarDatos()
+            MostrarEnTabla()
+        End If
 
     End Sub
 
     Private Sub btnDescuentoTotal_Click(sender As Object, e As EventArgs) Handles btnDescuentoTotal.Click
+        Dim frmD As New frmDescuento
+        frmD.ShowDialog()
+        If frmD.DialogResult = DialogResult.OK Then
+            AplicarDescuentoTotal(frmD.xdescuento)
+            MostrarEnTabla()
+            CargarDatos()
+        End If
+    End Sub
 
+    Public Sub AplicarDescuentoTotal(xdescuento)
+        For Each obja As Esperalin In Me.objE.Lineas
+            obja.Descuento = xdescuento
+        Next
     End Sub
 
     Private Sub btnDevolucion_Click(sender As Object, e As EventArgs) Handles btnDevolucion.Click
         Dim frmD As New frmAnulacion
         frmD.ShowDialog()
+
+    End Sub
+
+    Private Sub btnBorrarLinea_Click(sender As Object, e As EventArgs) Handles btnBorrarLinea.Click
+        If Me.dgridLineas.Rows.Count > 0 Then
+
+
+            If dgridLineas.Rows.Count > 1 And Not (dgridLineas.CurrentRow Is Nothing) Then
+                objE.EliminarLinea(dgridLineas.Item("LINEA", dgridLineas.CurrentRow.Index).Value - 1)
+            Else
+                objE.EliminarLinea(0)
+            End If
+            MostrarEnTabla()
+            CargarDatos()
+
+        End If
+    End Sub
+
+    Private Sub txtImporteTotalConIva_TextChanged(sender As Object, e As EventArgs) Handles txtImporteTotalConIva.TextChanged
+
+    End Sub
+
+    Private Sub btnReimprimir_Click(sender As Object, e As EventArgs) Handles btnReimprimir.Click
+        Dim xobjf As VentaContado
+        xobjf = GesDocumentos.getInstance().getVentaDocumento(2, "NH1C", 1)
+
+        Try
+            GestionReporte.FacturaContado(xobjf, GesPrecios.getInstance.getCotizacion(2))
+            Return
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtImporteDescuento.TextChanged
 
     End Sub
 End Class

@@ -1,9 +1,10 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Windows.Forms;
+using JJ.Entidades;
 using JJ.Reportes;
 using SpreadsheetLight;
 using SpreadsheetLight.Drawing;
-using DocumentFormat.OpenXml.Spreadsheet;
+//using DocumentFormat.OpenXml.Spreadsheet;
 
 using System;
 using System.Collections.Generic;
@@ -65,159 +66,203 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
-        public static void FacturaContado(DataTable xArticulos, string xRut)
+        public static void FacturaContado(VentaContado xobjF, decimal coti )
         {
             DataSet Factura = new DataSet();
-            xArticulos.TableName = "Contado";
-            Factura.Tables.Add(xArticulos);
-
-            List<DataTable> Lista = new List<DataTable>();
-            Lista.Add(xArticulos);
 
             DataTable T = Factura.Tables.Add("Cabecera");
+            DataTable T2 = Factura.Tables.Add("Contado");
+
 
             T.Columns.Add("RUT");
-            T.Columns.Add("NOMBRE");
+            T.Columns.Add("CLIENTE");
+            T.Columns.Add("SUBTOTAL");
+            T.Columns.Add("IVA");
+            T.Columns.Add("TOTAL");
+
+
+            T2.Columns.Add("CODIGO");
+            T2.Columns.Add("NOMBRE");
+            T2.Columns.Add("CANTIDAD");
+            T2.Columns.Add("PRECIO S/IVA");
 
             DataRow R;
             R = T.NewRow();
-            R["RUT"] = "123";
-            R["NOMBRE"] = "1234";
+            R["RUT"] = xobjF.Cliente.Documento;
+            R["CLIENTE"] = xobjF.Cliente.Nombre;
+            R["SUBTOTAL"] = Redondear(xobjF.Subtotal(1,coti));
+            R["IVA"] = Redondear(xobjF.IvaTotal(1,coti));
+            R["TOTAL"] = Redondear(xobjF.Subtotal(1,coti)+xobjF.IvaTotal(1,coti));
 
             T.Rows.Add(R);
 
+            DataRow R2;
+            foreach(VentaLin l in xobjF.Lineas)
+            {
+                R2 = T2.NewRow();
+                if (l.Articulo.CodMoneda == 2)
+                {
+                    
+                    R2["CODIGO"] = l.Articulo.Referencia;
+                    R2["NOMBRE"] = l.Descripcion;
+                    R2["CANTIDAD"] = l.Cantidad;
+                    R2["PRECIO S/IVA"] = Redondear(l.Precio()*coti);
 
+                }
+                else
+                {
+                 
+                    R2["CODIGO"] = l.Articulo.Referencia;
+                    R2["NOMBRE"] = l.Descripcion;
+                    R2["CANTIDAD"] = l.Cantidad;
+                    R2["PRECIO S/IVA"] = Redondear(l.Precio());
 
+                }
+               
+
+                T2.Rows.Add(R2);
+            }
+
+            
 
 
 
             ReportDocument rptDoc;
             rptDoc = new DiseñoFacturas.rptContado();
+            //rptDoc = new DiseñoFacturas.rptDiseñoContado();
             //rptDoc.SetDataSource(xArticulos);
             rptDoc.SetDataSource(Factura);
 
 
             frmInforme frmReport = new frmInforme();
             CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+          
             RP.ReportSource = rptDoc;
             frmReport.Show();
         }
 
-        public static void ExportExcel(DataTable xData, string xDestino)
+        //public static void ExportExcel(DataTable xData, string xDestino)
+        //{
+        //    try
+        //    {
+        //        //creamos el objeto SLDocument el cual creara el excel
+        //        SLDocument sl = new SLDocument();
+
+
+
+        //        int Index = 1;
+        //        SLStyle style = sl.CreateStyle();
+        //        style.Font.FontSize = 12;
+        //        style.Font.FontColor = System.Drawing.Color.Black;
+        //        style.Font.Bold = true;
+        //        style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
+        //        style.SetVerticalAlignment(VerticalAlignmentValues.Center);
+        //        style.SetTopBorder(BorderStyleValues.DashDot, System.Drawing.Color.Blue);
+        //        style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
+        //        sl.SetCellStyle(1, 1, style);
+
+        //        System.Drawing.Bitmap bm = new System.Drawing.Bitmap(Properties.Resources.LogoChico);
+        //        byte[] ba;
+        //        using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+        //        {
+        //            bm.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+        //            ms.Close();
+        //            ba = ms.ToArray();
+        //        }
+
+        //        //we need the image type because in byte array form, we don't know the type
+        //        SLPicture pic = new SLPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
+        //        pic.SetPosition(0, 0);
+        //        sl.InsertPicture(pic);
+
+
+
+        //        foreach (DataColumn DC in xData.Columns)
+        //        {
+        //            sl.SetCellValue(8, Index, DC.ColumnName);
+        //            sl.SetCellStyle(8, Index, style);
+        //            sl.AutoFitColumn(Index);
+        //            Index += 1;
+        //        }
+
+        //        int IndexRow = 9;
+        //        foreach (DataRow row in xData.Rows)
+        //        {
+        //            foreach (DataColumn DC in xData.Columns)
+        //            {
+
+        //                switch (Type.GetTypeCode(row[DC.Ordinal].GetType()))
+        //                {
+        //                    case TypeCode.Byte:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToByte(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.SByte:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSByte(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.UInt16:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt16(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.UInt32:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt32(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.UInt64:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt64(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Int16:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt16(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Int32:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt32(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Int64:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt64(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Decimal:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDecimal(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Double:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDouble(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.Single:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSingle(row[DC.Ordinal].ToString()));
+        //                        break;
+        //                    case TypeCode.String:
+        //                        sl.SetCellValue(IndexRow, DC.Ordinal + 1, row[DC.Ordinal].ToString());
+        //                        break;
+        //                }
+
+
+        //            }
+        //            IndexRow += 1;
+        //        }
+        //        sl.SetRowHeight(1, IndexRow, 20);
+
+        //        //Guardar como, y aqui ponemos la ruta de nuestro archivo
+        //        if (xDestino == null)
+        //        {
+        //            sl.SaveAs("C:/INFORMES/Informe.xlsx");
+        //        }
+        //        else
+        //        {
+        //            sl.SaveAs(xDestino);
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+
+        //}
+        public static decimal Redondear(decimal xvalor)
         {
-            try
-            {
-                //creamos el objeto SLDocument el cual creara el excel
-                SLDocument sl = new SLDocument();
-
-
-
-                int Index = 1;
-                SLStyle style = sl.CreateStyle();
-                style.Font.FontSize = 12;
-                style.Font.FontColor = System.Drawing.Color.Black;
-                style.Font.Bold = true;
-                style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
-                style.SetVerticalAlignment(VerticalAlignmentValues.Center);
-                style.SetTopBorder(BorderStyleValues.DashDot, System.Drawing.Color.Blue);
-                style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
-                sl.SetCellStyle(1, 1, style);
-
-                System.Drawing.Bitmap bm = new System.Drawing.Bitmap(Properties.Resources.LogoChico);
-                byte[] ba;
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-                {
-                    bm.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    ms.Close();
-                    ba = ms.ToArray();
-                }
-
-                //we need the image type because in byte array form, we don't know the type
-                SLPicture pic = new SLPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
-                pic.SetPosition(0, 0);
-                sl.InsertPicture(pic);
-
-
-
-                foreach (DataColumn DC in xData.Columns)
-                {
-                    sl.SetCellValue(8, Index, DC.ColumnName);
-                    sl.SetCellStyle(8, Index, style);
-                    sl.AutoFitColumn(Index);
-                    Index += 1;
-                }
-
-                int IndexRow = 9;
-                foreach (DataRow row in xData.Rows)
-                {
-                    foreach (DataColumn DC in xData.Columns)
-                    {
-
-                        switch (Type.GetTypeCode(row[DC.Ordinal].GetType()))
-                        {
-                            case TypeCode.Byte:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToByte(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.SByte:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSByte(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.UInt16:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt16(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.UInt32:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt32(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.UInt64:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt64(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Int16:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt16(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Int32:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt32(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Int64:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt64(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Decimal:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDecimal(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Double:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDouble(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.Single:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSingle(row[DC.Ordinal].ToString()));
-                                break;
-                            case TypeCode.String:
-                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, row[DC.Ordinal].ToString());
-                                break;
-                        }
-
-
-                    }
-                    IndexRow += 1;
-                }
-                sl.SetRowHeight(1, IndexRow, 20);
-
-                //Guardar como, y aqui ponemos la ruta de nuestro archivo
-                if (xDestino == null)
-                {
-                    sl.SaveAs("C:/INFORMES/Informe.xlsx");
-                }
-                else
-                {
-                    sl.SaveAs(xDestino);
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+            return decimal.Round(xvalor, 2);
         }
 
-
     }
+
+  
+       
+    
 }
