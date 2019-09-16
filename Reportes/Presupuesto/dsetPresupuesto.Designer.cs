@@ -283,7 +283,9 @@ namespace JJ.Reportes.Presupuesto {
             
             private global::System.Data.DataColumn columnNOMBRE;
             
-            private global::System.Data.DataColumn columnPRECIO;
+            private global::System.Data.DataColumn columnFINAL;
+            
+            private global::System.Data.DataColumn columnCANTIDAD;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -336,9 +338,17 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PRECIOColumn {
+            public global::System.Data.DataColumn FINALColumn {
                 get {
-                    return this.columnPRECIO;
+                    return this.columnFINAL;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CANTIDADColumn {
+                get {
+                    return this.columnCANTIDAD;
                 }
             }
             
@@ -379,12 +389,13 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PresupuestoRow AddPresupuestoRow(string CODIGO, string NOMBRE, string PRECIO) {
+            public PresupuestoRow AddPresupuestoRow(string CODIGO, string NOMBRE, string FINAL, string CANTIDAD) {
                 PresupuestoRow rowPresupuestoRow = ((PresupuestoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CODIGO,
                         NOMBRE,
-                        PRECIO};
+                        FINAL,
+                        CANTIDAD};
                 rowPresupuestoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPresupuestoRow);
                 return rowPresupuestoRow;
@@ -409,7 +420,8 @@ namespace JJ.Reportes.Presupuesto {
             internal void InitVars() {
                 this.columnCODIGO = base.Columns["CODIGO"];
                 this.columnNOMBRE = base.Columns["NOMBRE"];
-                this.columnPRECIO = base.Columns["PRECIO"];
+                this.columnFINAL = base.Columns["FINAL"];
+                this.columnCANTIDAD = base.Columns["CANTIDAD"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -419,8 +431,10 @@ namespace JJ.Reportes.Presupuesto {
                 base.Columns.Add(this.columnCODIGO);
                 this.columnNOMBRE = new global::System.Data.DataColumn("NOMBRE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNOMBRE);
-                this.columnPRECIO = new global::System.Data.DataColumn("PRECIO", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPRECIO);
+                this.columnFINAL = new global::System.Data.DataColumn("FINAL", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFINAL);
+                this.columnCANTIDAD = new global::System.Data.DataColumn("CANTIDAD", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCANTIDAD);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -595,17 +609,33 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PRECIO {
+            public string FINAL {
                 get {
                     try {
-                        return ((string)(this[this.tablePresupuesto.PRECIOColumn]));
+                        return ((string)(this[this.tablePresupuesto.FINALColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'PRECIO\' de la tabla \'Presupuesto\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FINAL\' de la tabla \'Presupuesto\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePresupuesto.PRECIOColumn] = value;
+                    this[this.tablePresupuesto.FINALColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CANTIDAD {
+                get {
+                    try {
+                        return ((string)(this[this.tablePresupuesto.CANTIDADColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CANTIDAD\' de la tabla \'Presupuesto\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePresupuesto.CANTIDADColumn] = value;
                 }
             }
             
@@ -635,14 +665,26 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPRECIONull() {
-                return this.IsNull(this.tablePresupuesto.PRECIOColumn);
+            public bool IsFINALNull() {
+                return this.IsNull(this.tablePresupuesto.FINALColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPRECIONull() {
-                this[this.tablePresupuesto.PRECIOColumn] = global::System.Convert.DBNull;
+            public void SetFINALNull() {
+                this[this.tablePresupuesto.FINALColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCANTIDADNull() {
+                return this.IsNull(this.tablePresupuesto.CANTIDADColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCANTIDADNull() {
+                this[this.tablePresupuesto.CANTIDADColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -126,6 +126,9 @@
       <DependentUpon>rptPrintPrice.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Presupuesto\dsetPresupuesto.cs">
+      <DependentUpon>dsetPresupuesto.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Presupuesto\dsetPresupuesto.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
