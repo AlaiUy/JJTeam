@@ -150,7 +150,7 @@ Public Class frmPrincipal
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
 
-        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False)
+        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
 
         For Each objL As Esperalin In objE.Lineas
@@ -160,22 +160,19 @@ Public Class frmPrincipal
 
         Next
 
-        Try
-            GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
-            Return
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
 
 
         Try
             GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+            GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
             objE = Nothing
             MostrarEnTabla()
-            MsgBox("Facturado", MsgBoxStyle.Information)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+
+
 
 
     End Sub
@@ -271,6 +268,10 @@ Public Class frmPrincipal
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+    End Sub
+
+    Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtImporteDescuento.TextChanged
 
     End Sub
 End Class

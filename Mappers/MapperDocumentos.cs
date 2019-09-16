@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
+
 namespace JJ.Mappers
 {
     public class MapperDocumentos : DataAccess, IMapperDocumentos
@@ -24,8 +25,8 @@ namespace JJ.Mappers
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-
-                Facturar(xObject,1);
+                
+                Facturar(xObject,1, new MapperPrecios().getCotizacion(2));
 
             if(xObject is EsperaContado )
                 GuardarEsperaContado(xObject);
@@ -314,7 +315,7 @@ namespace JJ.Mappers
 
 
 
-        public void Facturar(object xObjFactura, int xCodDocumento)
+        public void Facturar(object xObjFactura, int xCodDocumento, decimal xcotizacion)
 
         {
             Documento F = (Documento)xObjFactura;
@@ -372,7 +373,7 @@ namespace JJ.Mappers
                             //    ExecuteNonQuery(Com);
 
                             //}
-                            UpdateEspera(((VentaContado)F).Espera,Tran);
+                            UpdateEspera(((VentaContado)F).Espera,Con,Tran);
                         }
                         else if (F is VentaCuenta)
                         {
@@ -454,19 +455,17 @@ namespace JJ.Mappers
             }
         }
 
-        private void UpdateEspera(int xEspera,IDbTransaction xTra)
+        private void UpdateEspera(int xEspera,IDbConnection con,IDbTransaction xTra)
         {
-            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
-            {
-                Con.Open();
-                using (SqlCommand Com = new SqlCommand("UPDATE ESPERACONTADO SET ESTADO=1 WHERE CODIGO = @CODIGO", Con))
+           
+                using (SqlCommand Com = new SqlCommand("UPDATE ESPERACONTADO SET ESTADO=1 WHERE CODIGO = @CODIGO", (SqlConnection)con))
                 {
                     Com.Transaction = (SqlTransaction)xTra;
                     Com.Parameters.Add(new SqlParameter("@CODIGO", xEspera));
                     ExecuteNonQuery(Com);
                 }
 
-            }
+            
         }
 
         private int getNumeroZ(string xCaja)
@@ -523,7 +522,7 @@ namespace JJ.Mappers
         {
             Documento F = null;
            
-            Persona P = null;
+          //  Persona P = null;
             //CLIENTE CONTADO
             int CODCCCLIENTE = (int)Reader["CODIGO"];
             string CCDOCUMENTO = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]) ;
