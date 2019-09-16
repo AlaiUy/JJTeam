@@ -14,21 +14,21 @@ namespace JJ.Mappers
     public class MapperDocumentos : DataAccess, IMapperDocumentos
     {
 
-//NUMERO DOCUMENTO 1 = CONTADO
-//NUMERO DOCUMENTO 2 = CREDITO
-//NUMERO DOCUMENTO 20 = COMPRAS
-//NUMERO DOCUMENTO 3 = DEV.CONTADO
-//NUMERO DOCUMENTO 4 = NOTA CREDITO
+        //NUMERO DOCUMENTO 1 = CONTADO
+        //NUMERO DOCUMENTO 2 = CREDITO
+        //NUMERO DOCUMENTO 20 = COMPRAS
+        //NUMERO DOCUMENTO 3 = DEV.CONTADO
+        //NUMERO DOCUMENTO 4 = NOTA CREDITO
 
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-                
-                Facturar(xObject,1, new MapperPrecios().getCotizacion(2));
 
-            if(xObject is EsperaContado )
+                Facturar(xObject, 1, new MapperPrecios().getCotizacion(2));
+
+            if (xObject is EsperaContado)
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
                 FacturarCompra(xObject);
@@ -48,11 +48,11 @@ namespace JJ.Mappers
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
                     //Ingreso Cabecera
-                    Numero = AddCabeceraCompra(C,Con,Tran);
+                    Numero = AddCabeceraCompra(C, Con, Tran);
                     //Ingreso las lineas
-                    AddLineasCompra(C, Numero,Con,Tran);
+                    AddLineasCompra(C, Numero, Con, Tran);
                     //Actualizo el precio en la tabla articulos
-                    UpdatePreciosArticulos(C,Con,Tran);
+                    UpdatePreciosArticulos(C, Con, Tran);
                     // Agrego el historial del articulo.
 
                     Tran.Commit();
@@ -64,7 +64,7 @@ namespace JJ.Mappers
         {
             foreach (CompraLin L in xCompra.Lineas)
             {
-                if(L.Articulo.Recalcula)
+                if (L.Articulo.Recalcula)
                 {
                     using (SqlCommand Com = new SqlCommand("UPDATE ARTICULOS SET COSTO = @COSTO,STOCK = STOCK + @CANTIDAD,MONEDACOMPRA = @MONEDA WHERE CODIGO = @ARTICULO", (SqlConnection)xCon))
                     {
@@ -96,20 +96,20 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.TotalconIva() - L.SubTotal()));
                     Com.Transaction = xTran;
                     ExecuteNonQuery(Com);
-                    AddHisotriaPrecios(xC,xCon,xTran,L,xNumero);
+                    AddHisotriaPrecios(xC, xCon, xTran, L, xNumero);
                 }
             }
         }
 
-        private void AddHisotriaPrecios(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran, CompraLin xL,int xNumero)
+        private void AddHisotriaPrecios(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran, CompraLin xL, int xNumero)
         {
             using (SqlCommand Com = new SqlCommand("INSERT INTO PRECIOS(CODARTICULO,IDCOMPRA,SERIECOMPRA,PRECIOBRUTO,FECHA,CODMONEDA,IVA) VALUES(@CODARTICULO,@IDCOMPRA,@SERIECOMPRA,@PRECIOBRUTO,@FECHA,@CODMONEDA,@IVA)", (SqlConnection)xCon))
             {
                 //CODARTICULO,IDCOMPRA,SERIECOMPRA,PRECIOBRUTO,FECHA,CODMONEDA,IVA
                 Com.Parameters.Add(new SqlParameter("@CODARTICULO", xL.Articulo.CodArticulo));
                 Com.Parameters.Add(new SqlParameter("@IDCOMPRA", xNumero));
-                Com.Parameters.Add(new SqlParameter("@SERIECOMPRA",xC.Serie));
-                Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO",xL.Costo));
+                Com.Parameters.Add(new SqlParameter("@SERIECOMPRA", xC.Serie));
+                Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", xL.Costo));
                 Com.Parameters.Add(new SqlParameter("@FECHA", xC.Fecha));
                 Com.Parameters.Add(new SqlParameter("@CODMONEDA", xC.CodMoneda));
                 Com.Parameters.Add(new SqlParameter("@IVA", xL.Articulo.Iva.Id));
@@ -154,7 +154,7 @@ namespace JJ.Mappers
         {
             throw new NotImplementedException();
         }
-        
+
 
         private void GuardarEsperaContado(object xEspera)
         {
@@ -164,36 +164,36 @@ namespace JJ.Mappers
                 Con.Open();
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
-                        int xCodEspera = -1;
-                        List<IDataParameter> P = new List<IDataParameter>();
+                    int xCodEspera = -1;
+                    List<IDataParameter> P = new List<IDataParameter>();
 
 
-                        using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
- {
-                            Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
-                            Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
-                            Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
-                            Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
+                    using (SqlCommand Com = new SqlCommand("INSERT INTO ESPERACONTADO(FECHA,CODVENDEDOR,CLIENTECONTADO, ESTADO, DIRECCIONENVIO, ADENDA) OUTPUT INSERTED.CODIGO VALUES (@FECHA,@CODVENDEDOR, @CLIENTECONTADO, @ESTADO, @DIRECCIONENVIO, @ADENDA)", (SqlConnection)Con))
+                    {
+                        Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Today));
+                        Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", E.Codvendedor));
+                        Com.Parameters.Add(new SqlParameter("@CLIENTECONTADO", E.Codclientecontado));
+                        Com.Parameters.Add(new SqlParameter("@ESTADO", E.Estado));
 
-                            Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
-                            Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
-                            Com.Transaction = (SqlTransaction)Tran;
-                            var Result = ExecuteScalar(Com, P);
-                            int.TryParse(Result.ToString(), out xCodEspera);
-                        }
-                        AddLineasEspera(E.Lineas, Con, Tran, xCodEspera,TipoLineas.Contado);
-                        Tran.Commit();
+                        Com.Parameters.Add(new SqlParameter("@DIRECCIONENVIO", E.DirEnvio.ToUpper()));
+                        Com.Parameters.Add(new SqlParameter("@ADENDA", E.Adenda));
+                        Com.Transaction = (SqlTransaction)Tran;
+                        var Result = ExecuteScalar(Com, P);
+                        int.TryParse(Result.ToString(), out xCodEspera);
+                    }
+                    AddLineasEspera(E.Lineas, Con, Tran, xCodEspera, TipoLineas.Contado);
+                    Tran.Commit();
                 }
             }
         }
 
-        private void AddLineasEspera(List<Esperalin> lineas, SqlConnection xCon, SqlTransaction xTran, int xCodEsperaContado,TipoLineas xTipo)
+        private void AddLineasEspera(List<Esperalin> lineas, SqlConnection xCon, SqlTransaction xTran, int xCodEsperaContado, TipoLineas xTipo)
         {
-            string Query="";
+            string Query = "";
 
             if (xTipo == TipoLineas.Contado)
                 Query = "INSERT INTO ESPERALINCONTADO (CODESPERACONTADO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, DESCUENTO) VALUES(@CODESPERACONTADO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @DESCUENTO)";
-           if (xTipo == TipoLineas.Credito)
+            if (xTipo == TipoLineas.Credito)
                 Query = "";//INSERT INTO ESPERALINCONTADO (CODESPERACONTADO, LINEA, CODARTICULO, DESCRIPCION, CANTIDAD, DESCUENTO) VALUES(@CODESPERACONTADO, @LINEA, @CODARTICULO, @DESCRIPCION, @CANTIDAD, @DESCUENTO)
 
             foreach (object L in lineas)
@@ -231,12 +231,12 @@ namespace JJ.Mappers
                             int xCliente = (int)Reader["CLIENTECONTADO"];
                             string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
                             string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
-                           
+
                             //char xPresupuesto = (char)Reader["PRESUPUESTO"];
                             int xEstado = (int)Reader["ESTADO"];
                             String xNombreCliente = (string)Reader["NOMBRE"];
-                            EsperaContado E = new EsperaContado(Codigo,Fecha,xCodVendedor,xCliente,xAdenda,xEnvio,xEstado,xNombreCliente,'F');
-                        
+                            EsperaContado E = new EsperaContado(Codigo, Fecha, xCodVendedor, xCliente, xAdenda, xEnvio, xEstado, xNombreCliente, 'F');
+
                             E.AgregarLineas(getLineasEsperaContado(Codigo));
                             LtsEspera.Add(E);
                         }
@@ -297,12 +297,12 @@ namespace JJ.Mappers
                             string Descripcion = (string)Reader["DESCRIPCION"];
                             decimal Descuento = Convert.ToDecimal(Reader["DESCUENTO"]);
 
-                            Esperalin L = new Esperalin(A,Descripcion,Cantidad,Descuento,NumLin);
-
-                  
+                            Esperalin L = new Esperalin(A, Descripcion, Cantidad, Descuento, NumLin);
 
 
-                            
+
+
+
                             Lineas.Add(L);
                         }
                     }
@@ -339,7 +339,7 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", xCodDocumento));
                         Com.Parameters.Add(new SqlParameter("@DETALLE", F.Detalle));
                         Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
-                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1,xcotizacion)));
+                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1, xcotizacion)));
                         Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
@@ -373,7 +373,7 @@ namespace JJ.Mappers
                             //    ExecuteNonQuery(Com);
 
                             //}
-                            UpdateEspera(((VentaContado)F).Espera,Con,Tran);
+                            UpdateEspera(((VentaContado)F).Espera, Con, Tran);
                         }
                         else if (F is VentaCuenta)
                         {
@@ -424,7 +424,7 @@ namespace JJ.Mappers
                             Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", ((DevolucionContado)F).NumeroReferencia));
                             ExecuteNonQuery(Com);
 
-                                                     
+
 
 
                         }
@@ -455,17 +455,17 @@ namespace JJ.Mappers
             }
         }
 
-        private void UpdateEspera(int xEspera,IDbConnection con,IDbTransaction xTra)
+        private void UpdateEspera(int xEspera, IDbConnection con, IDbTransaction xTra)
         {
-           
-                using (SqlCommand Com = new SqlCommand("UPDATE ESPERACONTADO SET ESTADO=1 WHERE CODIGO = @CODIGO", (SqlConnection)con))
-                {
-                    Com.Transaction = (SqlTransaction)xTra;
-                    Com.Parameters.Add(new SqlParameter("@CODIGO", xEspera));
-                    ExecuteNonQuery(Com);
-                }
 
-            
+            using (SqlCommand Com = new SqlCommand("UPDATE ESPERACONTADO SET ESTADO=1 WHERE CODIGO = @CODIGO", (SqlConnection)con))
+            {
+                Com.Transaction = (SqlTransaction)xTra;
+                Com.Parameters.Add(new SqlParameter("@CODIGO", xEspera));
+                ExecuteNonQuery(Com);
+            }
+
+
         }
 
         private int getNumeroZ(string xCaja)
@@ -521,11 +521,11 @@ namespace JJ.Mappers
         private Documento getFacturaFromReader(IDataReader Reader, TipoLineas xTipo)
         {
             Documento F = null;
-           
-          //  Persona P = null;
+
+            //  Persona P = null;
             //CLIENTE CONTADO
             int CODCCCLIENTE = (int)Reader["CODIGO"];
-            string CCDOCUMENTO = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]) ;
+            string CCDOCUMENTO = (string)(Reader["DOCUMENTO"] is DBNull ? string.Empty : Reader["DOCUMENTO"]);
             string CCNOMBRE = (string)Reader["NOMBRE"];
             string CCDIRECCION = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
             string CCTELEFONO = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
@@ -537,7 +537,7 @@ namespace JJ.Mappers
 
             //VENTA
 
-            
+
             int VNumero = (int)Reader["NUMERO"];
             string VSerie = (string)Reader["SERIE"];
             string VCaja = (string)Reader["CODCAJA"];
@@ -546,7 +546,7 @@ namespace JJ.Mappers
             int VZ = (int)Reader["Z"];
             int VVendedor = (int)Reader["CODVENDEDOR"];
             int VDocumento = (int)Reader["CODDOCUMENTO"];
-            string VDetalle =(string)Reader["DETALLE"];
+            string VDetalle = (string)Reader["DETALLE"];
             decimal VCotizacion = (decimal)Reader["COTIZACION"];
             double VSubtotal = (double)Reader["SUBTOTAL"];
             double VIva = (double)Reader["IVA"];
@@ -555,19 +555,19 @@ namespace JJ.Mappers
             switch (xTipo)
             {
                 case TipoLineas.Contado:
-               
 
-                    F = new VentaContado(new ClienteContado (CODCCCLIENTE, CCDOCUMENTO,CCNOMBRE,CCDIRECCION,CCTELEFONO),VFecha,VSerie,VCaja,VMoneda,VZ,VVendedor,VCotizacion,false,-1);
+
+                    F = new VentaContado(new ClienteContado(CODCCCLIENTE, CCDOCUMENTO, CCNOMBRE, CCDIRECCION, CCTELEFONO), VFecha, VSerie, VCaja, VMoneda, VZ, VVendedor, VCotizacion, false, -1);
                     F.Numero = VCNUMERO;
 
                     break;
                 case TipoLineas.Credito:
-                    //int CodPersona = (int)Reader["CODPERSONA"];
-                    //int CodCuenta = (int)Reader["CODCUENTA"];
-                    //int Tarifa = (int)Reader["CODTARIFA"];
-                    //P = getPersonaById(CodPersona.ToString());
-                    //F = new VentaCuenta(Documento, P, CodCuenta, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor, Tarifa);
-                    //break;
+                //int CodPersona = (int)Reader["CODPERSONA"];
+                //int CodCuenta = (int)Reader["CODCUENTA"];
+                //int Tarifa = (int)Reader["CODTARIFA"];
+                //P = getPersonaById(CodPersona.ToString());
+                //F = new VentaCuenta(Documento, P, CodCuenta, Fecha, Numero, Serie, Caja, Moneda, Z, Vendedor, Tarifa);
+                //break;
                 default:
                     break;
 
@@ -578,7 +578,7 @@ namespace JJ.Mappers
             return F;
         }
 
-      
+
 
         private List<Linea> getLineasByFactura(int xNumero, string xSerie)
         {
@@ -622,7 +622,7 @@ namespace JJ.Mappers
             A.setCostoenBaseAPrecioFinal(Precio);
 
 
-            VentaLin L = new VentaLin(Linea, A, Des,  Cantidad, dto);
+            VentaLin L = new VentaLin(Linea, A, Des, Cantidad, dto);
             return L;
         }
 
@@ -646,14 +646,14 @@ namespace JJ.Mappers
                     //FALTA EN VENTALIN PONER ATRIBUTOS
                     Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
                     Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
-                    Com.Parameters.Add(new SqlParameter("@LINEA",VL.NumLinea ));
-                    Com.Parameters.Add(new SqlParameter("@CODARTICULO",VL.Articulo.CodArticulo ));
+                    Com.Parameters.Add(new SqlParameter("@LINEA", VL.NumLinea));
+                    Com.Parameters.Add(new SqlParameter("@CODARTICULO", VL.Articulo.CodArticulo));
                     Com.Parameters.Add(new SqlParameter("@REFERENCIA", VL.Articulo.Referencia));
-                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION",VL.Descripcion.ToUpper() ));
-                    Com.Parameters.Add(new SqlParameter("@CANTIDAD",VL.Cantidad ));
-                    Com.Parameters.Add(new SqlParameter("@PRECIO",VL.Precio(1,xcotizacion)));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", VL.Descripcion.ToUpper()));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
+                    Com.Parameters.Add(new SqlParameter("@PRECIO", VL.Precio(1, xcotizacion)));
                     Com.Parameters.Add(new SqlParameter("@DTO", VL.Descuento));
-                    Com.Parameters.Add(new SqlParameter("@IVA",VL.Articulo.Iva.Valor));
+                    Com.Parameters.Add(new SqlParameter("@IVA", VL.Articulo.Iva.Valor));
                     Com.Transaction = (SqlTransaction)xTran;
                     ExecuteNonQuery(Com);
                 }
@@ -756,9 +756,27 @@ namespace JJ.Mappers
             }
             return F;
         }
-    }
-    }
 
+        public object getVentas(DateTime xFechaI, DateTime xFechaF)
+        {
+
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT FECHA, CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@INICIO", xFechaI));
+                    Com.Parameters.Add(new SqlParameter("@FINAL", xFechaF));
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
+    }
+}
+    
 
 
         

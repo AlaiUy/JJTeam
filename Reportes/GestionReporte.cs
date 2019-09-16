@@ -260,6 +260,24 @@ namespace JJ.Reportes
             return decimal.Round(xvalor, 2);
         }
 
+        public static void Ventas(DataTable xVentas, DateTime xFechaInicio, DateTime xFechaFinal)
+        {
+            xVentas.TableName = "Ventas";
+            ReportDocument rptDoc;
+            rptDoc = new Ventas.rptVentas();
+            rptDoc.SetDataSource(xVentas);
+            TextObject Campo;
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtPeriodo"];
+            Campo.Text = "Periodo: " + xFechaInicio.ToShortDateString() + " hasta " + xFechaFinal.ToShortDateString();
+                
+
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
     }
 
   

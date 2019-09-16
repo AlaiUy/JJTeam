@@ -150,6 +150,17 @@
       <DependentUpon>rptPresupuesto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Ventas\dsetVentas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsetVentas.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\rptVentas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptVentas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Articulos\rptArticulos.rpt">
@@ -190,6 +201,10 @@
     <EmbeddedResource Include="Presupuesto\rptPresupuesto.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptPresupuesto.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ventas\rptVentas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptVentas.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +255,17 @@
     </None>
     <None Include="Precios\dsetPrecios.xss">
       <DependentUpon>dsetPrecios.xsd</DependentUpon>
+    </None>
+    <None Include="Ventas\dsetVentas.xsc">
+      <DependentUpon>dsetVentas.xsd</DependentUpon>
+    </None>
+    <None Include="Ventas\dsetVentas.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsetVentas.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Ventas\dsetVentas.xss">
+      <DependentUpon>dsetVentas.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

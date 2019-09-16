@@ -3,6 +3,7 @@ using JJ.FabricaMapper;
 using JJ.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -80,6 +81,11 @@ namespace JJ.Gestoras
         public VentaContado getVentaDocumento(int xNumero, string xSerie, TipoLineas xtipo)
         {
            return (VentaContado)_DBDocumentos.getFacturaByID(xSerie, xNumero, xtipo);
+        }
+
+        public DataTable ListadoVentas(DateTime xFechaI, DateTime xFechaF)
+        {
+            return (DataTable)_DBDocumentos.getVentas(xFechaI, xFechaF);
         }
 
     }
