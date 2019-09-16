@@ -104,7 +104,15 @@ namespace JJ.Entidades
 
         public virtual decimal SubTotal()
         {
-            return _objArticulo.Precio() * _Cantidad;
+            if (_Descuento < 0)
+            {
+                return ( _objArticulo.Precio() * (1 + (-_Descuento / 100))) * _Cantidad;
+            }
+            else
+            {
+                return (_objArticulo.Precio() / (1 + (_Descuento / 100))) * _Cantidad;
+            }
+           
         }
 
         //public virtual decimal SubTotal(int codmoneda, decimal xcotizacion)
@@ -147,6 +155,11 @@ namespace JJ.Entidades
             return (this._objArticulo.Precio() * (1 + (_objArticulo.Iva.Valor / 100))) * _Cantidad;
         }
 
+        public virtual decimal TotalSinIva() //Total con iva
+        {
+
+            return (this._objArticulo.Precio() ) * _Cantidad;
+        }
         //public virtual decimal TotalconIva(int codmoneda, decimal xcotizacion)  //Total con iva
         //{
         //    if (_objArticulo.CodMoneda == codmoneda)
@@ -159,15 +172,20 @@ namespace JJ.Entidades
         //        return ((_objArticulo.PrecioIva() * xcotizacion) * (1 + (_objArticulo.Iva.Valor / 100))) * _Cantidad;
 
         //    }
-          
+
         //}
 
         public virtual decimal TotalConDescuento() //Total Con descuento
         {
+            if (_Descuento < 0)
+            {
 
-            return (TotalconIva() * ((100 - _Descuento) / 100));
-
-                //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
+                return (TotalSinIva() * (1+ (-_Descuento) / 100)) * (1 + (_objArticulo.Iva.Valor / 100));
+            }
+            else { 
+                return (TotalSinIva() / (1 + (_Descuento) / 100)) * (1 + (_objArticulo.Iva.Valor / 100));
+            }
+            //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
         }
 
         //public virtual decimal TotalConDescuento(int codmoneda, decimal xcotizacion) //Total Con descuento

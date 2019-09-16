@@ -11,7 +11,8 @@
 
 
     Private Sub btnAceptar_Click(sender As Object, e As EventArgs) Handles btnAceptar.Click
-        xdescuento = Me.txtDescuento.Text
+
+        xdescuento = txtDescuento.Text
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub

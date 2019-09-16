@@ -60,8 +60,15 @@ namespace JJ.Entidades
         /// </summary>
         public override decimal TotalConDescuento() //Total Con descuento
         {
+            if (Descuento < 0)
+            {
+                return (TotalconIva() * (1+(- Descuento / 100)));
+            }
+            else
+            {
+                return (TotalconIva() * ((100 - Descuento) / 100));
+            }
             
-            return (TotalconIva() * ((100 - Descuento) / 100));
         }
 
         /// <summary>

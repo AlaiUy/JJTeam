@@ -341,6 +341,7 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
                         Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1,xcotizacion)));
                         Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
+                      
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
                         if (F is VentaContado)
@@ -448,6 +449,7 @@ namespace JJ.Mappers
                     }
                     AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
                     AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                    DescontarStock(F.Lineas, Con, Tran);
 
 
                     Tran.Commit();
@@ -671,6 +673,22 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
                     Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
                     Com.Parameters.Add(new SqlParameter("@LINEA", VL.NumLinea));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
+                    Com.Transaction = (SqlTransaction)xTran;
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
+
+        private void DescontarStock(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran)
+        {
+            foreach (object L in lineas)
+            {
+                VentaLin VL = (VentaLin)L;
+                using (SqlCommand Com = new SqlCommand("UPDATE  ARTICULOS set STOCK=(STOCK - @CANTIDAD)  WHERE CODIGO=@CODIGO", (SqlConnection)xCon))
+                {
+                    //FALTA EN VENTALIN PONER ATRIBUTOS
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", VL.Articulo.CodArticulo));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
                     Com.Transaction = (SqlTransaction)xTran;
                     ExecuteNonQuery(Com);

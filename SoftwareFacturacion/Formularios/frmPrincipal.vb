@@ -167,6 +167,7 @@ Public Class frmPrincipal
             GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
             objE = Nothing
             MostrarEnTabla()
+            CargarDatos()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
