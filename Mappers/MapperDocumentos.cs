@@ -764,7 +764,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT FECHA, CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT FECHA, CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL,CAST(SUM(DESCUENTO) AS DECIMAL(18,2) AS DESCUENTOS, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA + DESCUENTO) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA", (SqlConnection)Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@INICIO", xFechaI));
                     Com.Parameters.Add(new SqlParameter("@FINAL", xFechaF));

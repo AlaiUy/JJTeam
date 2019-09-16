@@ -287,6 +287,8 @@ namespace JJ.Reportes.Ventas {
             
             private global::System.Data.DataColumn columnTOTAL;
             
+            private global::System.Data.DataColumn columnDESCUENTOS;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public VentasDataTable() {
@@ -354,6 +356,14 @@ namespace JJ.Reportes.Ventas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DESCUENTOSColumn {
+                get {
+                    return this.columnDESCUENTOS;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -389,13 +399,14 @@ namespace JJ.Reportes.Ventas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public VentasRow AddVentasRow(string FECHA, decimal SUBTOTAL, decimal IVA, decimal TOTAL) {
+            public VentasRow AddVentasRow(string FECHA, decimal SUBTOTAL, decimal IVA, decimal TOTAL, string DESCUENTOS) {
                 VentasRow rowVentasRow = ((VentasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FECHA,
                         SUBTOTAL,
                         IVA,
-                        TOTAL};
+                        TOTAL,
+                        DESCUENTOS};
                 rowVentasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVentasRow);
                 return rowVentasRow;
@@ -422,6 +433,7 @@ namespace JJ.Reportes.Ventas {
                 this.columnSUBTOTAL = base.Columns["SUBTOTAL"];
                 this.columnIVA = base.Columns["IVA"];
                 this.columnTOTAL = base.Columns["TOTAL"];
+                this.columnDESCUENTOS = base.Columns["DESCUENTOS"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -435,6 +447,8 @@ namespace JJ.Reportes.Ventas {
                 base.Columns.Add(this.columnIVA);
                 this.columnTOTAL = new global::System.Data.DataColumn("TOTAL", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTOTAL);
+                this.columnDESCUENTOS = new global::System.Data.DataColumn("DESCUENTOS", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDESCUENTOS);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -641,6 +655,22 @@ namespace JJ.Reportes.Ventas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DESCUENTOS {
+                get {
+                    try {
+                        return ((string)(this[this.tableVentas.DESCUENTOSColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'DESCUENTOS\' de la tabla \'Ventas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVentas.DESCUENTOSColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFECHANull() {
                 return this.IsNull(this.tableVentas.FECHAColumn);
             }
@@ -685,6 +715,18 @@ namespace JJ.Reportes.Ventas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTOTALNull() {
                 this[this.tableVentas.TOTALColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDESCUENTOSNull() {
+                return this.IsNull(this.tableVentas.DESCUENTOSColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDESCUENTOSNull() {
+                this[this.tableVentas.DESCUENTOSColumn] = global::System.Convert.DBNull;
             }
         }
         
