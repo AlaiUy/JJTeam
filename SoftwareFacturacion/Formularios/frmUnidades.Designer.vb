@@ -23,8 +23,9 @@ Partial Class frmUnidades
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtCantidad = New System.Windows.Forms.TextBox()
+        Me.btnAceptar = New System.Windows.Forms.Button()
+        Me.txtUnidades = New System.Windows.Forms.TextBox()
+        Me.lbl = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -33,38 +34,49 @@ Partial Class frmUnidades
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.txtCantidad)
+        Me.Panel1.Controls.Add(Me.lbl)
+        Me.Panel1.Controls.Add(Me.btnAceptar)
+        Me.Panel1.Controls.Add(Me.txtUnidades)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(361, 72)
+        Me.Panel1.Size = New System.Drawing.Size(349, 130)
         Me.Panel1.TabIndex = 0
         '
-        'Label1
+        'btnAceptar
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(15, 25)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(73, 20)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Cantidad"
+        Me.btnAceptar.Location = New System.Drawing.Point(107, 73)
+        Me.btnAceptar.Name = "btnAceptar"
+        Me.btnAceptar.Size = New System.Drawing.Size(125, 38)
+        Me.btnAceptar.TabIndex = 1
+        Me.btnAceptar.Text = "Aceptar"
+        Me.btnAceptar.UseVisualStyleBackColor = True
         '
-        'txtCantidad
+        'txtUnidades
         '
-        Me.txtCantidad.Location = New System.Drawing.Point(105, 22)
-        Me.txtCantidad.Name = "txtCantidad"
-        Me.txtCantidad.Size = New System.Drawing.Size(223, 26)
-        Me.txtCantidad.TabIndex = 0
+        Me.txtUnidades.Location = New System.Drawing.Point(162, 28)
+        Me.txtUnidades.Name = "txtUnidades"
+        Me.txtUnidades.Size = New System.Drawing.Size(167, 26)
+        Me.txtUnidades.TabIndex = 0
+        '
+        'lbl
+        '
+        Me.lbl.AutoSize = True
+        Me.lbl.Location = New System.Drawing.Point(19, 31)
+        Me.lbl.Name = "lbl"
+        Me.lbl.Size = New System.Drawing.Size(77, 20)
+        Me.lbl.TabIndex = 2
+        Me.lbl.Text = "Unidades"
         '
         'frmUnidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 96)
+        Me.ClientSize = New System.Drawing.Size(373, 154)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmUnidades"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Unidades"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -73,6 +85,7 @@ Partial Class frmUnidades
     End Sub
 
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label1 As Label
-    Friend WithEvents txtCantidad As TextBox
+    Friend WithEvents btnAceptar As Button
+    Friend WithEvents txtUnidades As TextBox
+    Friend WithEvents lbl As Label
 End Class

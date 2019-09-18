@@ -40,6 +40,11 @@ Public Class frmPrincipal
             Me.objE = frmE.objEspera
             CargarDatos()
             MostrarEnTabla()
+            With dgridLineas
+                For Each ObjCol As DataGridViewColumn In .Columns
+                    ObjCol.SortMode = DataGridViewColumnSortMode.Programmatic
+                Next
+            End With
 
 
         End If
@@ -58,7 +63,7 @@ Public Class frmPrincipal
                 txtNombre.Text = objCC.Nombre
                 txtDocumento.Text = objCC.Documento
                 txtDireccion.Text = objCC.Direccion
-
+                lblVendedor.Text = GesVendedores.getInstance.getVendedorByID(objE.Codvendedor).Nombre
                 'ElseIf (TypeOf objE Is EsperaCredito) Then
                 '    Me.txtTipoVta.Text = "CREDITO"
 
@@ -149,30 +154,33 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
-
-        Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
-
-
-        For Each objL As Esperalin In objE.Lineas
-
-            objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.Articulo, objL.Descripcion, objL.Cantidad, objL.Descuento))
-            'objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
-
-        Next
+        If dgridLineas.RowCount > 0 Then
 
 
-
-        Try
-            GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
-            GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
-            objE = Nothing
-            MostrarEnTabla()
-            CargarDatos()
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
+            Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
 
+            For Each objL As Esperalin In objE.Lineas
+
+                objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.Articulo, objL.Descripcion, objL.Cantidad, objL.Descuento))
+                'objF.Lineas.Add(New VentaLin(objL.NumLinea, objL.ObjArticulo.CodArticulo, objL.ObjArticulo.Descripcion, objL.ObjArticulo.Precio(), objL.ObjArticulo.Iva, objL.Cantidad, objL.Descuento))
+
+            Next
+
+
+
+            Try
+                GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+                GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
+                objE = Nothing
+                MostrarEnTabla()
+                CargarDatos()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        Else
+            MsgBox("No Hay Lineas para facturar", MsgBoxStyle.Information)
+        End If
 
 
 
@@ -202,29 +210,42 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub btnDescuentoLinea_Click(sender As Object, e As EventArgs) Handles btnDescuentoLinea.Click
-        Dim lin As Integer = dgridLineas.CurrentRow.Index + 1
+        If dgridLineas.RowCount > 0 Then
 
-        Dim frmd As New frmDescuento
-        frmd.ShowDialog()
-        If frmd.DialogResult = DialogResult.OK Then
-            For Each line As Linea In objE.Lineas
-                If line.NumLinea = lin Then
-                    line.Descuento = frmd.xdescuento
-                End If
-            Next
-            CargarDatos()
-            MostrarEnTabla()
+
+            Dim lin As Integer = dgridLineas.CurrentRow.Index + 1
+
+            Dim frmd As New frmDescuento
+            frmd.ShowDialog()
+            If frmd.DialogResult = DialogResult.OK Then
+                For Each line As Linea In objE.Lineas
+                    If line.NumLinea = lin Then
+                        line.Descuento = frmd.xdescuento
+                    End If
+                Next
+                CargarDatos()
+                MostrarEnTabla()
+            End If
+        Else
+            MsgBox("No hay lineas", MsgBoxStyle.Information)
         End If
+
 
     End Sub
 
     Private Sub btnDescuentoTotal_Click(sender As Object, e As EventArgs) Handles btnDescuentoTotal.Click
-        Dim frmD As New frmDescuento
-        frmD.ShowDialog()
-        If frmD.DialogResult = DialogResult.OK Then
-            AplicarDescuentoTotal(frmD.xdescuento)
-            MostrarEnTabla()
-            CargarDatos()
+        If dgridLineas.RowCount > 0 Then
+
+
+            Dim frmD As New frmDescuento
+            frmD.ShowDialog()
+            If frmD.DialogResult = DialogResult.OK Then
+                AplicarDescuentoTotal(frmD.xdescuento)
+                MostrarEnTabla()
+                CargarDatos()
+            End If
+        Else
+            MsgBox("No Hay Lineas", MsgBoxStyle.Information)
         End If
     End Sub
 
@@ -273,6 +294,40 @@ Public Class frmPrincipal
     End Sub
 
     Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtImporteDescuento.TextChanged
+
+    End Sub
+
+    Private Sub dgridLineas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridLineas.CellContentClick
+
+    End Sub
+
+    Private Sub dgridLineas_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgridLineas.ColumnHeaderMouseClick
+        If dgridLineas.Columns(e.ColumnIndex).Name = "CANTIDAD" And Me.dgridLineas.Rows.Count > 0 Then
+            Dim frmU As New frmUnidades()
+            frmU.nombre("Unidades")
+            frmU.ShowDialog()
+
+            objE.Lineas(dgridLineas.Item("LINEA", dgridLineas.CurrentRow.Index).Value - 1).Cantidad = frmU.unidad
+
+            CargarDatos()
+            MostrarEnTabla()
+        ElseIf dgridLineas.Columns(e.ColumnIndex).Name = "PRECIO TOTAL" And Me.dgridLineas.Rows.Count > 0 Then
+            Dim frmU As New frmUnidades()
+            frmU.nombre("PRECIO TOTAL")
+            frmU.Text = "PRECIO TOTAL"
+            frmU.ShowDialog()
+            If frmU.unidad > 0 Then
+
+
+                objE.Lineas(dgridLineas.Item("LINEA", dgridLineas.CurrentRow.Index).Value - 1).CalcularDescuentoPrecioFinal(frmU.unidad, GesPrecios.getInstance.getCotizacion(2))
+
+                CargarDatos()
+                MostrarEnTabla()
+            End If
+
+        End If
+
+
 
     End Sub
 End Class

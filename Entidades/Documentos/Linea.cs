@@ -219,5 +219,48 @@ namespace JJ.Entidades
         //{
         //    return (TotalconIva(codmoneda, xcotizacion) - TotalConDescuento(codmoneda,xcotizacion));
         //}
+
+        public void CalcularDescuentoPrecioFinal(decimal ximporte, decimal xcotizacion)
+        {
+
+            _Descuento = 0;
+            if (Articulo.CodMoneda== 1)
+            {
+                if (ximporte < TotalConDescuento())
+                {
+                    _Descuento = decimal.Round((((TotalSinIva()) / (ximporte / (1 + (_objArticulo.Iva.Valor / 100)))) - 1) * 100,2);
+
+
+                }
+                else
+                {
+
+                    _Descuento = decimal.Round(-(((ximporte / (1 + (_objArticulo.Iva.Valor / 100))) / (TotalSinIva())) - 1) * 100,2);
+
+                }
+
+            }
+            else
+            {
+               
+                if (ximporte < (TotalConDescuento()* xcotizacion))
+                {
+                    _Descuento = decimal.Round((((TotalSinIva() * xcotizacion) / (ximporte / (1 + (_objArticulo.Iva.Valor / 100)))) - 1) * 100,2);
+                  
+
+                }
+                else
+                {
+
+                    _Descuento = decimal.Round(-(((ximporte / (1 + (_objArticulo.Iva.Valor / 100))) / (TotalSinIva() * xcotizacion)) - 1) * 100,2);
+
+                }
+
+            }
+           
+
+
+
+        }
     }
 }

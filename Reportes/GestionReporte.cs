@@ -141,6 +141,30 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
+        public static void ImprimirPagos(DataSet xPagos)
+        {
+        
+            ReportDocument rptDoc;
+            rptDoc = new Diversos.rptPagos();
+            rptDoc.SetDataSource(xPagos);
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
+        public static void ImprimirCierre(DataTable xCierre)
+        {
+
+            ReportDocument rptDoc;
+            rptDoc = new Diversos.rptCierre();
+            rptDoc.SetDataSource(xCierre);
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
         //public static void ExportExcel(DataTable xData, string xDestino)
         //{
         //    try

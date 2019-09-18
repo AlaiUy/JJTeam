@@ -470,7 +470,7 @@ namespace JJ.Mappers
             
         }
 
-        private int getNumeroZ(string xCaja)
+        public int getNumeroZ(string xCaja)
         {
             int Numero = -1;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))

@@ -17,6 +17,7 @@ Public Class frmEspera
         mListaDocumentos = GesDocumentos.getInstance.getListaEspera()
         Me.dgridCabecera.DataSource = MostrarEncabezado()
         dgridCabecera.Columns("CLIENTECOD").Visible = False
+        Me.dgridCabecera.Focus()
     End Sub
 
 
@@ -121,5 +122,17 @@ Public Class frmEspera
 
     Private Sub dgridCabecera_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridCabecera.CellContentClick
 
+    End Sub
+
+    Private Sub dgridCabecera_KeyDown(sender As Object, e As KeyEventArgs) Handles dgridCabecera.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If dgridCabecera.Rows.Count > 1 Then
+                objEspera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", dgridCabecera.CurrentRow.Index).Value)
+            Else
+                objEspera = ObtenerEsperabyIdEspera(dgridCabecera.Item("NUMERO", 0).Value)
+            End If
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+        End If
     End Sub
 End Class
