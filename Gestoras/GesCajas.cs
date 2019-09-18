@@ -82,16 +82,62 @@ namespace JJ.Gestoras
             return (DataTable)_DBCajas.getPagoByFecha(xFecha, xCaja);
         }
 
-        public int GetSaldoDeclarado( int xCodMoneda, int xtipo)
+        public DataTable getpagosCabecera(DateTime xFecha, int xZ)
+        {
+            if (xFecha == null & xZ == 0)
+                return (DataTable)_DBCajas.getPagoCabecera(DateTime.Now, Caja.Z);
+
+            if (xZ == 0)
+                return (DataTable)_DBCajas.getPagoCabecera(xFecha, Caja.Z);
+
+            if (xFecha == null)
+                return (DataTable)_DBCajas.getPagoCabecera(DateTime.Now, xZ);
+
+            return (DataTable)_DBCajas.getPagoCabecera(xFecha, xZ);
+        }
+
+        public DataTable getpagosDetalle(DateTime xFecha, int xZ)
+        {
+            if (xFecha == null & xZ== 0)
+                return (DataTable)_DBCajas.getPagoDetalle(DateTime.Now, Caja.Z);
+
+            if (xZ == 0)
+                return (DataTable)_DBCajas.getPagoDetalle(xFecha, Caja.Z);
+
+            if (xFecha == null)
+                return (DataTable)_DBCajas.getPagoDetalle(DateTime.Now, xZ);
+
+            return (DataTable)_DBCajas.getPagoDetalle(xFecha, xZ);
+        }
+
+        public decimal GetSaldoDeclarado( int xCodMoneda, int xtipo)
         {
             return _DBCajas.getSaldoDeclarados(Caja.Codigo,xCodMoneda, xtipo);
 
         }
 
-        public void CierreCaja(decimal xPesos, decimal xDolares,int xcodVendedor )
+        public decimal GetTotalVentaContado(string xCaja, int xZ, int xcodmoneda)
+        {
+            return _DBCajas.getVentasContado(xCaja, xZ, xcodmoneda);
+
+        }
+
+        public decimal getTotalPagos(string xCaja, int xZ, int xcodmoneda)
+        {
+            return _DBCajas.getPagos(xCaja, xZ, xcodmoneda);
+
+        }
+
+        public decimal getDevolucionesContado(string xCaja, int xZ, int xcodmoneda)
         {
 
-            _DBCajas.CierreCaja(xPesos, xDolares, Caja.Codigo, Caja.Z, xcodVendedor);
+            return _DBCajas.getDevolucionesContado(xCaja, xZ, xcodmoneda);
+        }
+
+        public void CierreCaja(decimal xPesos, decimal xDolares,decimal xPesosIni, decimal xDolaresIni, int xcodVendedor )
+        {
+
+            _DBCajas.CierreCaja(xPesos, xDolares,xPesosIni,xDolaresIni, Caja.Codigo, Caja.Z, xcodVendedor);
 
         }
 

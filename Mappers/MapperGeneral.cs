@@ -142,7 +142,6 @@ namespace JJ.Mappers
             return new Moneda(Codigo, Nombre, SubFijo, Coeficiente, Cotizacion);
         }
 
-
-
+       
     }
 }

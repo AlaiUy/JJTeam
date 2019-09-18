@@ -98,6 +98,34 @@
       <DependentUpon>rptDiseñoContado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Diversos\dtCierre.cs">
+      <DependentUpon>dtCierre.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Diversos\dtCierre.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtCierre.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Diversos\dtPagos.cs">
+      <DependentUpon>dtPagos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Diversos\dtPagos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dtPagos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Diversos\rptCierre.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptCierre.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Diversos\rptPagos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptPagos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DTFactura.cs">
       <DependentUpon>DTFactura.xsd</DependentUpon>
     </Compile>
@@ -187,6 +215,14 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptDiseñoContado.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Diversos\rptCierre.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptCierre.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Diversos\rptPagos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptPagos.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInforme.resx">
       <DependentUpon>frmInforme.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +268,28 @@
     </None>
     <None Include="DiseñoFacturas\dsetFactContado.xss">
       <DependentUpon>dsetFactContado.xsd</DependentUpon>
+    </None>
+    <None Include="Diversos\dtCierre.xsc">
+      <DependentUpon>dtCierre.xsd</DependentUpon>
+    </None>
+    <None Include="Diversos\dtCierre.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtCierre.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Diversos\dtCierre.xss">
+      <DependentUpon>dtCierre.xsd</DependentUpon>
+    </None>
+    <None Include="Diversos\dtPagos.xsc">
+      <DependentUpon>dtPagos.xsd</DependentUpon>
+    </None>
+    <None Include="Diversos\dtPagos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dtPagos.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Diversos\dtPagos.xss">
+      <DependentUpon>dtPagos.xsd</DependentUpon>
     </None>
     <None Include="DTFactura.xsc">
       <DependentUpon>DTFactura.xsd</DependentUpon>

@@ -131,6 +131,7 @@ Partial Class frmPrincipal
         Me.dgridLineas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgridLineas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgridLineas.Location = New System.Drawing.Point(0, 0)
+        Me.dgridLineas.MultiSelect = False
         Me.dgridLineas.Name = "dgridLineas"
         Me.dgridLineas.ReadOnly = True
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
