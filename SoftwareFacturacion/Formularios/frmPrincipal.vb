@@ -261,7 +261,7 @@ Public Class frmPrincipal
 
     Private Sub btnReimprimir_Click(sender As Object, e As EventArgs) Handles btnReimprimir.Click
         Dim xobjf As VentaContado
-        xobjf = GesDocumentos.getInstance().getVentaDocumento(2, "NH1C", 1)
+        xobjf = GesDocumentos.getInstance().getVentaDocumento(9, "NH1C", 1)
 
         Try
             GestionReporte.FacturaContado(xobjf, GesPrecios.getInstance.getCotizacion(2))
