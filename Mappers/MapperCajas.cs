@@ -104,7 +104,7 @@ namespace JJ.Mappers
         }
 
 
-        public void CierreCaja(decimal xCierrePesos, decimal xCierreDolares, string xCaja, int xZ, int xCodVendedor)
+        public void CierreCaja(decimal xCierrePesos, decimal xCierreDolares,decimal xsaldoinicialP, decimal xsaldoInicialD, string xCaja, int xZ, int xCodVendedor)
 
         {
 
@@ -128,7 +128,11 @@ namespace JJ.Mappers
                     DateTime xFecha = DateTime.Now;
                     Com.Parameters.Add(new SqlParameter("@CIERREPESOS", xCierrePesos));
                     Com.Parameters.Add(new SqlParameter("@CIERREDOLARES", xCierreDolares));
-                    Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xZ));
+
+                        Com.Parameters.Add(new SqlParameter("@SALDOINICIALPESOS", xsaldoinicialP));
+                        Com.Parameters.Add(new SqlParameter("@SALDOINICIALDOLARES", xsaldoInicialD));
+
+                        Com.Parameters.Add(new SqlParameter("@NUMEROCIERRE", xZ));
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
                     Com.Parameters.Add(new SqlParameter("@CODVENDEDOR", xCodVendedor));
                     Com.Parameters.Add(new SqlParameter("@FECHA", DateTime.Now.ToString("dd/MM/yyyy")));
@@ -143,7 +147,15 @@ namespace JJ.Mappers
 
                     ExecuteNonQuery(Com);
 
-                    Com.CommandText = "INSERT INTO ARQUEOS(CODCAJA, NUMEROZ, CODVENDEDOR, FECHA, HORA,TOTAL, DESCUADRE) VALUES (@CAJA, @NUMEROCIERRE, @CODVENDEDOR,@FECHA,@HORA,@TOTAL, @DESCUADRE)";
+                        Com.CommandText = "INSERT INTO DECLARADOZ(TIPO, CAJA, NUMEROCIERRE, CODMONEDA, IMPORTE) VALUES (2,@CAJA,@NUMEROCIERRE,1,@SALDOINICIALPESOS)";
+
+                        ExecuteNonQuery(Com);
+
+                        Com.CommandText = "INSERT INTO DECLARADOZ(TIPO, CAJA, NUMEROCIERRE, CODMONEDA, IMPORTE) VALUES (2,@CAJA,@NUMEROCIERRE,2,@SALDOINICIALDOLARES)";
+
+                        ExecuteNonQuery(Com);
+
+                        Com.CommandText = "INSERT INTO ARQUEOS(CODCAJA, NUMEROZ, CODVENDEDOR, FECHA, HORA,TOTAL, DESCUADRE) VALUES (@CAJA, @NUMEROCIERRE, @CODVENDEDOR,@FECHA,@HORA,@TOTAL, @DESCUADRE)";
 
                     ExecuteNonQuery(Com);
 
@@ -329,6 +341,38 @@ namespace JJ.Mappers
             return DT;
         }
 
+        public object getPagoDetalle(DateTime xFecha, int xZ)
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT P.COMENTARIO,(P.IMPORTE*P.COTIZACION)AS IMPORTE FROM PAGOS AS P INNER JOIN MONEDAS AS M ON P.CODMONEDA= M.CODIGO WHERE P.ZCAJA=@Z AND P.FECHA = @FECHA ORDER BY P.NUMERO ASC", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@Z", xZ));
+                    Com.Parameters.Add(new SqlParameter("@FECHA", xFecha));
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
+        public object getPagoCabecera(DateTime xFecha, int XZ)
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT V.NOMBRE AS CAJERO, P.CODCAJA AS CAJA, P.FECHA AS FECHA, P.NUMEROZ AS NUMEROZ FROM ARQUEOS AS P INNER JOIN VENDEDORES AS V ON (V.CODIGO=P.CODVENDEDOR) WHERE P.FECHA=@FECHA AND P.NUMEROZ=@XZ ", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@xz", XZ));
+                    Com.Parameters.Add(new SqlParameter("@FECHA", xFecha));
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
         public object getCajaById(string xCodigo)
         {
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
@@ -390,7 +434,75 @@ namespace JJ.Mappers
             string Nombre = (string)Reader["NOMBRE"];
             List<Seriedoc> L = new MapperDocumentos().getDocumentosByCaja(Codigo);
             Caja C = new Caja(Codigo, Nombre, L);
+            C.Z = new MapperDocumentos().getNumeroZ(C.Codigo);
             return C;
         }
+
+
+
+        private decimal getDatosCierre(IDataReader Reader)
+        {
+            
+            return Convert.ToDecimal(Reader["TOTAL"]);
+        }
+
+
+
+
+  
+
+        public decimal getVentasContado(string xCaja, int xZ, int xcodmoneda)
+        {
+            decimal total = 0;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT isnull(SUM(ISNULL(V.SUBTOTAL+V.IVA,0)),0) AS TOTAL  FROM VENTAS AS V INNER JOIN VENTASCONTADO AS VC ON V.NUMERO=VC.NUMERO AND V.CODSERIE=VC.SERIE WHERE CODCAJA=@CODCAJA AND Z=@Z AND CODMONEDA=@CODMONEDA ", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODCAJA", xCaja));
+                    Com.Parameters.Add(new SqlParameter("@Z", xZ));
+                    Com.Parameters.Add(new SqlParameter("@CODMONEDA", xcodmoneda));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            total = getDatosCierre(Reader);
+                        }
+                    }
+                }
+            }
+            return total;
+        }
+
+        public decimal getDevolucionesContado(string xCaja, int xZ, int xcodmoneda)
+        {
+            return 0;
+        }
+
+        public decimal getPagos(string xCaja, int xZ, int xcodmoneda)
+        {
+            decimal total = 0;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT isnull(SUM(ISNULL(IMPORTE,0)),0) AS TOTAL  FROM PAGOS WHERE CAJA=@CODCAJA AND ZCAJA=@Z AND CODMONEDA=@CODMONEDA ", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODCAJA", xCaja));
+                    Com.Parameters.Add(new SqlParameter("@Z", xZ));
+                    Com.Parameters.Add(new SqlParameter("@CODMONEDA", xcodmoneda));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            total = getDatosCierre(Reader);
+                        }
+                    }
+                }
+            }
+            return total;
+        }
+
+    
+
     }
 }
