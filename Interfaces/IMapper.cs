@@ -14,8 +14,5 @@ namespace JJ.Interfaces
         bool Remove(object xObject);
 
         IList<object> getMonedas();
-
-       
-
     }
 }

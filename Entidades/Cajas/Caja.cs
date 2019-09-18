@@ -40,11 +40,6 @@ namespace JJ.Entidades
             {
                 return _Z;
             }
-            set
-            {
-
-                _Z = value;
-            }
         }
 
         public bool IsNew

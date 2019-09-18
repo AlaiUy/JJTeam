@@ -15,23 +15,12 @@ namespace JJ.Interfaces
 
         object getPagoByFecha(DateTime xFecha, string xCaja); //Devuelve un datatable
 
-    
+        object getCaja();
 
-        object getPagoDetalle(DateTime xFecha, int xz);
-
-        object getPagoCabecera(DateTime xFecha, int xz);
-
-        void CierreCaja(decimal xCierrePesos, decimal xCierreDolares,decimal xSaldoIniPesos, decimal xSaldoiniDolares, string xCaja, int xZ, int xCodVendedor);
+        void CierreCaja(decimal xCierrePesos, decimal xCierreDolares, string xCaja, int xZ, int xCodVendedor);
         
        int getSaldoDeclarados(string xCaja, int xCodMoneda, int xtipo);
 
         object getCajaById(string xCodigo);
-
-
-        decimal getVentasContado(string xCaja, int xZ, int xcodmoneda);
-        decimal getDevolucionesContado(string xCaja, int xZ, int xcodmoneda);
-        decimal getPagos(string xCaja, int xZ, int xcodmoneda);
-
-
     }
 }

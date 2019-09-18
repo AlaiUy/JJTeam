@@ -155,12 +155,6 @@
     <Compile Include="Formularios\frmPrincipal.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\frmUnidades.Designer.vb">
-      <DependentUpon>frmUnidades.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\frmUnidades.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -205,9 +199,6 @@
     <EmbeddedResource Include="Formularios\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\frmUnidades.resx">
-      <DependentUpon>frmUnidades.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -231,10 +222,6 @@
     <ProjectReference Include="..\Gestoras\Gestoras.csproj">
       <Project>{e2044ddd-f84d-4823-91d1-4c55c82800b0}</Project>
       <Name>Gestoras</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mappers\Mappers.csproj">
-      <Project>{75D5C98F-265B-4435-9D9D-A46087690453}</Project>
-      <Name>Mappers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Reportes\Reportes.csproj">
       <Project>{794a1b68-0df5-4140-a845-f5e55438e4a0}</Project>

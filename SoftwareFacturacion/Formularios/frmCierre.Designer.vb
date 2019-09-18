@@ -87,23 +87,17 @@ Partial Class frmCierre
         '
         'txtDolaresInicial
         '
-        Me.txtDolaresInicial.Enabled = False
         Me.txtDolaresInicial.Location = New System.Drawing.Point(29, 60)
         Me.txtDolaresInicial.Name = "txtDolaresInicial"
         Me.txtDolaresInicial.Size = New System.Drawing.Size(136, 26)
         Me.txtDolaresInicial.TabIndex = 2
-        Me.txtDolaresInicial.Text = "0"
-        Me.txtDolaresInicial.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txtFinalDolares
         '
-        Me.txtFinalDolares.Enabled = False
         Me.txtFinalDolares.Location = New System.Drawing.Point(29, 168)
         Me.txtFinalDolares.Name = "txtFinalDolares"
         Me.txtFinalDolares.Size = New System.Drawing.Size(136, 26)
         Me.txtFinalDolares.TabIndex = 7
-        Me.txtFinalDolares.Text = "0"
-        Me.txtFinalDolares.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Panel3
         '
@@ -131,8 +125,6 @@ Partial Class frmCierre
         Me.txtPesosInicial.Name = "txtPesosInicial"
         Me.txtPesosInicial.Size = New System.Drawing.Size(136, 26)
         Me.txtPesosInicial.TabIndex = 1
-        Me.txtPesosInicial.Text = "0"
-        Me.txtPesosInicial.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'txtPesosFinal
         '
@@ -140,8 +132,6 @@ Partial Class frmCierre
         Me.txtPesosFinal.Name = "txtPesosFinal"
         Me.txtPesosFinal.Size = New System.Drawing.Size(136, 26)
         Me.txtPesosFinal.TabIndex = 6
-        Me.txtPesosFinal.Text = "0"
-        Me.txtPesosFinal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'btnCierre
         '

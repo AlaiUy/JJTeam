@@ -1,9 +1,7 @@
 ﻿Imports JJ.Gestoras
 Imports JJ.Entidades
-Imports JJ.Reportes
-
 Public Class frmPagos
-    Private zMomento As Integer
+
     Dim Sep As Char
     Dim coma As Boolean = False
     Private Sub frmPagos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -123,43 +121,15 @@ Public Class frmPagos
                     coma = False
                 End If
             Else
-                If (dgridPagos.Item("ZCAJA", 0).Value) <> 0 Then
-                    MsgBox("No se puede eliminar un pago ya asociado a un Cierre de Caja", MsgBoxStyle.Information)
-                Else
-                    GesCajas.getInstance.EliminarPago(dgridPagos.Item("NUMERO", 0).Value)
-                    CargarDatos()
 
-                    Vaciar()
-                    coma = False
-                End If
+                GesCajas.getInstance.EliminarPago(dgridPagos.Item("NUMERO", 0).Value)
+                CargarDatos()
 
+                Vaciar()
+                coma = False
 
             End If
 
         End If
-    End Sub
-
-    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
-        If dgridPagos.RowCount > 0 Then
-
-
-            Dim Pagos = New DataSet()
-
-
-
-            Dim dtC As DataTable
-            Dim dtD As DataTable
-
-
-            dtC = GesCajas.getInstance().getpagosCabecera(Me.dtFecha.Value.ToString("dd/MM/yyyy"), dgridPagos.Item("ZCAJA", 0).Value)
-            dtD = GesCajas.getInstance().getpagosDetalle(Me.dtFecha.Value.ToString("dd/MM/yyyy"), dgridPagos.Item("ZCAJA", 0).Value)
-            dtC.TableName = "Cabecera"
-            dtD.TableName = "Detalle"
-            Pagos.Tables.Add(dtC)
-            Pagos.Tables.Add(dtD)
-
-            GestionReporte.ImprimirPagos(Pagos)
-        End If
-
     End Sub
 End Class
