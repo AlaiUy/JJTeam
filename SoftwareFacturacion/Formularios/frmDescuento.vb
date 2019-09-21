@@ -11,10 +11,19 @@
 
 
     Private Sub btnAceptar_Click(sender As Object, e As EventArgs) Handles btnAceptar.Click
+        If txtDescuento.Text Is String.Empty Then
+            xdescuento = 0
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+        End If
+        Try
+            xdescuento = Convert.ToDecimal(txtDescuento.Text)
+            Me.DialogResult = DialogResult.OK
+            Me.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
-        xdescuento = txtDescuento.Text
-        Me.DialogResult = DialogResult.OK
-        Me.Close()
     End Sub
 
     Private Sub frmDescuento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
