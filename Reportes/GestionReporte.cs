@@ -147,9 +147,6 @@ namespace JJ.Reportes
             {
                 //creamos el objeto SLDocument el cual creara el excel
                 SLDocument sl = new SLDocument();
-
-
-
                 int Index = 1;
                 SLStyle style = sl.CreateStyle();
                 style.Font.FontSize = 12;
@@ -254,6 +251,29 @@ namespace JJ.Reportes
                 throw ex;
             }
 
+        }
+
+        public static void ImprimirPagos(DataSet xPagos)
+        {
+            ReportDocument rptDoc;
+            rptDoc = new Diversos.rptPagos();
+            rptDoc.SetDataSource(xPagos);
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
+        public static void ImprimirCierre(DataTable xCierre)
+        {
+
+            ReportDocument rptDoc;
+            rptDoc = new Diversos.rptCierre();
+            rptDoc.SetDataSource(xCierre);
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
         }
         public static decimal Redondear(decimal xvalor)
         {

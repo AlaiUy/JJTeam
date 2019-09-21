@@ -16,4 +16,14 @@
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub
+
+    Private Sub frmDescuento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub txtDescuento_KeyDown(sender As Object, e As KeyEventArgs) Handles txtDescuento.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            btnAceptar.PerformClick()
+        End If
+    End Sub
 End Class

@@ -66,8 +66,6 @@ Public Class frmPrincipal
                 lblVendedor.Text = GesVendedores.getInstance.getVendedorByID(objE.Codvendedor).Nombre
                 'ElseIf (TypeOf objE Is EsperaCredito) Then
                 '    Me.txtTipoVta.Text = "CREDITO"
-
-
             End If
 
             Me.txtNombre.Text = objE.NombreCLiente
@@ -109,6 +107,7 @@ Public Class frmPrincipal
         Dim COLC As DataColumn = tTable.Columns.Add("CANTIDAD", Type.GetType("System.String"))
 
         Dim COLPv As DataColumn = tTable.Columns.Add("P/UNITARIO C/IVA", Type.GetType("System.String"))
+        Dim ColRef As DataColumn = tTable.Columns.Add("REFERENCIA", Type.GetType("System.String"))
 
         Dim COLDesc As DataColumn = tTable.Columns.Add("DESCUENTO", Type.GetType("System.String"))
 
@@ -120,22 +119,19 @@ Public Class frmPrincipal
 
             For Each objL As Esperalin In Me.objE.Lineas
                 Dim objf As DataRow = tTable.NewRow()
+                objf.Item("LINEA") = objL.NumLinea
+                objf.Item("CODARTICULO") = objL.Articulo.CodArticulo
+                objf.Item("REFERENCIA") = objL.Articulo.Referencia
+
+                objf.Item("DESCRIPCION") = objL.Descripcion
+                objf.Item("CANTIDAD") = objL.Cantidad
+                objf.Item("DESCUENTO") = objL.Descuento
                 If objL.Articulo.CodMoneda = 1 Then
-                    objf.Item("LINEA") = objL.NumLinea
-                    objf.Item("CODARTICULO") = objL.Articulo.Referencia
-                    objf.Item("DESCRIPCION") = objL.Descripcion
-                    objf.Item("CANTIDAD") = objL.Cantidad
                     objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva())
-                    objf.Item("DESCUENTO") = objL.Descuento
                     objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal())
                     objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento())
                 Else
-                    objf.Item("LINEA") = objL.NumLinea
-                    objf.Item("CODARTICULO") = objL.Articulo.Referencia
-                    objf.Item("DESCRIPCION") = objL.Descripcion
-                    objf.Item("CANTIDAD") = objL.Cantidad
                     objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva() * GesPrecios.getInstance.getCotizacion(2))
-                    objf.Item("DESCUENTO") = objL.Descuento
                     objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal()) * GesPrecios.getInstance.getCotizacion(2)
                     objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento()) * GesPrecios.getInstance.getCotizacion(2)
                 End If
@@ -147,6 +143,7 @@ Public Class frmPrincipal
         End If
 
         Me.dgridLineas.DataSource = tTable
+        dgridLineas.Columns("CODARTICULO").Visible = False
         If dgridLineas.RowCount > 0 Then
             dgridLineas.Columns("LINEA").Visible = False
         End If
