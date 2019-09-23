@@ -79,6 +79,8 @@ namespace JJ.Reportes
             T.Columns.Add("SUBTOTAL");
             T.Columns.Add("IVA");
             T.Columns.Add("TOTAL");
+            T.Columns.Add("ADENDA");
+            T.Columns.Add("DIRECCION");
 
 
             T2.Columns.Add("CODIGO");
@@ -89,6 +91,8 @@ namespace JJ.Reportes
             DataRow R;
             R = T.NewRow();
             R["RUT"] = xobjF.Cliente.Documento;
+            R["DIRECCION"] = xobjF.Env_Direccion;
+            R["ADENDA"] = xobjF.Detalle;
             R["CLIENTE"] = xobjF.Cliente.Nombre;
             R["SUBTOTAL"] =  Redondear(xobjF.Subtotal(1,coti));
             R["IVA"] = Redondear(xobjF.IvaTotal(1,coti));
