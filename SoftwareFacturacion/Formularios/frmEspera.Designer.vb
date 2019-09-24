@@ -257,6 +257,7 @@ Partial Class frmEspera
         Me.Panel7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel7.BackColor = System.Drawing.Color.LightGray
         Me.Panel7.Controls.Add(Me.Panel1)
         Me.Panel7.Controls.Add(Me.Panel6)
         Me.Panel7.Location = New System.Drawing.Point(12, 13)
@@ -277,6 +278,7 @@ Partial Class frmEspera
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.DodgerBlue
         Me.ClientSize = New System.Drawing.Size(1198, 803)
         Me.Controls.Add(Me.Panel7)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
