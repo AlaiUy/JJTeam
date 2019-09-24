@@ -135,4 +135,12 @@ Public Class frmEspera
             Me.Close()
         End If
     End Sub
+
+    Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnActualizar.Click
+        mLisVendedores = GesVendedores.getInstance.getListaVendedores()
+        mListaDocumentos = GesDocumentos.getInstance.getListaEspera()
+        Me.dgridCabecera.DataSource = MostrarEncabezado()
+        dgridCabecera.Columns("CLIENTECOD").Visible = False
+        Me.dgridCabecera.Focus()
+    End Sub
 End Class

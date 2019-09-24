@@ -615,6 +615,10 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             private global::System.Data.DataColumn columnTOTAL;
             
+            private global::System.Data.DataColumn columnDIRECCION;
+            
+            private global::System.Data.DataColumn columnADENDA;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public CabeceraDataTable() {
@@ -690,6 +694,22 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DIRECCIONColumn {
+                get {
+                    return this.columnDIRECCION;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ADENDAColumn {
+                get {
+                    return this.columnADENDA;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -725,14 +745,16 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public CabeceraRow AddCabeceraRow(string RUT, string CLIENTE, string SUBTOTAL, string IVA, string TOTAL) {
+            public CabeceraRow AddCabeceraRow(string RUT, string CLIENTE, string SUBTOTAL, string IVA, string TOTAL, string DIRECCION, string ADENDA) {
                 CabeceraRow rowCabeceraRow = ((CabeceraRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         RUT,
                         CLIENTE,
                         SUBTOTAL,
                         IVA,
-                        TOTAL};
+                        TOTAL,
+                        DIRECCION,
+                        ADENDA};
                 rowCabeceraRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCabeceraRow);
                 return rowCabeceraRow;
@@ -760,6 +782,8 @@ namespace JJ.Reportes.DiseñoFacturas {
                 this.columnSUBTOTAL = base.Columns["SUBTOTAL"];
                 this.columnIVA = base.Columns["IVA"];
                 this.columnTOTAL = base.Columns["TOTAL"];
+                this.columnDIRECCION = base.Columns["DIRECCION"];
+                this.columnADENDA = base.Columns["ADENDA"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -775,6 +799,10 @@ namespace JJ.Reportes.DiseñoFacturas {
                 base.Columns.Add(this.columnIVA);
                 this.columnTOTAL = new global::System.Data.DataColumn("TOTAL", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTOTAL);
+                this.columnDIRECCION = new global::System.Data.DataColumn("DIRECCION", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDIRECCION);
+                this.columnADENDA = new global::System.Data.DataColumn("ADENDA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnADENDA);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1124,6 +1152,38 @@ namespace JJ.Reportes.DiseñoFacturas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DIRECCION {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera.DIRECCIONColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'DIRECCION\' de la tabla \'Cabecera\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera.DIRECCIONColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ADENDA {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera.ADENDAColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'ADENDA\' de la tabla \'Cabecera\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera.ADENDAColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsRUTNull() {
                 return this.IsNull(this.tableCabecera.RUTColumn);
             }
@@ -1180,6 +1240,30 @@ namespace JJ.Reportes.DiseñoFacturas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTOTALNull() {
                 this[this.tableCabecera.TOTALColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDIRECCIONNull() {
+                return this.IsNull(this.tableCabecera.DIRECCIONColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDIRECCIONNull() {
+                this[this.tableCabecera.DIRECCIONColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsADENDANull() {
+                return this.IsNull(this.tableCabecera.ADENDAColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetADENDANull() {
+                this[this.tableCabecera.ADENDAColumn] = global::System.Convert.DBNull;
             }
         }
         

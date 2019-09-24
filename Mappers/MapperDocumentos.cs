@@ -219,10 +219,13 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE, E.PRESUPUESTO FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 order by codigo asc", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE, E.PRESUPUESTO FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=0 AND fecha=@fecha order by codigo asc", Con))
                 {
+                    Com.Parameters.Add(new SqlParameter("@fecha", DateTime.Today.ToString("dd/MM/yyyy")));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
+                      
+
                         while (Reader.Read())
                         {
                             int Codigo = (int)Reader["CODIGO"];
@@ -311,6 +314,94 @@ namespace JJ.Mappers
             return Lineas;
         }
 
+
+        public List<object> getVentasContado(DateTime xfechaini, DateTime xfechafin)
+        {
+            List<object> ltsVentasC = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT CC.*,V.FECHA, V.CODSERIE,V.NUMERO, V.CODCAJA,V.CODMONEDA,V.Z, v.CODVENDEDOR,V.COTIZACION,V.DETALLE FROM VENTAS AS V INNER JOIN VENTASCONTADO VC ON (V.CODSERIE=VC.SERIE AND V.NUMERO=VC.NUMERO) inner join CLIENTESCONTADO AS CC ON (CC.CODIGO=VC.CLIENTECONTADO)  WHERE V.FECHA BETWEEN @Fechaini AND @Fechafin ", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@Fechaini", xfechaini));
+                    Com.Parameters.Add(new SqlParameter("@Fechafin", xfechafin));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+
+                        while (Reader.Read())
+                        {
+                           
+                            DateTime Fecha = (DateTime)Reader["FECHA"];
+                            int xCodVendedor = (int)Reader["CODVENDEDOR"];
+
+                            int xCliente = (int)Reader["CODIGO"];
+                            string xdocumento = (string)Reader["DOCUMENTO"];
+                            string XNOMBREC = (string)(Reader["NOMBRE"] is DBNull ? string.Empty : Reader["NOMBRE"]);
+                            string XDIRECCIONC = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
+                            string xtelefonocc = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
+
+                            string xdetalle  = (string)(Reader["DETALLE"] is DBNull ? string.Empty : Reader["DETALLE"]);
+
+                            string xserie = (string)(Reader["CODSERIE"]);
+                            int xnumero = (int)Reader["NUMERO"];
+                            string xcodcaja = (string)(Reader["CODCAJA"]);
+
+           
+                            int XCODMONEDA = (int)Reader["CODMONEDA"];
+                            int XZ = (int)Reader["Z"];
+                            int xcodvendedor = (int)Reader["CODVENDEDOR"];
+                            decimal xcotizacion= (decimal)Reader["COTIZACION"];
+
+                            VentaContado V = new VentaContado(new ClienteContado(xCliente, xdocumento, XNOMBREC, XDIRECCIONC, xtelefonocc), Fecha, xserie, xcodcaja, XCODMONEDA, XZ, xcodvendedor, xcotizacion, false, 0);
+                            V.Numero = xnumero;
+                            V.Detalle = xdetalle;
+
+                            V.AgregarLineas(getLineasVentasC(V.Serie,V.Numero));
+                            ltsVentasC.Add(V);
+                        }
+                    }
+                }
+            }
+            return ltsVentasC;
+
+                 }
+
+        private List<Linea> getLineasVentasC(string xSerie, int xNumero)
+        {
+            List<Linea> Lineas = new List<Linea>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("select CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO,DTO, IVA FROM VENTASLIN WHERE CODSERIE=@CODSERIE AND NUMERO=@NUMERO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xNumero));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            string xserie = (string)Reader["CODSERIE"];
+                            int xnumero = (int)Reader["NUMERO"];
+                        
+                            int NumLin = (int)Reader["LINEA"];
+                            decimal Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
+                            decimal xpreciof = Convert.ToDecimal(Reader["PRECIO"]);
+                            Articulo A = (Articulo)(new MapperArticulos().getArticuloById((Reader["CODARTICULO"]).ToString()));
+                            string Descripcion = (string)Reader["DESCRIPCION"];
+                            decimal Descuento = Convert.ToDecimal(Reader["DTO"]);
+
+                            VentaLin L = new VentaLin(xserie, xnumero, NumLin, A, Descripcion, Cantidad, Descuento);
+                            L.Preciofacturado = xpreciof;                  
+
+
+                            Lineas.Add(L);
+                        }
+                    }
+                }
+            }
+            return Lineas;
+        }
 
 
 

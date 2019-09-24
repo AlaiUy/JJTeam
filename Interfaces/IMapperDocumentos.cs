@@ -10,6 +10,8 @@ namespace JJ.Interfaces
     {
         List<object> getVentasEsperaContado();
 
+        List<object> getVentasContado(DateTime xfechaini, DateTime xfechafin);
+
         Documento getFacturaByID(string xSerie, int Numero, TipoLineas xTipo);
         object getVentas(DateTime xFechaI, DateTime xFechaF);
 
