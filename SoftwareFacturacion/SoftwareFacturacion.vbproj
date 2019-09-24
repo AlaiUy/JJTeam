@@ -119,6 +119,12 @@
     <Compile Include="Formularios\frmClave.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\frmConsulta.Designer.vb">
+      <DependentUpon>frmConsulta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmConsulta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\frmDescuento.Designer.vb">
       <DependentUpon>frmDescuento.vb</DependentUpon>
     </Compile>
@@ -161,6 +167,12 @@
     <Compile Include="Formularios\frmUnidades.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\frmVerFacturas.Designer.vb">
+      <DependentUpon>frmVerFacturas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmVerFacturas.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -187,6 +199,9 @@
     <EmbeddedResource Include="Formularios\frmClave.resx">
       <DependentUpon>frmClave.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmConsulta.resx">
+      <DependentUpon>frmConsulta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmDescuento.resx">
       <DependentUpon>frmDescuento.vb</DependentUpon>
     </EmbeddedResource>
@@ -207,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmUnidades.resx">
       <DependentUpon>frmUnidades.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmVerFacturas.resx">
+      <DependentUpon>frmVerFacturas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

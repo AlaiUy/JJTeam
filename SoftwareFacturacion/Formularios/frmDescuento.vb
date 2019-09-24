@@ -35,4 +35,8 @@
             btnAceptar.PerformClick()
         End If
     End Sub
+
+    Private Sub txtDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtDescuento.TextChanged
+
+    End Sub
 End Class

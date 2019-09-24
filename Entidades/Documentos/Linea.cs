@@ -14,6 +14,8 @@ namespace JJ.Entidades
         private int _NumLinea;
         private int _CodMoneda;
 
+        private decimal _preciofacturado;
+
         public Articulo Articulo
         {
             get
@@ -89,6 +91,19 @@ namespace JJ.Entidades
             set
             {
                 _CodMoneda = value;
+            }
+        }
+
+        public decimal Preciofacturado
+        {
+            get
+            {
+                return _preciofacturado;
+            }
+
+            set
+            {
+                _preciofacturado = value;
             }
         }
 

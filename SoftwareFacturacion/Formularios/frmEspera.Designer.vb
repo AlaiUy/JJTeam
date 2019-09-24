@@ -41,6 +41,7 @@ Partial Class frmEspera
         Me.txtImporteTotal = New System.Windows.Forms.TextBox()
         Me.txtAdenda = New System.Windows.Forms.TextBox()
         Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.btnActualizar = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -130,6 +131,7 @@ Partial Class frmEspera
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.btnActualizar)
         Me.Panel2.Controls.Add(Me.btnRecuperar)
         Me.Panel2.Controls.Add(Me.txtDireccion)
         Me.Panel2.Controls.Add(Me.txtNombre)
@@ -255,6 +257,7 @@ Partial Class frmEspera
         Me.Panel7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel7.BackColor = System.Drawing.Color.LightGray
         Me.Panel7.Controls.Add(Me.Panel1)
         Me.Panel7.Controls.Add(Me.Panel6)
         Me.Panel7.Location = New System.Drawing.Point(12, 13)
@@ -262,10 +265,20 @@ Partial Class frmEspera
         Me.Panel7.Size = New System.Drawing.Size(1174, 778)
         Me.Panel7.TabIndex = 2
         '
+        'btnActualizar
+        '
+        Me.btnActualizar.Location = New System.Drawing.Point(551, 9)
+        Me.btnActualizar.Name = "btnActualizar"
+        Me.btnActualizar.Size = New System.Drawing.Size(116, 36)
+        Me.btnActualizar.TabIndex = 7
+        Me.btnActualizar.Text = "Actualizar"
+        Me.btnActualizar.UseVisualStyleBackColor = True
+        '
         'frmEspera
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.DodgerBlue
         Me.ClientSize = New System.Drawing.Size(1198, 803)
         Me.Controls.Add(Me.Panel7)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
@@ -308,4 +321,5 @@ Partial Class frmEspera
     Friend WithEvents txtImporteTotal As TextBox
     Friend WithEvents txtAdenda As TextBox
     Friend WithEvents Panel7 As Panel
+    Friend WithEvents btnActualizar As Button
 End Class

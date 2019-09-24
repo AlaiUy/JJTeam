@@ -63,6 +63,7 @@ Public Class frmPrincipal
                 txtNombre.Text = objCC.Nombre
                 txtDocumento.Text = objCC.Documento
                 txtDireccion.Text = objCC.Direccion
+                txtTelefono.Text = objCC.Telefono
                 lblVendedor.Text = GesVendedores.getInstance.getVendedorByID(objE.Codvendedor).Nombre
                 'ElseIf (TypeOf objE Is EsperaCredito) Then
                 '    Me.txtTipoVta.Text = "CREDITO"
@@ -102,12 +103,14 @@ Public Class frmPrincipal
 
         Dim ColA As DataColumn = tTable.Columns.Add("CODARTICULO", Type.GetType("System.Int32"))
 
+        Dim ColRef As DataColumn = tTable.Columns.Add("REFERENCIA", Type.GetType("System.String"))
+
         Dim ColD As DataColumn = tTable.Columns.Add("DESCRIPCION", Type.GetType("System.String"))
 
         Dim COLC As DataColumn = tTable.Columns.Add("CANTIDAD", Type.GetType("System.String"))
 
         Dim COLPv As DataColumn = tTable.Columns.Add("P/UNITARIO C/IVA", Type.GetType("System.String"))
-        Dim ColRef As DataColumn = tTable.Columns.Add("REFERENCIA", Type.GetType("System.String"))
+
 
         Dim COLDesc As DataColumn = tTable.Columns.Add("DESCUENTO", Type.GetType("System.String"))
 
@@ -150,11 +153,32 @@ Public Class frmPrincipal
 
     End Sub
 
+    Public Sub Devolver(xobj As VentaContado)
+        xobj.Detalle = xobj.Detalle.Replace(vbCrLf, "\n")
+        xobj.Env_Direccion = xobj.Env_Direccion.Replace(vbCrLf, "\n")
+        xobj.Env_Nombre = xobj.Env_Nombre.Replace(vbCrLf, "\n")
+        xobj.Env_observaciones = xobj.Env_observaciones.Replace(vbCrLf, "\n")
+
+    End Sub
+
+    Public Sub Restaurar(xobj As VentaContado)
+        xobj.Detalle = xobj.Detalle.Replace("\n", vbCrLf)
+        xobj.Env_Direccion = xobj.Env_Direccion.Replace("\n", vbCrLf)
+        xobj.Env_Nombre = xobj.Env_Nombre.Replace("\n", vbCrLf)
+        xobj.Env_observaciones = xobj.Env_observaciones.Replace("\n", vbCrLf)
+
+    End Sub
+
+
+
     Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
         If dgridLineas.RowCount > 0 Then
 
 
             Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
+            objF.Detalle = txtAdenda.Text
+            objF.Env_Direccion = objE.DirEnvio
+            Devolver(objF)
 
 
             For Each objL As Esperalin In objE.Lineas
@@ -168,6 +192,7 @@ Public Class frmPrincipal
 
             Try
                 GesDocumentos.getInstance.GesFacturar(objF, objF.Z)
+                Restaurar(objF)
                 GestionReporte.FacturaContado(objF, GesPrecios.getInstance.getCotizacion(2))
                 objE = Nothing
                 MostrarEnTabla()
@@ -277,18 +302,6 @@ Public Class frmPrincipal
 
     End Sub
 
-    Private Sub btnReimprimir_Click(sender As Object, e As EventArgs) Handles btnReimprimir.Click
-        Dim xobjf As VentaContado
-        xobjf = GesDocumentos.getInstance().getVentaDocumento(9, "NH1C", 1)
-
-        Try
-            GestionReporte.FacturaContado(xobjf, GesPrecios.getInstance.getCotizacion(2))
-            Return
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-    End Sub
 
     Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtImporteDescuento.TextChanged
 
@@ -326,5 +339,24 @@ Public Class frmPrincipal
 
 
 
+    End Sub
+
+    Private Sub btnConsulta_Click(sender As Object, e As EventArgs) Handles btnConsulta.Click
+        Dim frmC As New frmVerFacturas
+        frmC.ShowDialog()
+
+    End Sub
+
+    Private Sub frmPrincipal_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Escape Then
+            If MsgBox("Desea cerrar?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                Me.Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub btnConsultaCaja_Click(sender As Object, e As EventArgs) Handles btnConsultaCaja.Click
+        Dim frmc As New frmConsulta
+        frmc.ShowDialog()
     End Sub
 End Class

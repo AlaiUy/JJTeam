@@ -30,7 +30,8 @@ Partial Class frmPrincipal
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.Panel13 = New System.Windows.Forms.Panel()
-        Me.btnReimprimir = New System.Windows.Forms.Button()
+        Me.btnConsulta = New System.Windows.Forms.Button()
+        Me.btnConsultaCaja = New System.Windows.Forms.Button()
         Me.btnSalir = New System.Windows.Forms.Button()
         Me.btnDescuentoTotal = New System.Windows.Forms.Button()
         Me.btnDescuentoLinea = New System.Windows.Forms.Button()
@@ -97,6 +98,7 @@ Partial Class frmPrincipal
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.BackColor = System.Drawing.Color.Silver
         Me.Panel1.Controls.Add(Me.Panel3)
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
@@ -171,7 +173,8 @@ Partial Class frmPrincipal
         '
         'Panel13
         '
-        Me.Panel13.Controls.Add(Me.btnReimprimir)
+        Me.Panel13.Controls.Add(Me.btnConsulta)
+        Me.Panel13.Controls.Add(Me.btnConsultaCaja)
         Me.Panel13.Controls.Add(Me.btnSalir)
         Me.Panel13.Controls.Add(Me.btnDescuentoTotal)
         Me.Panel13.Controls.Add(Me.btnDescuentoLinea)
@@ -188,14 +191,23 @@ Partial Class frmPrincipal
         Me.Panel13.Size = New System.Drawing.Size(975, 161)
         Me.Panel13.TabIndex = 1
         '
-        'btnReimprimir
+        'btnConsulta
         '
-        Me.btnReimprimir.Location = New System.Drawing.Point(752, 16)
-        Me.btnReimprimir.Name = "btnReimprimir"
-        Me.btnReimprimir.Size = New System.Drawing.Size(142, 55)
-        Me.btnReimprimir.TabIndex = 10
-        Me.btnReimprimir.Text = "Reimpresion"
-        Me.btnReimprimir.UseVisualStyleBackColor = True
+        Me.btnConsulta.Location = New System.Drawing.Point(752, 82)
+        Me.btnConsulta.Name = "btnConsulta"
+        Me.btnConsulta.Size = New System.Drawing.Size(142, 55)
+        Me.btnConsulta.TabIndex = 11
+        Me.btnConsulta.Text = "Consultar Facturas"
+        Me.btnConsulta.UseVisualStyleBackColor = True
+        '
+        'btnConsultaCaja
+        '
+        Me.btnConsultaCaja.Location = New System.Drawing.Point(752, 16)
+        Me.btnConsultaCaja.Name = "btnConsultaCaja"
+        Me.btnConsultaCaja.Size = New System.Drawing.Size(142, 55)
+        Me.btnConsultaCaja.TabIndex = 10
+        Me.btnConsultaCaja.Text = "Consulta Caja"
+        Me.btnConsultaCaja.UseVisualStyleBackColor = True
         '
         'btnSalir
         '
@@ -310,7 +322,7 @@ Partial Class frmPrincipal
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(15, 123)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(92, 15)
+        Me.Label18.Size = New System.Drawing.Size(128, 22)
         Me.Label18.TabIndex = 7
         Me.Label18.Text = "Importe Total"
         '
@@ -321,7 +333,7 @@ Partial Class frmPrincipal
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(38, 85)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(75, 15)
+        Me.Label17.Size = New System.Drawing.Size(105, 22)
         Me.Label17.TabIndex = 6
         Me.Label17.Text = "Descuento"
         '
@@ -332,7 +344,7 @@ Partial Class frmPrincipal
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(102, 49)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(27, 15)
+        Me.Label16.Size = New System.Drawing.Size(41, 22)
         Me.Label16.TabIndex = 5
         Me.Label16.Text = "IVA"
         '
@@ -343,7 +355,7 @@ Partial Class frmPrincipal
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(15, 15)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(88, 15)
+        Me.Label15.Size = New System.Drawing.Size(128, 22)
         Me.Label15.TabIndex = 4
         Me.Label15.Text = "Total Sin IVA"
         '
@@ -354,7 +366,7 @@ Partial Class frmPrincipal
         Me.txtImporteTotalConIva.Location = New System.Drawing.Point(149, 118)
         Me.txtImporteTotalConIva.Name = "txtImporteTotalConIva"
         Me.txtImporteTotalConIva.ReadOnly = True
-        Me.txtImporteTotalConIva.Size = New System.Drawing.Size(154, 23)
+        Me.txtImporteTotalConIva.Size = New System.Drawing.Size(154, 30)
         Me.txtImporteTotalConIva.TabIndex = 3
         Me.txtImporteTotalConIva.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -365,7 +377,7 @@ Partial Class frmPrincipal
         Me.txtImporteDescuento.Location = New System.Drawing.Point(149, 80)
         Me.txtImporteDescuento.Name = "txtImporteDescuento"
         Me.txtImporteDescuento.ReadOnly = True
-        Me.txtImporteDescuento.Size = New System.Drawing.Size(154, 23)
+        Me.txtImporteDescuento.Size = New System.Drawing.Size(154, 30)
         Me.txtImporteDescuento.TabIndex = 2
         Me.txtImporteDescuento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -376,7 +388,7 @@ Partial Class frmPrincipal
         Me.txtImporteIva.Location = New System.Drawing.Point(149, 44)
         Me.txtImporteIva.Name = "txtImporteIva"
         Me.txtImporteIva.ReadOnly = True
-        Me.txtImporteIva.Size = New System.Drawing.Size(154, 23)
+        Me.txtImporteIva.Size = New System.Drawing.Size(154, 30)
         Me.txtImporteIva.TabIndex = 1
         Me.txtImporteIva.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -387,7 +399,7 @@ Partial Class frmPrincipal
         Me.txtTotalSinIva.Location = New System.Drawing.Point(149, 10)
         Me.txtTotalSinIva.Name = "txtTotalSinIva"
         Me.txtTotalSinIva.ReadOnly = True
-        Me.txtTotalSinIva.Size = New System.Drawing.Size(154, 23)
+        Me.txtTotalSinIva.Size = New System.Drawing.Size(154, 30)
         Me.txtTotalSinIva.TabIndex = 0
         Me.txtTotalSinIva.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -441,7 +453,7 @@ Partial Class frmPrincipal
         Me.cboxMoneda.FormattingEnabled = True
         Me.cboxMoneda.Location = New System.Drawing.Point(249, 45)
         Me.cboxMoneda.Name = "cboxMoneda"
-        Me.cboxMoneda.Size = New System.Drawing.Size(300, 21)
+        Me.cboxMoneda.Size = New System.Drawing.Size(300, 28)
         Me.cboxMoneda.TabIndex = 8
         '
         'Label13
@@ -450,7 +462,7 @@ Partial Class frmPrincipal
         Me.Label13.AutoSize = True
         Me.Label13.Location = New System.Drawing.Point(353, 13)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(54, 13)
+        Me.Label13.Size = New System.Drawing.Size(79, 20)
         Me.Label13.TabIndex = 6
         Me.Label13.Text = "MONEDA"
         '
@@ -472,7 +484,7 @@ Partial Class frmPrincipal
         Me.lblCajero.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCajero.Location = New System.Drawing.Point(105, 86)
         Me.lblCajero.Name = "lblCajero"
-        Me.lblCajero.Size = New System.Drawing.Size(59, 17)
+        Me.lblCajero.Size = New System.Drawing.Size(82, 25)
         Me.lblCajero.TabIndex = 6
         Me.lblCajero.Text = "Label11"
         '
@@ -482,7 +494,7 @@ Partial Class frmPrincipal
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(16, 86)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(60, 17)
+        Me.Label10.Size = New System.Drawing.Size(83, 25)
         Me.Label10.TabIndex = 5
         Me.Label10.Text = "Cajero:"
         '
@@ -492,7 +504,7 @@ Partial Class frmPrincipal
         Me.lblCotrizacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCotrizacion.Location = New System.Drawing.Point(216, 26)
         Me.lblCotrizacion.Name = "lblCotrizacion"
-        Me.lblCotrizacion.Size = New System.Drawing.Size(51, 17)
+        Me.lblCotrizacion.Size = New System.Drawing.Size(71, 25)
         Me.lblCotrizacion.TabIndex = 4
         Me.lblCotrizacion.Text = "Label9"
         '
@@ -502,7 +514,7 @@ Partial Class frmPrincipal
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(16, 27)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(144, 17)
+        Me.Label8.Size = New System.Drawing.Size(194, 25)
         Me.Label8.TabIndex = 3
         Me.Label8.Text = "Cotizacion del Día:"
         '
@@ -524,7 +536,7 @@ Partial Class frmPrincipal
         Me.txtTipoVta.Location = New System.Drawing.Point(12, 118)
         Me.txtTipoVta.Name = "txtTipoVta"
         Me.txtTipoVta.ReadOnly = True
-        Me.txtTipoVta.Size = New System.Drawing.Size(203, 20)
+        Me.txtTipoVta.Size = New System.Drawing.Size(203, 26)
         Me.txtTipoVta.TabIndex = 3
         Me.txtTipoVta.Visible = False
         '
@@ -533,7 +545,7 @@ Partial Class frmPrincipal
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(45, 86)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(89, 13)
+        Me.Label14.Size = New System.Drawing.Size(129, 20)
         Me.Label14.TabIndex = 2
         Me.Label14.Text = "TIPO DE VENTA"
         Me.Label14.Visible = False
@@ -544,7 +556,7 @@ Partial Class frmPrincipal
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(46, 11)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(94, 17)
+        Me.Label6.Size = New System.Drawing.Size(131, 25)
         Me.Label6.TabIndex = 0
         Me.Label6.Text = "VENDEDOR"
         '
@@ -554,7 +566,7 @@ Partial Class frmPrincipal
         Me.lblVendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblVendedor.Location = New System.Drawing.Point(60, 48)
         Me.lblVendedor.Name = "lblVendedor"
-        Me.lblVendedor.Size = New System.Drawing.Size(0, 17)
+        Me.lblVendedor.Size = New System.Drawing.Size(0, 25)
         Me.lblVendedor.TabIndex = 1
         '
         'Panel4
@@ -579,7 +591,7 @@ Partial Class frmPrincipal
         Me.txtTelefono.Location = New System.Drawing.Point(106, 130)
         Me.txtTelefono.Name = "txtTelefono"
         Me.txtTelefono.ReadOnly = True
-        Me.txtTelefono.Size = New System.Drawing.Size(180, 20)
+        Me.txtTelefono.Size = New System.Drawing.Size(180, 26)
         Me.txtTelefono.TabIndex = 7
         '
         'Label5
@@ -588,7 +600,7 @@ Partial Class frmPrincipal
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(137, 7)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(53, 13)
+        Me.Label5.Size = New System.Drawing.Size(75, 20)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "Persona"
         '
@@ -597,7 +609,7 @@ Partial Class frmPrincipal
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(29, 69)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(44, 13)
+        Me.Label1.Size = New System.Drawing.Size(65, 20)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Nombre"
         '
@@ -606,7 +618,7 @@ Partial Class frmPrincipal
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(19, 101)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(52, 13)
+        Me.Label2.Size = New System.Drawing.Size(75, 20)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Direccion"
         '
@@ -615,7 +627,7 @@ Partial Class frmPrincipal
         Me.txtDireccion.Location = New System.Drawing.Point(106, 98)
         Me.txtDireccion.Name = "txtDireccion"
         Me.txtDireccion.ReadOnly = True
-        Me.txtDireccion.Size = New System.Drawing.Size(271, 20)
+        Me.txtDireccion.Size = New System.Drawing.Size(271, 26)
         Me.txtDireccion.TabIndex = 6
         '
         'Label3
@@ -623,7 +635,7 @@ Partial Class frmPrincipal
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(23, 133)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(49, 13)
+        Me.Label3.Size = New System.Drawing.Size(71, 20)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Telefono"
         '
@@ -632,7 +644,7 @@ Partial Class frmPrincipal
         Me.txtNombre.Location = New System.Drawing.Point(106, 66)
         Me.txtNombre.Name = "txtNombre"
         Me.txtNombre.ReadOnly = True
-        Me.txtNombre.Size = New System.Drawing.Size(271, 20)
+        Me.txtNombre.Size = New System.Drawing.Size(271, 26)
         Me.txtNombre.TabIndex = 5
         '
         'Label4
@@ -640,7 +652,7 @@ Partial Class frmPrincipal
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(2, 37)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(62, 13)
+        Me.Label4.Size = New System.Drawing.Size(92, 20)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "Documento"
         '
@@ -649,15 +661,17 @@ Partial Class frmPrincipal
         Me.txtDocumento.Location = New System.Drawing.Point(106, 34)
         Me.txtDocumento.Name = "txtDocumento"
         Me.txtDocumento.ReadOnly = True
-        Me.txtDocumento.Size = New System.Drawing.Size(180, 20)
+        Me.txtDocumento.Size = New System.Drawing.Size(180, 26)
         Me.txtDocumento.TabIndex = 4
         '
         'frmPrincipal
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.BackColor = System.Drawing.Color.DodgerBlue
         Me.ClientSize = New System.Drawing.Size(1310, 721)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmPrincipal"
         Me.Text = "Facturacion"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
@@ -727,7 +741,7 @@ Partial Class frmPrincipal
     Friend WithEvents txtTotalSinIva As TextBox
     Friend WithEvents Panel10 As Panel
     Friend WithEvents txtAdenda As TextBox
-    Friend WithEvents btnReimprimir As Button
+    Friend WithEvents btnConsultaCaja As Button
     Friend WithEvents btnSalir As Button
     Friend WithEvents btnDescuentoTotal As Button
     Friend WithEvents btnDescuentoLinea As Button
@@ -738,4 +752,5 @@ Partial Class frmPrincipal
     Friend WithEvents btnEspera As Button
     Friend WithEvents btnRecuperar As Button
     Friend WithEvents btnFacturar As Button
+    Friend WithEvents btnConsulta As Button
 End Class

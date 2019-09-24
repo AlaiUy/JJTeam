@@ -23,9 +23,9 @@ Partial Class frmUnidades
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lbl = New System.Windows.Forms.Label()
         Me.btnAceptar = New System.Windows.Forms.Button()
         Me.txtUnidades = New System.Windows.Forms.TextBox()
-        Me.lbl = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -34,6 +34,7 @@ Partial Class frmUnidades
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.BackColor = System.Drawing.Color.LightGray
         Me.Panel1.Controls.Add(Me.lbl)
         Me.Panel1.Controls.Add(Me.btnAceptar)
         Me.Panel1.Controls.Add(Me.txtUnidades)
@@ -41,6 +42,15 @@ Partial Class frmUnidades
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(349, 130)
         Me.Panel1.TabIndex = 0
+        '
+        'lbl
+        '
+        Me.lbl.AutoSize = True
+        Me.lbl.Location = New System.Drawing.Point(19, 31)
+        Me.lbl.Name = "lbl"
+        Me.lbl.Size = New System.Drawing.Size(77, 20)
+        Me.lbl.TabIndex = 2
+        Me.lbl.Text = "Unidades"
         '
         'btnAceptar
         '
@@ -58,19 +68,11 @@ Partial Class frmUnidades
         Me.txtUnidades.Size = New System.Drawing.Size(167, 26)
         Me.txtUnidades.TabIndex = 0
         '
-        'lbl
-        '
-        Me.lbl.AutoSize = True
-        Me.lbl.Location = New System.Drawing.Point(19, 31)
-        Me.lbl.Name = "lbl"
-        Me.lbl.Size = New System.Drawing.Size(77, 20)
-        Me.lbl.TabIndex = 2
-        Me.lbl.Text = "Unidades"
-        '
         'frmUnidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.DodgerBlue
         Me.ClientSize = New System.Drawing.Size(373, 154)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
