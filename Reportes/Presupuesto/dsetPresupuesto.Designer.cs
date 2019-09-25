@@ -279,7 +279,7 @@ namespace JJ.Reportes.Presupuesto {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class PresupuestoDataTable : global::System.Data.TypedTableBase<PresupuestoRow> {
             
-            private global::System.Data.DataColumn columnCODIGO;
+            private global::System.Data.DataColumn columnREFERENCIA;
             
             private global::System.Data.DataColumn columnNOMBRE;
             
@@ -322,9 +322,9 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CODIGOColumn {
+            public global::System.Data.DataColumn REFERENCIAColumn {
                 get {
-                    return this.columnCODIGO;
+                    return this.columnREFERENCIA;
                 }
             }
             
@@ -389,10 +389,10 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PresupuestoRow AddPresupuestoRow(string CODIGO, string NOMBRE, string FINAL, string CANTIDAD) {
+            public PresupuestoRow AddPresupuestoRow(string REFERENCIA, string NOMBRE, string FINAL, string CANTIDAD) {
                 PresupuestoRow rowPresupuestoRow = ((PresupuestoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        CODIGO,
+                        REFERENCIA,
                         NOMBRE,
                         FINAL,
                         CANTIDAD};
@@ -418,7 +418,7 @@ namespace JJ.Reportes.Presupuesto {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnCODIGO = base.Columns["CODIGO"];
+                this.columnREFERENCIA = base.Columns["REFERENCIA"];
                 this.columnNOMBRE = base.Columns["NOMBRE"];
                 this.columnFINAL = base.Columns["FINAL"];
                 this.columnCANTIDAD = base.Columns["CANTIDAD"];
@@ -427,8 +427,8 @@ namespace JJ.Reportes.Presupuesto {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnCODIGO = new global::System.Data.DataColumn("CODIGO", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCODIGO);
+                this.columnREFERENCIA = new global::System.Data.DataColumn("REFERENCIA", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnREFERENCIA);
                 this.columnNOMBRE = new global::System.Data.DataColumn("NOMBRE", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNOMBRE);
                 this.columnFINAL = new global::System.Data.DataColumn("FINAL", typeof(string), null, global::System.Data.MappingType.Element);
@@ -577,17 +577,17 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string CODIGO {
+            public string REFERENCIA {
                 get {
                     try {
-                        return ((string)(this[this.tablePresupuesto.CODIGOColumn]));
+                        return ((string)(this[this.tablePresupuesto.REFERENCIAColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'CODIGO\' de la tabla \'Presupuesto\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'REFERENCIA\' de la tabla \'Presupuesto\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePresupuesto.CODIGOColumn] = value;
+                    this[this.tablePresupuesto.REFERENCIAColumn] = value;
                 }
             }
             
@@ -641,14 +641,14 @@ namespace JJ.Reportes.Presupuesto {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCODIGONull() {
-                return this.IsNull(this.tablePresupuesto.CODIGOColumn);
+            public bool IsREFERENCIANull() {
+                return this.IsNull(this.tablePresupuesto.REFERENCIAColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCODIGONull() {
-                this[this.tablePresupuesto.CODIGOColumn] = global::System.Convert.DBNull;
+            public void SetREFERENCIANull() {
+                this[this.tablePresupuesto.REFERENCIAColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
