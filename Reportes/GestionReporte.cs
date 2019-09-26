@@ -118,6 +118,7 @@ namespace JJ.Reportes
             T.Rows.Add(R);
 
             DataRow R2;
+            int Diferencia = (10 - xobjF.Lineas.Count);
             foreach(VentaLin l in xobjF.Lineas)
             {
                 R2 = T2.NewRow();
@@ -139,12 +140,25 @@ namespace JJ.Reportes
                     R2["PRECIO S/IVA"] = Redondear(l.SubTotal());
 
                 }
-               
+
 
                 T2.Rows.Add(R2);
+
+
             }
 
-            
+            while (Diferencia > 0)
+            {
+                R2 = T2.NewRow();
+                R2["CODIGO"] = string.Empty;
+                R2["NOMBRE"] = string.Empty;
+                R2["CANTIDAD"] = string.Empty;
+                R2["PRECIO S/IVA"] = string.Empty;
+                T2.Rows.Add(R2);
+                Diferencia--;
+            }
+
+
 
 
 
