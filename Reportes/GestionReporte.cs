@@ -81,6 +81,7 @@ namespace JJ.Reportes
             T.Columns.Add("TOTAL");
             T.Columns.Add("ADENDA");
             T.Columns.Add("DIRECCION");
+            T.Columns.Add("FINAL");
 
 
             T2.Columns.Add("CODIGO");
@@ -98,6 +99,11 @@ namespace JJ.Reportes
             R["IVA"] = Redondear(xobjF.IvaTotal(1,coti));
             R["TOTAL"] = Redondear(xobjF.Subtotal(1,coti)+xobjF.IvaTotal(1,coti));
             R["DIRECCION"] = xobjF.Cliente.Direccion;
+
+            if (xobjF.Cliente.Documento.Length < 11)
+                R["FINAL"] = "X";
+
+
 
             if (xobjF.Env_Direccion != "")
             {
@@ -118,29 +124,21 @@ namespace JJ.Reportes
             T.Rows.Add(R);
 
             DataRow R2;
-            int Diferencia = (10 - xobjF.Lineas.Count);
+            int Diferencia = (12 - xobjF.Lineas.Count);
             foreach(VentaLin l in xobjF.Lineas)
             {
                 R2 = T2.NewRow();
                 if (l.Articulo.CodMoneda == 2)
                 {
-                    
-                    R2["CODIGO"] = l.Articulo.Referencia;
-                    R2["NOMBRE"] = l.Descripcion;
-                    R2["CANTIDAD"] = l.Cantidad;
                     R2["PRECIO S/IVA"] = Redondear(l.SubTotal()*coti);
-
                 }
                 else
                 {
-                 
-                    R2["CODIGO"] = l.Articulo.Referencia;
-                    R2["NOMBRE"] = l.Descripcion;
-                    R2["CANTIDAD"] = l.Cantidad;
                     R2["PRECIO S/IVA"] = Redondear(l.SubTotal());
-
                 }
-
+                R2["CODIGO"] = l.Articulo.Referencia;
+                R2["NOMBRE"] = l.Descripcion;
+                R2["CANTIDAD"] = l.Cantidad;
 
                 T2.Rows.Add(R2);
 
