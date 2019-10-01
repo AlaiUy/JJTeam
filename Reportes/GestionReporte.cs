@@ -40,7 +40,7 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
-        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra)
+        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra,string xNombre,string xDireccion)
         {
             xArticulos.TableName = "Presupuesto";
             ReportDocument rptDoc;
@@ -57,7 +57,13 @@ namespace JJ.Reportes
 
             Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtFormaPago"];
             Campo.Text = xFormaPago;
-            
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["lblNombre"];
+            Campo.Text = xNombre;
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["lblDireccion"];
+            Campo.Text = xDireccion;
+
 
 
             frmInforme frmReport = new frmInforme();
