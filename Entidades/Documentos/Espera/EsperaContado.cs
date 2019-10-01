@@ -69,6 +69,8 @@ namespace JJ.Entidades
         {
             get
             {
+                if (_Adenda == null)
+                    return string.Empty;
                 return _Adenda;
             }
 

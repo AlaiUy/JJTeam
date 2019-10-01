@@ -40,7 +40,7 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
-        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra)
+        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra,string xNombre,string xDireccion)
         {
             xArticulos.TableName = "Presupuesto";
             ReportDocument rptDoc;
@@ -57,7 +57,13 @@ namespace JJ.Reportes
 
             Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtFormaPago"];
             Campo.Text = xFormaPago;
-            
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["lblNombre"];
+            Campo.Text = xNombre;
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["lblDireccion"];
+            Campo.Text = xDireccion;
+
 
 
             frmInforme frmReport = new frmInforme();
@@ -81,6 +87,7 @@ namespace JJ.Reportes
             T.Columns.Add("TOTAL");
             T.Columns.Add("ADENDA");
             T.Columns.Add("DIRECCION");
+            T.Columns.Add("FINAL");
 
 
             T2.Columns.Add("CODIGO");
@@ -98,6 +105,11 @@ namespace JJ.Reportes
             R["IVA"] = Redondear(xobjF.IvaTotal(1,coti));
             R["TOTAL"] = Redondear(xobjF.Subtotal(1,coti)+xobjF.IvaTotal(1,coti));
             R["DIRECCION"] = xobjF.Cliente.Direccion;
+
+            if (xobjF.Cliente.Documento.Length < 11)
+                R["FINAL"] = "X";
+
+
 
             if (xobjF.Env_Direccion != "")
             {
@@ -118,29 +130,21 @@ namespace JJ.Reportes
             T.Rows.Add(R);
 
             DataRow R2;
-            int Diferencia = (10 - xobjF.Lineas.Count);
+            int Diferencia = (12 - xobjF.Lineas.Count);
             foreach(VentaLin l in xobjF.Lineas)
             {
                 R2 = T2.NewRow();
                 if (l.Articulo.CodMoneda == 2)
                 {
-                    
-                    R2["CODIGO"] = l.Articulo.Referencia;
-                    R2["NOMBRE"] = l.Descripcion;
-                    R2["CANTIDAD"] = l.Cantidad;
                     R2["PRECIO S/IVA"] = Redondear(l.SubTotal()*coti);
-
                 }
                 else
                 {
-                 
-                    R2["CODIGO"] = l.Articulo.Referencia;
-                    R2["NOMBRE"] = l.Descripcion;
-                    R2["CANTIDAD"] = l.Cantidad;
                     R2["PRECIO S/IVA"] = Redondear(l.SubTotal());
-
                 }
-
+                R2["CODIGO"] = l.Articulo.Referencia;
+                R2["NOMBRE"] = l.Descripcion;
+                R2["CANTIDAD"] = l.Cantidad;
 
                 T2.Rows.Add(R2);
 
