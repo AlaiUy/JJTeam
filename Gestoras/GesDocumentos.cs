@@ -64,6 +64,11 @@ namespace JJ.Gestoras
             return _DBDocumentos.getVentasEsperaContado();
         }
 
+        public List<object> getListaEspera(int xEstado)
+        {
+            return _DBDocumentos.getVentasEsperaContado(xEstado);
+        }
+
         public List<object> getListaVentaContado(DateTime xfechaini, DateTime xfechafin)
         {
             return _DBDocumentos.getVentasContado(xfechaini, xfechafin);
