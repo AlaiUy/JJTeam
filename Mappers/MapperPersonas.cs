@@ -59,19 +59,19 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("INSERT INTO PROVEEDORES(NOMBRE,RZ,RUT,DIRECCION,DIRNUMERO,TELEFONO,CELULAR,CODCATEGORIA,EMAIL) VALUES (@NOMBRE,@RZ,@RUT,@DIRECCION,@DIRNUMERO,@TELEFONO,@CELULAR,@CODCATEGORIA,@EMAIL)", Con))
+                using (SqlCommand Com = new SqlCommand("INSERT INTO PROVEEDORES(NOMBRE,RZ,RUT,DIRECCION,DIRNUMERO,TELEFONO,CELULAR,CODCATEGORIA,EMAIL,COMENTARIOS) VALUES (@NOMBRE,@RZ,@RUT,@DIRECCION,@DIRNUMERO,@TELEFONO,@CELULAR,@CODCATEGORIA,@EMAIL,@COMENTARIOS)", Con))
                 {
-                    List<IDataParameter> P = new List<IDataParameter>();
-                    P.Add(new SqlParameter("@NOMBRE", Pv.Nombre));
-                    P.Add(new SqlParameter("@RZ", Pv.Rz));
-                    P.Add(new SqlParameter("@RUT", Pv.Rut));
-                    P.Add(new SqlParameter("@DIRECCION", Pv.Direccion));
-                    P.Add(new SqlParameter("@DIRNUMERO", Pv.Dirnumero));
-                    P.Add(new SqlParameter("@TELEFONO", Pv.Telefono));
-                    P.Add(new SqlParameter("@CELULAR", Pv.Celular));
-                    P.Add(new SqlParameter("@CODCATEGORIA", Pv.Categoria));
-                    P.Add(new SqlParameter("@EMAIL", Pv.Email));
-                    ExecuteNonQuery(Com, P);
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", Pv.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@RZ", Pv.Rz));
+                    Com.Parameters.Add(new SqlParameter("@RUT", Pv.Rut));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", Pv.Direccion));
+                    Com.Parameters.Add(new SqlParameter("@DIRNUMERO", Pv.Dirnumero));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", Pv.Telefono));
+                    Com.Parameters.Add(new SqlParameter("@CELULAR", Pv.Celular));
+                    Com.Parameters.Add(new SqlParameter("@CODCATEGORIA", Pv.Categoria));
+                    Com.Parameters.Add(new SqlParameter("@EMAIL", Pv.Email));
+                    Com.Parameters.Add(new SqlParameter("@COMENTARIOS", Pv.Comentarios));
+                    ExecuteNonQuery(Com);
                 }
 
             }
@@ -151,7 +151,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL FROM PROVEEDORES P", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL,P.COMENTARIOS FROM PROVEEDORES P", Con))
                 {
 
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -182,6 +182,7 @@ namespace JJ.Mappers
             Entity.Telefono = (string)Reader["TELEFONO"];
             Entity.Celular = (string)Reader["CELULAR"];
             Entity.Categoria = (int)Reader["CODCATEGORIA"];
+            Entity.Comentarios = (string)(Reader["COMENTARIOS"] is DBNull ? string.Empty : Reader["COMENTARIOS"]);
             return Entity;
         }
 

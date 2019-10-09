@@ -249,6 +249,40 @@ namespace JJ.Mappers
             return LtsEspera;
         }
 
+        public List<object> getVentasEsperaContado(int xEstado)
+        {
+            List<object> LtsEspera = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT E.CODIGO,E.FECHA,E.CODVENDEDOR,E.CLIENTECONTADO,E.ESTADO,E.DIRECCIONENVIO,E.ADENDA, CC.NOMBRE, E.PRESUPUESTO FROM ESPERACONTADO E  inner join clientescontado as CC on (cc.CODIGO= E.Clientecontado) where estado=@ESTADO AND fecha=@fecha order by codigo asc", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@fecha", DateTime.Today.ToString("dd/MM/yyyy")));
+                    Com.Parameters.Add(new SqlParameter("@ESTADO", xEstado));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+
+
+                        while (Reader.Read())
+                        {
+                            int Codigo = (int)Reader["CODIGO"];
+                            DateTime Fecha = (DateTime)Reader["FECHA"];
+                            int xCodVendedor = (int)Reader["CODVENDEDOR"];
+                            int xCliente = (int)Reader["CLIENTECONTADO"];
+                            string xAdenda = (string)(Reader["ADENDA"] is DBNull ? string.Empty : Reader["ADENDA"]);
+                            string xEnvio = (string)(Reader["DIRECCIONENVIO"] is DBNull ? string.Empty : Reader["DIRECCIONENVIO"]);
+                            String xNombreCliente = (string)Reader["NOMBRE"];
+                            EsperaContado E = new EsperaContado(Codigo, Fecha, xCodVendedor, xCliente, xAdenda, xEnvio, xEstado, xNombreCliente, 'F');
+
+                            E.AgregarLineas(getLineasEsperaContado(Codigo));
+                            LtsEspera.Add(E);
+                        }
+                    }
+                }
+            }
+            return LtsEspera;
+        }
+
         public List<object> getVentasEsperaCredito()
         {
             List<object> LtsEspera = new List<object>();
@@ -873,7 +907,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT FECHA, CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT FECHA, NUMERO,CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA,NUMERO", (SqlConnection)Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@INICIO", xFechaI));
                     Com.Parameters.Add(new SqlParameter("@FINAL", xFechaF));

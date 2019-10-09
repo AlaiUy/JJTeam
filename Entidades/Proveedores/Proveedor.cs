@@ -17,6 +17,7 @@ namespace JJ.Entidades
         private string _celular;
         private int _categoria;
         private string _email;
+        private string _Comentarios;
 
         public int Codigo
         {
@@ -140,6 +141,19 @@ namespace JJ.Entidades
             set
             {
                 _email = value;
+            }
+        }
+
+        public string Comentarios
+        {
+            get
+            {
+                return _Comentarios;
+            }
+
+            set
+            {
+                _Comentarios = value;
             }
         }
 
