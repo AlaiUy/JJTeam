@@ -318,8 +318,6 @@ namespace JJ.Reportes
 
                         }
 
-                        
-
                     }
                     IndexRow += 1;
                 }
