@@ -164,6 +164,12 @@
     <Compile Include="Formularios\frmInicioSesion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Formularios\frmMedioPago.Designer.vb">
+      <DependentUpon>frmMedioPago.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmMedioPago.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Formularios\frmPagos.Designer.vb">
       <DependentUpon>frmPagos.vb</DependentUpon>
     </Compile>
@@ -230,6 +236,9 @@
     <EmbeddedResource Include="Formularios\frmInicioSesion.resx">
       <DependentUpon>frmInicioSesion.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmMedioPago.resx">
+      <DependentUpon>frmMedioPago.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\frmPagos.resx">
       <DependentUpon>frmPagos.vb</DependentUpon>
     </EmbeddedResource>
@@ -250,7 +259,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

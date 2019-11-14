@@ -62,7 +62,7 @@ namespace JJ.Gestoras
 
             int zPago = _DBCajas.getZByPago(xNumeroPago);
 
-            if (zPago == -1 || zPago != Caja.Z)
+            if (zPago == -1 || (zPago != Caja.Z && zPago != 0))
                 return;
 
             _DBCajas.Eliminarpago(xNumeroPago);

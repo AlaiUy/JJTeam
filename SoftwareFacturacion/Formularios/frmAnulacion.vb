@@ -81,7 +81,7 @@ Public Class frmAnulacion
             dgridfactura.Columns("DESCUENTO").ReadOnly = True
             dgridfactura.Columns("IMPORTE DESCUENTO TOTAL").ReadOnly = True
             dgridfactura.Columns("PRECIO TOTAL").ReadOnly = True
-
+            dgridfactura.Columns("CANTIDAD A ANULAR").ReadOnly = False
         End If
 
     End Sub
@@ -91,6 +91,24 @@ Public Class frmAnulacion
     End Function
 
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
+        'Dim objfd As DevolucionContado()
 
+        'GesDocumentos.getInstance.GesFacturar(objfd, objF.Z)
+    End Sub
+
+    Private Sub dgridfactura_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellContentClick
+
+    End Sub
+
+    Private Sub dgridfactura_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgridfactura.DataError
+        MsgBox("Ingrese un dato correcto, tiene que ser numerico", MsgBoxStyle.Information, "-Informacion-")
+        dgridfactura.Item((dgridfactura.Columns.Count - 1), e.RowIndex).Value = 0
+
+    End Sub
+
+    Private Sub dgridfactura_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellValueChanged
+        If dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value > (dgridfactura.CurrentRow.Cells("CANTIDAD").Value) Or dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value < 0 Then
+            dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value = dgridfactura.CurrentRow.Cells("CANTIDAD").Value
+        End If
     End Sub
 End Class

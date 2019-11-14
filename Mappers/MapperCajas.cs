@@ -57,6 +57,7 @@ namespace JJ.Mappers
         
         public void AgregarPago(int xMoneda,decimal xImporte,decimal xCotizacion,string xComentario,string xCaja, int xZ)
         {
+            xZ = 0;
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
@@ -110,8 +111,8 @@ namespace JJ.Mappers
 
             decimal Total = 0;
             decimal totaldeclarado = 0;
-            decimal pagopesos = getPagosPesos(xCaja, xZ);
-            decimal pagodolares = getPagosDolares(xCaja, xZ);
+            decimal pagopesos = getPagosPesos(xCaja, 0);
+            decimal pagodolares = getPagosDolares(xCaja, 0);
 
             decimal cotizacion = MapperGeneral.getInstance().getMonedaByID(2).Cotizacion;
             decimal Descuadre = 0;
@@ -140,6 +141,7 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@TOTAL", Total));
                         Com.Parameters.Add(new SqlParameter("@DESCUADRE", Descuadre));
 
+
                         Com.Transaction = (SqlTransaction)Tran;
                     ExecuteNonQuery(Com);
 
@@ -159,11 +161,13 @@ namespace JJ.Mappers
 
                     ExecuteNonQuery(Com);
 
+                        Com.CommandText = "UPDATE PAGOS SET ZCAJA=@NUMEROCIERRE WHERE CAJA=@CAJA AND ZCAJA=0";
 
-                  
+                        ExecuteNonQuery(Com);
 
 
-                }
+
+                    }
                     Tran.Commit();
                 }
 

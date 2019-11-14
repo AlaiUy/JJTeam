@@ -43,6 +43,8 @@ Partial Class frmPrincipal
         Me.btnRecuperar = New System.Windows.Forms.Button()
         Me.btnFacturar = New System.Windows.Forms.Button()
         Me.Panel12 = New System.Windows.Forms.Panel()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtEfectivo = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -122,7 +124,7 @@ Partial Class frmPrincipal
         Me.Panel9.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel9.Location = New System.Drawing.Point(0, 0)
         Me.Panel9.Name = "Panel9"
-        Me.Panel9.Size = New System.Drawing.Size(1286, 311)
+        Me.Panel9.Size = New System.Drawing.Size(1286, 274)
         Me.Panel9.TabIndex = 1
         '
         'dgridLineas
@@ -148,7 +150,7 @@ Partial Class frmPrincipal
         Me.dgridLineas.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         Me.dgridLineas.RowTemplate.Height = 28
         Me.dgridLineas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgridLineas.Size = New System.Drawing.Size(1286, 311)
+        Me.dgridLineas.Size = New System.Drawing.Size(1286, 274)
         Me.dgridLineas.TabIndex = 0
         '
         'Panel8
@@ -156,9 +158,9 @@ Partial Class frmPrincipal
         Me.Panel8.Controls.Add(Me.Panel11)
         Me.Panel8.Controls.Add(Me.Panel10)
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel8.Location = New System.Drawing.Point(0, 311)
+        Me.Panel8.Location = New System.Drawing.Point(0, 274)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(1286, 219)
+        Me.Panel8.Size = New System.Drawing.Size(1286, 256)
         Me.Panel8.TabIndex = 0
         '
         'Panel11
@@ -168,7 +170,7 @@ Partial Class frmPrincipal
         Me.Panel11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel11.Location = New System.Drawing.Point(0, 58)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(1286, 161)
+        Me.Panel11.Size = New System.Drawing.Size(1286, 198)
         Me.Panel11.TabIndex = 1
         '
         'Panel13
@@ -188,12 +190,12 @@ Partial Class frmPrincipal
         Me.Panel13.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel13.Location = New System.Drawing.Point(0, 0)
         Me.Panel13.Name = "Panel13"
-        Me.Panel13.Size = New System.Drawing.Size(975, 161)
+        Me.Panel13.Size = New System.Drawing.Size(942, 198)
         Me.Panel13.TabIndex = 1
         '
         'btnConsulta
         '
-        Me.btnConsulta.Location = New System.Drawing.Point(752, 82)
+        Me.btnConsulta.Location = New System.Drawing.Point(765, 101)
         Me.btnConsulta.Name = "btnConsulta"
         Me.btnConsulta.Size = New System.Drawing.Size(142, 55)
         Me.btnConsulta.TabIndex = 11
@@ -202,7 +204,7 @@ Partial Class frmPrincipal
         '
         'btnConsultaCaja
         '
-        Me.btnConsultaCaja.Location = New System.Drawing.Point(752, 16)
+        Me.btnConsultaCaja.Location = New System.Drawing.Point(765, 35)
         Me.btnConsultaCaja.Name = "btnConsultaCaja"
         Me.btnConsultaCaja.Size = New System.Drawing.Size(142, 55)
         Me.btnConsultaCaja.TabIndex = 10
@@ -211,7 +213,7 @@ Partial Class frmPrincipal
         '
         'btnSalir
         '
-        Me.btnSalir.Location = New System.Drawing.Point(604, 82)
+        Me.btnSalir.Location = New System.Drawing.Point(617, 101)
         Me.btnSalir.Name = "btnSalir"
         Me.btnSalir.Size = New System.Drawing.Size(142, 55)
         Me.btnSalir.TabIndex = 9
@@ -220,7 +222,7 @@ Partial Class frmPrincipal
         '
         'btnDescuentoTotal
         '
-        Me.btnDescuentoTotal.Location = New System.Drawing.Point(456, 82)
+        Me.btnDescuentoTotal.Location = New System.Drawing.Point(469, 101)
         Me.btnDescuentoTotal.Name = "btnDescuentoTotal"
         Me.btnDescuentoTotal.Size = New System.Drawing.Size(142, 55)
         Me.btnDescuentoTotal.TabIndex = 8
@@ -229,7 +231,7 @@ Partial Class frmPrincipal
         '
         'btnDescuentoLinea
         '
-        Me.btnDescuentoLinea.Location = New System.Drawing.Point(308, 82)
+        Me.btnDescuentoLinea.Location = New System.Drawing.Point(321, 101)
         Me.btnDescuentoLinea.Name = "btnDescuentoLinea"
         Me.btnDescuentoLinea.Size = New System.Drawing.Size(142, 55)
         Me.btnDescuentoLinea.TabIndex = 7
@@ -238,7 +240,7 @@ Partial Class frmPrincipal
         '
         'btnCierre
         '
-        Me.btnCierre.Location = New System.Drawing.Point(160, 82)
+        Me.btnCierre.Location = New System.Drawing.Point(173, 101)
         Me.btnCierre.Name = "btnCierre"
         Me.btnCierre.Size = New System.Drawing.Size(142, 55)
         Me.btnCierre.TabIndex = 6
@@ -247,7 +249,7 @@ Partial Class frmPrincipal
         '
         'btnPagos
         '
-        Me.btnPagos.Location = New System.Drawing.Point(12, 82)
+        Me.btnPagos.Location = New System.Drawing.Point(25, 101)
         Me.btnPagos.Name = "btnPagos"
         Me.btnPagos.Size = New System.Drawing.Size(142, 55)
         Me.btnPagos.TabIndex = 5
@@ -256,7 +258,7 @@ Partial Class frmPrincipal
         '
         'btnBorrarLinea
         '
-        Me.btnBorrarLinea.Location = New System.Drawing.Point(456, 16)
+        Me.btnBorrarLinea.Location = New System.Drawing.Point(469, 35)
         Me.btnBorrarLinea.Name = "btnBorrarLinea"
         Me.btnBorrarLinea.Size = New System.Drawing.Size(142, 55)
         Me.btnBorrarLinea.TabIndex = 4
@@ -265,7 +267,7 @@ Partial Class frmPrincipal
         '
         'btnDevolucion
         '
-        Me.btnDevolucion.Location = New System.Drawing.Point(604, 16)
+        Me.btnDevolucion.Location = New System.Drawing.Point(617, 35)
         Me.btnDevolucion.Name = "btnDevolucion"
         Me.btnDevolucion.Size = New System.Drawing.Size(142, 55)
         Me.btnDevolucion.TabIndex = 3
@@ -274,7 +276,7 @@ Partial Class frmPrincipal
         '
         'btnEspera
         '
-        Me.btnEspera.Location = New System.Drawing.Point(308, 15)
+        Me.btnEspera.Location = New System.Drawing.Point(321, 34)
         Me.btnEspera.Name = "btnEspera"
         Me.btnEspera.Size = New System.Drawing.Size(142, 55)
         Me.btnEspera.TabIndex = 2
@@ -283,7 +285,7 @@ Partial Class frmPrincipal
         '
         'btnRecuperar
         '
-        Me.btnRecuperar.Location = New System.Drawing.Point(160, 16)
+        Me.btnRecuperar.Location = New System.Drawing.Point(173, 35)
         Me.btnRecuperar.Name = "btnRecuperar"
         Me.btnRecuperar.Size = New System.Drawing.Size(142, 55)
         Me.btnRecuperar.TabIndex = 1
@@ -292,7 +294,7 @@ Partial Class frmPrincipal
         '
         'btnFacturar
         '
-        Me.btnFacturar.Location = New System.Drawing.Point(12, 16)
+        Me.btnFacturar.Location = New System.Drawing.Point(25, 35)
         Me.btnFacturar.Name = "btnFacturar"
         Me.btnFacturar.Size = New System.Drawing.Size(142, 55)
         Me.btnFacturar.TabIndex = 0
@@ -301,6 +303,8 @@ Partial Class frmPrincipal
         '
         'Panel12
         '
+        Me.Panel12.Controls.Add(Me.Label7)
+        Me.Panel12.Controls.Add(Me.txtEfectivo)
         Me.Panel12.Controls.Add(Me.Label18)
         Me.Panel12.Controls.Add(Me.Label17)
         Me.Panel12.Controls.Add(Me.Label16)
@@ -310,17 +314,42 @@ Partial Class frmPrincipal
         Me.Panel12.Controls.Add(Me.txtImporteIva)
         Me.Panel12.Controls.Add(Me.txtTotalSinIva)
         Me.Panel12.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel12.Location = New System.Drawing.Point(975, 0)
+        Me.Panel12.Location = New System.Drawing.Point(942, 0)
         Me.Panel12.Name = "Panel12"
-        Me.Panel12.Size = New System.Drawing.Size(311, 161)
+        Me.Panel12.Size = New System.Drawing.Size(344, 198)
         Me.Panel12.TabIndex = 0
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.Red
+        Me.Label7.Location = New System.Drawing.Point(16, 160)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(160, 22)
+        Me.Label7.TabIndex = 9
+        Me.Label7.Text = "Total EFECTIVO"
+        Me.Label7.Visible = False
+        '
+        'txtEfectivo
+        '
+        Me.txtEfectivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtEfectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtEfectivo.Location = New System.Drawing.Point(182, 155)
+        Me.txtEfectivo.Name = "txtEfectivo"
+        Me.txtEfectivo.ReadOnly = True
+        Me.txtEfectivo.Size = New System.Drawing.Size(154, 30)
+        Me.txtEfectivo.TabIndex = 8
+        Me.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtEfectivo.Visible = False
         '
         'Label18
         '
         Me.Label18.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(15, 123)
+        Me.Label18.Location = New System.Drawing.Point(48, 121)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(128, 22)
         Me.Label18.TabIndex = 7
@@ -331,7 +360,7 @@ Partial Class frmPrincipal
         Me.Label17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(38, 85)
+        Me.Label17.Location = New System.Drawing.Point(71, 83)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(105, 22)
         Me.Label17.TabIndex = 6
@@ -342,7 +371,7 @@ Partial Class frmPrincipal
         Me.Label16.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(102, 49)
+        Me.Label16.Location = New System.Drawing.Point(135, 47)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(41, 22)
         Me.Label16.TabIndex = 5
@@ -353,7 +382,7 @@ Partial Class frmPrincipal
         Me.Label15.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(15, 15)
+        Me.Label15.Location = New System.Drawing.Point(48, 13)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(128, 22)
         Me.Label15.TabIndex = 4
@@ -363,7 +392,7 @@ Partial Class frmPrincipal
         '
         Me.txtImporteTotalConIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteTotalConIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtImporteTotalConIva.Location = New System.Drawing.Point(149, 118)
+        Me.txtImporteTotalConIva.Location = New System.Drawing.Point(182, 116)
         Me.txtImporteTotalConIva.Name = "txtImporteTotalConIva"
         Me.txtImporteTotalConIva.ReadOnly = True
         Me.txtImporteTotalConIva.Size = New System.Drawing.Size(154, 30)
@@ -374,7 +403,7 @@ Partial Class frmPrincipal
         '
         Me.txtImporteDescuento.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteDescuento.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtImporteDescuento.Location = New System.Drawing.Point(149, 80)
+        Me.txtImporteDescuento.Location = New System.Drawing.Point(182, 78)
         Me.txtImporteDescuento.Name = "txtImporteDescuento"
         Me.txtImporteDescuento.ReadOnly = True
         Me.txtImporteDescuento.Size = New System.Drawing.Size(154, 30)
@@ -385,7 +414,7 @@ Partial Class frmPrincipal
         '
         Me.txtImporteIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtImporteIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtImporteIva.Location = New System.Drawing.Point(149, 44)
+        Me.txtImporteIva.Location = New System.Drawing.Point(182, 42)
         Me.txtImporteIva.Name = "txtImporteIva"
         Me.txtImporteIva.ReadOnly = True
         Me.txtImporteIva.Size = New System.Drawing.Size(154, 30)
@@ -396,7 +425,7 @@ Partial Class frmPrincipal
         '
         Me.txtTotalSinIva.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtTotalSinIva.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTotalSinIva.Location = New System.Drawing.Point(149, 10)
+        Me.txtTotalSinIva.Location = New System.Drawing.Point(182, 8)
         Me.txtTotalSinIva.Name = "txtTotalSinIva"
         Me.txtTotalSinIva.ReadOnly = True
         Me.txtTotalSinIva.Size = New System.Drawing.Size(154, 30)
@@ -753,4 +782,6 @@ Partial Class frmPrincipal
     Friend WithEvents btnRecuperar As Button
     Friend WithEvents btnFacturar As Button
     Friend WithEvents btnConsulta As Button
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txtEfectivo As TextBox
 End Class
