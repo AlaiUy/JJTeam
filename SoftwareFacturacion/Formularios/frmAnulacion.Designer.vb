@@ -30,14 +30,14 @@ Partial Class frmAnulacion
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.txtNombre = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.btnAnular = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
         Me.txtNumero = New System.Windows.Forms.TextBox()
         Me.txtSerie = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.txtNombre = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         CType(Me.dgridfactura, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
@@ -61,13 +61,13 @@ Partial Class frmAnulacion
         '
         Me.dgridfactura.AllowUserToAddRows = False
         Me.dgridfactura.AllowUserToDeleteRows = False
+        Me.dgridfactura.AllowUserToResizeRows = False
         Me.dgridfactura.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgridfactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgridfactura.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgridfactura.Location = New System.Drawing.Point(0, 100)
         Me.dgridfactura.MultiSelect = False
         Me.dgridfactura.Name = "dgridfactura"
-        Me.dgridfactura.ReadOnly = True
         Me.dgridfactura.RowHeadersVisible = False
         Me.dgridfactura.RowTemplate.Height = 28
         Me.dgridfactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -140,6 +140,23 @@ Partial Class frmAnulacion
         Me.Panel2.Size = New System.Drawing.Size(795, 100)
         Me.Panel2.TabIndex = 0
         '
+        'txtNombre
+        '
+        Me.txtNombre.Location = New System.Drawing.Point(361, 36)
+        Me.txtNombre.Name = "txtNombre"
+        Me.txtNombre.ReadOnly = True
+        Me.txtNombre.Size = New System.Drawing.Size(262, 26)
+        Me.txtNombre.TabIndex = 7
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(407, 13)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(118, 20)
+        Me.Label5.TabIndex = 6
+        Me.Label5.Text = "Nombre Cliente"
+        '
         'btnAnular
         '
         Me.btnAnular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -190,23 +207,6 @@ Partial Class frmAnulacion
         Me.Label1.Size = New System.Drawing.Size(46, 20)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Serie"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(423, 11)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(118, 20)
-        Me.Label5.TabIndex = 6
-        Me.Label5.Text = "Nombre Cliente"
-        '
-        'txtNombre
-        '
-        Me.txtNombre.Location = New System.Drawing.Point(377, 34)
-        Me.txtNombre.Name = "txtNombre"
-        Me.txtNombre.ReadOnly = True
-        Me.txtNombre.Size = New System.Drawing.Size(262, 26)
-        Me.txtNombre.TabIndex = 7
         '
         'frmAnulacion
         '

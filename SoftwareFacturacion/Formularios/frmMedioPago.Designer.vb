@@ -23,8 +23,9 @@ Partial Class frmMedioPago
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnEfectivo = New System.Windows.Forms.Button()
         Me.btnTarjeta = New System.Windows.Forms.Button()
+        Me.btnEfectivo = New System.Windows.Forms.Button()
+        Me.btnVolver = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -33,38 +34,51 @@ Partial Class frmMedioPago
         Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.BackColor = System.Drawing.Color.Silver
+        Me.Panel1.Controls.Add(Me.btnVolver)
         Me.Panel1.Controls.Add(Me.btnTarjeta)
         Me.Panel1.Controls.Add(Me.btnEfectivo)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(678, 405)
+        Me.Panel1.Size = New System.Drawing.Size(240, 160)
         Me.Panel1.TabIndex = 0
+        '
+        'btnTarjeta
+        '
+        Me.btnTarjeta.Location = New System.Drawing.Point(132, 13)
+        Me.btnTarjeta.Name = "btnTarjeta"
+        Me.btnTarjeta.Size = New System.Drawing.Size(97, 65)
+        Me.btnTarjeta.TabIndex = 1
+        Me.btnTarjeta.Text = "Tarjeta"
+        Me.btnTarjeta.UseVisualStyleBackColor = True
         '
         'btnEfectivo
         '
-        Me.btnEfectivo.Location = New System.Drawing.Point(58, 54)
+        Me.btnEfectivo.Location = New System.Drawing.Point(13, 13)
         Me.btnEfectivo.Name = "btnEfectivo"
         Me.btnEfectivo.Size = New System.Drawing.Size(97, 65)
         Me.btnEfectivo.TabIndex = 0
         Me.btnEfectivo.Text = "Efectivo"
         Me.btnEfectivo.UseVisualStyleBackColor = True
         '
-        'btnTarjeta
+        'btnVolver
         '
-        Me.btnTarjeta.Location = New System.Drawing.Point(211, 73)
-        Me.btnTarjeta.Name = "btnTarjeta"
-        Me.btnTarjeta.Size = New System.Drawing.Size(75, 23)
-        Me.btnTarjeta.TabIndex = 1
-        Me.btnTarjeta.Text = "Button1"
-        Me.btnTarjeta.UseVisualStyleBackColor = True
+        Me.btnVolver.Location = New System.Drawing.Point(154, 117)
+        Me.btnVolver.Name = "btnVolver"
+        Me.btnVolver.Size = New System.Drawing.Size(75, 34)
+        Me.btnVolver.TabIndex = 2
+        Me.btnVolver.Text = "Volver"
+        Me.btnVolver.UseVisualStyleBackColor = True
         '
         'frmMedioPago
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(702, 429)
+        Me.BackColor = System.Drawing.Color.SkyBlue
+        Me.ClientSize = New System.Drawing.Size(264, 184)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "frmMedioPago"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Medio de Pago"
@@ -76,4 +90,5 @@ Partial Class frmMedioPago
     Friend WithEvents Panel1 As Panel
     Friend WithEvents btnEfectivo As Button
     Friend WithEvents btnTarjeta As Button
+    Friend WithEvents btnVolver As Button
 End Class

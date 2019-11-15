@@ -53,7 +53,7 @@ Public Class frmConsulta
 
             Dim vc As Decimal = GesCajas.getInstance().GetTotalVentaContado(c.Codigo, c.Z, 1)
             Dim dc As Decimal = GesCajas.getInstance().getDevolucionesContado(c.Codigo, c.Z, 1)
-            Dim pagos As Decimal = GesCajas.getInstance().getTotalPagos(c.Codigo, c.Z, 1)
+            Dim pagos As Decimal = GesCajas.getInstance().getTotalPagos(c.Codigo, 0, 1)
 
 
             Dim totcalculado As Decimal = saldoini + vc - dc - pagos
