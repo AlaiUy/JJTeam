@@ -31,5 +31,6 @@ namespace JJ.Interfaces
         Proveedor getProveedorByID(string xCod);
 
         Proveedor getProveedorByRut(string xRut);
+        object Cuentas();
     }
 }

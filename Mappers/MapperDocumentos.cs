@@ -13,27 +13,22 @@ namespace JJ.Mappers
 {
     public class MapperDocumentos : DataAccess, IMapperDocumentos
     {
-
         //NUMERO DOCUMENTO 1 = CONTADO
         //NUMERO DOCUMENTO 2 = CREDITO
         //NUMERO DOCUMENTO 20 = COMPRAS
         //NUMERO DOCUMENTO 3 = DEV.CONTADO
         //NUMERO DOCUMENTO 4 = NOTA CREDITO
-
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-
                 Facturar(xObject, 1, new MapperPrecios().getCotizacion(2));
 
             if (xObject is EsperaContado)
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
                 FacturarCompra(xObject);
-
-
             return true;
         }
 
@@ -54,7 +49,6 @@ namespace JJ.Mappers
                     //Actualizo el precio en la tabla articulos
                     UpdatePreciosArticulos(C, Con, Tran);
                     // Agrego el historial del articulo.
-
                     Tran.Commit();
                 }
             }

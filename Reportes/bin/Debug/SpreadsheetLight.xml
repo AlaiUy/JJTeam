@@ -123,48 +123,12 @@
         </member>
         <member name="M:SpreadsheetLight.Charts.SLLineChartOptions.#ctor">
             <summary>
-            Initializes an instance of SLLineChartOptions. It is recommended to use SLChart.CreateLineChartOptions().
+            Initializes an instance of SLLineChartOptions.
             </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLLineChartOptions.Clone">
-            <summary>
-            Clone an instance of SLLineChartOptions.
-            </summary>
-            <returns>An SLLineChartOptions object.</returns>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.GapDepth">
             <summary>
             The gap depth between line clusters (between different data series) as a percentage of bar or column width, ranging between 0% and 500% (both inclusive). The default is 150%. This is only used for 3D chart version.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.HasDropLines">
-            <summary>
-            Indicates if the line chart has drop lines.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.DropLines">
-            <summary>
-            Drop lines properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.HasHighLowLines">
-            <summary>
-            Indicates if the line chart has high-low lines. This is not applicable for 3D line charts.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.HighLowLines">
-            <summary>
-            High-low lines properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.HasUpDownBars">
-            <summary>
-            Indicates if the line chart has up-down bars. This is not applicable for 3D line charts.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.UpDownBars">
-            <summary>
-            Up-down bars properties.
             </summary>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLLineChartOptions.Smooth">
@@ -379,11 +343,6 @@
         <member name="T:SpreadsheetLight.Charts.SLNumberDataSourceType">
             <summary>
             For BubbleSize, Minus, Plus, Values, YValues
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStringReference.Points">
-            <summary>
-            This takes the place of StringCache
             </summary>
         </member>
         <member name="T:SpreadsheetLight.Drawing.SLReflection">
@@ -680,21 +639,12 @@
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
-            <strong>Obsolete. </strong>Creates an instance of SLChart, given cell references of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
+            Creates an instance of SLChart, given cell references of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
             </summary>
             <param name="StartCellReference">The cell reference of the start cell of the cell range to be in the chart, such as "A1". This is typically the top-left cell.</param>
             <param name="EndCellReference">The cell reference of the end cell of the cell range to be in the chart, such as "A1". This is typically the bottom-right cell.</param>
             <param name="RowsAsDataSeries">True if rows contain the data series. False if columns contain the data series.</param>
             <param name="ShowHiddenData">True if hidden data is used in the chart. False otherwise.</param>
-            <returns>An SLChart with the required information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.String,SpreadsheetLight.Charts.SLCreateChartOptions)">
-            <summary>
-            Creates an instance of SLChart, given cell references of opposite cells in a cell range.
-            </summary>
-            <param name="StartCellReference">The cell reference of the start cell of the cell range to be in the chart, such as "A1". This is typically the top-left cell.</param>
-            <param name="EndCellReference">The cell reference of the end cell of the cell range to be in the chart, such as "A1". This is typically the bottom-right cell.</param>
-            <param name="Options">Chart creation options.</param>
             <returns>An SLChart with the required information.</returns>
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.String,System.String)">
@@ -708,23 +658,13 @@
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
-            <strong>Obsolete. </strong>Creates an instance of SLChart, given cell references of opposite cells in a cell range and whether rows or columns contain the data series.
+            Creates an instance of SLChart, given cell references of opposite cells in a cell range and whether rows or columns contain the data series.
             </summary>
             <param name="WorksheetName">The name of the source worksheet.</param>
             <param name="StartCellReference">The cell reference of the start cell of the cell range to be in the chart, such as "A1". This is typically the top-left cell.</param>
             <param name="EndCellReference">The cell reference of the end cell of the cell range to be in the chart, such as "A1". This is typically the bottom-right cell.</param>
             <param name="RowsAsDataSeries">True if rows contain the data series. False if columns contain the data series.</param>
             <param name="ShowHiddenData">True if hidden data is used in the chart. False otherwise.</param>
-            <returns>An SLChart with the required information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.String,System.String,SpreadsheetLight.Charts.SLCreateChartOptions)">
-            <summary>
-            Creates an instance of SLChart, given cell references of opposite cells in a cell range.
-            </summary>
-            <param name="WorksheetName">The name of the source worksheet.</param>
-            <param name="StartCellReference">The cell reference of the start cell of the cell range to be in the chart, such as "A1". This is typically the top-left cell.</param>
-            <param name="EndCellReference">The cell reference of the end cell of the cell range to be in the chart, such as "A1". This is typically the bottom-right cell.</param>
-            <param name="Options">Chart creation options.</param>
             <returns>An SLChart with the required information.</returns>
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.Int32,System.Int32,System.Int32,System.Int32)">
@@ -739,7 +679,7 @@
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean)">
             <summary>
-            <strong>Obsolete. </strong>Creates an instance of SLChart, given row and column indices of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
+            Creates an instance of SLChart, given row and column indices of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
             </summary>
             <param name="StartRowIndex">The row index of the start row. This is typically the top row.</param>
             <param name="StartColumnIndex">The column index of the start column. This is typically the left-most column.</param>
@@ -747,17 +687,6 @@
             <param name="EndColumnIndex">The column index of the end column. This is typically the right-most column.</param>
             <param name="RowsAsDataSeries">True if rows contain the data series. False if columns contain the data series.</param>
             <param name="ShowHiddenData">True if hidden data is used in the chart. False otherwise.</param>
-            <returns>An SLChart with the required information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.Int32,System.Int32,System.Int32,System.Int32,SpreadsheetLight.Charts.SLCreateChartOptions)">
-            <summary>
-            Creates an instance of SLChart, given row and column indices of opposite cells in a cell range.
-            </summary>
-            <param name="StartRowIndex">The row index of the start row. This is typically the top row.</param>
-            <param name="StartColumnIndex">The column index of the start column. This is typically the left-most column.</param>
-            <param name="EndRowIndex">The row index of the end row. This is typically the bottom row.</param>
-            <param name="EndColumnIndex">The column index of the end column. This is typically the right-most column.</param>
-            <param name="Options">Chart creation options.</param>
             <returns>An SLChart with the required information.</returns>
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
@@ -773,7 +702,7 @@
         </member>
         <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean)">
             <summary>
-            <strong>Obsolete. </strong>Creates an instance of SLChart, given row and column indices of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
+            Creates an instance of SLChart, given row and column indices of opposite cells in a cell range and whether rows or columns contain the data series and if hidden data is used.
             </summary>
             <param name="WorksheetName">The name of the source worksheet.</param>
             <param name="StartRowIndex">The row index of the start row. This is typically the top row.</param>
@@ -783,50 +712,6 @@
             <param name="RowsAsDataSeries">True if rows contain the data series. False if columns contain the data series.</param>
             <param name="ShowHiddenData">True if hidden data is used in the chart. False otherwise.</param>
             <returns>An SLChart with the required information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.CreateChart(System.String,System.Int32,System.Int32,System.Int32,System.Int32,SpreadsheetLight.Charts.SLCreateChartOptions)">
-            <summary>
-            Creates an instance of SLChart, given row and column indices of opposite cells in a cell range.
-            </summary>
-            <param name="WorksheetName">The name of the source worksheet.</param>
-            <param name="StartRowIndex">The row index of the start row. This is typically the top row.</param>
-            <param name="StartColumnIndex">The column index of the start column. This is typically the left-most column.</param>
-            <param name="EndRowIndex">The row index of the end row. This is typically the bottom row.</param>
-            <param name="EndColumnIndex">The column index of the end column. This is typically the right-most column.</param>
-            <param name="Options">Chart creation options.</param>
-            <returns>An SLChart with the required information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.ImportText(System.String,System.String)">
-            <summary>
-            Import a text file as a data source, with the first data row and first data column at a specific cell.
-            </summary>
-            <param name="FileName">The file name.</param>
-            <param name="AnchorCellReference">The anchor cell reference, such as "A1".</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.ImportText(System.String,System.String,SpreadsheetLight.SLTextImportOptions)">
-            <summary>
-            Import a text file as a data source, with the first data row and first data column at a specific cell.
-            </summary>
-            <param name="FileName">The file name.</param>
-            <param name="AnchorCellReference">The anchor cell reference, such as "A1".</param>
-            <param name="Options">Text import options.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.ImportText(System.String,System.Int32,System.Int32)">
-            <summary>
-            Import a text file as a data source, with the first data row and first data column at a specific cell.
-            </summary>
-            <param name="FileName">The file name.</param>
-            <param name="AnchorRowIndex">The row index of the anchor cell.</param>
-            <param name="AnchorColumnIndex">The column index of the anchor cell.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLDocument.ImportText(System.String,System.Int32,System.Int32,SpreadsheetLight.SLTextImportOptions)">
-            <summary>
-            Import a text file as a data source, with the first data row and first data column at a specific cell.
-            </summary>
-            <param name="FileName">The file name.</param>
-            <param name="AnchorRowIndex">The row index of the anchor cell.</param>
-            <param name="AnchorColumnIndex">The column index of the anchor cell.</param>
-            <param name="Options">Text import options.</param>
         </member>
         <member name="M:SpreadsheetLight.SLDocument.ImportDataTable(System.String,System.Data.DataTable,System.Boolean)">
             <summary>
@@ -3873,37 +3758,6 @@
             <param name="BackgroundColorTheme">The theme color to be used for the background.</param>
             <param name="BackgroundColorTint">The tint applied to the background theme color, ranging from -1.0 to 1.0. Negative tints darken the theme color and positive tints lighten the theme color.</param>
         </member>
-        <member name="T:SpreadsheetLight.Charts.SLHighLowLines">
-            <summary>
-            Encapsulates properties and methods for high-low lines.
-            This simulates the DocumentFormat.OpenXml.Drawing.Charts.HighLowLines class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLHighLowLines.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLHighLowLines.Line">
-            <summary>
-            Line properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLHighLowLines.Shadow">
-            <summary>
-            Shadow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLHighLowLines.Glow">
-            <summary>
-            Glow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLHighLowLines.SoftEdge">
-            <summary>
-            Soft edge properties.
-            </summary>
-        </member>
         <member name="T:SpreadsheetLight.Charts.SLAreaChartOptions">
             <summary>
             Chart customization options for area charts.
@@ -3911,23 +3765,7 @@
         </member>
         <member name="M:SpreadsheetLight.Charts.SLAreaChartOptions.#ctor">
             <summary>
-            Initializes an instance of SLAreaChartOptions. It is recommended to use SLChart.CreateAreaChartOptions().
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLAreaChartOptions.Clone">
-            <summary>
-            Clone a new instance of SLAreaChartOptions.
-            </summary>
-            <returns>An SLAreaChartOptions object.</returns>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLAreaChartOptions.HasDropLines">
-            <summary>
-            Indicates if the area chart has drop lines.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLAreaChartOptions.DropLines">
-            <summary>
-            Drop lines properties.
+            Initializes an instance of SLAreaChartOptions.
             </summary>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLAreaChartOptions.GapDepth">
@@ -4658,11 +4496,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.PlotArea class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLPlotArea.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLPlotArea.Fill">
             <summary>
             Fill properties.
@@ -5130,11 +4963,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.MinorGridlines class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLMinorGridlines.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLMinorGridlines.Line">
             <summary>
             Line properties.
@@ -5278,11 +5106,6 @@
         <member name="T:SpreadsheetLight.Charts.SLDataTable">
             <summary>
             Encapsulates properties and methods for setting the data table of charts.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLDataTable.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
             </summary>
         </member>
         <member name="M:SpreadsheetLight.Charts.SLDataTable.SetFont(SpreadsheetLight.SLFont)">
@@ -6069,11 +5892,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.ValueAxis class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLValueAxis.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="M:SpreadsheetLight.Charts.SLValueAxis.SetDisplayUnits(DocumentFormat.OpenXml.Drawing.Charts.BuiltInUnitValues,System.Boolean)">
             <summary>
             Set the display units on the axis.
@@ -6361,11 +6179,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.Floor class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLFloor.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLFloor.Fill">
             <summary>
             Fill properties.
@@ -6389,16 +6202,6 @@
         <member name="P:SpreadsheetLight.Charts.SLFloor.SoftEdge">
             <summary>
             Soft edge properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLFloor.Format3D">
-            <summary>
-            3D format properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLFloor.Rotation3D">
-            <summary>
-            3D rotation properties.
             </summary>
         </member>
         <member name="T:SpreadsheetLight.Charts.SLGroupDataLabelOptions">
@@ -6676,24 +6479,9 @@
             Basis theme with Corbel as both major and minor fonts.
             </summary>
         </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Berlin">
-            <summary>
-            Berlin theme with Trebuchet MS as both major and minor fonts.
-            </summary>
-        </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Celestial">
             <summary>
             Celestial theme with Calibri Light and Calibri as the major and minor fonts respectively.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Circuit">
-            <summary>
-            Circuit theme with Tw Cen MT as both major and minor fonts.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Damask">
-            <summary>
-            Damask theme Bookman Old Style and Rockwell as the major and minor fonts respectively.
             </summary>
         </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Decatur">
@@ -6701,19 +6489,9 @@
             Decatur theme with Bodoni MT Condensed and Franklin Gothic Book as the major and minor fonts respectively.
             </summary>
         </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Depth">
-            <summary>
-            Depth theme with Corbel as both major and minor fonts.
-            </summary>
-        </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Dividend">
             <summary>
             Dividend theme with Gill Sans MT as both major and minor fonts.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Droplet">
-            <summary>
-            Droplet theme with Tw Cen MT as both major and minor fonts.
             </summary>
         </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Frame">
@@ -6729,11 +6507,6 @@
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Macro">
             <summary>
             Macro theme with Calibri as both major and minor fonts.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.MainEvent">
-            <summary>
-            Main Event theme with Impact as both major and minor fonts.
             </summary>
         </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Mesh">
@@ -6771,11 +6544,6 @@
             Sketchbook theme with Cambria as both major and minor fonts.
             </summary>
         </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.Slate">
-            <summary>
-            Slate theme with Calisto MT as both major and minor fonts.
-            </summary>
-        </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.Soho">
             <summary>
             Soho theme with Candara as both major and minor fonts.
@@ -6804,11 +6572,6 @@
         <member name="F:SpreadsheetLight.SLThemeTypeValues.UrbanPop">
             <summary>
             Urban Pop theme with Gill Sans MT as both major and minor fonts.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLThemeTypeValues.VaporTrail">
-            <summary>
-            Vapor Trail theme with Century Gothic as both major and minor fonts.
             </summary>
         </member>
         <member name="F:SpreadsheetLight.SLThemeTypeValues.View">
@@ -7823,11 +7586,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.MajorGridlines class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLMajorGridlines.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLMajorGridlines.Line">
             <summary>
             Line properties.
@@ -7956,170 +7714,10 @@
             Indicates if the merged cell range is valid. This is read-only.
             </summary>
         </member>
-        <member name="T:SpreadsheetLight.Charts.SLUpBars">
-            <summary>
-            Encapsulates properties and methods for up bars.
-            This simulates the DocumentFormat.OpenXml.Drawing.Charts.UpBars class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLUpBars.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.Fill">
-            <summary>
-            Fill properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.Border">
-            <summary>
-            Border properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.Shadow">
-            <summary>
-            Shadow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.Glow">
-            <summary>
-            Glow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.SoftEdge">
-            <summary>
-            Soft edge properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpBars.Format3D">
-            <summary>
-            3D format properties.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.Charts.SLStockChartOptions">
-            <summary>
-            Chart customization options for stock charts.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLStockChartOptions.#ctor">
-            <summary>
-            Initializes an instance of SLStockChartOptions. It is recommended to use SLChart.CreateStockChartOptions().
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.GapWidth">
-            <summary>
-            The gap width between columns as a percentage of column width, ranging between 0% and 500% (both inclusive). The default is 150%.
-            This only applies when there's Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Overlap">
-            <summary>
-            The amount of overlapping for columns, ranging from -100 to 100 (both inclusive). The default is 0.
-            This only applies when there's Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Fill">
-            <summary>
-            Fill properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Border">
-            <summary>
-            Border properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Shadow">
-            <summary>
-            Shadow properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Glow">
-            <summary>
-            Glow properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.SoftEdge">
-            <summary>
-            Soft edge properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.Format3D">
-            <summary>
-            3D format properties for Volume data.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.HasDropLines">
-            <summary>
-            Indicates if the stock chart has drop lines.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.DropLines">
-            <summary>
-            Drop lines properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.HasHighLowLines">
-            <summary>
-            Indicates if the stock chart has high-low lines.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.HighLowLines">
-            <summary>
-            High-low lines properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.HasUpDownBars">
-            <summary>
-            Indicates if the stock chart has up-down bars.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLStockChartOptions.UpDownBars">
-            <summary>
-            Up-down bars properties.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.Charts.SLCreateChartOptions">
-            <summary>
-            General chart customization options on chart creation.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLCreateChartOptions.#ctor">
-            <summary>
-            Initializes an instance of SLCreateChartOptions.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLCreateChartOptions.RowsAsDataSeries">
-            <summary>
-            True if rows contain the data series. False if columns contain the data series.
-            Set to null if SpreadsheetLight is to determine data series orientation.
-            If the number of columns in a given cell range is more than or equal to the
-            number of rows, then it's decided that rows contain data series (else it's columns).
-            The default value is null.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLCreateChartOptions.ShowHiddenData">
-            <summary>
-            True if hidden data is used in the chart. False otherwise.
-            The default value is false.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLCreateChartOptions.IsStylish">
-            <summary>
-            True to use default chart styling from latest version of Excel
-            (but no guarantees on conformity or Excel version). False otherwise.
-            The default value is true.
-            </summary>
-        </member>
         <member name="T:SpreadsheetLight.Charts.SLBackWall">
             <summary>
             Encapsulates properties and methods for setting the back wall of 3D charts.
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.BackWall class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLBackWall.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
             </summary>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLBackWall.Fill">
@@ -8145,16 +7743,6 @@
         <member name="P:SpreadsheetLight.Charts.SLBackWall.SoftEdge">
             <summary>
             Soft edge properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLBackWall.Format3D">
-            <summary>
-            3D format properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLBackWall.Rotation3D">
-            <summary>
-            3D rotation properties.
             </summary>
         </member>
         <member name="T:SpreadsheetLight.SLProtection">
@@ -8822,11 +8410,6 @@
             <summary>
             Encapsulates properties and methods for setting titles for charts.
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.Title class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLTitle.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
             </summary>
         </member>
         <member name="M:SpreadsheetLight.Charts.SLTitle.SetTitle(System.String)">
@@ -10020,27 +9603,6 @@
         <member name="P:SpreadsheetLight.SLWorksheetStatistics.NumberOfColumns">
             <summary>
             Number of columns in the worksheet. This includes empty columns (no cells in that column but a column style was applied, or that column only has empty cells). This is read-only.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.Charts.SLUpDownBars">
-            <summary>
-            Encapsulates properties and methods for up-down bars.
-            This simulates the DocumentFormat.OpenXml.Drawing.Charts.UpDownBars class.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpDownBars.GapWidth">
-            <summary>
-            The gap width between consecutive up-down bars as a percentage of the width of the bar, ranging from 0 to 500 (both inclusive).
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpDownBars.UpBars">
-            <summary>
-            The up bars.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLUpDownBars.DownBars">
-            <summary>
-            The down bars.
             </summary>
         </member>
         <member name="T:SpreadsheetLight.SLDefinedName">
@@ -12375,37 +11937,6 @@
             Distance from the ground, ranging from -2147483648 pt to 2147483647 pt. However, a suggested range is -4000 pt to 4000 pt.
             </summary>
         </member>
-        <member name="T:SpreadsheetLight.Charts.SLDropLines">
-            <summary>
-            Encapsulates properties and methods for drop lines.
-            This simulates the DocumentFormat.OpenXml.Drawing.Charts.DropLines class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLDropLines.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDropLines.Line">
-            <summary>
-            Line properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDropLines.Shadow">
-            <summary>
-            Shadow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDropLines.Glow">
-            <summary>
-            Glow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDropLines.SoftEdge">
-            <summary>
-            Soft edge properties.
-            </summary>
-        </member>
         <member name="T:SpreadsheetLight.SLPaperSizeValues">
             <summary>
             Paper size
@@ -12821,235 +12352,6 @@
             This resets the font styles. Use this when the previous section of text has formatting and the next section of text should have normal font styles.
             </summary>
         </member>
-        <member name="T:SpreadsheetLight.SLTextImportDataFieldTypeValues">
-            <summary>
-            The type of data fields to be imported, whether by delimiters/separators or in fixed width.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportDataFieldTypeValues.Delimited">
-            <summary>
-            Data is separated by character delimiters.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportDataFieldTypeValues.FixedWidth">
-            <summary>
-            Data is separated by fixed width columns.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.SLTextImportColumnFormatValues">
-            <summary>
-            The type of column data format.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.General">
-            <summary>
-            Numeric values will be converted to numbers, date values to dates and remaining values to text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.Text">
-            <summary>
-            Text format.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateMDY">
-            <summary>
-            The value will be parsed as a date in the order of month, day, year.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateDMY">
-            <summary>
-            The value will be parsed as a date in the order of day, month, year.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateYMD">
-            <summary>
-            The value will be parsed as a date in the order of year, month, day.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateMYD">
-            <summary>
-            The value will be parsed as a date in the order of month, year, day.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateDYM">
-            <summary>
-            The value will be parsed as a date in the order of day, year, month.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.DateYDM">
-            <summary>
-            The value will be parsed as a date in the order of year, day, month.
-            Failing that, any given custom date formats will be used to parse the value.
-            Failing that, the value is parse generically as a date.
-            And failing that, the value is set as text.
-            </summary>
-        </member>
-        <member name="F:SpreadsheetLight.SLTextImportColumnFormatValues.Skip">
-            <summary>
-            This column will be skipped.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.SLTextImportOptions">
-            <summary>
-            Text import options for importing text data.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.#ctor">
-            <summary>
-            Initializes an instance of SLTextImportOptions, and assuming that the data source is character delimited.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.#ctor(SpreadsheetLight.SLTextImportDataFieldTypeValues)">
-            <summary>
-            Initializes an instance of SLTextImportOptions.
-            </summary>
-            <param name="DataFieldType">Whether the data source is character delimited or of fixed width.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.SetColumnFormat(System.Int32,SpreadsheetLight.SLTextImportColumnFormatValues)">
-            <summary>
-            Set the column data format type.
-            </summary>
-            <param name="ColumnIndex">The column index in the data source. This is 1-based indexing, so it's 1 for the 1st data source column, 2 for the 2nd data source column and so on.</param>
-            <param name="ColumnFormat">The column data format type.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.SkipColumn(System.Int32)">
-            <summary>
-            Skip a particular data source column. This is equivalent to using the SetColumnFormat() function with a Skip data format type.
-            </summary>
-            <param name="ColumnIndex">The data source column to skip. This is 1-based indexing, so it's 1 for the 1st data source column, 2 for the 2nd data source column and so on.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.ClearColumnFormats">
-            <summary>
-            Clear all column data formats. This is effectively making all columns to be of General type.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.AddCustomDateFormat(System.String)">
-            <summary>
-            Add custom date formats (this is the .NET date format code, not Excel's format code).
-            This is used to parse any date data into a date, and is done first before trying other
-            generic date parsing operations.
-            </summary>
-            <param name="Format"></param>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.ClearCustomDateFormats">
-            <summary>
-            Clear all custom date formats.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.SetFixedWidth(System.Int32,System.Int32)">
-            <summary>
-            Set the width of a column in number of characters for separating data columns.
-            This is used when the data source is specified as of fixed width.
-            If no width is specified, the DefaultFixedWidth is used.
-            </summary>
-            <param name="ColumnIndex">The column index of the data source. This is 1-based indexing, so it's 1 for the 1st data source column, 2 for the 2nd data source column and so on.</param>
-            <param name="ColumnWidth">The column width in number of characters.</param>
-        </member>
-        <member name="M:SpreadsheetLight.SLTextImportOptions.Clone">
-            <summary>
-            Clone an instance of SLTextImportOptions.
-            </summary>
-            <returns>An SLTextImportOptions object.</returns>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.DataFieldType">
-            <summary>
-            Indicates if fields are separated by character delimiters or are of fixed width.
-            The default is Delimited.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.DefaultFixedWidth">
-            <summary>
-            The default number of characters when columns are of fixed width.
-            If no width is set for a column, this will be used. By default, this is 8 characters.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.UseTabDelimiter">
-            <summary>
-            Indicates if a tab character is a delimiter. By default, this is true.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.UseSemicolonDelimiter">
-            <summary>
-            Indicates if a semicolon is a delimiter. By default, this is false.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.UseCommaDelimiter">
-            <summary>
-            Indicates if a comma is a delimiter. By default, this is false.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.UseSpaceDelimiter">
-            <summary>
-            Indicates if a space character is a delimiter. By default, this is false.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.UseCustomDelimiter">
-            <summary>
-            Indicates if a custom character is used as a delimiter. By default, this is false. Use the CustomDelimiter property to set the custom delimiter character.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.CustomDelimiter">
-            <summary>
-            The custom delimiter character. This is used only when UseCustomDelimiter is true.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.MergeDelimiters">
-            <summary>
-            Indicates if consecutive delimiters are treated as one.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.HasTextQualifier">
-            <summary>
-            Indicates if data enclosed within text qualifiers is taken as text.
-            The default is true.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.TextQualifier">
-            <summary>
-            Data enclosed within this qualifier will automatically be taken as text. The text qualifier
-            will be removed. The default is the double quote character.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.ImportStartRowIndex">
-            <summary>
-            The row in the text data source to begin importing.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.Culture">
-            <summary>
-            The culture used for parsing numbers and dates. The default is the InvariantCulture.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.NumberStyles">
-            <summary>
-            The number styles used for parsing numeric data. The default is NumberStyles.Any.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.Encoding">
-            <summary>
-            The encoding used to read the data source. The default is Encoding.Default.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.SLTextImportOptions.PreserveSpace">
-            <summary>
-            Indicates if space characters in the data source are preserved (after data column separation by delimiters). By default, this is true.
-            </summary>
-        </member>
         <member name="T:SpreadsheetLight.SLRun">
             <summary>
             Encapsulates properties and methods for rich text runs. This simulates the DocumentFormat.OpenXml.Spreadsheet.Run class.
@@ -13328,11 +12630,6 @@
             DocumentFormat.OpenXml.Drawing.Charts.ValueAxis classes.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLTextAxis.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="M:SpreadsheetLight.Charts.SLTextAxis.SetAsCategoryAxis">
             <summary>
             Set this axis as a category axis. WARNING: This only works if it's a category/date axis. This fails if it's already a value axis.
@@ -13470,12 +12767,6 @@
         <member name="P:SpreadsheetLight.Charts.SLTextAxis.CrossBetween">
             <summary>
             This sets how the axis crosses regarding the tick marks (or position of the axis). Use Between for "between tick marks", and MidpointCategory for "on tick marks".
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLTextAxis.NoMultiLevelLabels">
-            <summary>
-            Indicates if labels are shown as flat text. If false, then the labels are shown as a hierarchy.
-            This is used only for category axes. The default is true.
             </summary>
         </member>
         <member name="T:SpreadsheetLight.SLBorder">
@@ -14401,7 +13692,7 @@
             Left Middle
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Drawing.SLShapeProperties.ToCShapeProperties(System.Boolean)">
+        <member name="M:SpreadsheetLight.Drawing.SLShapeProperties.ToCShapeProperties">
             <summary>
             This is for C.ShapeProperties
             </summary>
@@ -14416,11 +13707,6 @@
             <summary>
             Encapsulates properties and methods for setting the side wall of 3D charts.
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.SideWall class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLSideWall.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
             </summary>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLSideWall.Fill">
@@ -14446,16 +13732,6 @@
         <member name="P:SpreadsheetLight.Charts.SLSideWall.SoftEdge">
             <summary>
             Soft edge properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLSideWall.Format3D">
-            <summary>
-            3D format properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLSideWall.Rotation3D">
-            <summary>
-            3D rotation properties.
             </summary>
         </member>
         <member name="T:SpreadsheetLight.SLTotalsRowFunctionValues">
@@ -14542,11 +13818,6 @@
             </summary>
             <param name="TableColumnIndex">The table column index. For example, 1 for the 1st table column, 2 for the 2nd table column and so on.</param>
             <param name="SortAscending">True to sort in ascending order. False to sort in descending order.</param>
-        </member>
-        <member name="P:SpreadsheetLight.SLTable.HasAutoFilter">
-            <summary>
-            Indicates if the table has auto-filter.
-            </summary>
         </member>
         <member name="P:SpreadsheetLight.SLTable.DisplayName">
             <summary>
@@ -14928,7 +14199,7 @@
         </member>
         <member name="T:SpreadsheetLight.Charts.SLStockChartType">
             <summary>
-            Built-in stock chart types.
+            Not supported yet. TODO!
             </summary>
         </member>
         <member name="F:SpreadsheetLight.Charts.SLStockChartType.HighLowClose">
@@ -15320,19 +14591,6 @@
             <param name="ChartType">A built-in bubble chart type.</param>
             <param name="Options">Chart customization options.</param>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLChart.SetChartType(SpreadsheetLight.Charts.SLStockChartType)">
-            <summary>
-            Set a stock chart using one of the built-in stock chart types.
-            </summary>
-            <param name="ChartType">A built-in stock chart type.</param>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLChart.SetChartType(SpreadsheetLight.Charts.SLStockChartType,SpreadsheetLight.Charts.SLStockChartOptions)">
-            <summary>
-            Set a stock chart using one of the built-in stock chart types.
-            </summary>
-            <param name="ChartType">A built-in stock chart type.</param>
-            <param name="Options">Chart customization options.</param>
-        </member>
         <member name="M:SpreadsheetLight.Charts.SLChart.SetChartType(SpreadsheetLight.Charts.SLDoughnutChartType)">
             <summary>
             Set a doughnut chart using one of the built-in doughnut chart types.
@@ -15505,29 +14763,11 @@
             Hide the secondary value axis. This has no effect if the chart has no secondary axes.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLChart.CreateAreaChartOptions">
-            <summary>
-            Creates an instance of SLAreaChartOptions with theme information.
-            </summary>
-            <returns>An SLAreaChartOptions object with theme information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLChart.CreateLineChartOptions">
-            <summary>
-            Creates an instance of SLLineChartOptions with theme information.
-            </summary>
-            <returns>An SLLineChartOptions object with theme information.</returns>
-        </member>
         <member name="M:SpreadsheetLight.Charts.SLChart.CreatePieChartOptions">
             <summary>
             Creates an instance of SLPieChartOptions with theme information.
             </summary>
-            <returns>An SLPieChartOptions object with theme information.</returns>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLChart.CreateStockChartOptions">
-            <summary>
-            Creates an instance of SLStockChartOptions with theme information.
-            </summary>
-            <returns>An SLStockChartOptions object with theme information.</returns>
+            <returns>An SLPieChartOptions class with theme information.</returns>
         </member>
         <member name="M:SpreadsheetLight.Charts.SLChart.PlotDataSeriesAsDoughnutChart(System.Int32,SpreadsheetLight.Charts.SLDoughnutChartType)">
             <summary>
@@ -15784,12 +15024,6 @@
             <param name="DataPointIndex">The index of the data point. This is 1-based indexing, so it's 1 for the 1st data point, 2 for the 2nd data point and so on.</param>
             <param name="Options">Data point customization options.</param>
         </member>
-        <member name="P:SpreadsheetLight.Charts.SLChart.IsStylish">
-            <summary>
-            True if follow latest Excel styling defaults (but no guarantees because I might not
-            be able to afford to keep buying latest Office/Excel).
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLChart.RoundedCorners">
             <summary>
             Specifies whether the chart has rounded corners. In Microsoft Excel, you might find this setting under "Border Styles" when formatting the chart area.
@@ -15798,11 +15032,6 @@
         <member name="P:SpreadsheetLight.Charts.SLChart.ShowEmptyCellsAs">
             <summary>
             The default is to show empty cells with a gap (or whichever option is appropriate for the chart). Note that "Zero" and "Span" are used mostly for line, scatter and radar charts. Use "Zero" to force a zero value, and "Span" to connect data points across the empty cell.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLChart.ShowDataLabelsOverMaximum">
-            <summary>
-            Indicates whether data labels over the maximum value of the chart is shown. The default value is true.
             </summary>
         </member>
         <member name="P:SpreadsheetLight.Charts.SLChart.Perspective">
@@ -16275,11 +15504,6 @@
             This simulates the DocumentFormat.OpenXml.Drawing.Charts.Legend class.
             </summary>
         </member>
-        <member name="M:SpreadsheetLight.Charts.SLLegend.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
         <member name="P:SpreadsheetLight.Charts.SLLegend.LegendPosition">
             <summary>
             The position of the legend.
@@ -16313,47 +15537,6 @@
         <member name="P:SpreadsheetLight.Charts.SLLegend.SoftEdge">
             <summary>
             Soft edge properties.
-            </summary>
-        </member>
-        <member name="T:SpreadsheetLight.Charts.SLDownBars">
-            <summary>
-            Encapsulates properties and methods for down bars.
-            This simulates the DocumentFormat.OpenXml.Drawing.Charts.DownBars class.
-            </summary>
-        </member>
-        <member name="M:SpreadsheetLight.Charts.SLDownBars.ClearShapeProperties">
-            <summary>
-            Clear all styling shape properties. Use this if you want to start styling from a clean slate.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.Fill">
-            <summary>
-            Fill properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.Border">
-            <summary>
-            Border properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.Shadow">
-            <summary>
-            Shadow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.Glow">
-            <summary>
-            Glow properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.SoftEdge">
-            <summary>
-            Soft edge properties.
-            </summary>
-        </member>
-        <member name="P:SpreadsheetLight.Charts.SLDownBars.Format3D">
-            <summary>
-            3D format properties.
             </summary>
         </member>
     </members>
