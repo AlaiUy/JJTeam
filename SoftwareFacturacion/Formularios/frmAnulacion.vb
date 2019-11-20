@@ -93,7 +93,7 @@ Public Class frmAnulacion
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
         'Dim objfd As DevolucionContado()
 
-        'GesDocumentos.getInstance.GesFacturar(objfd, objF.Z)
+        GesDocumentos.getInstance.GesFacturar(objfd, objF.Z)
     End Sub
 
     Private Sub dgridfactura_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellContentClick
