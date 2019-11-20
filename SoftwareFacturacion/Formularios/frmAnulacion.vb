@@ -91,7 +91,7 @@ Public Class frmAnulacion
     End Function
 
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
-        'Dim objfd As DevolucionContado()
+        Dim objfd As DevolucionContado()
 
         GesDocumentos.getInstance.GesFacturar(objfd, objF.Z)
     End Sub
