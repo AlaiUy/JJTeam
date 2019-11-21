@@ -91,9 +91,11 @@ Public Class frmAnulacion
     End Function
 
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
-        'Dim objfd As DevolucionContado()
+        Dim objc As Caja = GesCajas.getInstance().Caja
+        Dim objfd As New DevolucionContado(0, 0, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)
+        'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
-        'GesDocumentos.getInstance.GesFacturar(objfd, objF.Z)
+        GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
     End Sub
 
     Private Sub dgridfactura_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellContentClick
