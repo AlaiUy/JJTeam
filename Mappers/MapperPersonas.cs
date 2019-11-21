@@ -542,5 +542,20 @@ namespace JJ.Mappers
             }
             return P;
         }
+
+        public object Cuentas()
+        {
+            DataTable DT;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT ISNULL(CONVERT(VARCHAR(8),CODIGO),'') CODIGO, ISNULL(DOCUMENTO,'') AS DOCUMENTO,ISNULL(NOMBRE,'') NOMBRE,ISNULL(DIRECCION,'') AS DIRECCION,ISNULL(CONVERT(VARCHAR(9),TELEFONO),'') AS TELEFONO FROM  CLIENTESCONTADO", (SqlConnection)Con))
+                {
+                    DT = new DataTable();
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
     }
 }

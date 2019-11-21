@@ -96,6 +96,7 @@ Public Class frmAnulacion
         'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
         GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
+
     End Sub
 
     Private Sub dgridfactura_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellContentClick

@@ -11,6 +11,7 @@ namespace JJ.Entidades
         
         public Esperalin(Articulo xobjArticulo, String xDescripcion, Decimal xCantidad, Decimal xDescuento, int xNumLinea):base(xobjArticulo,xDescripcion,xCantidad,xDescuento,xNumLinea)
         {
+
             
         }
 

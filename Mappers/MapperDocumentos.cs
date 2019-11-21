@@ -13,27 +13,23 @@ namespace JJ.Mappers
 {
     public class MapperDocumentos : DataAccess, IMapperDocumentos
     {
-
         //NUMERO DOCUMENTO 1 = CONTADO
         //NUMERO DOCUMENTO 2 = CREDITO
         //NUMERO DOCUMENTO 20 = COMPRAS
         //NUMERO DOCUMENTO 3 = DEV.CONTADO
         //NUMERO DOCUMENTO 4 = NOTA CREDITO
-
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
                 return true;
             if (xObject is VentaContado)
-
                 Facturar(xObject, 1, new MapperPrecios().getCotizacion(2));
-
             if (xObject is EsperaContado)
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
                 FacturarCompra(xObject);
-
-
+            if(xObject is DevolucionContado)
+                Facturar(xObject,3, new MapperPrecios().getCotizacion(2));
             return true;
         }
 
@@ -54,7 +50,6 @@ namespace JJ.Mappers
                     //Actualizo el precio en la tabla articulos
                     UpdatePreciosArticulos(C, Con, Tran);
                     // Agrego el historial del articulo.
-
                     Tran.Commit();
                 }
             }
@@ -540,15 +535,18 @@ namespace JJ.Mappers
 
                         else if (F is DevolucionContado)
                         {
-                            Com.CommandText = "INSERT INTO VENTASCONTADO(NUMERO, SERIE, CLIENTECONTADO) VALUES (@NUMERO,@CODSERIE,@CLIENTE)";
+                            Com.CommandText = "INSERT INTO DEVCONTADO(SERIE, NUMERO, FECHA,SERIEANULA,NUMEROANULA) VALUES (@SERIE,@NUMERO,@FECHA,@SERIEANULA,@NUMEROANULA)";
 
-                            Com.Parameters.Add(new SqlParameter("@CLIENTE", ((DevolucionContado)F).Cliente.Codigo));
+                            Com.Parameters.Add(new SqlParameter("@SERIE", ((DevolucionContado)F).Serie));
+                            Com.Parameters.Add(new SqlParameter("@NUMERO", ((DevolucionContado)F).Numero));
+                            Com.Parameters.Add(new SqlParameter("@FECHA", ((DevolucionContado)F).Fecha)); 
+                            Com.Parameters.Add(new SqlParameter("@SERIEANULA", ((DevolucionContado)F).SerieReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
+                            Com.Parameters.Add(new SqlParameter("@NUMEROANULA", ((DevolucionContado)F).NumeroReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
                             ExecuteNonQuery(Com);
 
-                            Com.CommandText = "UPDATE VENTAS SET CODSERIEANULA=@CODSERIEANULA, CODNUMEROANULA=@CODNUMEROANULA WHERE NUMERO=@NUMERO AND CODSERIE=@SERIE";
-                            Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", ((DevolucionContado)F).SerieReferencia));
-                            Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", ((DevolucionContado)F).NumeroReferencia));
-                            ExecuteNonQuery(Com);
+                           
+
+
 
 
 
@@ -572,7 +570,7 @@ namespace JJ.Mappers
 
 
                     }
-                    AddLineasFactura(F.Lineas, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
+                    AddLineasFactura(F, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
                     AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
                     DescontarStock(F.Lineas, Con, Tran);
 
@@ -763,12 +761,24 @@ namespace JJ.Mappers
             return (ClienteContado)new MapperPersonas().getClienteContadobyID(ClC);
         }
 
-        private void AddLineasFactura(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie, decimal xcotizacion)
+        private void AddLineasFactura(object xFactura, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie, decimal xcotizacion)
         {
-            foreach (object L in lineas)
+            string Query="";
+
+            if (xFactura is VentaContado)
             {
-                VentaLin VL = (VentaLin)L;
-                using (SqlCommand Com = new SqlCommand("INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO,@REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO,@IVA)", (SqlConnection)xCon))
+                Query = "INSERT INTO VENTASLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO, @REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO, @IVA)";
+            }
+
+            if (xFactura is DevolucionContado)
+            {
+                Query = "INSERT INTO DEVCONTADOLIN (CODSERIE, NUMERO, LINEA, CODARTICULO, REFERENCIA, DESCRIPCION, CANTIDAD, PRECIO, DTO, IVA) VALUES(@CODSERIE, @NUMERO, @LINEA, @CODARTICULO, @REFERENCIA, @DESCRIPCION, @CANTIDAD, @PRECIO, @DTO, @IVA)";
+            }
+
+            foreach (object L in ((Documento)xFactura).Lineas)
+            {
+                Linea VL = (Linea)L;
+                using (SqlCommand Com = new SqlCommand(Query, (SqlConnection)xCon))
                 {
                     //FALTA EN VENTALIN PONER ATRIBUTOS
                     Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
@@ -787,6 +797,7 @@ namespace JJ.Mappers
             }
         }
 
+        
         private void AddLineasEntrega(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
         {
             foreach (object L in lineas)

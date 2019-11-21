@@ -19,20 +19,29 @@ namespace JJ.Gestoras
         public void GesFacturar(object xObjFactura, int xZ)
         {
             if(xObjFactura == null)
-                throw new Exception("La factura no es valida");
+                throw new Exception("Documento no valido");
 
-            VentaContado F = (VentaContado)xObjFactura;
-
-
-            if (F.Caja.Length != 3)
-                throw new Exception("La caja ingresada no es valida");
-
-            if (F.Vendedor < 1)
-                throw new Exception("El vendedor ingresado no es valido");
+            if (xObjFactura is VentaContado)
+            {
+                VentaContado F = (VentaContado)xObjFactura;
 
 
+                if (F.Caja.Length != 3)
+                    throw new Exception("La caja ingresada no es valida");
 
-            
+                if (F.Vendedor < 1)
+                    throw new Exception("El vendedor ingresado no es valido");
+            }
+
+            if (xObjFactura is DevolucionContado)
+            {
+                DevolucionContado D = (DevolucionContado)xObjFactura;
+                if (D.Caja.Length != 3)
+                    throw new Exception("La caja ingresada no es valida");
+
+                if (D.Vendedor < 1)
+                    throw new Exception("El vendedor ingresado no es valido");
+            }
 
             _DBDocumentos.Add(xObjFactura);
         }

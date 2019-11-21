@@ -293,6 +293,11 @@ namespace JJ.Gestoras
             return _DBPersonas.getAllClientes(true);
         }
 
+        public object TablaCuentas()
+        {
+            return _DBPersonas.Cuentas();
+        }
+
         public ClienteContado getClienteContadoByID(string xCodCLienteContado)
         {
             return (ClienteContado)_DBPersonas.getClienteContadobyID(xCodCLienteContado);
