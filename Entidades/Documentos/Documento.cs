@@ -282,7 +282,7 @@ namespace JJ.Entidades
         {
             decimal zSuma = 0;
             foreach (Linea L in _Lineas)
-                zSuma += L.SubTotal();
+                                 zSuma += L.SubTotal();
             return zSuma;
         }
 

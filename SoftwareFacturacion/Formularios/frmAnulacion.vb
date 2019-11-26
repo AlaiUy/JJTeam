@@ -10,6 +10,7 @@ Public Class frmAnulacion
             MostrarEnTabla()
             Me.txtNombre.Text = objF.Cliente.Nombre
             Me.txtTotal.Text = objF.Subtotal + objF.IvaTotal
+            ControlDevolucion()
         Else
             MsgBox("Ingrese los valores", MsgBoxStyle.Information)
         End If
@@ -24,6 +25,27 @@ Public Class frmAnulacion
 
     Private Sub frmAnulacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.txtSerie.Text = "NH1C"
+    End Sub
+
+
+    Public Sub ControlDevolucion()
+        txtTotalAnulacion.Text = "0"
+        Dim A As Decimal = "0"
+        Dim B As Decimal
+        For i As Integer = 0 To dgridfactura.Rows.Count - 1
+            If IsDBNull(dgridfactura.Rows(i).Cells("CANTIDAD A ANULAR").Value) Then
+                A = 0
+            Else
+                A = dgridfactura.Rows(i).Cells("CANTIDAD A ANULAR").Value
+            End If
+
+            B = objF.Lineas(i).TotalConDescuentoDevolucion(A)
+            'B = Convert.ToString(DataGridView1.Rows(i).Cells("PRECIO UNITARIO CON IVA").Value * (1 + (DataGridView1.Rows(i).Cells("DTO").Value / 100))).Split(" ")
+            'MsgBox(DataGridView1.Rows(i).Cells("PRECIO UNITARIO CON IVA").Value)
+            txtTotalAnulacion.Text = Convert.ToDecimal(txtTotalAnulacion.Text) + B
+
+        Next
+        txtTotalAnulacion.Text = Decimal.Round(Convert.ToDecimal(txtTotalAnulacion.Text), 2)
     End Sub
 
     Public Sub MostrarEnTabla()
@@ -90,12 +112,31 @@ Public Class frmAnulacion
         Return Decimal.Round(xvalor, 2)
     End Function
 
+    Public Function controllineas() As List(Of Linea)
+
+        Dim XLIST As New List(Of Linea)
+        For Each a As Linea In objF.Lineas
+
+            XLIST.Add(a)
+        Next
+        Return XLIST
+    End Function
+
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
         Dim objc As Caja = GesCajas.getInstance().Caja
-        Dim objfd As New DevolucionContado(0, 0, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)
-        'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
 
-        GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
+        Dim objfd As New DevolucionContado(0, objc.getSerieByID(3).Serie, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)
+        objfd.Lineas = controllineas()
+        'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
+        Try
+            GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
+            objF = Nothing
+            MostrarEnTabla()
+            Me.txtNumero.Text = ""
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
 
     End Sub
 
@@ -106,12 +147,15 @@ Public Class frmAnulacion
     Private Sub dgridfactura_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgridfactura.DataError
         MsgBox("Ingrese un dato correcto, tiene que ser numerico", MsgBoxStyle.Information, "-Informacion-")
         dgridfactura.Item((dgridfactura.Columns.Count - 1), e.RowIndex).Value = 0
+        ControlDevolucion()
 
     End Sub
 
     Private Sub dgridfactura_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellValueChanged
         If dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value > (dgridfactura.CurrentRow.Cells("CANTIDAD").Value) Or dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value < 0 Then
             dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value = dgridfactura.CurrentRow.Cells("CANTIDAD").Value
+
         End If
+        ControlDevolucion()
     End Sub
 End Class

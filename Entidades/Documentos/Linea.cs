@@ -175,6 +175,12 @@ namespace JJ.Entidades
 
             return (this._objArticulo.Precio() ) * _Cantidad;
         }
+
+        public virtual decimal TotalSinIvaDevolucion(decimal xcan) //Total con iva
+        {
+
+            return (this._objArticulo.Precio()) * xcan;
+        }
         //public virtual decimal TotalconIva(int codmoneda, decimal xcotizacion)  //Total con iva
         //{
         //    if (_objArticulo.CodMoneda == codmoneda)
@@ -203,14 +209,28 @@ namespace JJ.Entidades
             //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
         }
 
+
+        public virtual decimal TotalConDescuentoDevolucion(decimal xcan) //Total Con descuento
+        {
+            if (_Descuento < 0)
+            {
+
+                return (TotalSinIvaDevolucion(xcan) * (1 + (-_Descuento) / 100)) * (1 + (_objArticulo.Iva.Valor / 100));
+            }
+            else
+            {
+                return (TotalSinIvaDevolucion(xcan) / (1 + (_Descuento) / 100)) * (1 + (_objArticulo.Iva.Valor / 100));
+            }
+            //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
+        }
         //public virtual decimal TotalConDescuento(int codmoneda, decimal xcotizacion) //Total Con descuento
         //{
-            
-            
+
+
         //        return (TotalconIva(codmoneda,xcotizacion) * ((100 - _Descuento) / 100));
 
-            
-       
+
+
 
         //    //((this._objArticulo.Precio() * (1 + (this._objArticulo.Iva / 100))) * ((100 - _Descuento) / 100)) * _Cantidad;
         //}

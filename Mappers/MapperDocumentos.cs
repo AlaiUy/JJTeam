@@ -535,11 +535,11 @@ namespace JJ.Mappers
 
                         else if (F is DevolucionContado)
                         {
-                            Com.CommandText = "INSERT INTO DEVCONTADO(SERIE, NUMERO, FECHA,SERIEANULA,NUMEROANULA) VALUES (@SERIE,@NUMERO,@FECHA,@SERIEANULA,@NUMEROANULA)";
+                            Com.CommandText = "INSERT INTO DEVCONTADO(SERIE, NUMERO, FECHA,SERIEANULA,NUMEROANULA) VALUES (@SERIE,@NUMERO,@FECHAd,@SERIEANULA,@NUMEROANULA)";
 
                             Com.Parameters.Add(new SqlParameter("@SERIE", ((DevolucionContado)F).Serie));
-                            Com.Parameters.Add(new SqlParameter("@NUMERO", ((DevolucionContado)F).Numero));
-                            Com.Parameters.Add(new SqlParameter("@FECHA", ((DevolucionContado)F).Fecha)); 
+                            //Com.Parameters.Add(new SqlParameter("@NUMEROd", ((DevolucionContado)F).Numero));
+                            Com.Parameters.Add(new SqlParameter("@FECHAd", ((DevolucionContado)F).Fecha)); 
                             Com.Parameters.Add(new SqlParameter("@SERIEANULA", ((DevolucionContado)F).SerieReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
                             Com.Parameters.Add(new SqlParameter("@NUMEROANULA", ((DevolucionContado)F).NumeroReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
                             ExecuteNonQuery(Com);
