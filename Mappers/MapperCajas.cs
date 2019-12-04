@@ -65,8 +65,8 @@ namespace JJ.Mappers
                 {
                     DateTime xFecha = DateTime.Now;
                     Com.Parameters.Add(new SqlParameter("@CAJA",xCaja));
-                    Com.Parameters.Add(new SqlParameter("@FECHA", xFecha.ToShortDateString()));
-                    Com.Parameters.Add(new SqlParameter("@HORA", xFecha.ToShortTimeString()));
+                    Com.Parameters.Add(new SqlParameter("@FECHA",Convert.ToDateTime(xFecha.ToShortDateString())));
+                    Com.Parameters.Add(new SqlParameter("@HORA", Convert.ToDateTime(xFecha.ToShortTimeString())));
                     Com.Parameters.Add(new SqlParameter("@CODMONEDA", xMoneda));
                     Com.Parameters.Add(new SqlParameter("@IMPORTE", xImporte));
                     Com.Parameters.Add(new SqlParameter("@COTIZACION", xCotizacion));

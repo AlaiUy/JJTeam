@@ -28,8 +28,8 @@ namespace JJ.Mappers
                 GuardarEsperaContado(xObject);
             if (xObject is AlbaranCompra)
                 FacturarCompra(xObject);
-            if(xObject is DevolucionContado)
-                Facturar(xObject,3, new MapperPrecios().getCotizacion(2));
+            if (xObject is DevolucionContado)
+                Facturar(xObject, 3, new MapperPrecios().getCotizacion(2));
             return true;
         }
 
@@ -219,7 +219,7 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@fecha", DateTime.Today.ToString("dd/MM/yyyy")));
                     using (IDataReader Reader = ExecuteReader(Com))
                     {
-                      
+
 
                         while (Reader.Read())
                         {
@@ -360,7 +360,7 @@ namespace JJ.Mappers
 
                         while (Reader.Read())
                         {
-                           
+
                             DateTime Fecha = (DateTime)Reader["FECHA"];
                             int xCodVendedor = (int)Reader["CODVENDEDOR"];
 
@@ -370,23 +370,23 @@ namespace JJ.Mappers
                             string XDIRECCIONC = (string)(Reader["DIRECCION"] is DBNull ? string.Empty : Reader["DIRECCION"]);
                             string xtelefonocc = (string)(Reader["TELEFONO"] is DBNull ? string.Empty : Reader["TELEFONO"]);
 
-                            string xdetalle  = (string)(Reader["DETALLE"] is DBNull ? string.Empty : Reader["DETALLE"]);
+                            string xdetalle = (string)(Reader["DETALLE"] is DBNull ? string.Empty : Reader["DETALLE"]);
 
                             string xserie = (string)(Reader["CODSERIE"]);
                             int xnumero = (int)Reader["NUMERO"];
                             string xcodcaja = (string)(Reader["CODCAJA"]);
 
-           
+
                             int XCODMONEDA = (int)Reader["CODMONEDA"];
                             int XZ = (int)Reader["Z"];
                             int xcodvendedor = (int)Reader["CODVENDEDOR"];
-                            decimal xcotizacion= (decimal)Reader["COTIZACION"];
+                            decimal xcotizacion = (decimal)Reader["COTIZACION"];
 
                             VentaContado V = new VentaContado(new ClienteContado(xCliente, xdocumento, XNOMBREC, XDIRECCIONC, xtelefonocc), Fecha, xserie, xcodcaja, XCODMONEDA, XZ, xcodvendedor, xcotizacion, false, 0);
                             V.Numero = xnumero;
                             V.Detalle = xdetalle;
 
-                            V.AgregarLineas(getLineasVentasC(V.Serie,V.Numero));
+                            V.AgregarLineas(getLineasVentasC(V.Serie, V.Numero));
                             ltsVentasC.Add(V);
                         }
                     }
@@ -394,7 +394,7 @@ namespace JJ.Mappers
             }
             return ltsVentasC;
 
-                 }
+        }
 
         private List<Linea> getLineasVentasC(string xSerie, int xNumero)
         {
@@ -412,7 +412,7 @@ namespace JJ.Mappers
                         {
                             string xserie = (string)Reader["CODSERIE"];
                             int xnumero = (int)Reader["NUMERO"];
-                        
+
                             int NumLin = (int)Reader["LINEA"];
                             decimal Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
                             decimal xpreciof = Convert.ToDecimal(Reader["PRECIO"]);
@@ -421,7 +421,7 @@ namespace JJ.Mappers
                             decimal Descuento = Convert.ToDecimal(Reader["DTO"]);
 
                             VentaLin L = new VentaLin(xserie, xnumero, NumLin, A, Descripcion, Cantidad, Descuento);
-                            L.Preciofacturado = xpreciof;                  
+                            L.Preciofacturado = xpreciof;
 
 
                             Lineas.Add(L);
@@ -461,7 +461,7 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
                         Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1, xcotizacion)));
                         Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
-                      
+
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
                         if (F is VentaContado)
@@ -539,12 +539,12 @@ namespace JJ.Mappers
 
                             Com.Parameters.Add(new SqlParameter("@SERIE", ((DevolucionContado)F).Serie));
                             Com.Parameters.Add(new SqlParameter("@NUMERO", ((DevolucionContado)F).Numero));
-                            Com.Parameters.Add(new SqlParameter("@FECHA", ((DevolucionContado)F).Fecha)); 
+                            Com.Parameters.Add(new SqlParameter("@FECHA", ((DevolucionContado)F).Fecha));
                             Com.Parameters.Add(new SqlParameter("@SERIEANULA", ((DevolucionContado)F).SerieReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
                             Com.Parameters.Add(new SqlParameter("@NUMEROANULA", ((DevolucionContado)F).NumeroReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
                             ExecuteNonQuery(Com);
 
-                           
+
 
 
 
@@ -763,7 +763,7 @@ namespace JJ.Mappers
 
         private void AddLineasFactura(object xFactura, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie, decimal xcotizacion)
         {
-            string Query="";
+            string Query = "";
 
             if (xFactura is VentaContado)
             {
@@ -797,7 +797,7 @@ namespace JJ.Mappers
             }
         }
 
-        
+
         private void AddLineasEntrega(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
         {
             foreach (object L in lineas)
@@ -928,6 +928,58 @@ namespace JJ.Mappers
             return DT;
         }
 
+        public object getEntrega(int xNumero, string xSerie)
+        {
+            Entrega E = null;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT TOP 1 FECHA,ENVIO_NOMBRE,ENVIO_DIRECCION,ENVIO_TELEFONO FROM ENTREGA WHERE CODSERIE = @SERIE AND NUMERO = @NUMERO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@SERIE", xSerie));
+                    Com.Parameters.Add(new SqlParameter("@NUMERO", xNumero));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            DateTime Fec = (DateTime)Reader["FECHA"];
+                            string Nom = (string)(Reader["ENVIO_NOMBRE"] is DBNull ? string.Empty : Reader["ENVIO_NOMBRE"]);
+                            string Dir = (string)(Reader["ENVIO_DIRECCION"] is DBNull ? string.Empty : Reader["ENVIO_DIRECCION"]);
+                            string Tel = (string)(Reader["ENVIO_TELEFONO"] is DBNull ? string.Empty : Reader["ENVIO_TELEFONO"]);
+                            E = getEntraLineas(xNumero,xSerie,Fec, Nom, Dir, Tel, Con);
+                        }
+                    }
+                }
+            }
+            return E;
+        }
+
+        private Entrega getEntraLineas(int xNumero,string xSerie,DateTime fec, string nom, string dir, string tel, SqlConnection xCon)
+        {
+            List<EntregaLin> Lineas = new List<EntregaLin>();
+            EntregaLin EL = null;
+
+            using (SqlCommand Com = new SqlCommand("SELECT L.LINEA,L.CANTIDAD,L.ENTREGADO,L.DEVUELTO,L.NOTAC,L.RECIBIDO FROM ENTREGALIN L WHERE L.CODSERIE = @SERIE AND L.NUMERO = @CODIGO", xCon))
+            {
+                Com.Parameters.Add(new SqlParameter("@CODIGO", xNumero));
+                Com.Parameters.Add(new SqlParameter("@SERIE", xSerie));
+                using (IDataReader Reader = ExecuteReader(Com))
+                {
+                    while (Reader.Read())
+                    {
+                        int Linea = (int)Reader["LINEA"];
+                        decimal Cantidad = Convert.ToDecimal(Reader["CANTIDAD"]);
+                        decimal Entregado = Convert.ToDecimal(Reader["ENTREGADO"]);
+                        decimal Dev = Convert.ToDecimal(Reader["DEVUELTO"]);
+                        decimal NotC = Convert.ToDecimal(Reader["NOTAC"]);
+                        decimal Rec = Convert.ToDecimal(Reader["RECIBIDO"]);
+                        EL = new EntregaLin(Linea, Cantidad, Entregado, Dev, NotC);
+                        Lineas.Add(EL);
+                    }
+                }
+            }
+            return new Entrega(xNumero, xSerie, Lineas);
+        }
     }
 }
     
