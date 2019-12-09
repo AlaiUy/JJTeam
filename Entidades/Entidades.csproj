@@ -66,6 +66,8 @@
     <Compile Include="Empresa\Grupo.cs" />
     <Compile Include="Empresa\Iva.cs" />
     <Compile Include="Empresa\Parametro.cs" />
+    <Compile Include="Entrega.cs" />
+    <Compile Include="EntregaLin.cs" />
     <Compile Include="Moneda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedores\Proveedor.cs" />

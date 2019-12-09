@@ -47,6 +47,11 @@ namespace JJ.Gestoras
         }
 
 
+        public Entrega getEntrega(int xNumero, string xSerie)
+        {
+            return (Entrega)_DBDocumentos.getEntrega(xNumero, xSerie);
+        }
+
         public static GesDocumentos getInstance()
         {
             if (_Instance == null)
