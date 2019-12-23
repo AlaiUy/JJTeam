@@ -22,6 +22,22 @@ namespace JJ.Entidades
             }
         }
 
+        public decimal Devuelto
+        {
+            get
+            {
+                return _Devuelto;
+            }
+        }
+
+        public decimal NotaC
+        {
+            get
+            {
+                return _Notac;
+            }
+        }
+
         public EntregaLin(int xLinea, decimal xCantidad, decimal xEntregado, decimal xDevuelto, decimal xNotac)
         {
             _Linea = xLinea;

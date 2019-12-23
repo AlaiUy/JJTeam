@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JJ.Entidades
 {
-    public abstract class Documento
+    public abstract class Documento: ICloneable
     {
         private DateTime _Fecha;
         private string _Serie;
@@ -22,6 +22,7 @@ namespace JJ.Entidades
         private string _env_telefono;
         private string _env_observaciones;
         private bool _presupuesto;
+        
 
 
         public Documento(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion)
@@ -331,7 +332,13 @@ namespace JJ.Entidades
             return zSuma;
         }
 
+        public object Clone()
+        {
+           return this.MemberwiseClone();
+        }
     }
 
+
+   
 
 }

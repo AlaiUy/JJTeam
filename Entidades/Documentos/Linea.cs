@@ -15,6 +15,20 @@ namespace JJ.Entidades
         private int _CodMoneda;
 
         private decimal _preciofacturado;
+        private decimal cantAanular;
+
+        public decimal CantANular
+        {
+            get
+            {
+                return cantAanular;
+            }
+
+            set
+            {
+                cantAanular = value;
+            }
+        }
 
         public Articulo Articulo
         {

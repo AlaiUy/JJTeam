@@ -179,7 +179,116 @@ namespace JJ.Reportes
             RP.ReportSource = rptDoc;
             frmReport.Show();
         }
-        
+
+        public static void DevolucionContado(DevolucionContado xobjF, decimal coti)
+        {
+            DataSet Factura = new DataSet();
+
+            DataTable T = Factura.Tables.Add("Cabecera");
+            DataTable T2 = Factura.Tables.Add("Contado");
+
+
+            T.Columns.Add("RUT");
+            T.Columns.Add("CLIENTE");
+            T.Columns.Add("SUBTOTAL");
+            T.Columns.Add("IVA");
+            T.Columns.Add("TOTAL");
+            T.Columns.Add("ADENDA");
+            T.Columns.Add("DIRECCION");
+            T.Columns.Add("FINAL");
+
+
+            T2.Columns.Add("CODIGO");
+            T2.Columns.Add("NOMBRE");
+            T2.Columns.Add("CANTIDAD");
+            T2.Columns.Add("PRECIO S/IVA");
+
+            DataRow R;
+            R = T.NewRow();
+            R["RUT"] = xobjF.Cliente.Documento;
+            R["DIRECCION"] = xobjF.Env_Direccion;
+            R["ADENDA"] = xobjF.Detalle;
+            R["CLIENTE"] = xobjF.Cliente.Nombre;
+            R["SUBTOTAL"] = Redondear(xobjF.Subtotal(1, coti));
+            R["IVA"] = Redondear(xobjF.IvaTotal(1, coti));
+            R["TOTAL"] = Redondear(xobjF.Subtotal(1, coti) + xobjF.IvaTotal(1, coti));
+            R["DIRECCION"] = xobjF.Cliente.Direccion;
+
+            if (xobjF.Cliente.Documento.Length < 11)
+                R["FINAL"] = "X";
+
+
+
+            if (xobjF.Env_Direccion != "")
+            {
+                R["ADENDA"] = "Serie: " + xobjF.Serie + " Numero: " + xobjF.Numero + "\n" + "Direccion Envio: " + xobjF.Env_Direccion + "\n" + "Comentarios: " + xobjF.Detalle;
+
+            }
+            else if (xobjF.Detalle != "")
+            {
+                R["ADENDA"] = "Serie: " + xobjF.Serie + " Numero: " + xobjF.Numero + "\n" + "Comentarios: " + xobjF.Detalle;
+
+            }
+            else
+            {
+                R["ADENDA"] = "Serie: " + xobjF.Serie + " Numero: " + xobjF.Numero;
+            }
+
+
+
+            T.Rows.Add(R);
+
+            DataRow R2;
+            int Diferencia = (12 - xobjF.Lineas.Count);
+            foreach (VentaLin l in xobjF.Lineas)
+            {
+                R2 = T2.NewRow();
+                if (l.Articulo.CodMoneda == 2)
+                {
+                    R2["PRECIO S/IVA"] = Redondear(l.SubTotal() * coti);
+                }
+                else
+                {
+                    R2["PRECIO S/IVA"] = Redondear(l.SubTotal());
+                }
+                R2["CODIGO"] = l.Articulo.Referencia;
+                R2["NOMBRE"] = l.Descripcion;
+                R2["CANTIDAD"] = l.Cantidad;
+
+                T2.Rows.Add(R2);
+
+
+            }
+
+            while (Diferencia > 0)
+            {
+                R2 = T2.NewRow();
+                R2["CODIGO"] = string.Empty;
+                R2["NOMBRE"] = string.Empty;
+                R2["CANTIDAD"] = string.Empty;
+                R2["PRECIO S/IVA"] = string.Empty;
+                T2.Rows.Add(R2);
+                Diferencia--;
+            }
+
+
+
+
+
+            ReportDocument rptDoc;
+            rptDoc = new DiseñoFacturas.rptContado();
+            //rptDoc = new DiseñoFacturas.rptDiseñoContado();
+            //rptDoc.SetDataSource(xArticulos);
+            rptDoc.SetDataSource(Factura);
+
+
+            frmInforme frmReport = new frmInforme();
+            CrystalReportViewer RP = (CrystalReportViewer)frmReport.Controls["RPViewer"];
+
+            RP.ReportSource = rptDoc;
+            frmReport.Show();
+        }
+
         //public static void ExportExcelVentas(DataTable xData, string xDestino)
         //{
         //    try

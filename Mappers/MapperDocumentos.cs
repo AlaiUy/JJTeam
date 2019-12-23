@@ -446,7 +446,7 @@ namespace JJ.Mappers
                 using (SqlTransaction Tran = Con.BeginTransaction())
                 {
                     int xZ = getNumeroZ(F.Caja);
-                    NumeroFactura = ObtenerNumeroFactura(Con, Tran);
+                    NumeroFactura = ObtenerNumeroFactura(Con, Tran, F.Serie);
                     using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,DETALLE, COTIZACION, SUBTOTAL, IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO,@DETALLE,@COTIZACION,@SUBTOTAL,@IVA)", (SqlConnection)Con))
                     {
                         Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
@@ -539,7 +539,7 @@ namespace JJ.Mappers
 
                             Com.Parameters.Add(new SqlParameter("@SERIE", ((DevolucionContado)F).Serie));
 
-                            Com.Parameters.Add(new SqlParameter("@NUMERO", ((DevolucionContado)F).Numero));
+                            //Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura);
                             Com.Parameters.Add(new SqlParameter("@FECHAd", ((DevolucionContado)F).Fecha)); 
 
                             Com.Parameters.Add(new SqlParameter("@SERIEANULA", ((DevolucionContado)F).SerieReferencia));//CHEQUEAR SI VIENE EL NUMERO DE LA FACTURA A LA QUE ANULA
@@ -554,7 +554,7 @@ namespace JJ.Mappers
 
 
                         }
-                        else if (F is DevolucionCuenta)
+                        else if (F is VentaCuenta)
                         {
                             Com.CommandText = "INSERT INTO VENTASCREDITO(NUMERO, SERIE, CODPERSONA,CODCUENTA,CODTARIFA) VALUES (@NUMERO,@SERIE,@PERSONA,@CUENTA,@TARIFA)";
 
@@ -573,7 +573,10 @@ namespace JJ.Mappers
 
                     }
                     AddLineasFactura(F, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
-                    AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                    if (F is DevolucionCuenta || F is VentaContado){
+                        AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                    }
+                  
                     DescontarStock(F.Lineas, Con, Tran);
 
 
@@ -818,6 +821,32 @@ namespace JJ.Mappers
             }
         }
 
+        // HAY QUE HACER EL UPDATE EN ENTREGASLIN CUANDO HAGO LA DEVOLUCION - COMO ENTREGALIN ES INDEPENDIENTE, NO SE SI LLAMAR LA FUNCION NUEVAMENTE O NO
+        //private void UpdateLineasEntregas(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
+        //{
+        //    foreach (object L in lineas)
+        //    {
+        //        VentaLin VL = (VentaLin)L;
+        //        using (SqlCommand Com = new SqlCommand("UPDATE ENTREGALIN SET ENTREGADO=, DEVUELTO=, RECIBIDO=,NOTAC WHERE CODSERIE=@CODSERIE AND NUMERO=@NUMERO AND LINEA=@LINEA", (SqlConnection)xCon))
+        //        {
+        //            FALTA EN VENTALIN PONER ATRIBUTOS
+        //            Com.Parameters.Add(new SqlParameter("@CODSERIE", xSerie));
+        //            Com.Parameters.Add(new SqlParameter("@NUMERO", xFacturaID));
+        //            Com.Parameters.Add(new SqlParameter("@LINEA", VL.NumLinea));
+
+        //            Com.Parameters.Add(new SqlParameter("@ENTREGADO", ));
+        //            Com.Parameters.Add(new SqlParameter("@DEVUELTO", ));
+        //            Com.Parameters.Add(new SqlParameter("@RECIBIDO", ));
+        //            Com.Parameters.Add(new SqlParameter("@NOTAC", E));
+
+
+        //            Com.Transaction = (SqlTransaction)xTran;
+        //            ExecuteNonQuery(Com);
+        //        }
+        //    }
+        //}
+
+
         private void DescontarStock(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran)
         {
             foreach (object L in lineas)
@@ -834,11 +863,12 @@ namespace JJ.Mappers
             }
         }
 
-        private int ObtenerNumeroFactura(SqlConnection xCon, SqlTransaction xTran)
+        private int ObtenerNumeroFactura(SqlConnection xCon, SqlTransaction xTran,  string serie)
         {
             int numero = 0;
-            using (SqlCommand Com = new SqlCommand("SELECT ISNULL(MAX(NUMERO),0) AS NUMERO FROM VENTAS", (SqlConnection)xCon))
+            using (SqlCommand Com = new SqlCommand("SELECT ISNULL(MAX(NUMERO),0) AS NUMERO FROM VENTAS where codserie=@serienum", (SqlConnection)xCon))
             {
+                Com.Parameters.Add(new SqlParameter("@serienum", serie));
                 Com.Transaction = xTran;
                 numero = Convert.ToInt32(ExecuteScalar(Com));
                 using (IDataReader Reader = ExecuteReader(Com))

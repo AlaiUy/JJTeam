@@ -1,16 +1,27 @@
 ﻿Imports JJ.Entidades
 Imports JJ.Gestoras
+Imports JJ.Reportes
+
 Public Class frmAnulacion
     Private objF As VentaContado
+    Private objEntrega As Entrega
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
         If txtSerie.Text <> "" And txtNumero.Text <> "" Then
             objF = GesDocumentos.getInstance().getVentaDocumento(txtNumero.Text, txtSerie.Text, 1)
-            ''MsgBox(objF.Fecha)
-            MostrarEnTabla()
-            Me.txtNombre.Text = objF.Cliente.Nombre
-            Me.txtTotal.Text = objF.Subtotal + objF.IvaTotal
-            ControlDevolucion()
+
+            If objF Is Nothing Then
+                MsgBox("No se encontro factura", MsgBoxStyle.Information)
+            Else
+                ''MsgBox(objF.Fecha)
+                objEntrega = GesDocumentos.getInstance().getEntrega(txtNumero.Text, txtSerie.Text)
+
+                MostrarEnTabla()
+                Me.txtNombre.Text = objF.Cliente.Nombre
+                Me.txtTotal.Text = Decimal.Round(objF.Subtotal + objF.IvaTotal)
+                ControlDevolucion()
+            End If
+
         Else
             MsgBox("Ingrese los valores", MsgBoxStyle.Information)
         End If
@@ -25,7 +36,10 @@ Public Class frmAnulacion
 
     Private Sub frmAnulacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.txtSerie.Text = "NH1C"
+        Me.txtTotal.Text = 0
+        Me.txtTotalAnulacion.Text = 0
     End Sub
+
 
 
     Public Sub ControlDevolucion()
@@ -55,11 +69,13 @@ Public Class frmAnulacion
         Dim colLin As DataColumn = tTable.Columns.Add("LINEA", Type.GetType("System.Int32"))
 
 
-        Dim ColA As DataColumn = tTable.Columns.Add("CODARTICULO", Type.GetType("System.Int32"))
+        Dim ColA As DataColumn = tTable.Columns.Add("CODARTICULO", Type.GetType("System.String"))
 
         Dim ColD As DataColumn = tTable.Columns.Add("DESCRIPCION", Type.GetType("System.String"))
 
         Dim COLC As DataColumn = tTable.Columns.Add("CANTIDAD", Type.GetType("System.String"))
+
+        Dim COLCANANULADA As DataColumn = tTable.Columns.Add("CANTIDAD_ANULADA", Type.GetType("System.String"))
 
         Dim COLPv As DataColumn = tTable.Columns.Add("P/UNITARIO C/IVA", Type.GetType("System.String"))
 
@@ -77,13 +93,14 @@ Public Class frmAnulacion
                 Dim objf As DataRow = tTable.NewRow()
 
                 objf.Item("LINEA") = objL.NumLinea
-                    objf.Item("CODARTICULO") = objL.Articulo.Referencia
-                    objf.Item("DESCRIPCION") = objL.Descripcion
-                    objf.Item("CANTIDAD") = objL.Cantidad
-                    objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva())
-                    objf.Item("DESCUENTO") = objL.Descuento
-                    objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal())
-                    objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento())
+                objf.Item("CODARTICULO") = objL.Articulo.Referencia
+                objf.Item("DESCRIPCION") = objL.Descripcion
+                objf.Item("CANTIDAD") = objL.Cantidad
+                objf.Item("CANTIDAD ANULADA") = objEntrega.LINEAS(objL.NumLinea).NotaC
+                objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva())
+                objf.Item("DESCUENTO") = objL.Descuento
+                objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal())
+                objf.Item("PRECIO TOTAL") = Redondear(objL.TotalConDescuento())
                 objf.Item("CANTIDAD A ANULAR") = 0
 
 
@@ -113,11 +130,15 @@ Public Class frmAnulacion
     End Function
 
     Public Function controllineas() As List(Of Linea)
-
+        Dim control As Integer = 0
         Dim XLIST As New List(Of Linea)
         For Each a As Linea In objF.Lineas
+            If a.CantANular > 0 Then
+                a.NumLinea = control
+                XLIST.Add(a)
+                control += 1
+            End If
 
-            XLIST.Add(a)
         Next
         Return XLIST
     End Function
@@ -126,13 +147,19 @@ Public Class frmAnulacion
         Dim objc As Caja = GesCajas.getInstance().Caja
 
         Dim objfd As New DevolucionContado(0, objc.getSerieByID(3).Serie, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)
+        ControlCant()
         objfd.Lineas = controllineas()
+
         'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
         Try
             GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
+            GestionReporte.DevolucionContado(objfd, GesPrecios.getInstance.getCotizacion(2))
             objF = Nothing
             MostrarEnTabla()
             Me.txtNumero.Text = ""
+            Me.txtTotal.Text = 0
+            Me.txtTotalAnulacion.Text = 0
+            Me.txtNombre.Text = ""
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -140,8 +167,12 @@ Public Class frmAnulacion
 
     End Sub
 
-    Private Sub dgridfactura_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellContentClick
-
+    Public Sub ControlCant()
+        If dgridfactura.Rows.Count > 0 Then
+            For Each Fila As DataGridViewRow In dgridfactura.Rows
+                objF.Lineas(Fila.Index).CantANular = Fila.Cells("CANTIDAD A ANULAR").Value
+            Next
+        End If
     End Sub
 
     Private Sub dgridfactura_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgridfactura.DataError
@@ -154,8 +185,17 @@ Public Class frmAnulacion
     Private Sub dgridfactura_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellValueChanged
         If dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value > (dgridfactura.CurrentRow.Cells("CANTIDAD").Value) Or dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value < 0 Then
             dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value = dgridfactura.CurrentRow.Cells("CANTIDAD").Value
-
+            objEntrega.Devolver(dgridfactura.CurrentRow.Index, dgridfactura.CurrentRow.Cells("CANTIDAD").Value)
         End If
         ControlDevolucion()
     End Sub
+
+
+    Private Sub txtNumero_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNumero.KeyPress
+        If Not IsNumeric(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+
 End Class

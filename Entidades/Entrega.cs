@@ -12,6 +12,19 @@ namespace JJ.Entidades
         private List<EntregaLin> _Lineas;
 
 
+        public List<EntregaLin> LINEAS
+        {
+            get
+            {
+                return _Lineas;
+            }
+
+            set
+            {
+                _Lineas = value;
+            }
+        }
+
         public Entrega(int xNumero, string xSerie, List<EntregaLin> xLineas)
         {
             _Numero = xNumero;

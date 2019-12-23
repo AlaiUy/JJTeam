@@ -480,7 +480,25 @@ namespace JJ.Mappers
 
         public decimal getDevolucionesContado(string xCaja, int xZ, int xcodmoneda)
         {
-            return 0;
+            decimal total = 0;
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT isnull(SUM(ISNULL(V.SUBTOTAL+V.IVA,0)),0) AS TOTAL  FROM VENTAS AS V INNER JOIN DEVCONTADO AS VC ON V.NUMERO=VC.NUMERO AND V.CODSERIE=VC.SERIE WHERE CODCAJA=@CODCAJA AND Z=@Z AND CODMONEDA=@CODMONEDA ", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@CODCAJA", xCaja));
+                    Com.Parameters.Add(new SqlParameter("@Z", xZ));
+                    Com.Parameters.Add(new SqlParameter("@CODMONEDA", xcodmoneda));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        if (Reader.Read())
+                        {
+                            total = getDatosCierre(Reader);
+                        }
+                    }
+                }
+            }
+            return total;
         }
 
         public decimal getPagos(string xCaja, int xZ, int xcodmoneda)
