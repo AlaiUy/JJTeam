@@ -96,7 +96,7 @@ Public Class frmAnulacion
                 objf.Item("CODARTICULO") = objL.Articulo.Referencia
                 objf.Item("DESCRIPCION") = objL.Descripcion
                 objf.Item("CANTIDAD") = objL.Cantidad
-                objf.Item("CANTIDAD ANULADA") = objEntrega.LINEAS(objL.NumLinea).NotaC
+                objf.Item("CANTIDAD_ANULADA") = objEntrega.getLinea(objL.NumLinea).NotaC
                 objf.Item("P/UNITARIO C/IVA") = Redondear(objL.Articulo.PrecioIva())
                 objf.Item("DESCUENTO") = objL.Descuento
                 objf.Item("IMPORTE DESCUENTO TOTAL") = Redondear(objL.ImporteDescuentoTotal())
@@ -185,7 +185,12 @@ Public Class frmAnulacion
     Private Sub dgridfactura_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgridfactura.CellValueChanged
         If dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value > (dgridfactura.CurrentRow.Cells("CANTIDAD").Value) Or dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value < 0 Then
             dgridfactura.CurrentRow.Cells("CANTIDAD A ANULAR").Value = dgridfactura.CurrentRow.Cells("CANTIDAD").Value
-            objEntrega.Devolver(dgridfactura.CurrentRow.Index, dgridfactura.CurrentRow.Cells("CANTIDAD").Value)
+            Try
+                objEntrega.Devolver(dgridfactura.CurrentRow.Index, dgridfactura.CurrentRow.Cells("CANTIDAD").Value)
+            Catch ex As Exception
+
+            End Try
+
         End If
         ControlDevolucion()
     End Sub
