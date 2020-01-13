@@ -144,6 +144,9 @@ namespace JJ.Entidades
            
         }
 
+
+
+        
         //public virtual decimal SubTotal(int codmoneda, decimal xcotizacion)
         //{
         //    if (_objArticulo.CodMoneda == codmoneda)
@@ -155,7 +158,7 @@ namespace JJ.Entidades
 
         //        return (_objArticulo.Precio()*xcotizacion )* _Cantidad;
         //    }
-            
+
         //}
 
         public virtual decimal Precio() //Con iva

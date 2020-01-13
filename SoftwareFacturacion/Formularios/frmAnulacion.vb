@@ -135,6 +135,7 @@ Public Class frmAnulacion
         For Each a As Linea In objF.Lineas
             If a.CantANular > 0 Then
                 a.NumLinea = control
+                a.Cantidad = a.CantANular
                 XLIST.Add(a)
                 control += 1
             End If
@@ -149,11 +150,13 @@ Public Class frmAnulacion
         Dim objfd As New DevolucionContado(0, objc.getSerieByID(3).Serie, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)
         ControlCant()
         objfd.Lineas = controllineas()
+        objfd.NumeroFacturaAnula = objF.Numero
+        objfd.SerieFacturaAnula = objF.Serie
 
         'Dim objF As New VentaContado(objCC, Date.Today(), objC.getSerieByID(1).Serie, objC.Codigo, CType(Me.cboxMoneda.SelectedItem, Moneda).Codigo, objC.Z, objE.Codvendedor, CType(Me.cboxMoneda.SelectedItem, Moneda).Cotizacion, False, objE.Numero)
         Try
             GesDocumentos.getInstance.GesFacturar(objfd, objfd.Z)
-            GestionReporte.DevolucionContado(objfd, GesPrecios.getInstance.getCotizacion(2))
+            GestionReporte.DevolucionContado(objfd)
             objF = Nothing
             MostrarEnTabla()
             Me.txtNumero.Text = ""

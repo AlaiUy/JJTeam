@@ -22,7 +22,23 @@ namespace JJ.Entidades
         private string _env_telefono;
         private string _env_observaciones;
         private bool _presupuesto;
-        
+        private int _NumeroFacturaAnula;
+        private string _SerieFacturaAnula;
+
+        public  int NumeroFacturaAnula
+
+        {
+            get
+            {
+                return _NumeroFacturaAnula;
+            }
+
+            set
+            {
+                _NumeroFacturaAnula = value;
+            }
+        }
+
 
 
         public Documento(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion)
@@ -278,7 +294,8 @@ namespace JJ.Entidades
             }
         }
 
-      
+        public string SerieFacturaAnula { get => _SerieFacturaAnula; set => _SerieFacturaAnula = value; }
+
         public decimal Subtotal()
         {
             decimal zSuma = 0;
@@ -316,6 +333,17 @@ namespace JJ.Entidades
             return ivaTot;
         }
 
+        public decimal IvaTotalDevolucion(int xcodmoneda)
+        {
+            decimal ivaTot = 0;
+            foreach (Linea L in _Lineas)
+               
+                    ivaTot += L.IvaTotal();
+            
+
+            return ivaTot;
+        }
+
         public decimal Subtotal(int xcodmoneda, decimal xCotizacion)
         {
             decimal zSuma = 0;
@@ -329,6 +357,16 @@ namespace JJ.Entidades
                     zSuma += L.SubTotal()* xCotizacion;
 
                 }
+            return zSuma;
+        }
+
+        public decimal SubtotalDevolucion(int xcodmoneda)
+        {
+            decimal zSuma = 0;
+            foreach (Linea L in _Lineas)
+                
+                    zSuma += L.SubTotal();
+               
             return zSuma;
         }
 

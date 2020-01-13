@@ -447,7 +447,8 @@ namespace JJ.Mappers
                 {
                     int xZ = getNumeroZ(F.Caja);
                     NumeroFactura = ObtenerNumeroFactura(Con, Tran, F.Serie);
-                    using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,DETALLE, COTIZACION, SUBTOTAL, IVA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO,@DETALLE,@COTIZACION,@SUBTOTAL,@IVA)", (SqlConnection)Con))
+                    F.Numero = NumeroFactura;
+                    using (SqlCommand Com = new SqlCommand("INSERT INTO VENTAS(NUMERO, CODSERIE, CODCAJA, FECHA, CODMONEDA, Z, CODVENDEDOR, CODDOCUMENTO,DETALLE, COTIZACION, SUBTOTAL, IVA,CODSERIEANULA,CODNUMEROANULA) VALUES (@NUMERO, @CODSERIE, @CODCAJA, @FECHA, @CODMONEDA, @Z, @CODVENDEDOR, @CODDOCUMENTO,@DETALLE,@COTIZACION,@SUBTOTAL,@IVA,@CODSERIEANULA,@CODNUMEROANULA)", (SqlConnection)Con))
                     {
                         Com.Parameters.Add(new SqlParameter("@NUMERO", NumeroFactura));
                         Com.Parameters.Add(new SqlParameter("@CODSERIE", F.Serie));
@@ -459,8 +460,22 @@ namespace JJ.Mappers
                         Com.Parameters.Add(new SqlParameter("@CODDOCUMENTO", xCodDocumento));
                         Com.Parameters.Add(new SqlParameter("@DETALLE", F.Detalle));
                         Com.Parameters.Add(new SqlParameter("@COTIZACION", F.Cotizacion));
-                        Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1, xcotizacion)));
-                        Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
+
+                      
+                        if (F is DevolucionContado)
+                        {
+                            Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.SubtotalDevolucion(1)));
+                            Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotalDevolucion(1)));
+                            Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", F.SerieFacturaAnula));
+                            Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", F.NumeroFacturaAnula));
+
+                        }
+                        else {
+                            Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1, xcotizacion)));
+                            Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
+                            Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", null));
+                            Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", null));
+                        }
 
                         Com.Transaction = (SqlTransaction)Tran;
                         ExecuteNonQuery(Com);
@@ -575,9 +590,15 @@ namespace JJ.Mappers
                     AddLineasFactura(F, Con, Tran, NumeroFactura, F.Serie, xcotizacion);
                     if (F is DevolucionCuenta || F is VentaContado){
                         AddLineasEntrega(F.Lineas, Con, Tran, NumeroFactura, F.Serie);
+                        DescontarStock(F.Lineas, Con, Tran);
+                    }
+                    else
+                    {
+                        AgregarStock(F.Lineas, Con, Tran);
+                        //aca tengo que llamar la de actualizar entregalin
                     }
                   
-                    DescontarStock(F.Lineas, Con, Tran);
+                   
 
 
                     Tran.Commit();
@@ -822,7 +843,7 @@ namespace JJ.Mappers
         }
 
         // HAY QUE HACER EL UPDATE EN ENTREGASLIN CUANDO HAGO LA DEVOLUCION - COMO ENTREGALIN ES INDEPENDIENTE, NO SE SI LLAMAR LA FUNCION NUEVAMENTE O NO
-        //private void UpdateLineasEntregas(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie)
+        //private void UpdateLineasEntregas(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran, int xFacturaID, string xSerie, List<EntregaLin> lineasEntrega)
         //{
         //    foreach (object L in lineas)
         //    {
@@ -862,6 +883,23 @@ namespace JJ.Mappers
                 }
             }
         }
+
+        private void AgregarStock(List<Linea> lineas, SqlConnection xCon, SqlTransaction xTran)
+        {
+            foreach (object L in lineas)
+            {
+                VentaLin VL = (VentaLin)L;
+                using (SqlCommand Com = new SqlCommand("UPDATE  ARTICULOS set STOCK=(STOCK + @CANTIDAD)  WHERE CODIGO=@CODIGO", (SqlConnection)xCon))
+                {
+                    //FALTA EN VENTALIN PONER ATRIBUTOS
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", VL.Articulo.CodArticulo));
+                    Com.Parameters.Add(new SqlParameter("@CANTIDAD", VL.Cantidad));
+                    Com.Transaction = (SqlTransaction)xTran;
+                    ExecuteNonQuery(Com);
+                }
+            }
+        }
+
 
         private int ObtenerNumeroFactura(SqlConnection xCon, SqlTransaction xTran,  string serie)
         {
