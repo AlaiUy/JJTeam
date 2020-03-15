@@ -294,7 +294,18 @@ namespace JJ.Entidades
             }
         }
 
-        public string SerieFacturaAnula { get => _SerieFacturaAnula; set => _SerieFacturaAnula = value; }
+        public string SerieFacturaAnula
+        {
+            get
+            {
+                return _SerieFacturaAnula;
+            }
+
+            set
+            {
+                _SerieFacturaAnula = value;
+            }
+        }
 
         public decimal Subtotal()
         {
