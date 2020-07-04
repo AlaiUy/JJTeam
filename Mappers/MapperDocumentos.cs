@@ -473,8 +473,8 @@ namespace JJ.Mappers
                         else {
                             Com.Parameters.Add(new SqlParameter("@SUBTOTAL", F.Subtotal(1, xcotizacion)));
                             Com.Parameters.Add(new SqlParameter("@IVA", F.IvaTotal(1, xcotizacion)));
-                            Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", null));
-                            Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", null));
+                            Com.Parameters.Add(new SqlParameter("@CODSERIEANULA", string.Empty));
+                            Com.Parameters.Add(new SqlParameter("@CODNUMEROANULA", -1));
                         }
 
                         Com.Transaction = (SqlTransaction)Tran;
@@ -628,8 +628,15 @@ namespace JJ.Mappers
                 using (SqlCommand Com = new SqlCommand("SELECT ISNULL(CONVERT(INT,MAX(NUMEROZ+1)),1) AS NUMERO FROM ARQUEOS WHERE CODCAJA =@CAJA", (SqlConnection)Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@CAJA", xCaja));
-
-                    Numero = (int)ExecuteScalar(Com);
+                    try
+                    {
+                        Numero = (int)ExecuteScalar(Com);
+                    }
+                    catch (Exception E)
+                    {
+                        Numero = 1;
+                    }
+                    
                 }
             }
             return Numero;
@@ -988,15 +995,36 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT FECHA, NUMERO,CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL GROUP BY FECHA,NUMERO", (SqlConnection)Con))
+                using (SqlCommand Com = new SqlCommand("SELECT FECHA, NUMERO,CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL AND CODDOCUMENTO = @DOC GROUP BY FECHA,NUMERO", (SqlConnection)Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@INICIO", xFechaI));
                     Com.Parameters.Add(new SqlParameter("@FINAL", xFechaF));
+                    Com.Parameters.Add(new SqlParameter("@DOC", 1));
                     DT.Load(ExecuteReader(Com));
                 }
             }
             return DT;
         }
+
+        public object getDevoluciones(DateTime xFechaI, DateTime xFechaF)
+        {
+
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT FECHA, NUMERO,CAST(SUM(SUBTOTAL) AS DECIMAL(18,2)) AS SUBTOTAL, CAST(SUM(IVA) AS DECIMAL(18,2)) AS IVA, CAST(SUM(SUBTOTAL + IVA) AS DECIMAL(18,2)) AS TOTAL FROM VENTAS WHERE FECHA BETWEEN @INICIO AND @FINAL AND CODDOCUMENTO = @DOC GROUP BY FECHA,NUMERO", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@INICIO", xFechaI));
+                    Com.Parameters.Add(new SqlParameter("@FINAL", xFechaF));
+                    Com.Parameters.Add(new SqlParameter("@DOC", 3));
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
+
 
         public object getEntrega(int xNumero, string xSerie)
         {

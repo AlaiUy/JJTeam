@@ -112,6 +112,11 @@ namespace JJ.Gestoras
             return (DataTable)_DBDocumentos.getVentas(xFechaI, xFechaF);
         }
 
+        public DataTable ListadoDevoluciones(DateTime xFechaI, DateTime xFechaF)
+        {
+            return (DataTable)_DBDocumentos.getDevoluciones(xFechaI, xFechaF);
+        }
+
     }
 
 }

@@ -16,6 +16,10 @@ namespace JJ.Interfaces
         object AddSeccion(object xSeccion,object xDepto);
         object getArticuloById(string xArticulo);
         object getVistaArticulos();
+
+        object getVistaArticulosDescatalogados();
+        
+
         void Actualizar(Articulo xArticulo, decimal xGanancia, decimal xCosto);
         void UpdateStock(object xArticulo, decimal xCantidad);
         object getArticuloByRef(string xCodigo);

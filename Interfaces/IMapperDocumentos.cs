@@ -17,6 +17,9 @@ namespace JJ.Interfaces
         Documento getFacturaByID(string xSerie, int Numero, TipoLineas xTipo);
         object getVentas(DateTime xFechaI, DateTime xFechaF);
 
+        object getDevoluciones(DateTime xFechaI, DateTime xFechaF);
+
+
         object getEntrega(int xNumero, string xSerie);
 
         //object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo);

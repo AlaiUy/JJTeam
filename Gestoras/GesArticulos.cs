@@ -83,6 +83,11 @@ namespace JJ.Gestoras
             return (DataTable)DBArticulos.getVistaArticulos();
         }
 
+        public DataTable getVistaArticulosOff()
+        {
+            return (DataTable)DBArticulos.getVistaArticulosDescatalogados();
+        }
+
         public void Descatalogar(int xCodArticulo)
         {
 

@@ -145,6 +145,7 @@ Public Class frmAnulacion
     End Function
 
     Private Sub btnAnular_Click(sender As Object, e As EventArgs) Handles btnAnular.Click
+
         Dim objc As Caja = GesCajas.getInstance().Caja
 
         Dim objfd As New DevolucionContado(0, objc.getSerieByID(3).Serie, objF.Caja, Date.Today, objF.Moneda, objc.Z, objF.Vendedor, objF.Cotizacion, 0, objF.Serie, objF.Numero, objF.Cliente)

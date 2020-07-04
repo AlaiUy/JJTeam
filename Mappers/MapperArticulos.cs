@@ -369,6 +369,20 @@ namespace JJ.Mappers
             return DT;
         }
 
+        public object getVistaArticulosDescatalogados()
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM dbo.JL_ARTICULOSDES", (SqlConnection)Con))
+                {
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
+
         public void Actualizar(Articulo xA, decimal xGanancia, decimal xCosto)
         {
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
