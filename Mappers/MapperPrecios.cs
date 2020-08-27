@@ -12,7 +12,7 @@ namespace JJ.Mappers
 {
     public class MapperPrecios : DataAccess, IMapperPrecios
     {
-        
+
         public bool Add(object xObject)
         {
             throw new NotImplementedException();
@@ -57,8 +57,6 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-
-
                 using (SqlCommand Com = new SqlCommand("SELECT ISNULL(dbo.getCotizacion(@MONEDA),1) AS COTIZACION", Con))
                 {
                     Com.Parameters.Add(new SqlParameter("@MONEDA", xCodMoneda));
@@ -68,11 +66,9 @@ namespace JJ.Mappers
                         {
                             Cotizacion = (decimal)Reader["COTIZACION"];
                         }
-
-
+                    }
                 }
-                }
-                 }
+            }
             return Cotizacion;
         }
 
@@ -107,7 +103,7 @@ namespace JJ.Mappers
             }
             return Tarifas;
 
-            
+
         }
 
         public bool Remove(object xObject)

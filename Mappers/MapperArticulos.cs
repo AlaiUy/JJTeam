@@ -244,11 +244,11 @@ namespace JJ.Mappers
             string CodBarras1 = (string)(Reader["CODBARRAS1"] is DBNull ? string.Empty : Reader["CODBARRAS1"]);
             bool Activo = Convert.ToBoolean(Reader["ACTIVO"]);
 
-            int Marca = (int)Reader["CODMARCA"];
+            int Marca = (int)(Reader["CODMARCA"] is DBNull ? -1 : Reader["CODMARCA"]);
             string Modelo = (string)(Reader["MODELO"] is DBNull ? string.Empty : Reader["MODELO"]);
-            int CodDepartamento = (int)Reader["CODDEPARTAMENTO"];
+            int CodDepartamento = (int)(Reader["CODDEPARTAMENTO"] is DBNull ? -1 : Reader["CODDEPARTAMENTO"]);
             int xCodMoneda = (int)Reader["MONEDACOMPRA"];
-            int CodSeccion = (int)Reader["CODSECCION"];
+            int CodSeccion = (int)(Reader["CODSECCION"] is DBNull ? -1 : Reader["CODSECCION"]);
             decimal Costo = Convert.ToDecimal(Reader["COSTO"]);
             decimal Ganancia = Convert.ToDecimal(Reader["GANANCIA"]);
             int Recalcula = (int)Reader["RECALCULA"];

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="GesArticulos.cs" />
     <Compile Include="GesCajas.cs" />
+    <Compile Include="GesCobros.cs" />
     <Compile Include="GesDocumentos.cs" />
     <Compile Include="GesEmpresa.cs" />
     <Compile Include="GesPersonas.cs" />

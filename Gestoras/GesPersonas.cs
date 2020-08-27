@@ -140,6 +140,37 @@ namespace JJ.Gestoras
             return _DBPersonas.getProveedorByRut(xCod);
         }
 
+        public void UpdateCliente(ClienteContado xCC)
+        {
+            if (xCC.Codigo == 1)
+                return;
+
+            if (xCC.Documento.Length > 12)
+            {
+                throw new Exception("El rut ingresado no es valido. [Length 5-12]");
+            }
+            if (xCC.Documento.Length < 11)
+                if (!Tools.Numeros.VerificaDocumento(Convert.ToInt32(xCC.Documento)))
+                    throw new Exception("La cedula ingresada no se puede verificar");
+
+            if (xCC.Telefono.Length > 0)
+            {
+                if (xCC.Telefono.Length > 9 || !Tools.Numeros.isNumeric(xCC.Telefono))
+                {
+                    throw new Exception("El Telefono/Celular ingresado no es correcto. [Length 9]");
+                }
+
+            }
+
+
+            if (xCC.Nombre.Length > 50)
+                xCC.Nombre = xCC.Nombre.Substring(0, 49);
+            if (xCC.Direccion.Length > 200)
+                xCC.Direccion = xCC.Direccion.Substring(0, 49);
+
+             _DBPersonas.Update(xCC);
+        }
+
         public ClienteContado addClienteContado(ClienteContado xCC)
         {
             if (xCC.Codigo == 1)

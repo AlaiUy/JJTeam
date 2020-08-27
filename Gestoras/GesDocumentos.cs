@@ -46,6 +46,10 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(xObjFactura);
         }
 
+        public List<object> getMovimientosPPendientes(int xCodProveedor)
+        {
+           return _DBDocumentos.getProveedorPendiente(xCodProveedor);
+        }
 
         public Entrega getEntrega(int xNumero, string xSerie)
         {
@@ -96,7 +100,7 @@ namespace JJ.Gestoras
 
         public void IngresarCompra(AlbaranCompra xCompra)
         {
-            xCompra.Serie = GesCajas.getInstance().Caja.getSerieByID(20).Serie;
+            xCompra.Serie = GesCajas.getInstance().Caja.getSerieByID(xCompra.Tipodoc()).Serie;
             xCompra.FechaProveedor = DateTime.Now;
             xCompra.Fecha = DateTime.Now;
             _DBDocumentos.Add(xCompra);
@@ -117,6 +121,12 @@ namespace JJ.Gestoras
             return (DataTable)_DBDocumentos.getDevoluciones(xFechaI, xFechaF);
         }
 
+        public object getEstadoCuentaProveedor(DateTime xFecha, Proveedor xProveedor)
+        {
+            List<object> _Movs = _DBDocumentos.getMovimientosProveedor(xFecha, xProveedor.Codigo);
+            EstadoCuentaProveedor E = new EstadoCuentaProveedor(_Movs, xFecha, xProveedor);
+            return E;
+        }
     }
 
 }

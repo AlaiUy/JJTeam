@@ -18,6 +18,7 @@ namespace JJ.Mappers
         //NUMERO DOCUMENTO 20 = COMPRAS
         //NUMERO DOCUMENTO 3 = DEV.CONTADO
         //NUMERO DOCUMENTO 4 = NOTA CREDITO
+        //NUMERO DOCUMENTO 21 = NOTA CREDITO COMPRA
         public bool Add(object xObject)
         {
             if (xObject is VentaCuenta)
@@ -50,8 +51,31 @@ namespace JJ.Mappers
                     //Actualizo el precio en la tabla articulos
                     UpdatePreciosArticulos(C, Con, Tran);
                     // Agrego el historial del articulo.
+
+                    // Agrego la factura a tesoreria
+                    AddTesoreriaP(C, Con, Tran,Numero);
                     Tran.Commit();
                 }
+            }
+        }
+
+        private void AddTesoreriaP(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran,int xNumero)
+        {
+            
+            using (SqlCommand Com = new SqlCommand("INSERT INTO TESORERIAP(SERIE,NUMERO,LIN,FECHA,ESTADO,CODMONEDA,COTIZACION,IMPORTE,CODPROVEEDOR,TIPODOC) VALUES (@SERIE,@NUMERO,@LIN,@FECHA,@ESTADO,@CODMONEDA,@COTIZACION,@IMPORTE,@CODPROVEEDOR,@TIPODOC)", (SqlConnection)xCon))
+            {
+                Com.Parameters.Add(new SqlParameter("@SERIE", xC.Serie));
+                Com.Parameters.Add(new SqlParameter("@NUMERO", xNumero));
+                Com.Parameters.Add(new SqlParameter("@LIN", 1));
+                Com.Parameters.Add(new SqlParameter("@FECHA", xC.FechaProveedor));
+                Com.Parameters.Add(new SqlParameter("@ESTADO", xC.Estado()));
+                Com.Parameters.Add(new SqlParameter("@CODMONEDA",xC.CodMoneda));
+                Com.Parameters.Add(new SqlParameter("@COTIZACION", xC.Cotizacion));
+                Com.Parameters.Add(new SqlParameter("@IMPORTE", xC.ImporteTesoreria()));
+                Com.Parameters.Add(new SqlParameter("@TIPODOC", xC.Tipodoc()));
+                Com.Parameters.Add(new SqlParameter("@CODPROVEEDOR", xC.CodProveedor));
+                Com.Transaction = xTran;
+                ExecuteNonQuery(Com);
             }
         }
 
@@ -84,11 +108,11 @@ namespace JJ.Mappers
                     Com.Parameters.Add(new SqlParameter("@SERIECOMPRA", xC.Serie));
                     Com.Parameters.Add(new SqlParameter("@NUMLIN", L.NumLinea));
                     Com.Parameters.Add(new SqlParameter("@CODARTICULO", L.Articulo.CodArticulo));
-                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", L.Descripcion));
+                    Com.Parameters.Add(new SqlParameter("@DESCRIPCION", L.Articulo.Descripcion));
                     Com.Parameters.Add(new SqlParameter("@CANTIDAD", L.Cantidad));
-                    Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", L.SubTotal()));
-                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva.Id));
-                    Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.TotalconIva() - L.SubTotal()));
+                    Com.Parameters.Add(new SqlParameter("@PRECIOBRUTO", L.Costo));
+                    Com.Parameters.Add(new SqlParameter("@IVA", L.Articulo.Iva.Valor));
+                    Com.Parameters.Add(new SqlParameter("@TOTALIVA", L.ImporteDescuentoTotal()));
                     Com.Transaction = xTran;
                     ExecuteNonQuery(Com);
                     AddHisotriaPrecios(xC, xCon, xTran, L, xNumero);
@@ -116,7 +140,7 @@ namespace JJ.Mappers
         private int AddCabeceraCompra(AlbaranCompra xC, SqlConnection xCon, SqlTransaction xTran)
         {
             int Numero = -1;
-            using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRAS(SERIECOMPRA,FECHA,CODPROVEEDOR, CODMONEDA, NUMPROVEEDOR, SERIEPROVEEDOR, FECHAPROVEEDOR,COTIZACION) OUTPUT INSERTED.IDCOMPRA VALUES (@SERIECOMPRA,@FECHA,@CODPROVEEDOR,@CODMONEDA,@NUMPROVEEDOR,@SERIEPROVEEDOR,@FECHAPROVEEDOR,@COTIZACION)", (SqlConnection)xCon))
+            using (SqlCommand Com = new SqlCommand("INSERT INTO COMPRAS(SERIECOMPRA,FECHA,CODPROVEEDOR, CODMONEDA, NUMPROVEEDOR, SERIEPROVEEDOR, FECHAPROVEEDOR,COTIZACION,ADENDA,TIPODOC) OUTPUT INSERTED.IDCOMPRA VALUES (@SERIECOMPRA,@FECHA,@CODPROVEEDOR,@CODMONEDA,@NUMPROVEEDOR,@SERIEPROVEEDOR,@FECHAPROVEEDOR,@COTIZACION,@ADENDA,@TIPODOC)", (SqlConnection)xCon))
             {
                 Com.Parameters.Add(new SqlParameter("@SERIECOMPRA", xC.Serie));
                 Com.Parameters.Add(new SqlParameter("@FECHA", xC.Fecha));
@@ -126,6 +150,8 @@ namespace JJ.Mappers
                 Com.Parameters.Add(new SqlParameter("@SERIEPROVEEDOR", xC.SerieFacturaProveedor));
                 Com.Parameters.Add(new SqlParameter("@FECHAPROVEEDOR", xC.FechaProveedor));
                 Com.Parameters.Add(new SqlParameter("@COTIZACION", xC.Cotizacion));
+                Com.Parameters.Add(new SqlParameter("@ADENDA", xC.Adenda));
+                Com.Parameters.Add(new SqlParameter("@TIPODOC", xC.Tipodoc()));
                 Com.Transaction = xTran;
                 var Result = ExecuteScalar(Com);
                 int.TryParse(Result.ToString(), out Numero);
@@ -1077,6 +1103,70 @@ namespace JJ.Mappers
                 }
             }
             return new Entrega(xNumero, xSerie, Lineas);
+        }
+
+        public List<object> getMovimientosProveedor(DateTime now, int v)
+        {
+            List<object> Movimientos = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT *  FROM DBO.getProveedorSA(@PROVEEDOR)", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@PROVEEDOR", v));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                           Movimientos.Add(getMovimientoProveedor(Reader));
+                        }
+                    }
+                }
+            }
+            return Movimientos;
+        }
+
+        private Movimiento getMovimientoProveedor(IDataReader Reader)
+        {
+            MovimientoP M;
+            int Linea = -1;
+            char xEstado=' ';
+            DateTime xFecha = Convert.ToDateTime(Reader["FECHA"]);
+            int xNumero = (int)(Reader["NUMERO"]);
+            string xSerie = (string)(Reader["SERIE"]);
+            int xMoneda = (int)(Reader["CODMONEDA"]);
+            decimal xImporte = Convert.ToDecimal((Reader["IMPORTE"]));
+            if (Reader.FieldCount > 5)
+            {
+                Linea = (int)(Reader["LIN"]);
+                xEstado = Convert.ToChar((Reader["ESTADO"]));
+            }
+
+                
+            
+            M = new MovimientoP(xFecha, xNumero, xSerie, xMoneda,xImporte,Linea,xEstado);
+            return M;
+        }
+
+        public List<object> getProveedorPendiente(int xCodProveedor)
+        {
+            List<object> Movimientos = new List<object>();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT *  FROM DBO.getPendientesProveedor(@PROVEEDOR)", (SqlConnection)Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@PROVEEDOR", xCodProveedor));
+                    using (IDataReader Reader = ExecuteReader(Com))
+                    {
+                        while (Reader.Read())
+                        {
+                            Movimientos.Add((MovimientoP)getMovimientoProveedor(Reader));
+                        }
+                    }
+                }
+            }
+            return Movimientos;
         }
     }
 }

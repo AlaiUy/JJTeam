@@ -17,25 +17,24 @@ namespace JJ.Entidades
         private DateTime _FechaProveedor;
         private List<CompraLin> _Lineas;
         private decimal _Cotizacion;
+        private string _Adenda;
 
-        public AlbaranCompra()
-        {
-
-        }
+        
 
         public AlbaranCompra(string xSerie, DateTime xFecha, int xCodproveedor, int xCodmoneda)
         {
             _Serie = xSerie;
             _Fecha = xFecha;
             _CodProveedor = xCodproveedor;
-            _CodMoneda = xCodmoneda; 
+            _CodMoneda = xCodmoneda;
+            _Adenda = "";
         }
 
         /// <summary>
         /// Agrega una linea a la compra.
         /// Necesita se invocado en un try and catch, puede generar una excepcion.
         /// </summary>
-        public void AgregarLineas(List<CompraLin> xLineas)
+        public virtual void AgregarLineas(List<CompraLin> xLineas)
         {
             foreach (CompraLin Linea in xLineas)
             {
@@ -47,7 +46,7 @@ namespace JJ.Entidades
         /// Agrega una linea a la compra.
         /// Necesita se invocado en un try and catch, puede generar una excepcion.
         /// </summary>
-        public void AgregarLinea(CompraLin Linea)
+        public virtual void AgregarLinea(CompraLin Linea)
         {
             if (Linea.Cantidad <= 0)
                 throw new Exception("No puede haber articulos con cantidad negativa");
@@ -178,6 +177,46 @@ namespace JJ.Entidades
             {
                 _Cotizacion = value;
             }
+        }
+
+        
+
+        public string Adenda
+        {
+            get
+            {
+                return _Adenda;
+            }
+
+            set
+            {
+                _Adenda = value;
+            }
+        }
+
+        public virtual char Estado()
+        {
+            return 'P';
+        }
+
+        public virtual decimal Total()
+        {
+            decimal zImporte = 0;
+            foreach (CompraLin L in _Lineas)
+            {
+                zImporte += L.TotalconIva();
+            }
+            return zImporte;
+        }
+
+        public virtual int Tipodoc()
+        {
+            return 20;
+        }
+
+        public virtual decimal ImporteTesoreria()
+        {
+            return Total();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace JJ.Entidades
         private int _categoria;
         private string _email;
         private string _Comentarios;
+        private int _codMoneda;
 
         public int Codigo
         {
@@ -157,11 +158,27 @@ namespace JJ.Entidades
             }
         }
 
-        public Proveedor() { }
+        public int CodMoneda
+        {
+            get
+            {
+                return _codMoneda;
+            }
+        }
 
-        public Proveedor(int xCodProveedor)
+        public Proveedor(int xCodmoneda) {
+            _codMoneda = xCodmoneda;
+        }
+
+        public Proveedor(int xCodProveedor,int xCodmoneda)
         {
             _codigo = xCodProveedor;
+            _codMoneda = xCodmoneda;
+        }
+
+        public override string ToString()
+        {
+            return _codigo + " - " + _nombre;
         }
     }
 }

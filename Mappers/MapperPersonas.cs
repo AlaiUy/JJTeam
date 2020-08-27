@@ -151,7 +151,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL,P.COMENTARIOS FROM PROVEEDORES P", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.CODMONEDA,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL,P.COMENTARIOS FROM PROVEEDORES P", Con))
                 {
 
                     using (IDataReader Reader = ExecuteReader(Com))
@@ -171,8 +171,9 @@ namespace JJ.Mappers
         {
             Proveedor Entity = null;
             int Codigo = (int)Reader["CODIGO"];
+            int Moneda = (int)Reader["CODMONEDA"];
             string Nombre = (string)Reader["NOMBRE"];
-            Entity = new Proveedor(Codigo);
+            Entity = new Proveedor(Codigo,Moneda);
             Entity.Direccion = (string)Reader["DIRECCION"];
             Entity.Dirnumero = (string)Reader["DIRNUMERO"];
             Entity.Email = (string)Reader["EMAIL"];
@@ -306,7 +307,6 @@ namespace JJ.Mappers
             return Cuentas;
         }
 
-
         public bool Remove(object xObject)
         {
             throw new NotImplementedException();
@@ -319,7 +319,29 @@ namespace JJ.Mappers
                 UpdateProveedor((Proveedor)xObject);
                 return true;
             }
+            if (xObject is ClienteContado)
+            {
+                UpdateClienteContado((ClienteContado)xObject);
+                return true;
+            }
             return true;
+        }
+
+        private void UpdateClienteContado(ClienteContado xObject)
+        {
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("UPDATE CLIENTESCONTADO SET NOMBRE=@NOMBRE,DOCUMENTO=@DOCUMENTO,TELEFONO=@TELEFONO,DIRECCION=@DIRECCION where CODIGO = @CODIGO", Con))
+                {
+                    Com.Parameters.Add(new SqlParameter("@NOMBRE", xObject.Nombre));
+                    Com.Parameters.Add(new SqlParameter("@DOCUMENTO", xObject.Documento));
+                    Com.Parameters.Add(new SqlParameter("@TELEFONO", xObject.Telefono));
+                    Com.Parameters.Add(new SqlParameter("@DIRECCION", xObject.Direccion));
+                    Com.Parameters.Add(new SqlParameter("@CODIGO", xObject.Codigo));
+                    ExecuteNonQuery(Com);
+                }
+            }
         }
 
         private void UpdateProveedor(Proveedor xObject)
