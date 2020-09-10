@@ -10,23 +10,23 @@ namespace JJ.Entidades
     {
         private string _Serie;
         private DateTime _Fecha;
+        private int _Numero;
         private int _CodProveedor;
-        private int _CodMoneda;
+        private Moneda _Moneda;
         private int _NumFacturaProveedor;
         private string _SerieFacturaProveedor;
         private DateTime _FechaProveedor;
         private List<CompraLin> _Lineas;
-        private decimal _Cotizacion;
         private string _Adenda;
 
         
 
-        public AlbaranCompra(string xSerie, DateTime xFecha, int xCodproveedor, int xCodmoneda)
+        public AlbaranCompra(string xSerie, DateTime xFecha, int xCodproveedor, Moneda xMoneda)
         {
             _Serie = xSerie;
             _Fecha = xFecha;
             _CodProveedor = xCodproveedor;
-            _CodMoneda = xCodmoneda;
+            _Moneda = xMoneda;
             _Adenda = "";
         }
 
@@ -101,18 +101,7 @@ namespace JJ.Entidades
             }
         }
 
-        public int CodMoneda
-        {
-            get
-            {
-                return _CodMoneda;
-            }
-
-            set
-            {
-                _CodMoneda = value;
-            }
-        }
+        
 
         public int NumFacturaProveedor
         {
@@ -166,21 +155,6 @@ namespace JJ.Entidades
             }
         }
 
-        public decimal Cotizacion
-        {
-            get
-            {
-                return _Cotizacion;
-            }
-
-            set
-            {
-                _Cotizacion = value;
-            }
-        }
-
-        
-
         public string Adenda
         {
             get
@@ -191,6 +165,32 @@ namespace JJ.Entidades
             set
             {
                 _Adenda = value;
+            }
+        }
+
+        public Moneda Moneda
+        {
+            get
+            {
+                return _Moneda;
+            }
+
+            set
+            {
+                _Moneda = value;
+            }
+        }
+
+        public int Numero
+        {
+            get
+            {
+                return _Numero;
+            }
+
+            set
+            {
+                _Numero = value;
             }
         }
 

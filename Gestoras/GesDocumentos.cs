@@ -82,6 +82,11 @@ namespace JJ.Gestoras
             return _DBDocumentos.getVentasEsperaContado();
         }
 
+        public Recibo getReciboProveedorByID(string xSerie, int xNumero)
+        {
+            return (Recibo)_DBDocumentos.getReciboProveedorByID(xSerie, xNumero);
+        }
+
         public List<object> getListaEspera(int xEstado)
         {
             return _DBDocumentos.getVentasEsperaContado(xEstado);
@@ -106,6 +111,18 @@ namespace JJ.Gestoras
             _DBDocumentos.Add(xCompra);
         }
 
+        public void AnularReciboCompra(string xSerie, int xNumero)
+        {
+            ReciboCompra xRecibo;
+            xRecibo = (ReciboCompra)_DBDocumentos.getReciboProveedorByID(xSerie, xNumero);
+            if (xRecibo == null)
+                throw new Exception("El recibo recibido no se puede localizar");
+            if (xRecibo.Total() > 0)
+            {
+                _DBDocumentos.AnularRecibo(xRecibo);
+            }
+        }
+
         public VentaContado getVentaDocumento(int xNumero, string xSerie, TipoLineas xtipo)
         {
            return (VentaContado)_DBDocumentos.getFacturaByID(xSerie, xNumero, xtipo);
@@ -126,6 +143,29 @@ namespace JJ.Gestoras
             List<object> _Movs = _DBDocumentos.getMovimientosProveedor(xFecha, xProveedor.Codigo);
             EstadoCuentaProveedor E = new EstadoCuentaProveedor(_Movs, xFecha, xProveedor);
             return E;
+        }
+
+        public void newDPP(MovimientoP xMovimiento,int xMoneda,int xCodProveedor,string xSerieProveedor,int xNumeroProveedor)
+        {
+            AlbaranCompraNC NC;
+            string SerieAlbaran = GesCajas.getInstance().Caja.getSerieByID(21).Serie;
+            Moneda M = GesPrecios.getInstance().getMonedaByID(xMoneda);
+            NC = new AlbaranCompraNC(SerieAlbaran, DateTime.Now, xCodProveedor, M);
+            NC.NumFacturaProveedor = xNumeroProveedor;
+            NC.SerieFacturaProveedor = xSerieProveedor;
+
+            Articulo A = GesArticulos.getInstance().getArticuloByRef("DPP");
+            NC.AgregarLinea(new CompraLin(A, "N/C DPP " + xMovimiento.SerieInterna + xMovimiento.NumeroInterno.ToString(), 1, 0, 1, Convert.ToDecimal(xMovimiento.Importe) / Convert.ToDecimal(1.22)));
+            IngresarCompra(NC);
+
+            PreRecibo PR = new PreRecibo(DateTime.Now, "RP PP");
+            xMovimiento.Saldar = xMovimiento.Importe;
+            PR.AddMovimiento(xMovimiento);
+
+            MovimientoP Mov = new MovimientoP(NC.Fecha, NC.Numero, NC.Serie, NC.Moneda.Codigo, NC.ImporteTesoreria(),1,'P',NC.Moneda.Cotizacion,NC.CodProveedor,NC.Tipodoc());
+            Mov.Saldar = NC.ImporteTesoreria();
+            PR.AddMovimiento(Mov);
+            GesCobros.getInstance().GenerarPago(PR);   
         }
     }
 

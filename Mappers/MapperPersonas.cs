@@ -151,7 +151,7 @@ namespace JJ.Mappers
             using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
             {
                 Con.Open();
-                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.CODMONEDA,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL,P.COMENTARIOS FROM PROVEEDORES P", Con))
+                using (SqlCommand Com = new SqlCommand("SELECT P.CODIGO,P.CODMONEDA,P.NOMBRE,P.RZ,P.RUT,P.DIRECCION,P.DIRNUMERO,P.TELEFONO,P.CELULAR,P.CODCATEGORIA,P.EMAIL,P.COMENTARIOS,P.codmoneda FROM PROVEEDORES P", Con))
                 {
 
                     using (IDataReader Reader = ExecuteReader(Com))

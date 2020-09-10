@@ -1,4 +1,5 @@
-﻿using JJ.FabricaMapper;
+﻿using JJ.Entidades;
+using JJ.FabricaMapper;
 using JJ.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace JJ.Gestoras
         public GesCobros()
         {
             _DBCobros = (IMapperCobros)Factory.getMapper(this.GetType());
+        }
+
+        public void GenerarPago(Recibo xRecibo)
+        {
+            _DBCobros.Add(xRecibo);
         }
     }
 }

@@ -446,5 +446,19 @@ namespace JJ.Mappers
             }
             return A;
         }
+
+        public object getListadoArticulos()
+        {
+            DataTable DT = new DataTable();
+            using (SqlConnection Con = new SqlConnection(GlobalConnectionString))
+            {
+                Con.Open();
+                using (SqlCommand Com = new SqlCommand("SELECT * FROM dbo.LISTADOARTICULOS", (SqlConnection)Con))
+                {
+                    DT.Load(ExecuteReader(Com));
+                }
+            }
+            return DT;
+        }
     }
 }

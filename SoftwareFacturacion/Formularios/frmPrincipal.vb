@@ -214,7 +214,7 @@ Public Class frmPrincipal
 
     End Sub
 
-    Private Sub txtTotalSinIva_TextChanged(sender As Object, e As EventArgs) Handles txtTotalSinIva.TextChanged
+    Private Sub txtTotalSinIva_TextChanged(sender As Object, e As EventArgs) 
 
     End Sub
 
@@ -298,12 +298,12 @@ Public Class frmPrincipal
         End If
     End Sub
 
-    Private Sub txtImporteTotalConIva_TextChanged(sender As Object, e As EventArgs) Handles txtImporteTotalConIva.TextChanged
+    Private Sub txtImporteTotalConIva_TextChanged(sender As Object, e As EventArgs) 
 
     End Sub
 
 
-    Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) Handles txtImporteDescuento.TextChanged
+    Private Sub txtImporteDescuento_TextChanged(sender As Object, e As EventArgs) 
 
     End Sub
 

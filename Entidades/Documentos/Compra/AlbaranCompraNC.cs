@@ -4,7 +4,7 @@ namespace JJ.Entidades
 {
     public class AlbaranCompraNC : AlbaranCompra
     {
-        public AlbaranCompraNC(string xSerie, DateTime xFecha, int xCodproveedor, int xCodmoneda) : base(xSerie, xFecha, xCodproveedor, xCodmoneda)
+        public AlbaranCompraNC(string xSerie, DateTime xFecha, int xCodproveedor, Moneda xMoneda) : base(xSerie, xFecha, xCodproveedor, xMoneda)
         {
 
         }

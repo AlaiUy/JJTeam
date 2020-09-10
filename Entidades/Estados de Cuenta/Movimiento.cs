@@ -16,6 +16,9 @@ namespace JJ.Entidades
         private char _estado;
         private int _linea;
         private decimal _saldar;
+        private decimal _cotizacion;
+        private int _codproveedor;
+        private int _tipodoc = -1;
 
         public DateTime Fecha
         {
@@ -98,8 +101,33 @@ namespace JJ.Entidades
             }
         }
 
-          
-        
+        public decimal Cotizacion
+        {
+            get
+            {
+                if (_cotizacion == 0)
+                    return 1;
+                return _cotizacion;
+            }
+            
+        }
+
+        public int Codproveedor
+        {
+            get
+            {
+                return _codproveedor;
+            }
+            
+        }
+
+        public int Tipodoc
+        {
+            get
+            {
+                return _tipodoc;
+            }
+        }
 
         public Movimiento(DateTime xFecha, int xNumeroInterno, string xSerieInterna, int xCodMoneda,decimal xImporte)
         {
@@ -110,8 +138,9 @@ namespace JJ.Entidades
             _Importe = xImporte;
         }
 
-        public Movimiento(DateTime xFecha, int xNumeroInterno, string xSerieInterna, int xCodMoneda, decimal xImporte,char xEstado,int xLinea)
+        public Movimiento(DateTime xFecha, int xNumeroInterno, string xSerieInterna, int xCodMoneda, decimal xImporte,char xEstado,int xLinea,decimal xcotizacion,int xCodProveedor,int xTipodoc)
         {
+            _cotizacion = xcotizacion;
             _Fecha = xFecha;
             _NumeroInterno = xNumeroInterno;
             _SerieInterna = xSerieInterna;
@@ -119,7 +148,11 @@ namespace JJ.Entidades
             _Importe = xImporte;
             _estado = xEstado;
             _linea = xLinea;
+            _codproveedor = xCodProveedor;
+            _tipodoc = xTipodoc;
         }
+
+        
 
 
     }

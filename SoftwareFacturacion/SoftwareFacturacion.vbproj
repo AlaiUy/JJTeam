@@ -91,6 +91,11 @@
       <HintPath>..\Entidades\obj\Debug\Entidades.dll</HintPath>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="FontAwesome.Sharp">
+      <HintPath>..\..\..\Visual Studio 2015\Projects\Recetario\packages\FontAwesome.Sharp.5.12.1\lib\net40\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -98,10 +103,12 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -194,6 +201,12 @@
     <Compile Include="Formularios\frmVerFacturas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Material Desing\frmMain_Material.Designer.vb">
+      <DependentUpon>frmMain_Material.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Material Desing\frmMain_Material.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -251,6 +264,9 @@
     <EmbeddedResource Include="Formularios\frmVerFacturas.resx">
       <DependentUpon>frmVerFacturas.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Material Desing\frmMain_Material.resx">
+      <DependentUpon>frmMain_Material.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -287,6 +303,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\WhatsApp Image 2019-04-11 at 09.29.39.jpeg" />
   </ItemGroup>
   <ItemGroup>

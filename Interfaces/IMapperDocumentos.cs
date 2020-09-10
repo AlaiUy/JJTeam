@@ -23,6 +23,8 @@ namespace JJ.Interfaces
         object getEntrega(int xNumero, string xSerie);
         List<object> getMovimientosProveedor(DateTime now, int v);
         List<object> getProveedorPendiente(int xCodProveedor);
+        object getReciboProveedorByID(string xSerie, int xNumero);
+        void AnularRecibo(object xRecibo);
 
 
         //object getFacturaByID(string xSerie, int xNumero, TipoLineas xTipo);

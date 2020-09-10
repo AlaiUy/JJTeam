@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -55,6 +56,11 @@ namespace JJ.Entidades
             Movimientos();
         }
 
+        private string FormatearImporte(decimal xImporte)
+        {
+            return xImporte.ToString("N", new CultureInfo("is-IS"));
+        }
+        
         public virtual List<object> Movimientos()
         {
             List<object> _Tablas = new List<object>();
@@ -115,8 +121,8 @@ namespace JJ.Entidades
                         RM["FECHA"] = M.Fecha.ToString("dd/MM/yyyy");
                         RM["SERIE"] = M.SerieInterna;
                         RM["NUMERO"] = M.NumeroInterno;
-                        RM["IMPORTE"] = M.Importe;
-                        RM["TOTAL"] = _DeudaPesos;
+                        RM["IMPORTE"] = FormatearImporte(M.Importe);
+                        RM["TOTAL"] = FormatearImporte(_DeudaPesos);
                         TablaP.Rows.Add(RM);
                     }
                     else
@@ -126,8 +132,8 @@ namespace JJ.Entidades
                         RM["FECHA"] = M.Fecha.ToString("dd/MM/yyyy");
                         RM["SERIE"] = M.SerieInterna;
                         RM["NUMERO"] = M.NumeroInterno;
-                        RM["IMPORTE"] = M.Importe;
-                        RM["TOTAL"] = _DeudaDolares;
+                        RM["IMPORTE"] = FormatearImporte(M.Importe);
+                        RM["TOTAL"] = FormatearImporte(_DeudaDolares);
                         TablaD.Rows.Add(RM);
                     }
 
@@ -143,8 +149,5 @@ namespace JJ.Entidades
             _Tablas.Add(TablaD);
             return _Tablas;
         }
-
-        
-      
     }
 }

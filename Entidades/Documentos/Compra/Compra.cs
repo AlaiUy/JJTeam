@@ -11,9 +11,11 @@ namespace JJ.Entidades
         private int _NumFacturaProveedor;
         private string _SerieFacturaProveedor;
 
-        public Compra(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion) : base(xFecha, xSerie, xCaja, xMoneda, xZ, xVendedor, xCotizacion)
+        public Compra(DateTime xFecha, string xSerie, string xCaja, int xMoneda, int xZ, int xVendedor, decimal xCotizacion, int xProveedor,string xSerieProveedor,int xNumeroProveedor) : base(xFecha, xSerie, xCaja, xMoneda, xZ, xVendedor, xCotizacion)
         {
-
+            _CodProveedor = xProveedor;
+            _NumFacturaProveedor = xNumeroProveedor;
+            _SerieFacturaProveedor = xSerieProveedor;
         }
 
         public int CodProveedor

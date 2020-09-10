@@ -18,7 +18,8 @@ namespace JJ.Interfaces
         object getVistaArticulos();
 
         object getVistaArticulosDescatalogados();
-        
+
+        object getListadoArticulos();
 
         void Actualizar(Articulo xArticulo, decimal xGanancia, decimal xCosto);
         void UpdateStock(object xArticulo, decimal xCantidad);

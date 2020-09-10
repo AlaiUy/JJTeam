@@ -289,8 +289,6 @@ namespace JJ.Reportes.Articulos {
             
             private global::System.Data.DataColumn columnGANANCIA;
             
-            private global::System.Data.DataColumn columnPRECIO;
-            
             private global::System.Data.DataColumn columnSTOCK;
             
             private global::System.Data.DataColumn columnMONEDA;
@@ -370,14 +368,6 @@ namespace JJ.Reportes.Articulos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PRECIOColumn {
-                get {
-                    return this.columnPRECIO;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn STOCKColumn {
                 get {
                     return this.columnSTOCK;
@@ -429,7 +419,7 @@ namespace JJ.Reportes.Articulos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ArticulosRow AddArticulosRow(string REFERENCIA, string NOMBRE, string ACTIVO, string COSTO, string GANANCIA, string PRECIO, string STOCK, string MONEDA) {
+            public ArticulosRow AddArticulosRow(string REFERENCIA, string NOMBRE, string ACTIVO, string COSTO, string GANANCIA, string STOCK, string MONEDA) {
                 ArticulosRow rowArticulosRow = ((ArticulosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         REFERENCIA,
@@ -437,7 +427,6 @@ namespace JJ.Reportes.Articulos {
                         ACTIVO,
                         COSTO,
                         GANANCIA,
-                        PRECIO,
                         STOCK,
                         MONEDA};
                 rowArticulosRow.ItemArray = columnValuesArray;
@@ -467,7 +456,6 @@ namespace JJ.Reportes.Articulos {
                 this.columnACTIVO = base.Columns["ACTIVO"];
                 this.columnCOSTO = base.Columns["COSTO"];
                 this.columnGANANCIA = base.Columns["GANANCIA"];
-                this.columnPRECIO = base.Columns["PRECIO"];
                 this.columnSTOCK = base.Columns["STOCK"];
                 this.columnMONEDA = base.Columns["MONEDA"];
             }
@@ -485,8 +473,6 @@ namespace JJ.Reportes.Articulos {
                 base.Columns.Add(this.columnCOSTO);
                 this.columnGANANCIA = new global::System.Data.DataColumn("GANANCIA", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGANANCIA);
-                this.columnPRECIO = new global::System.Data.DataColumn("PRECIO", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPRECIO);
                 this.columnSTOCK = new global::System.Data.DataColumn("STOCK", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSTOCK);
                 this.columnMONEDA = new global::System.Data.DataColumn("MONEDA", typeof(string), null, global::System.Data.MappingType.Element);
@@ -713,22 +699,6 @@ namespace JJ.Reportes.Articulos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string PRECIO {
-                get {
-                    try {
-                        return ((string)(this[this.tableArticulos.PRECIOColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'PRECIO\' de la tabla \'Articulos\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableArticulos.PRECIOColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string STOCK {
                 get {
                     try {
@@ -817,18 +787,6 @@ namespace JJ.Reportes.Articulos {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGANANCIANull() {
                 this[this.tableArticulos.GANANCIAColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPRECIONull() {
-                return this.IsNull(this.tableArticulos.PRECIOColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPRECIONull() {
-                this[this.tableArticulos.PRECIOColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -7,6 +7,6 @@ namespace JJ.Interfaces
 {
     public interface IMapperCobros:IMapper
     {
-        void GenerarRecibo(object xRecibo);
+        
     }
 }

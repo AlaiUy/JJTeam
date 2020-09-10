@@ -14,7 +14,7 @@ namespace JJ.Entidades
 
         }
 
-        public MovimientoP(DateTime xFecha, int xNumeroInterno, string xSerieInterna, int xCodMoneda, decimal xImporte,int xLinea,char xEstado) : base(xFecha, xNumeroInterno, xSerieInterna, xCodMoneda, xImporte,xEstado,xLinea)
+        public MovimientoP(DateTime xFecha, int xNumeroInterno, string xSerieInterna, int xCodMoneda, decimal xImporte,int xLinea,char xEstado,decimal xCotizacion,int xCodProveedor,int xTipodoc) : base(xFecha, xNumeroInterno, xSerieInterna, xCodMoneda, xImporte,xEstado,xLinea,xCotizacion,xCodProveedor, xTipodoc)
         {
 
         }

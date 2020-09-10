@@ -12,7 +12,7 @@ namespace JJ.Mappers
     public abstract class DataAccess
     {
         private static string globalConnectionString;
-        
+
 
 
         public static string GlobalConnectionString
@@ -35,7 +35,7 @@ namespace JJ.Mappers
                     throw e;
                 }
 
-                
+
             }
             set { DataAccess.globalConnectionString = value; }
         }
@@ -57,24 +57,27 @@ namespace JJ.Mappers
         }
 
 
-        public int ExecuteNonQuery(DbCommand cmd, List<IDataParameter> Lts) {
+        public int ExecuteNonQuery(DbCommand cmd, List<IDataParameter> Lts)
+        {
             
-                foreach (IDataParameter P in Lts)
-                {
-                    cmd.Parameters.Add(P);
-                }
-
-                try
-                {
-                    return cmd.ExecuteNonQuery();
-                }
-                catch (Exception E)
-                {
-                
-                    CerrarConexion(cmd.Connection);
-                    throw new Exception(E.Message);
+            foreach (IDataParameter P in Lts)
+            {
+                if(cmd.Parameters.Contains(P.ParameterName))
+                    cmd.Parameters.RemoveAt(P.ParameterName);
+                cmd.Parameters.Add(P);
             }
-            
+
+            try
+            {
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception E)
+            {
+
+                CerrarConexion(cmd.Connection);
+                throw new Exception(E.Message);
+            }
+
         }
 
 
@@ -83,7 +86,7 @@ namespace JJ.Mappers
         {
             try
             {
-                return  cmd.ExecuteReader(CommandBehavior.Default);
+                return cmd.ExecuteReader(CommandBehavior.Default);
             }
             catch (Exception e)
             {
@@ -92,7 +95,7 @@ namespace JJ.Mappers
             }
         }
 
-        public  IDataReader ExecuteReader(DbCommand cmd, List<IDataParameter> Lts)
+        public IDataReader ExecuteReader(DbCommand cmd, List<IDataParameter> Lts)
         {
             foreach (IDataParameter P in Lts)
             {
@@ -110,7 +113,7 @@ namespace JJ.Mappers
         }
 
 
-        public  object ExecuteScalar(DbCommand cmd, List<IDataParameter> Lts)
+        public object ExecuteScalar(DbCommand cmd, List<IDataParameter> Lts)
         {
             foreach (IDataParameter P in Lts)
             {
@@ -128,7 +131,7 @@ namespace JJ.Mappers
         }
 
 
-        public  object ExecuteScalar(DbCommand cmd)
+        public object ExecuteScalar(DbCommand cmd)
         {
             try
             {
@@ -161,7 +164,7 @@ namespace JJ.Mappers
             }
         }
 
-      
+
 
         public int ExecuteNonQuery(DbCommand cmd, List<IDataParameter> Lts, List<string> xQuerys)
         {

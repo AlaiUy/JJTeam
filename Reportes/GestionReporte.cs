@@ -40,7 +40,7 @@ namespace JJ.Reportes
             frmReport.Show();
         }
 
-        public static void Presupuesto(DataTable xArticulos,int xDias,string xFormaPago,string dtoExtra,string xNombre,string xDireccion)
+        public static void Presupuesto(DataTable xArticulos,string xDias,string xFormaPago,string dtoExtra,string xNombre,string xDireccion,string xSubFijo)
         {
             xArticulos.TableName = "Presupuesto";
             ReportDocument rptDoc;
@@ -63,6 +63,9 @@ namespace JJ.Reportes
 
             Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["lblDireccion"];
             Campo.Text = xDireccion;
+
+            Campo = (TextObject)rptDoc.ReportDefinition.ReportObjects["txtSubFijo"];
+            Campo.Text = xSubFijo;
 
 
 
@@ -473,7 +476,7 @@ namespace JJ.Reportes
                 style.Font.Bold = true;
                 style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
                 style.SetVerticalAlignment(VerticalAlignmentValues.Center);
-                style.SetTopBorder(BorderStyleValues.DashDot, System.Drawing.Color.Blue);
+                style.SetTopBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
                 style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
                 sl.SetCellStyle(1, 1, style);
 
@@ -502,6 +505,145 @@ namespace JJ.Reportes
                 }
 
                 int IndexRow = 9;
+                foreach (DataRow row in xData.Rows)
+                {
+                    foreach (DataColumn DC in xData.Columns)
+                    {
+
+                        switch (Type.GetTypeCode(row[DC.Ordinal].GetType()))
+                        {
+                            case TypeCode.Byte:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToByte(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.SByte:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSByte(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.UInt16:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt16(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.UInt32:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt32(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.UInt64:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToUInt64(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Int16:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt16(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Int32:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt32(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Int64:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToInt64(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Decimal:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDecimal(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Double:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToDouble(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.Single:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, Convert.ToSingle(row[DC.Ordinal].ToString()));
+                                break;
+                            case TypeCode.String:
+                                sl.SetCellValue(IndexRow, DC.Ordinal + 1, row[DC.Ordinal].ToString());
+                                break;
+                        }
+
+
+                    }
+                    IndexRow += 1;
+                }
+                sl.SetRowHeight(1, IndexRow, 20);
+
+                //Guardar como, y aqui ponemos la ruta de nuestro archivo
+                if (xDestino == null)
+                {
+                    sl.SaveAs("C:/INFORMES/Informe.xlsx");
+                }
+                else
+                {
+                    sl.SaveAs(xDestino);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public static void Excel(DataTable xData)
+        {
+            Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+
+            worksheet = workbook.Sheets[1];
+            worksheet.Name = xData.TableName;
+
+            for (int i = 1; i < xData.Columns.Count + 1; i++)
+            {
+                worksheet.Cells[1, i] = xData.Columns[i - 1].ColumnName;
+            }
+
+            for (int i = 0; i < xData.Rows.Count; i++)
+            {
+                for (int j = 0; j < xData.Columns.Count; j++)
+                {
+                    worksheet.Cells[i + 2, j + 1] = xData.Rows[i][j];
+                }
+            }
+            app.Visible = true;
+        }
+
+        public static void ExportExcelGral(DataTable xData, string xDestino, string xInformacion)
+        {
+            try
+            {
+                //creamos el objeto SLDocument el cual creara el excel
+                SLDocument sl = new SLDocument();
+                int Index = 1;
+                SLStyle style = sl.CreateStyle();
+                style.Font.FontSize = 12;
+                style.Font.FontColor = System.Drawing.Color.Black;
+                style.Font.Bold = true;
+                style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
+                style.SetVerticalAlignment(VerticalAlignmentValues.Center);
+                style.SetTopBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
+                style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Blue);
+                sl.SetCellStyle(1, 1, style);
+
+                System.Drawing.Bitmap bm = new System.Drawing.Bitmap(Properties.Resources.LogoChico);
+                byte[] ba;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    bm.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    ms.Close();
+                    ba = ms.ToArray();
+                }
+
+                //we need the image type because in byte array form, we don't know the type
+                SLPicture pic = new SLPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
+                pic.SetPosition(0, 0);
+                sl.InsertPicture(pic);
+
+
+
+                foreach (DataColumn DC in xData.Columns)
+                {
+                    sl.SetCellValue(11, Index, DC.ColumnName);
+                    sl.SetCellStyle(11, Index, style);
+                    sl.AutoFitColumn(Index);
+                    Index += 1;
+                }
+
+
+                sl.SetCellValue(9, 1, xInformacion);
+
+                int IndexRow = 12;
                 foreach (DataRow row in xData.Rows)
                 {
                     foreach (DataColumn DC in xData.Columns)
